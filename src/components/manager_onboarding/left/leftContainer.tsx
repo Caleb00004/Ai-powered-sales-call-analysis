@@ -83,7 +83,6 @@ const LeftContainer = () => {
 
     const slidePrev = () => {
         carouselChange("prev")
-        // setCurrentItem(prev => prev > 1 ? prev - 1 : prev )
 
         setTimeout(() => {
             carouselDotAnimation()
@@ -104,30 +103,33 @@ const LeftContainer = () => {
             <Image className="absolute top-0" src={ellipse3} alt="ellips" width={10000} height={10000} />
             <Image className="absolute bottom-0 rotate-[180deg] opacity-[0.3]" src={ellipse3} alt="ellips" width={10000} height={10000} />
 
-            <div className="z-[2] carousel-container flex flex-[2] mdx2:flex-[3] w-full overflow-hidden justify-center">
-                {itemData.map((item, i) => {
-                    if (i+1 == 2) return <>{currentItem === i+1 && <Item imgStyle="w-[100%] sm:w-[66%] mdx3:w-[75%]" header={item.header} body={item.body} img={item.img} />}</>
-                    return <>{currentItem === i+1 && <Item header={item.header} body={item.body} img={item.img} />}</>
-                })}
-            </div>
-            <div className="z-[2] flex mdx3:flex-1 pb-10 mdx3:pb-0 pt-5 w-full items-start justify-center">
-                <div className="flex gap-12 justify-center items-center pt-3">
-                    <div onClick={slidePrev}>
-                        <NextBtn />
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <div onClick={() => handleDirectChange(1)} className={`${currentItem === 1 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                        <div onClick={() => handleDirectChange(2)} className={`${currentItem === 2 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                        <div onClick={() => handleDirectChange(3)} className={`${currentItem === 3 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                        <div onClick={() => handleDirectChange(4)} className={`${currentItem === 4 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                        <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                    </div>
-                    <div onClick={slideNext}>
-                        <NextBtn className=" rotate-[180deg]" />
-                    </div>
+            <div className="z-[2] left-container flex flex-col h-full">
+                <div className=" carousel-container flex flex-[2] mdx2:flex-[3] w-full overflow-hidden justify-center">
+                    {itemData.map((item, i) => {
+                        if (i+1 == 2) return <>{currentItem === i+1 && <Item imgStyle="w-[100%] sm:w-[59%] mdx3:w-[75%]" header={item.header} body={item.body} img={item.img} />}</>
+                        return <>{currentItem === i+1 && <Item header={item.header} body={item.body} img={item.img} />}</>
+                    })}
                 </div>
+                <div className="carousel-nav flex mdx3:flex-1 pb-10 mdx3:pb-0 pt-5 w-full items-start justify-center">
+                    <div className="flex gap-12 justify-center items-center pt-3">
+                        <div onClick={slidePrev}>
+                            <NextBtn />
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div onClick={() => handleDirectChange(1)} className={`${currentItem === 1 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                            <div onClick={() => handleDirectChange(2)} className={`${currentItem === 2 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                            <div onClick={() => handleDirectChange(3)} className={`${currentItem === 3 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                            <div onClick={() => handleDirectChange(4)} className={`${currentItem === 4 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                            <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                        </div>
+                        <div onClick={slideNext}>
+                            <NextBtn className=" rotate-[180deg]" />
+                        </div>
+                    </div>
 
+                </div>
             </div>
+
         </div>
     )
 }

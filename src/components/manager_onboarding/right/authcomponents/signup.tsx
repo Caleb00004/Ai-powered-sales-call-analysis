@@ -16,11 +16,11 @@ const Signup:FC<props> = ({changeSection}) => {
             <Logo />
             <h1 className="text-[1.5em] sm:text-[2em] mt-3 font-medium">Create an account</h1>
             <div className="flex gap-10 mt-7">
-                <div className="border text-[0.9em] text-[#333333] rounded-md  border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
+                <div className="hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] cursor-pointer border text-[0.9em] text-[#333333] rounded-md  border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
                     <Google />
                     <p>Google</p>
                 </div>
-                <div className="border text-[0.9em] text-[#333333] rounded-md border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
+                <div className="hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] cursor-pointer border text-[0.9em] text-[#333333] rounded-md border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
                     <Microsoft />
                     <p>Microsoft</p>
                 </div>

@@ -11,18 +11,19 @@ import Microsoft from "../../../../../public/microsoft_icon.svg"
 interface props {
     changeSection: (newSection: sectionType) => void
 }
-
+    
 const Signin:FC<props> = ({changeSection}) => {
     return (
         <>
             <Logo />
             <h1 className="text-[1.5em] sm:text-[2em] mt-3 font-medium">Welcome Back</h1>
             <div className="flex gap-10 mt-7">
-                <div className="border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
+                <div className="hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] cursor-pointer border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
                     <Google />
                     <p>Google</p>
+                    <div className="absolute z-[1]"></div>
                 </div>
-                <div className="border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
+                <div className="cursor-pointer hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
                     <Microsoft />
                     <p>Microsoft</p>
                 </div>
