@@ -4,6 +4,7 @@ import Key from "../../../../../public/key_icon.svg"
 import Button from "@/components/primary/Button"
 import { sectionType } from "../rightContainer"
 import { FC } from "react"
+import ArrowLeft from "../../../../../public/arrow-left.svg"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -29,7 +30,7 @@ const ForgotPassword:FC<props> = ({changeSection}) => {
             <Button onClick={() => changeSection("newpassword")}>
                 Send
             </Button>
-            <p onClick={() => changeSection("signin")} className=" cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6">{"<-"} Back to Sign in</p>
+            <p onClick={() => changeSection("signin")} className=" cursor-pointer text-[0.9em] text-[#475467] flex justify-center items-center gap-2 font-medium mt-6"><ArrowLeft /> Back to Sign in</p>
         </>        
     )
 }

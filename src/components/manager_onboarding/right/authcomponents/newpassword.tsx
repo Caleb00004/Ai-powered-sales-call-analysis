@@ -4,6 +4,7 @@ import Key from "../../../../../public/key_icon.svg"
 import Input from "@/components/primary/input"
 import { sectionType } from "../rightContainer"
 import { FC } from "react"
+import ArrowLeft from "../../../../../public/arrow-left.svg"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -38,7 +39,7 @@ const NewPassword:FC<props> = ({changeSection}) => {
                 </Button>
             </div>
 
-            <p onClick={() => changeSection("signin")} className="cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6">{"<-"} Back to Sign in</p>
+            <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p>
 
         </>
     )

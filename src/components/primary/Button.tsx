@@ -7,7 +7,7 @@ interface props {
 
 const Button:FC<props> = ({children, onClick}) => {
     return (
-        <button onClick={onClick} className="w-full bg-[#B3387F] py-2 rounded-lg text-white text-[0.9em]">
+        <button onClick={onClick} className="w-full bg-[#B3387F] font-medium py-2 rounded-lg text-white text-[0.9em]">
             {children}
         </button>
     )

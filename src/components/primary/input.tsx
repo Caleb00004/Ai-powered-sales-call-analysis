@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react"
+import LockIcon from "../../../public/lock_icon.svg"
 
 interface props {
     label: ReactNode, 
@@ -11,7 +12,10 @@ const Input:FC<props> = ({label, placeholder, type, name}) => {
     return (
         <div className="flex flex-col items-start mb-5">
             {label}
-            <input className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md" type={type} placeholder={placeholder} name={name} />
+            <div className="relative w-full">
+                {type === "password" && <LockIcon className="absolute bottom-[25%] right-4" />}
+                <input className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md" type={type} placeholder={placeholder} name={name} />
+            </div>
         </div>
     )
 }

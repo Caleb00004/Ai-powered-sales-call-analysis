@@ -1,9 +1,10 @@
 import Button from "@/components/primary/Button"
 import Key from "../../../../../public/key_icon.svg"
 import Input from "@/components/primary/input"
-import { useState, useRef, FC } from "react"
+import { useState, useRef, FC, ChangeEventHandler, ChangeEvent } from "react"
 import { sectionType } from "../rightContainer"
 import Logo from "@/components/primary/Logo"
+import ArrowLeft from "../../../../../public/arrow-left.svg"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -21,7 +22,7 @@ const CheckMail:FC<props> = ({changeSection}) => {
     })
     const inputRefs = useRef([]);
 
-    const handleInputChange = (e, index) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
         const { value } = e.target;
         
         // Update the user input state
@@ -65,7 +66,7 @@ const CheckMail:FC<props> = ({changeSection}) => {
             </Button>
 
             <p className="mt-8 text-[0.9em] text-[#475467]">Didn't receive the email? <span className="text-[#5272EA] font-medium">Click to resend</span></p>
-            <p onClick={() => changeSection("signin")} className="cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6">{"<-"} Back to Sign in</p>
+            <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p>
         </>
     )
 }
