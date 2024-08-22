@@ -3,7 +3,7 @@ import Logo from "@/components/primary/Logo"
 import Key from "../../../../../public/svgs/key_icon.svg"
 import Input from "@/components/primary/input"
 import { sectionType } from "../rightContainer"
-import { FC } from "react"
+import { FC, useState } from "react"
 import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
 
 interface props {
@@ -11,6 +11,21 @@ interface props {
 }
 
 const NewPassword:FC<props> = ({changeSection}) => {
+    const [formDetails, setFormDetails] = useState({
+        password: "",
+        confirm_password: ""
+    })  
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+        setFormDetails(prev => ({...prev, [name]: value}))
+    }
+
+    const handleSubmit = () => {
+        console.log(formDetails)
+    }
+
     return (
         <>
             <Logo />
@@ -19,6 +34,8 @@ const NewPassword:FC<props> = ({changeSection}) => {
             <p className="text-[0.9em] mb-8 text-[#5B5B5B] pt-2 font-normal">Your new password must be different from previously used passwords.</p>
 
             <Input 
+                value={formDetails.password}
+                onChange={handleOnChange}
                 label={<label className="text-[#333333] font-medium text-[0.9em]">Password</label>} 
                 placeholder="Enter your password"
                 type="password"
@@ -26,10 +43,12 @@ const NewPassword:FC<props> = ({changeSection}) => {
             />
 
             <Input 
+                value={formDetails.confirm_password}
+                onChange={handleOnChange}
                 label={<label className="text-[#333333] font-medium text-[0.9em]">Confirm password</label>} 
                 placeholder="Confirm your password"
                 type="password"
-                name="confirmpassword"
+                name="confirm_password"
             />
 
             <div className="mt-6">

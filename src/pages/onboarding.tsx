@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
  
-export default function ManagerOnboarding() {
+const Onboarding = () => {
     const ACCOUNT_TYPE: "sales-rep" | "manager" = "sales-rep"
 
     useEffect(() => {
@@ -28,3 +28,5 @@ export default function ManagerOnboarding() {
         </main>
     );
 }
+
+export default Onboarding
