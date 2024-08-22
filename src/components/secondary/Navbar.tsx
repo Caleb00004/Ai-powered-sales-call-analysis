@@ -26,7 +26,7 @@ const Navbar = () => {
 
     return (
         <nav className=" bg-[#161529] text-white border-b border-b-white" >
-            <div className="z-[2] bg-[#161529] relative py-6 mdx3:py-4 flex justify-between items-center px-6">
+            <div className="z-[3] bg-[#161529] relative py-6 mdx3:py-4 flex justify-between items-center px-6">
                 <div>
                     <Logo2 />
                 </div>
@@ -39,8 +39,8 @@ const Navbar = () => {
                     <Link href={"#"} >Contact</Link>
                 </div>
                 <div className="hidden mdx4:flex gap-3 z-[2]">
-                    <Button className="w-[8em] font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
-                    <Button className="font-light w-[8em] ">Sign up</Button>
+                    <Button className="w-[120px] font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
+                    <Button className="font-light w-[120px] ">Sign up</Button>
                 </div>
                 {/* FOR MOBILE */}
                 <div onClick={toggleNav} className="flex cursor-pointer mdx4:hidden flex-col gap-2 py-1">
@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
 
             {/* MOBILE NAV */}
-            <div className="phone-nav flex -translate-y-full flex-col mdx4:hidden absolute bg-[#161529] top-0 h-[100vh] w-full z-[1] pt-[6em]" >
+            <div className="phone-nav flex -translate-y-full flex-col mdx4:hidden absolute bg-[#161529] top-0 h-[100vh] w-full z-[2] pt-[6em]" >
                 <div className="flex flex-col items-center gap-6">
                     <Link href={"#"} >Home</Link>
                     <Link href={"#"} >Features</Link>
@@ -59,8 +59,8 @@ const Navbar = () => {
                     <Link href={"#"} >Contact</Link>
                     
                     <div className="flex flex-col gap-3">
-                        <Button className="w-[8em] font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
-                        <Button className="font-light w-[8em] ">Sign up</Button>
+                        <Button className="w-[120px] font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
+                        <Button className="font-light w-[120px] ">Sign up</Button>
                     </div>
                 </div>
             </div>

@@ -10,8 +10,8 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] px-[5em] py-[5em]">
-        <div className="flex justify-between">
+      <div className="bg-[#161529] px-[5em] py-[5em] overflow-hidden">
+        <div className="flex justify-between ">
           <div className=" w-[25em] mt-7 ">
             <h1 className="text-[3em] leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781]">AI-Powered</span> Call Analysis</h1>
             <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
@@ -23,7 +23,7 @@ export default function Home() {
           <div className="relative mx-auto ">
             <Image className="absolute scale-[3] opacity-[0.6] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
-            <div className="flex relative z-[2] flex-col gap-1 ">
+            <div className="flex relative z-[1] flex-col gap-1 ">
               <div className="py-5 pl-4 pr-16 bg-gradient-to-r from-[#00000076] to-[#0101017d]">
                 <h1 className="text-[2.5em] font-[400]">1M+</h1>
                 <p className="text-[#A1A1AA] text-[15px]">Analysis Delivered This Month</p>
