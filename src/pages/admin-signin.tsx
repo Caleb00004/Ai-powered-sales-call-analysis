@@ -2,12 +2,14 @@ import Button from "@/components/primary/Button"
 import Input from "@/components/primary/input"
 import Logo from "@/components/primary/Logo"
 import { useState } from "react"
+import { useRouter } from "next/router"
 
 const AdminSignin = () => {
     const [loginDetails, setLoginDetails] = useState({
         email: "",
         password: ""
     })  
+    const routeTo = useRouter()
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -25,7 +27,7 @@ const AdminSignin = () => {
                 <Logo />
                 <h1 className="text-[1.5em] sm:text-[2em] mt-3 font-medium" >Admin Login</h1>     
                 <div className="py-8 flex justify-center items-center gap-4 w-full">
-                    <div className="border-[0.1px] w-full bg-red-800"></div>
+                    <div className="border-[0.1px] w-full "></div>
                     <p>Or</p>
                     <div className="border-[0.1px] w-full"></div>
                 </div>
@@ -43,7 +45,7 @@ const AdminSignin = () => {
                     label={
                          <div className="flex w-full justify-between">
                             <label className="text-[#333333] font-medium text-[0.9em]" >Password</label>
-                            <label className=" text-[#5272EA] cursor-pointer font-medium text-[0.9em]">Forget Password</label>
+                            <label onClick={() => routeTo.push({pathname: "/onboarding", query: {goToSection: "forgotpassword"}})} className=" text-[#5272EA] cursor-pointer font-medium text-[0.9em]">Forget Password</label>
                         </div>
                     }
                     placeholder="Enter your password"

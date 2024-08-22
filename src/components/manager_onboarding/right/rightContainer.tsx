@@ -5,6 +5,7 @@ import CheckMail from "./authcomponents/checkmail"
 import Signup from "./authcomponents/signup"
 import { FC, useState } from "react"
 import gsap from "gsap"
+import { useRouter } from "next/router"
 
 export type sectionType = "signin" | "forgotpassword" | "newpassword" | "checkmail" | "signup"
 
@@ -12,9 +13,14 @@ interface props {
     accountType: "sales-rep" | "manager"
 }
 
+type QueryParams = {
+    goToSection: sectionType
+}
+
 const RightContainer:FC<props> = ({accountType}) => {
-    const [section, setSection] = useState<sectionType>("signin")
-    
+    const router = useRouter()
+    const {goToSection} = router.query as QueryParams
+    const [section, setSection] = useState<sectionType>(goToSection ? goToSection : "signin")
     
     const handleSectionChange = (newsection: sectionType) => {
         const fadeAnimation = gsap.timeline()
