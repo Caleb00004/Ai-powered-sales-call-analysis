@@ -1,10 +1,10 @@
 import Button from "@/components/primary/Button"
-import Key from "../../../../../public/key_icon.svg"
+import Key from "../../../../../public/svgs/key_icon.svg"
 import Input from "@/components/primary/input"
 import { useState, useRef, FC, ChangeEventHandler, ChangeEvent } from "react"
 import { sectionType } from "../rightContainer"
 import Logo from "@/components/primary/Logo"
-import ArrowLeft from "../../../../../public/arrow-left.svg"
+import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
 
 interface props {
     changeSection: (newSection: sectionType) => void

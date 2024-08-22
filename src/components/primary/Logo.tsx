@@ -1,4 +1,4 @@
-import Durekt from "../../../public/Logo.svg"
+import Durekt from "../../../public/svgs/Logo.svg"
 
 const Logo = () => {
     return (

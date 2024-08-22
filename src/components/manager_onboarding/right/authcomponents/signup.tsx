@@ -1,9 +1,9 @@
 import Logo from "@/components/primary/Logo"
 import Button from "@/components/primary/Button"
-import Google from "../../../../../public/icons_google.svg"
+import Google from "../../../../../public/svgs/icons_google.svg"
 import Input from "@/components/primary/input"
 import { sectionType } from "../rightContainer"
-import Microsoft from "../../../../../public/microsoft_icon.svg"
+import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
 import { FC } from "react"
 
 interface props {

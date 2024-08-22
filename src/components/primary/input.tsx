@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react"
-import LockIcon from "../../../public/lock_icon.svg"
+import LockIcon from "../../../public/svgs/lock_icon.svg"
 
 interface props {
     label: ReactNode, 

@@ -1,12 +1,12 @@
 import Image from "next/image"
 import Logo from "@/components/primary/Logo"
-import Line from "../../../../../public/Line 1.svg"
+import Line from "../../../../../public/svgs/Line 1.svg"
 import Button from "@/components/primary/Button"
-import Google from "../../../../../public/icons_google.svg"
+import Google from "../../../../../public/svgs/icons_google.svg"
 import { FC } from "react"
 import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
-import Microsoft from "../../../../../public/microsoft_icon.svg"
+import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
 
 interface props {
     changeSection: (newSection: sectionType) => void

@@ -1,16 +1,16 @@
 import Item from "./carousel/item"
-import Ellipse from "../../../../public/Ellipse 2348.svg"
+import Ellipse from "../../../../public/svgs/Ellipse 2348.svg"
 import { useEffect, useState } from "react"
-import NextBtn from "../../../../public/carousel_btn.svg"
+import NextBtn from "../../../../public/svgs/carousel_btn.svg"
 import gsap from "gsap"
 import { carouselDotAnimation } from "@/components/Animations/animations"
-import itemImg1 from "../../../../public/images/item1_img.png"
-import itemImg2 from "../../../../public/images/item2_img.png"
-import itemImg3 from "../../../../public/images/item3_img.png"
-import itemImg4 from "../../../../public/images/item4_img.png"
-import itemImg5 from "../../../../public/images/item5_img.png"
-import ellipse1 from "../../../../public/Ellipse1.png"
-import ellipse3 from "../../../../public/Ellipse3.png"
+import itemImg1 from "../../../../public/images/onboarding_pages/manager_item1.png"
+import itemImg2 from "../../../../public/images/onboarding_pages/manager_item2.png"
+import itemImg3 from "../../../../public/images/onboarding_pages/manager_item3.png"
+import itemImg4 from "../../../../public/images/onboarding_pages/manager_item4.png"
+import itemImg5 from "../../../../public/images/onboarding_pages/manager_item5.png"
+import ellipse1 from "../../../../public/images/onboarding_pages/Ellipse1.png"
+import ellipse3 from "../../../../public/images/onboarding_pages/Ellipse3.png"
 import Image from "next/image"
 
 const itemData = [
@@ -106,7 +106,7 @@ const LeftContainer = () => {
             <div className="z-[2] left-container flex flex-col h-full">
                 <div className=" carousel-container flex flex-[2] mdx2:flex-[3] w-full overflow-hidden justify-center">
                     {itemData.map((item, i) => {
-                        if (i+1 == 2) return <>{currentItem === i+1 && <Item imgStyle="w-[100%] sm:w-[59%] mdx3:w-[75%]" header={item.header} body={item.body} img={item.img} />}</>
+                        if (i+1 == 2) return <>{currentItem === i+1 && <Item imgStyle="w-[100%] sm:w-[59%] mdx3:w-[73%]" header={item.header} body={item.body} img={item.img} />}</>
                         return <>{currentItem === i+1 && <Item header={item.header} body={item.body} img={item.img} />}</>
                     })}
                 </div>
