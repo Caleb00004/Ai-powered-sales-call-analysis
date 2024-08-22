@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
+ 
 export default function ManagerOnboarding() {
 
   useEffect(() => {
