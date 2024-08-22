@@ -3,12 +3,16 @@ import ForgotPassword from "./authcomponents/forgotpassword"
 import NewPassword from "./authcomponents/newpassword"
 import CheckMail from "./authcomponents/checkmail"
 import Signup from "./authcomponents/signup"
-import { useState } from "react"
+import { FC, useState } from "react"
 import gsap from "gsap"
 
 export type sectionType = "signin" | "forgotpassword" | "newpassword" | "checkmail" | "signup"
 
-const RightContainer = () => {
+interface props {
+    accountType: "sales-rep" | "manager"
+}
+
+const RightContainer:FC<props> = ({accountType}) => {
     const [section, setSection] = useState<sectionType>("signin")
     
     

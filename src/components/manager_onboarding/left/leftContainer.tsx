@@ -1,6 +1,6 @@
 import Item from "./carousel/item"
 import Ellipse from "../../../../public/svgs/Ellipse 2348.svg"
-import { useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import NextBtn from "../../../../public/svgs/carousel_btn.svg"
 import gsap from "gsap"
 import { carouselDotAnimation } from "@/components/Animations/animations"
@@ -13,44 +13,48 @@ import ellipse1 from "../../../../public/images/onboarding_pages/Ellipse1.png"
 import ellipse3 from "../../../../public/images/onboarding_pages/Ellipse3.png"
 import Image from "next/image"
 
-const itemData = [
-    {
-        header: "Welcome to Your AI Sales Assistant",
-        body: "Begin your journey to smarter sales Analysis. Get Ready to transform Your Sales Performance.",
-        img: itemImg1
-    },
-    {
-        header: "Seamless Integration",
-        body: "Connect with Zoom, Google Meet, and Kixie to start Analyzing your Sales Calls",
-        img: itemImg2
-    },
-    {
-        header: "Smart Transcriptions",
-        body: "Leverage NLP to Accurately Transcribe and Understand Every Sales Interaction",
-        img: itemImg3
-    },
-    {
-        header: "AI-Driven Performance Grading",
-        body: "Receive Detailed Feedback and Grades Based on Proven Sales Techniques",
-        img: itemImg4
-    },
-    {
-        header: "Your Dashboard for success",
-        body: "Access Insights, Track Progress, and Improve with Real-Time Data",
-        img: itemImg5
-    },
-]
 
-const LeftContainer = () => {
+interface props {
+    accountType: "sales-rep" | "manager"
+}
+
+const LeftContainer:FC<props> = ({accountType}) => {
     const [currentItem, setCurrentItem] = useState(1)
     
+    const itemData = [
+        {
+            header: "Welcome to Your AI Sales Assistant",
+            body: "Begin your journey to smarter sales Analysis. Get Ready to transform Your Sales Performance.",
+            img: itemImg1
+        },
+        {
+            header: "Seamless Integration",
+            body: "Connect with Zoom, Google Meet, and Kixie to start Analyzing your Sales Calls",
+            img: itemImg2
+        },
+        {
+            header: "Smart Transcriptions",
+            body: "Leverage NLP to Accurately Transcribe and Understand Every Sales Interaction",
+            img: itemImg3
+        },
+        {
+            header: "AI-Driven Performance Grading",
+            body: "Receive Detailed Feedback and Grades Based on Proven Sales Techniques",
+            img: itemImg4
+        },
+        ...(accountType === "manager" ? [{
+            header: "Your Dashboard for success",
+            body: "Access Insights, Track Progress, and Improve with Real-Time Data",
+            img: itemImg5
+        }] : [])
+    ]
 
     useEffect(() => {
         carouselDotAnimation()
     },[])
     
     const carouselChange = (type: "next" | "prev") => {
-        if (type === "next" && currentItem >= 5) {
+        if (type === "next" && currentItem >= itemData.length) {
             return
         }
         if (type === "prev" && currentItem <= 1) {
@@ -61,7 +65,7 @@ const LeftContainer = () => {
             onUpdate: function() {
                 if (this.progress() >= 0.45 && !this.halfwayReached) {
                     this.halfwayReached = true; // Ensure the function runs only once
-                    type === "next" && setCurrentItem(prev => prev < 5 ? prev + 1 : prev)
+                    type === "next" && setCurrentItem(prev => prev < itemData.length ? prev + 1 : prev)
                     type === "prev" && setCurrentItem(prev => prev > 1 ? prev - 1 : prev ) 
                 }
             
@@ -120,7 +124,7 @@ const LeftContainer = () => {
                             <div onClick={() => handleDirectChange(2)} className={`${currentItem === 2 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
                             <div onClick={() => handleDirectChange(3)} className={`${currentItem === 3 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
                             <div onClick={() => handleDirectChange(4)} className={`${currentItem === 4 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                            <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
+                            {accountType === "manager" && <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>}
                         </div>
                         <div onClick={slideNext}>
                             <NextBtn className=" rotate-[180deg]" />
