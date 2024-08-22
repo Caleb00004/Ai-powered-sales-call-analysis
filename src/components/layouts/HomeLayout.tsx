@@ -10,7 +10,7 @@ const HomeLayout:FC<props> = ({children}) => {
     return (
         <>
             <Navbar />
-            <main>
+            <main className="text-white">
                 {children}
             </main>
             <Footer />
