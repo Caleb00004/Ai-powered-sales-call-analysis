@@ -25,8 +25,8 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="py-2 mdx3:py-0 bg-[#161529] text-white border-b border-b-white" >
-            <div className="z-[2] relative py-4 flex justify-between items-center px-6">
+        <nav className=" bg-[#161529] text-white border-b border-b-white" >
+            <div className="z-[2] bg-[#161529] relative py-6 mdx3:py-4 flex justify-between items-center px-6">
                 <div>
                     <Logo2 />
                 </div>
