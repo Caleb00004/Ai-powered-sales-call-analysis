@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <h1>Home Page</h1>
+      <h1>Home Pag e</h1>
     </HomeLayout>
   );
 }
