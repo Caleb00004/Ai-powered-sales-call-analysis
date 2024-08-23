@@ -10,7 +10,8 @@ const config: Config = {
     extend: {
       screens: {
         mdx2: "942px",
-        mdx3: "908px"
+        mdx3: "908px",
+        mdx4: "856px"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
