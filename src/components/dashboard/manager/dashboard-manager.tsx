@@ -1,6 +1,6 @@
 const ManagerDashboard = () => {
     return (
-        <div>
+        <div> 
             <h1>Manager Dashboard</h1>
         </div>
     )
