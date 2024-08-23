@@ -3,7 +3,7 @@ import Logo from "@/components/primary/Logo"
 import Key from "../../../../../public/svgs/key_icon.svg"
 import Button from "@/components/primary/Button"
 import { sectionType } from "../rightContainer"
-import { FC } from "react"
+import { FC, useState } from "react"
 import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
 
 interface props {
@@ -11,6 +11,20 @@ interface props {
 }
 
 const ForgotPassword:FC<props> = ({changeSection}) => {
+    const [formDetails, setFormDetails] = useState({
+        email: "",
+    })  
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+        setFormDetails(prev => ({...prev, [name]: value}))
+    }
+
+    const handleSubmit = () => {
+        console.log(formDetails)
+    }
+
     return (
         <>
             <Logo />
@@ -19,6 +33,8 @@ const ForgotPassword:FC<props> = ({changeSection}) => {
             <p className="text-[0.9em] mb-8 text-[#5B5B5B] pt-2 font-normal">No worries, we’ll send you reset instructions.</p>
 
             <Input 
+                value={formDetails.email}
+                onChange={handleOnChange}
                 label={<label className="text-[#333333] font-medium text-[0.9em]">Email</label>} 
                 placeholder="Enter your Email"
                 type="email"

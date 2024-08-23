@@ -3,7 +3,7 @@ import Logo from "@/components/primary/Logo"
 import Line from "../../../../../public/svgs/Line 1.svg"
 import Button from "@/components/primary/Button"
 import Google from "../../../../../public/svgs/icons_google.svg"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
@@ -13,6 +13,22 @@ interface props {
 }
     
 const Signin:FC<props> = ({changeSection}) => {
+
+    const [loginDetails, setLoginDetails] = useState({
+        email: "",
+        password: ""
+    })
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+        setLoginDetails(prev => ({...prev, [name]: value}))
+    }
+
+    const handleSignin = () => {
+        console.log(loginDetails)
+    }
+
     return (
         <>
             <Logo />
@@ -36,12 +52,16 @@ const Signin:FC<props> = ({changeSection}) => {
             <div className="mb-6">
                 <Input 
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Email</label>} 
+                    value={loginDetails.email}
+                    onChange={handleOnChange}
                     placeholder="Enter your email"
                     type="email"
                     name="email"
                 />
 
                 <Input 
+                    value={loginDetails.password}
+                    onChange={handleOnChange}
                     label={
                         <div className="flex w-full justify-between">
                             <label className="text-[#333333] font-medium text-[0.9em]" >Password</label>
@@ -52,16 +72,9 @@ const Signin:FC<props> = ({changeSection}) => {
                     type="password"
                     name="password"
                 />
-                {/* <div className="flex flex-col items-start mb-4">
-                    <div className="flex w-full justify-between">
-                        <label className="text-[#333333] font-medium text-[0.9em]" >Password</label>
-                        <label onClick={() => changeSection("forgotpassword")} className=" text-[#5272EA] cursor-pointer font-medium text-[0.9em]">Forget Password</label>
-                    </div>
-                    <input className="w-full mt-2 p-2 border border-[#D0D5DD] rounded-md" type="email" placeholder="Enter Password" name="password" />
-                </div> */}
             </div>
             
-            <Button>
+            <Button onClick={handleSignin}>
                 Sign in
             </Button>
 
