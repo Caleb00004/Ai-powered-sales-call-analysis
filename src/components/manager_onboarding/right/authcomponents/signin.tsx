@@ -7,13 +7,16 @@ import { FC, useState } from "react"
 import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
+import { useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
 
 interface props {
     changeSection: (newSection: sectionType) => void
 }
     
 const Signin:FC<props> = ({changeSection}) => {
-
+    const [authSignin] = useAuthSignInMutation()
+    const [loginRequestStatus, setLoginRequestStatus] = useState("idle");
+    const [displayLoading, setDisplayLoading] = useState(false);
     const [loginDetails, setLoginDetails] = useState({
         email: "",
         password: ""
@@ -26,7 +29,22 @@ const Signin:FC<props> = ({changeSection}) => {
     }
 
     const handleSignin = () => {
-        console.log(loginDetails)
+        if (loginRequestStatus == "idle") {
+            setLoginRequestStatus("pending")
+            setDisplayLoading(true);
+            try {
+                authSignin(loginDetails).unwrap()
+                    .then(fulfilled => {
+                        console.log(fulfilled)
+                    })
+                    .catch(rejected => {
+                        console.log(rejected)
+                    })
+            } catch (err) {
+                console.error(err)
+                setDisplayLoading(false)
+            }
+        }
     }
 
     return (
