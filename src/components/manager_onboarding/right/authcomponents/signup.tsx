@@ -5,12 +5,16 @@ import Input from "@/components/primary/input"
 import { sectionType } from "../rightContainer"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
 import { FC, useState } from "react"
+import { useAuthSignUpMutation } from "../../../../../api-feature/apiSlice"
 
 interface props {
     changeSection: (newSection: sectionType) => void
 }
 
 const Signup:FC<props> = ({changeSection}) => {
+    const [authSignUp] = useAuthSignUpMutation()
+    const [requestStatus, setRequestStatus] = useState("idle");
+    const [displayLoading, setDisplayLoading] = useState(false);
     const [passwordsMatch, setPassWordsMatch] = useState(true)
     const [formDetails, setFormDetails] = useState({
         first_name: "",
@@ -30,6 +34,24 @@ const Signup:FC<props> = ({changeSection}) => {
         if (formDetails.password !== formDetails.confirm_password) {
             setPassWordsMatch(false)
             return
+        }
+
+        if (requestStatus == "idle") {
+            setRequestStatus("pending")
+            setDisplayLoading(true);
+            const {confirm_password, ...rest} = formDetails
+            try {
+                authSignUp(rest).unwrap()
+                    .then(fulfilled => {
+                        console.log(fulfilled)
+                    })
+                    .catch(rejected => {
+                        console.log(rejected)
+                    })
+            } catch (err) {
+                console.error(err)
+                setDisplayLoading(false)
+            }
         }
 
         console.log(formDetails)
