@@ -8,43 +8,49 @@ import InsightsIcon from "../../../public/svgs/dashboardIcons/insights-icon.svg"
 import DealsIcon from "../../../public/svgs/dashboardIcons/deals-icon.svg"
 import ManagerIcon from "../../../public/svgs/dashboardIcons/managers-icon.svg"
 import TrainingIcon from "../../../public/svgs/dashboardIcons/trainings-icon.svg"
+import { useRouter } from "next/router"
 
 const SideNav = () => {
+    const router = useRouter()
+    const routeName = router.pathname.split('/').slice(2).join('/')
+
+    console.log(routeName)
+
     return (
         <div className="bg-[#161529] h-screen flex flex-col ">
             <div className=" mx-auto mt-6">
                 <Logo2 />
             </div>
             <div className="flex flex-col text-[#D9D9D9] text-[0.9em] mt-10">
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "" && "bg-[#2B2A3D]"}`}>
                     <DashboardIcon />
                     <p>Dashboard</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/sales-rep"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D]"}`}>
                     <SalesRepIcon />
                     <p>Sales Reps</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/skills"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && "bg-[#2B2A3D]"}`}>
                     <SkillsIcon />
                     <p>Skills</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/team-rating"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D]"}`}>
                     <TeamIcon />
                     <p>Team Rating</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/insights"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && "bg-[#2B2A3D]"}`}>
                     <InsightsIcon />
                     <p>Insights</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/deals"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && "bg-[#2B2A3D]"}`}>
                     <DealsIcon />
                     <p>Deals</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/managers"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "managers" && "bg-[#2B2A3D]"}`}>
                     <ManagerIcon />
                     <p>Managers</p>
                 </Link>
-                <Link href={"#"} className="flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white">
+                <Link href={"/dashboard/trainings"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D]"}`}>
                     <TrainingIcon />
                     <p>Trainings</p>
                 </Link>
