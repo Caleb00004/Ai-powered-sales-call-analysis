@@ -15,7 +15,7 @@ const DashboardLayout:FC<props> = ({children}) => {
                 </div>
                 <div className="flex flex-1 sm:flex-[2.5] mdx2:flex-[4] flex-col">
                     <TopNav />
-                    <main className="bg-[#F8F8FA] h-full pt-5 px-4 ">
+                    <main className="bg-[#F8F8FA] h-[90vh] pt-5 px-4 overflow-auto ">
                         {children}
                     </main>
                 </div>
