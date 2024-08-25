@@ -6,7 +6,7 @@ import Search from "./Search"
 const TopNav = () => {
     return (
         <div className="bg-white px-4 py-4 flex justify-between border-b border-b[#D4D4D4]">
-            <Search />
+            <Search value={""} onChange={() => {}} />
             <div className="flex gap-3 items-center">
                 <div className="border border-[#D4D4D4] rounded-md p-1">
                     <HelpIcon />

@@ -1,18 +1,23 @@
-import { FC } from "react"
+import { ChangeEvent, FC } from "react"
 import SearchIcon from "../../../public/svgs/search-icon.svg"
 
 interface props {
     className?: string
+    placeholder?: string;
+    value: string;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
-const Search:FC<props> = ({className}) => {
+const Search:FC<props> = ({className, value, onChange, placeholder}) => {
     return (
-        <div className={` bg-[#F8F8FA] rounded-md border w-[20em] py-1 px-3 font-light  relative ${className}`}>
+        <div className={` rounded-md border font-light relative `}>
             <SearchIcon className="absolute right-3 top-[19%]" />
             <input
-                placeholder="Search..."
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder ? placeholder : "Search..."}
                 type="text"
-                className=""
+                className={`bg-[#F8F8FA] w-[20em] py-1 px-3 ${className} `}
             />
         </div>
     )

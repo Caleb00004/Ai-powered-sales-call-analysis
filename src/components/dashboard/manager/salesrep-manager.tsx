@@ -1,89 +1,54 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Search from "@/components/secondary/Search"
-import { useState } from 'react';
 import { callData } from "@/testData"
-import { DataGrid, useGridApiRef, GridColDef, useGridApiContext, useGridSelector, gridPageSelector, gridPageCountSelector, gridRowCountSelector } from '@mui/x-data-grid';
-import NavIcon from "../../../../public/svgs/next-icon.svg"
-import { Box, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { DataGrid, useGridApiRef, GridColDef } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
+import { GridFilterInputValue, getGridNumericOperators } from '@mui/x-data-grid';
+import CustomGridFooter from '@/components/secondary/TableFooter';
+import FilterIcon from "../../../../public/svgs/filter-icon.svg"
 
-const CustomFooter = () => {
-    const apiRef = useGridApiContext();
-    const page = useGridSelector(apiRef, gridPageSelector);
-    const pageCount = useGridSelector(apiRef, gridPageCountSelector);
-    const totalRowCount = useGridSelector(apiRef, gridRowCountSelector);
-    const [pageSize, setPageSize] = useState<number>(5);
-
-    const start = page * pageSize + 1;
-    const end = Math.min((page + 1) * pageSize, totalRowCount);
-
-    const handleNextPage = () => {
-        if (page < pageCount - 1) {
-            apiRef.current.setPage(page + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (page > 0) {
-            apiRef.current.setPage(page - 1);
-        }
-    };
-
-    const handlePageSizeChange = (event: SelectChangeEvent<number>) => {
-        const newSize = event.target.value;
-        // @ts-ignore
-        setPageSize(newSize);
-        // @ts-ignore
-        apiRef.current.setPageSize(newSize);
-    };
-
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '10px',
-                backgroundColor: '#f5f5f5',
-                borderTop: '1px solid #ccc',
-            }}
-        >
-
-            <div>
-                <p className='text-[#626262] font-light text-[14px]'>{`Showing ${start} - ${end} of ${totalRowCount} entries`}</p>
-            </div>
-            <div className='flex gap-4'>
-                <div className='flex items-center gap-2 justify-between'>
-                    <button className='mr-3 scale-[0.85] cursor-pointer' onClick={handlePreviousPage} disabled={page === 0}><NavIcon /></button>
-                    <div className='flex items-center gap-1 text-[#333333]'>
-                        <p>Page</p>
-                        <div className=' border border-[#D4D4D4] ml-3 mr-1 rounded-md w-14 pl-2 '><p>{page + 1}</p></div>
-                        <p>of <span className='pl-1'>{pageCount}</span></p>
-                    </div>
-                    <button className="rotate-[180deg] ml-2 scale-[0.85]" onClick={handleNextPage} disabled={page >= pageCount - 1}><NavIcon /></button>
-                </div>
-                
-                <div className="flex items-center border border-[#D4D4D4CC] rounded-md pl-4 h-10 gap-3">
-                    <span className='text-[#333333] text-[14px] font-[400]'>Entries per page:</span>
-                    <Select
-                        value={pageSize}
-                        onChange={handlePageSizeChange}
-                        sx={{ height: "100%", border: "none"}}
-                        className=' border-rose-600 w-[70px] text-[13px] font-[500]'
-                    >
-                        <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={20}>20</MenuItem>
-                    </Select>
-                </div>
-
-            </div>
-        </Box>
-    );
-}
 
 const SalesRepManager = () => {
-
+    const [searchInput, setSearchInput] = useState("")
     const rows = callData
+    const filteredRows = rows.filter(row =>
+        row.meetingName.toLowerCase().includes(searchInput.toLowerCase())
+    );
+
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value);
+    };
+    // HOW TO DEFINE CUSTOM FILTER OPERTORS
+    // const customGreaterThanOperator = {
+    //     label: 'Greater than',
+    //     value: 'greaterThan',
+    //     getApplyFilterFn: (filterItem: {value: number}) => {
+    //         if (!filterItem.value || isNaN(filterItem.value)) {
+    //         return null;
+    //         }
+    //         return ({ value }) => value != null && value > filterItem.value;
+    //     },
+    //     InputComponent: GridFilterInputValue,
+    // };
+
+    // const customLessThanOperator = {
+    // label: 'Less than',
+    // value: 'lessThan',
+    // getApplyFilterFn: (filterItem) => {
+    //     if (!filterItem.value || isNaN(filterItem.value)) {
+    //     return null;
+    //     }
+    //     return ({ value }) => value != null && value < filterItem.value;
+    // },
+    // InputComponent: GridFilterInputValue,
+    // };
+
+    const customNumericOperators = [
+        ...getGridNumericOperators(),
+        // customGreaterThanOperator,
+        // customLessThanOperator,
+    ];
+
     const columns: GridColDef[] = [
         {field: "meetingName", headerName: "Meeting Name", width: 200, headerClassName: "bg-[#C32782]"},
         {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
@@ -106,14 +71,14 @@ const SalesRepManager = () => {
             )
         },
         {field: "overall", headerName: "Overall", headerClassName: "bg-[#C32782]"},
-        {field: "BA",  description: 'This is used to show BA means lorem ipsum', headerName: "BA", headerClassName: "bg-[#C32782]"},
-        {field: "BB", headerName: "BB", headerClassName: "bg-[#C32782]"},
-        {field: "BC", headerName: "BC", headerClassName: "bg-[#C32782]"},
-        {field: "BD", headerName: "BD", headerClassName: "bg-[#C32782]"},
-        {field: "BE", headerName: "BE", headerClassName: "bg-[#C32782]"},
-        {field: "BF", headerName: "BF", headerClassName: "bg-[#C32782]"},
-        {field: "BG", headerName: "BG", headerClassName: "bg-[#C32782]"},
-        {field: "MC", headerName: "MC", headerClassName: "bg-[#C32782]"},
+        {field: "BA", filterOperators: customNumericOperators, description: 'This is used to show BA means lorem ipsum', headerName: "BA", headerClassName: "bg-[#C32782]"},
+        {field: "BB", filterOperators: customNumericOperators, headerName: "BB", headerClassName: "bg-[#C32782]"},
+        {field: "BC", filterOperators: customNumericOperators, headerName: "BC", headerClassName: "bg-[#C32782]"},
+        {field: "BD", filterOperators: customNumericOperators, headerName: "BD", headerClassName: "bg-[#C32782]"},
+        {field: "BE", filterOperators: customNumericOperators, headerName: "BE", headerClassName: "bg-[#C32782]"},
+        {field: "BF", filterOperators: customNumericOperators, headerName: "BF", headerClassName: "bg-[#C32782]"},
+        {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
+        {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
     ];
 
     const apiRef = useGridApiRef();
@@ -122,20 +87,42 @@ const SalesRepManager = () => {
         apiRef.current.exportDataAsCsv();
     }
 
+    function handleFilter() {
+        apiRef.current.showFilterPanel()
+
+    }
+
     return (
         <div className="flex flex-col gap-[20px] w-full">
-            <div className="bg-white h-[130px] rounded-2xl">
+            <div className="bg-white h-[130px] rounded-2xl flex gap-2 p-3">
+                <div className='flex gap-3 flex-[0.7]'>
+                    <div className='bg-slate-700 w-[35%] h-full rounded-lg'>
 
+                    </div>
+                    <div>
+                        <p>Elizabeth Parker</p>
+                        <p>Senior Project</p>
+                        <p>Manager</p>
+                    </div>
+                </div>
+                <div className='bg-rose-400 rounded-lg h-full flex-[2]'>
+                    <p>.</p>
+                </div>
             </div>
             <div className="bg-white p-4 ">
                 <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">Durekt Table</h1>
                 <div className="flex justify-between">
-                    <Search className="w-[15em]" />
+                    <Search
+                        className="w-[14em]" 
+                        value={searchInput}
+                        onChange={handleSearchChange}
+                    />
                     <div className="flex gap-4 items-center">
-                        <div className="border border-[#D4D4D4] rounded-md text-[#5B5B5B] px-2 py-1">
+                        <div onClick={handleFilter} className="cursor-pointer border hover:bg-[#5B5B5B] hover:text-white active:scale-[0.95] transition-all border-[#D4D4D4] flex items-center text-[14px] gap-2 rounded-md text-[#5B5B5B] px-3 py-1">
+                            <FilterIcon className="h-5 w-5" />
                             <p>Filter by</p>
                         </div>
-                        <div onClick={handleExport} className=" cursor-pointer border-[0.1px] rounded-md border-[#C32781] px-2 py-1 text-[#C32781] font-[500]">
+                        <div onClick={handleExport} className=" cursor-pointer border-[0.1px] hover:bg-[#C32781] hover:text-white active:scale-[0.95] transition-all rounded-md border-[#C32781] px-3 py-1 text-[14px] text-[#C32781] font-[500]">
                             Export CSV
                         </div>
                     </div>
@@ -161,7 +148,7 @@ const SalesRepManager = () => {
                     >
                         <DataGrid
                             apiRef={apiRef}
-                            slots={{footer: CustomFooter}}
+                            slots={{footer: CustomGridFooter}}
                             initialState={{
                                 pagination: {
                                     paginationModel: { pageSize: 5 }, // Set the number of rows per page to 5
@@ -169,8 +156,9 @@ const SalesRepManager = () => {
                             }}
                             columnHeaderHeight={68}
                             pageSizeOptions={([5, 10, 20])}
-                            rows={rows} 
-                            columns={columns} />
+                            rows={filteredRows} 
+                            columns={columns} 
+                        />
                     </Box>
                 </div>
             </div>
