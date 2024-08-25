@@ -8,6 +8,8 @@ import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
 import { useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
+import { useGoogleLogin, googleLogout } from "@react-oauth/google"
+import axios from "axios"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -21,6 +23,27 @@ const Signin:FC<props> = ({changeSection}) => {
         email: "",
         password: ""
     })
+
+    const handleGoogleLogin = useGoogleLogin({
+        onSuccess: (codeResponse) => {
+            axios
+                .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`, {
+                        headers: {
+                            Authorization: `Bearer ${codeResponse.access_token}`,
+                            Accept: 'application/json'
+                        }
+                    })
+                    .then((res) => {
+                        console.log(res.data)
+                        // setProfile(res.data);
+                    })
+                    .catch((err) => console.log(err));
+
+            console.log(codeResponse)
+        },
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -52,7 +75,7 @@ const Signin:FC<props> = ({changeSection}) => {
             <Logo />
             <h1 className="text-[1.5em] sm:text-[2em] mt-3 font-medium">Welcome Back</h1>
             <div className="flex gap-10 mt-7">
-                <div className="hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] cursor-pointer border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
+                <div onClick={() => handleGoogleLogin()} className="hover:bg-[#B3387F] hover:text-white transition-all duration-[0.3s] cursor-pointer border text-[0.9em] text-[#333333] rounded-md font-normal border-[#D4D4D4] flex-1 text-center py-2 flex justify-center items-center gap-2">
                     <Google />
                     <p>Google</p>
                     <div className="absolute z-[1]"></div>

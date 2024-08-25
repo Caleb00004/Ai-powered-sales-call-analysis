@@ -17,8 +17,8 @@ const Onboarding = () => {
             .fromTo(".right-container", {x: "100%"}, {x: 0,}, "<0.2")
             .fromTo(".carousel-head", {opacity: 0, x: -25}, {opacity: 1, x: 0, ease: "back"}, "<0.35")
             .fromTo(".carousel-body", {opacity: 0, x: 25}, {opacity: 1, x: 0, ease: "back"}, "<")
-            .fromTo(".carousel-img", {opacity: 0}, {opacity: 1})
-            .fromTo(".carousel-nav", {opacity: 0}, {opacity: 1}, "<")
+            .fromTo(".carousel-img", {scale: 0}, {scale: 1, ease: "back"})
+            .fromTo(".carousel-nav", {scale: 0}, {scale: 1, ease: "back"}, "<")
     },[])
 
     return (
