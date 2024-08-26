@@ -1,9 +1,10 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout"
+import SalesRepComponent from "@/components/dashboard/salesrep-component"
 
 const SalesRep = () => {
     return (
         <DashboardLayout>
-            <h1>Sales Rep</h1>
+            <SalesRepComponent />
         </DashboardLayout>
     )
 }
