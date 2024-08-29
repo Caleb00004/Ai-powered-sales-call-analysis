@@ -296,3 +296,78 @@ export const dealsData: dealsDataType[] = [
         assignedSalesRep: 2
     },
 ]
+
+export const TeamsData = [
+    {
+        id: 1,
+        name: "Kevin jOhn",
+        email: "kevin@gmail.com",
+        role: "Sales Rep",
+        department: "Software Engineer",
+        status: "Active"
+    },
+    {
+        id: 2,
+        name: "Michael myers",
+        email: "myke@gmail.com",
+        role: "Software Engineer",
+        department: "Project Management",
+        status: "Active"
+    },
+    {
+        id: 3,
+        name: "Caleb Akpan",
+        email: "caleb@gmail.com",
+        role: "Manager",
+        department: "Software Engineer",
+        status: "Suspended"
+    },
+    {
+        id: 4,
+        name: "Chiak josh",
+        email: "chika@gmail.com",
+        role: "Sales Rep",
+        department: "Software Engineer",
+        status: "Active"
+    },
+    {
+        id: 5,
+        name: "Michael myers",
+        email: "myke@gmail.com",
+        role: "Software Engineer",
+        department: "Project Management",
+        status: "Active"
+    },
+    {
+        id: 6,
+        name: "Caleb Akpan",
+        email: "caleb@gmail.com",
+        role: "Manager",
+        department: "Software Engineer",
+        status: "Suspended"
+    },
+    {
+        id: 7,
+        name: "Kevin jOhn",
+        email: "kevin@gmail.com",
+        role: "Sales Rep",
+        department: "Software Engineer",
+        status: "Active"
+    },
+    {
+        id: 8,
+        name: "Michael myers",
+        email: "myke@gmail.com",
+        role: "Software Engineer",
+        department: "Project Management",
+        status: "Active"
+    },
+    {
+        id: 9,
+        name: "Caleb Akpan",
+        email: "caleb@gmail.com",
+        role: "Manager",
+        department: "Software Engineer",
+        status: "Suspended"
+    }
+]

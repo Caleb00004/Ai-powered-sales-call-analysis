@@ -28,7 +28,7 @@ const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRo
         apiRef.current.showFilterPanel()
 
     }
-
+    
     return (
         <div className="bg-white p-4 ">
             <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">{title ? title : "Durekt Table"}</h1>
@@ -76,6 +76,7 @@ const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRo
                             },
                         }}
                         columnHeaderHeight={68}
+                        rowHeight={75}
                         pageSizeOptions={([5, 10, 20])}
                         rows={filteredRows} 
                         columns={columns} 

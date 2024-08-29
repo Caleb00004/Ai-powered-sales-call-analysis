@@ -35,7 +35,7 @@ const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "" }) => 
 
     return (
       <div className="fixed z-[5] inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
-        <div ref={modalRef} className="relative bg-white rounded-lg shadow-lg w-full md:w-1/2">
+        <div ref={modalRef} className="relative bg-white rounded-lg shadow-lg w-full md:w-[35em]">
           <button className="absolute text-[1.8em] right-8 text-gray-600" onClick={onClose}>
             &times;
           </button>
