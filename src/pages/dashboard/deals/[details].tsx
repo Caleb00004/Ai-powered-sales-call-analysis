@@ -6,20 +6,20 @@ import Table from "@/components/secondary/Table"
 import { dealsData, dealsDataType } from "@/testData"
 import { GridColDef, GridEventListener } from "@mui/x-data-grid"
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
-import Modal from "@/components/secondary/Modal"
+import { useRouter } from "next/router"
+import Link from "next/link"
+import AttachmentIcon from "../../../../public/svgs/attach-icon.svg"
+import SendIcon from "../../../../public/svgs/send-icon.svg"
+import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 
 type sectionsType = "overview" | "meetings" | "notes"
 
 const Deals = () => {
     const [section, setSection] = useState<sectionsType>("overview")
     const [searchInput, setSearchInput] = useState("")
-    const [selectedDeal, setSelectedDeal] = useState({} as dealsDataType)
     const rows = dealsData
-
 
     const filteredRows = useMemo(() => {
         return rows.filter(row =>
@@ -31,18 +31,8 @@ const Deals = () => {
         setSearchInput(event.target.value);
     },[]);
 
-    const handleSelectDeal = useCallback((data: {id: string, row: {}}) => {
-        console.log(data)
-        // routeTo.push(`/dashboard/deals/${data.id}`)
-    },[])
-
     const handleChangeSection = (newSection: sectionsType) => {
         setSection(newSection)
-    }
-
-    const handleEditData = (data) => {
-        const {id, ...rest} = data.row
-        console.log(rest)
     }
 
     const columns: GridColDef[] = useMemo(() => {
@@ -53,8 +43,8 @@ const Deals = () => {
                 headerName: '',
                 renderCell: (params) => (
                     <TableActionsMenu options={[
-                        <MenuItem onClick={() => handleEditData(params)}>Edit</MenuItem>,
-                        <MenuItem onClick={() => {}}>Delete</MenuItem>
+                        <MenuItem >Action 1</MenuItem>,
+                        <MenuItem >Action 2</MenuItem>
                     ]} data={params} />
                 ),
                 width: 10,
@@ -109,9 +99,9 @@ const Deals = () => {
             <div className="flex flex-col">
                 
                 <div className="flex justify-between items-center">
-                    <div className="flex gap-2 text-[15px]">
-                        <p className=" underline text-[#5B5B5B]">Deals</p>
-                        <p>{">"}</p>
+                    <div className="flex items-center gap-0 text-[15px]">
+                        <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/deals"}><p >Deals</p></Link>
+                        <ArrorwIcon className="scale-[0.8]" />
                         <p className=" text-[#333333] font-[500] ">Deal details</p>
                     </div>
                     <div style={{width: "10em"}}>
@@ -165,7 +155,6 @@ const Deals = () => {
                                 filteredRows={filteredRows}
                                 columns={columns}
                                 searchInput={searchInput}
-                                handleSelectCell={handleSelectDeal as GridEventListener<"cellClick">}
                                 handleSearchChange={handleSearchChange}
                                 csv
                                 title="Specified Sales Rep Performance"
@@ -180,7 +169,6 @@ const Deals = () => {
                                 filteredRows={filteredRows}
                                 columns={columns}
                                 searchInput={searchInput}
-                                handleSelectCell={handleSelectDeal as GridEventListener<"cellClick">}
                                 handleSearchChange={handleSearchChange}
                             />
                         </div>    
@@ -210,8 +198,11 @@ const Deals = () => {
     
                             </div>
                             <div className="bg-white flex items-center gap-3 border-t mt-auto p-3">
-                                <p>&</p>
-                                <input className="bg-[#F8F9FD] w-full px-4 py-2 rounded-3xl" type="text" placeholder="Type your message here..." />
+                                <AttachmentIcon />
+                                <div className="flex w-full relative">
+                                    <SendIcon className="absolute right-4 bottom-2 cursor-pointer" />
+                                    <input className="bg-[#F8F9FD] w-full px-4 py-2 rounded-3xl" type="text" placeholder="Type your message here..." />
+                                </div>
                             </div>
                         </div>  
                     </>

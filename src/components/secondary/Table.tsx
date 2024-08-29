@@ -13,11 +13,11 @@ interface props {
     filteredRows: {}[];
     columns: GridColDef[];
     csv?: boolean;
-    handleSelectCell: GridEventListener<"cellClick">;
+    handleSelectCell?: GridEventListener<"cellClick">;
     title?: string
 }
 
-const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRows, columns, csv, handleSelectCell, title }) => {
+const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
     const apiRef = useGridApiRef();
 
     function handleExport() {

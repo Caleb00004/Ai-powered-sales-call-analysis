@@ -3,13 +3,14 @@ import Table from "@/components/secondary/Table"
 import CustomGridFooter from "@/components/secondary/TableFooter"
 import { dealsData, dealsDataType } from "@/testData"
 import { DataGrid, getGridNumericOperators, GridColDef, GridEventListener } from "@mui/x-data-grid"
-import { ChangeEvent, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, useCallback, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { GridFilterInputSingleSelect } from '@mui/x-data-grid';
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
-import Modal from "@/components/secondary/Modal"
+import Modal from "@/components/primary/Modal"
 import { stageFilterOperator, statusFilterOperator } from "@/components/util/customFilterOperators"
+import EditTableModal from "@/components/primary/EditTableModal"
 
 const DealsManager = () => {
     const routeTo = useRouter()
@@ -41,9 +42,8 @@ const DealsManager = () => {
         routeTo.push(`/dashboard/deals/${data.id}`)
     },[])
 
-    const handleOpenEditModal = (data) => {
-        const {id, ...rest} = data.row
-        console.log(rest)
+    const handleOpenEditModal = (data: {id: string, row: dealsDataType}) => {
+        const {...rest} = data.row
         setSelectedDeal(rest)
         openModal() 
     }
@@ -69,7 +69,7 @@ const DealsManager = () => {
                 renderCell: (params) => (
                     <TableActionsMenu options={[
                         <MenuItem onClick={() => handleSelectDeal(params as { id: string; row: {}; }) }>View More</MenuItem>,
-                        <MenuItem onClick={() => handleOpenEditModal(params)}>Edit</MenuItem>,
+                        <MenuItem onClick={() => handleOpenEditModal(params as { id: string; row: dealsDataType; })}>Edit</MenuItem>,
                         <MenuItem onClick={() => {}}>Delete</MenuItem>
                     ]} data={params} />
                 ),
@@ -80,38 +80,32 @@ const DealsManager = () => {
         ]
     },[]) 
 
+    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const {name} = e.target 
+        const {value} = e.target
+        setSelectedDeal(prev => ({...prev, [name]: value}))
+    }
+
     return (
         <div className="flex flex-col gap-[20px] w-full">
-            <Modal
+            <EditTableModal 
                 isOpen={modalOpen}
                 onClose={closeModal}
-                className={" p-3"}
-            >
-                <div className="pt-5">
-                    {Object.entries(selectedDeal).map(([key, value]) => (
-                        <div key={key} className="flex flex-col">
-                            <label className="mb-1 font-medium">{key}</label>
-                            <input
-                                type="text"
-                                name={key}
-                                value={value}
-                                // onChange={handleChange}
-                                className="p-2 border rounded-md"
-                            />
-                        </div>
-                    ))}
-                </div>
-            </Modal>
+                cellData={selectedDeal}
+                handleValueChange={handleEditChange}
+            />
+            
             <div className="flex justify-between items-center">
-                <h1 className="text-[1.5em] font-[600] text-[#333333]">Deals</h1>
-                <Button className="w-[140px] py-[6px] text-[13px]">Add New Deal</Button>
+                <h1 className="text-[20px] font-[600] text-[#333333]">Deals</h1>
+                <div className="w-[140px]">
+                    <Button className="py-[6px] text-[13px]">Add New Deal</Button>
+                </div>
             </div>
 
             <Table 
                 filteredRows={filteredRows}
                 columns={columns}
                 searchInput={searchInput}
-                handleSelectCell={() => {}}
                 handleSearchChange={handleSearchChange}
             />
         </div>
