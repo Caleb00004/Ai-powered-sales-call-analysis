@@ -111,8 +111,8 @@ const TeamsComponent = () => {
             permission: prev.permission.filter(permission => permission !== permissionToRemove)
         }));
     }
-    
-    const handleCreateTeam = (e) => {
+
+    const handleCreateTeam = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log(createTeamDetails)
     }
