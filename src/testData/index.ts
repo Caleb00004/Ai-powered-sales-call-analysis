@@ -371,3 +371,165 @@ export const TeamsData = [
         status: "Suspended"
     }
 ]
+
+export const ModulesData = [
+    {
+        id: 1,
+        name: "Module 1",
+        topics: [
+            {
+                name: "Trading Forex",
+                enrolledTeam: 4
+            },
+            {
+                name: "Crypto Basics",
+                enrolledTeam: 2
+            },
+            {
+                name: "Learn Web Basics",
+                enrolledTeam: 6
+            },
+        ]
+    },
+    {
+        id: 2,
+        name: "Module 2",
+        topics: [
+            {
+                name: "Ai robotics",
+                enrolledTeam: 1
+            },
+            {
+                name: "Close Deals",
+                enrolledTeam: 3
+            },
+            {
+                name: "Know your clinet",
+                enrolledTeam: 5
+            },
+        ]
+    },
+    {
+        id: 3,
+        name: "Module 3",
+        topics: [
+            {
+                name: "Ai robotics",
+                enrolledTeam: 1
+            },
+            {
+                name: "Close Deals",
+                enrolledTeam: 3
+            },
+            {
+                name: "Know your clinet",
+                enrolledTeam: 5
+            },
+        ]
+    },
+    {
+        id: 4,
+        name: "Module 4",
+        topics: [
+            {
+                name: "Ai robotics",
+                enrolledTeam: 1
+            },
+            {
+                name: "Close Deals",
+                enrolledTeam: 3
+            },
+            {
+                name: "Know your clinet",
+                enrolledTeam: 5
+            },
+        ]
+    },
+    {
+        id: 5,
+        name: "Module 5",
+        topics: [
+            {
+                name: "Trading Forex",
+                enrolledTeam: 4
+            },
+            {
+                name: "Crypto Basics",
+                enrolledTeam: 2
+            },
+            {
+                name: "Learn Web Basics",
+                enrolledTeam: 6
+            },
+        ]
+    },
+]
+
+export const TeamProgresData = [
+    {
+        id: 1,
+        name: "Micael john",
+        topics: [
+            {
+                id: 1,
+                name: "Close Deals",
+                progress: "In Progress",
+                date: "11/04/2023"
+            },
+            {
+                id: 2,
+                name: "Close Deals",
+                progress: "In Progress",
+                date: "11/04/2023"
+            },
+            {
+                id: 3,
+                name: "Close Deals",
+                progress: "Completed",
+                date: "11/04/2023"
+            },
+            {
+                id: 2,
+                name: "Close Deals",
+                progress: "Not Started",
+                date: "11/04/2023"
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: "Charles Andrew",
+        topics: [
+            {
+                id: 1,
+                name: "Learn Web 3",
+                progress: "Completed",
+                date: "22/02/2013"
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "Susan Kay",
+        topics: [
+            {
+                id: 1,
+                name: "Forex ax",
+                progress: "Not Started",
+                date: "22/02/2013"
+            },
+             {
+                id: 2,
+                name: "Forex ax",
+                progress: "Not Started",
+                date: "22/02/2013"
+            },
+            {
+                id: 3,
+                name: "Forex ax",
+                progress: "Not Started",
+                date: "22/02/2013"
+            },
+        ]
+    },
+]

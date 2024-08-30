@@ -17,7 +17,7 @@ const Search:FC<props> = ({className, value, onChange, placeholder}) => {
                 onChange={onChange}
                 placeholder={placeholder ? placeholder : "Search..."}
                 type="text"
-                className={`bg-[#F8F8FA] w-[20em] py-1 px-3 ${className} `}
+                className={`bg-[#F8F8FA] py-1 px-3 ${className ? className : "w-[20em]"} `}
             />
         </div>
     )

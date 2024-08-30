@@ -1,9 +1,10 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout"
+import TrainingsComponent from "@/components/dashboard/trainings-component"
 
 const Trainings = () => {
     return (
         <DashboardLayout>
-            <h1>Trainings</h1>
+            <TrainingsComponent />
         </DashboardLayout>
     )
 }
