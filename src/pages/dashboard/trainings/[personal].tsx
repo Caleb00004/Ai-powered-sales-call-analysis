@@ -2,13 +2,20 @@ import DashboardLayout from "@/components/layouts/DashboardLayout"
 import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 import Link from "next/link"
 import Button from "@/components/primary/Button"
-import { useEffect, useRef } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import gsap from "gsap"
 import { useRouter } from "next/router"
+import Table from "@/components/secondary/Table"
+import { GridColDef } from "@mui/x-data-grid"
+import TableActionsMenu from "@/components/secondary/TableActionsMenu"
+import { MenuItem } from "@mui/material"
+import { dealsData } from "@/testData"
 
 const PersonalTraining = () => {
     const carouselContainer = useRef<HTMLDivElement | null>(null)
     const tran = [0, 1, 2, 0, 1, 2, 0, 1, 2, ]
+    const [searchInput, setSearchInput] = useState("")
+    const rows = dealsData
     const routeTo = useRouter()
 
     useEffect(() => {
@@ -17,16 +24,15 @@ const PersonalTraining = () => {
             .to(".topic-txt", {x: 0, opacity: 1})
     },[])
 
+    const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value);
+    },[]);
+
     const scrollRight = () => {
         if (carouselContainer.current) {
             const carouselItemWidth = carouselContainer.current.clientWidth - 18;
             carouselContainer.current.scrollLeft += carouselItemWidth;
         }
-        // const carouselItemWidth = window.innerWidth - 350;
-        // console.log(window.innerWidth)
-        // if (carouselContainer.current) {
-        //     carouselContainer.current.scrollLeft += carouselItemWidth;
-        //   }
     }
 
     const scrollLeft = () => {
@@ -34,11 +40,44 @@ const PersonalTraining = () => {
             const carouselItemWidth = carouselContainer.current.clientWidth - 18;
             carouselContainer.current.scrollLeft -= carouselItemWidth;
         }
-        // const carouselItemWidth = window.innerWidth;
-        // if (carouselContainer.current) {
-        //     carouselContainer.current.scrollLeft -= carouselItemWidth;
-        //   }
     }
+
+     const filteredRows = useMemo(() => {
+        return rows.filter(row =>
+            row.name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+    }, [rows, searchInput]);
+
+    
+    const columns: GridColDef[] = useMemo(() => {
+        return [
+            {field: "name", flex: 1, headerName: "Name", headerClassName: "bg-[#C32782]"},
+            {field: "client", flex: 1, renderHeader: () => ( 
+                <div className="flex items-center mdx2:flex-row flex-col">
+                    <p>Client/</p><p>Company</p>
+                </div>
+                ),
+                headerClassName: "bg-[#C32782]"
+            },
+            {field: "stage", flex: 0.6, headerName: "Stage", headerClassName: "bg-[#C32782]"},
+            {field: "status", flex: 0.5, headerName: "Status", headerClassName: "bg-[#C32782]"},
+            {field: "assignedSalesRep", flex: 1, renderHeader: () =>  (<div className="flex gap-1 flex-col "><p>Assigned <br />Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
+            {
+                field: 'actions',
+                flex: 0.5,
+                headerClassName: "bg-[#C32782]",
+                headerName: 'Actions',
+                renderCell: (params) => (
+                    <TableActionsMenu options={[
+                        <MenuItem onClick={() => {}}>Action</MenuItem>
+                    ]} data={params} />
+                ),
+                width: 10,
+                sortable: false,
+                filterable: false,
+            },
+        ]
+    },[])
 
     return (
         <DashboardLayout>
@@ -49,7 +88,7 @@ const PersonalTraining = () => {
                             <Link className="trainings-txt text-[20px] font-[600] " href={"/dashboard/trainings"}><p >Training</p></Link>
                             <div className="topic-txt flex items-center -translate-x-16 opacity-0">
                                 <ArrorwIcon className="scale-[0.8]" />
-                                <p className="  font-[500] ">Personal Training</p>
+                                <p className=" font-[500] ">Personal Training</p>
                             </div>
                         </div>
                     </div>
@@ -68,7 +107,7 @@ const PersonalTraining = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white border px-5 py-3 mt-3 flex overflow-hidden gap-4" style={{ pointerEvents: "none" }}  ref={carouselContainer} >
+                    <div className="bg-white scroll-smooth border px-5 py-3 mt-3 flex overflow-hidden gap-4"  ref={carouselContainer} >
                         {tran.map(item => (
                             <div onClick={() => routeTo.push("/dashboard/trainings/topic")} className="w-[32.3%] flex-shrink-0">
                                 <div className="bg-slate-300 h-[10em] rounded-xl">
@@ -81,8 +120,14 @@ const PersonalTraining = () => {
                     </div>
                 </div>
 
-                <div className="mt-4">
-
+                <div className="mt-8">
+                    <Table 
+                        title="Enrolled Training"
+                        filteredRows={filteredRows}
+                        columns={columns}
+                        searchInput={searchInput}
+                        handleSearchChange={handleSearchChange}
+                    />
                 </div>
 
             </div>

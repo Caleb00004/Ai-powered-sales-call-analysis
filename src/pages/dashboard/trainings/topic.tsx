@@ -3,11 +3,14 @@ import Link from "next/link"
 import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 import { useEffect } from "react"
 import gsap from "gsap"
+import { useRouter } from "next/router"
 
 const TrainingTopic = () => {
-
+    const routeTo = useRouter()
     useEffect(() => {
-        gsap.to(".topic-txt", {x: 0, opacity: 1})
+        gsap.timeline()
+            .to(".topic-txt1", {color: "#5B5B5B", fontSize: "14px", fontWeight: "400", textDecoration: "underline"})
+            .to(".topic-txt2", {x: 0, opacity: 1})
     },[])
 
     return (
@@ -17,9 +20,13 @@ const TrainingTopic = () => {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-0 text-[15px]">
                             <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/trainings"}><p >Training</p></Link>
-                            <ArrorwIcon className="scale-[0.8]" />
-                            <p className="cursor-pointer underline text-[#5B5B5B]">Personal Training</p>
-                            <div className="topic-txt flex items-center -translate-x-16 opacity-0">
+                            <div onClick={() => routeTo.back()} className="topic-txt1 cursor-pointer text-[20px] font-[600] flex items-center ">
+                                <ArrorwIcon className="scale-[0.8]" />
+                                <p className="  ">Personal Training</p>
+                            </div>
+                            {/* <ArrorwIcon className="scale-[0.8]" />
+                            <p onClick={() => routeTo.back()} className="cursor-pointer underline text-[#5B5B5B]">Personal Training</p> */}
+                            <div className="topic-txt2 flex items-center -translate-x-16 opacity-0">
                                 <ArrorwIcon className="scale-[0.8]" />
                                 <p className=" text-[#333333] font-[500] ">Topic</p>
                             </div>
