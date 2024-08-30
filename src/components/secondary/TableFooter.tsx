@@ -35,10 +35,9 @@ const CustomGridFooter = () => {
 
     return (
         <Box
+            className="flex flex-col items-start mdx2:flex-row mdx2:items-center gap-3 mdx2:gap-0"
             sx={{
-                display: 'flex',
                 justifyContent: 'space-between',
-                alignItems: 'center',
                 padding: '10px',
                 backgroundColor: '#f5f5f5',
                 borderTop: '1px solid #ccc',
