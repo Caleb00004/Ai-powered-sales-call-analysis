@@ -158,11 +158,11 @@ const SalesRepManager = () => {
                         <Button className='text-[13px] py-1'>Message Elizabeth</Button>
                         <Button className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
                     </div>
-                    <div className='flex gap-5 mt-5'>
-                        <div className='flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
+                    <div className='flex flex-col sm:flex-row gap-5 mt-5'>
+                        <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
                             <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Area of concern</h1>
                         </div>
-                        <div className='flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
+                        <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                             <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Dureket Report</h1>
                             <p className='text-[#4A4A4A] text-[13.5px] font-[400]'>Lorem ipsum dolor sit amet consectetur. Arcu ut aliquam neque orci sapien nisl. Ligula rhoncus at nisl scelerisque eget enim ut.
                                 At vulputate metus pulvinar leo lorem nec morbi dolor. Tempus fusce vel duis dictum nibh a sed adipiscing in. In egestas aliquam 
@@ -172,8 +172,8 @@ const SalesRepManager = () => {
                                 sed dui massa. id egestas morbi cras vivamus. Ac sed vehicula sem sed dui massa. In egestas aliquam id egestas morbi cras vivamus</p>
                         </div>
                     </div>
-                    <div className='flex gap-5 mt-5'>
-                        <div className='flex-1 flex flex-col bg-white p-3 pb-10 px-3 rounded-lg'>
+                    <div className='flex flex-col sm:flex-row gap-5 mt-5'>
+                        <div className='border flex-1 flex flex-col bg-white p-3 pb-10 px-3 rounded-lg'>
                             <h1 className='text-[#333333] text-[20px] font-[600] pb-4'>Assigned Deals</h1>
                             <div className='flex flex-col gap-4'>
                                 <p className=' text-[13px] underline text-[#333333] font-[600]'>Sample deal name</p>
@@ -181,7 +181,7 @@ const SalesRepManager = () => {
                                 <p className=' text-[13px] underline text-[#333333] font-[600]'>Sample deal name</p>
                             </div>
                         </div>
-                        <div className='flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
+                        <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                             <div className='flex justify-between pb-4'>
                                 <h1 className='text-[#333333] text-[20px] font-[600] '>Scheduled Training</h1>
                                 <div className='border border-[#A4A4A4] w-[30%] rounded-lg pl-3 flex items-center text-[14px] text-[#333333]'>

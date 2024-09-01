@@ -9,13 +9,13 @@ import { Select, MenuItem } from "@mui/material"
 
 const SkillsComponent = () => {
     return (
-        <div className="flex gap-8 text-[#333333] ">
-            <div className="flex-shrink-0 bg-white p-4 border rounded-md flex flex-col w-[13em]">
+        <div className="flex flex-col mdx5:flex-row gap-8 text-[#333333] ">
+            <div className="flex-shrink-0 bg-white p-4 border rounded-md flex flex-col mdx5:w-[13em]">
                 <div className="flex justify-between">
                     <p className="font-[600] text-[17px] ">Team Skills</p>
                     <p className="font-[600] text-[17px] ">Trend</p>
                 </div>
-                <div className=" py-1 w-full min-h-[75vh]">
+                <div className=" py-1 w-full h-[72vh] sm:h-auto sm:min-h-[75vh]">
                     <PaginationComponent 
                         items={skillsData}
                         hidePaginationStatus
@@ -23,7 +23,7 @@ const SkillsComponent = () => {
                         itemsPerPage={10}
                         renderItems={(data) => (
                             data.map(item => (
-                                <div className="flex hover:bg-slate-100 hover:scale-[1.05] transition-all cursor-pointer py-2 justify-between border-b  items-center">
+                                <div className="flex hover:bg-slate-100 mdx4:hover:scale-[1.025]  transition-all cursor-pointer py-2 justify-between border-b  items-center">
                                     <p className="font-[500]">{item.short}</p>
                                     <div className="flex items-center justify-between gap-5 ">
                                         <p className={`${getProgressColor(item.score)} h-6 rounded-md px-8 font-[600]`}>{item.score}</p>
@@ -35,8 +35,8 @@ const SkillsComponent = () => {
                     />
                 </div>
             </div>
-            <div className="flex-shrink-0  p-2 flex flex-col flex-1 ">
-                <div className="flex  text-[#333333] font-[600] justify-between py-3 mb-4">
+            <div className="flex-shrink-0 p-2 flex flex-col flex-1 ">
+                <div className="flex text-[#333333] font-[600] justify-between py-3 mb-4">
                     <p className=" flex-1   translate-x-9">Sales Rep</p>
                     <div className=" flex  flex-1 justify-around gap-6">
                         <p>Attributes</p>
@@ -57,7 +57,7 @@ const SkillsComponent = () => {
                         itemsPerPage={5}
                         renderItems={(data) => (
                             data.map(item => (
-                                <div className="bg-white mb-2 border flex px-2 py-3 justify-between rounded-lg">
+                                <div className="bg-white w-[40em] mdx4:w-auto mb-2 border flex px-2 py-3 justify-between rounded-lg">
                                     <div className="flex flex-1 items-center gap-2 ">
                                         <p className="text-[16px] font-[500] mr-2">1</p> 
                                         <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
@@ -79,7 +79,7 @@ const SkillsComponent = () => {
                             ))
                         )}
                         footer={({ currentPage, totalPages, handlePageChange, itemsPerPage, handlePageSizeChange }) => (
-                            <div className='flex justify-center gap-4'>
+                            <div className='flex flex-col sm:flex-row justify-center gap-4'>
                                 <div className='flex items-center gap-2 justify-between'>
                                     <button className='mr-3 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1' onClick={() => handlePageChange(currentPage - 1)}  disabled={currentPage === 1}><NavIcon /></button>
                                     <div className='flex items-center gap-1 text-[#333333]'>
@@ -96,7 +96,7 @@ const SkillsComponent = () => {
                                         value={itemsPerPage}
                                         onChange={handlePageSizeChange}
                                         sx={{ height: "100%", border: "none"}}
-                                        className=' border-rose-600 w-[70px] text-[13px] font-[500]'
+                                        className=' border-rose-600 w-[70px] text-[13px] ml-auto font-[500]'
                                     >
                                         <MenuItem value={5}>5</MenuItem>
                                         <MenuItem value={10}>10</MenuItem>
