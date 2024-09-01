@@ -5,6 +5,7 @@ import { DataGrid } from "@mui/x-data-grid"
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid"
 import { callData } from "@/testData"
 import { Box, useTheme } from "@mui/material"
+import ProgressDiagram from "@/components/secondary/ProgressDiagram"
 // import { tokens } from "@/components/util/theme"
 
 const ManagerDashboard = () => {
@@ -124,28 +125,46 @@ const ManagerDashboard = () => {
                                 <th className="text-[12px] text-[#333333] font-[600]">Top Skills</th>
                             </tr>
                         </tbody>
-                        <tbody className="gap-4">
+                        <tbody className="gap-4 ">
                             <tr>
                                 <td className="flex items-center gap-2 ">
-                                   <p className="text-[12px]">1</p> 
+                                   <p className="text-[12px] font-[600]">1</p> 
                                    <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
                                    <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
                                 </td>
                                 <td className="">
-                                    <div className="bg-slate-800 mx-auto rounded-full w-12 h-12"></div>
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-12 h-12">
+                                        <p className="font-[700] text-white">60</p>
+                                    </div>
                                 </td>
                                 <td className="" >
-                                    <div className=" bg-slate-800 mx-auto rounded-full h-12 w-12"></div>
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full h-12 w-12">
+                                        <p className="font-[700] text-white">GG</p>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+                        <br />
+                        <tbody className="gap-4">
                             <tr>
-                                <td>Hello</td>
-                                <td>Hello</td>
-                                <td>Hello</td>
+                                <td className="flex items-center gap-2 ">
+                                   <p className="text-[12px] font-[600]">1</p> 
+                                   <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
+                                   <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
+                                </td>
+                                <td className="">
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-12 h-12">
+                                        <p className="font-[700] text-white">60</p>
+                                    </div>
+                                </td>
+                                <td className="" >
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full h-12 w-12">
+                                        <p className="font-[700] text-white">GG</p>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -187,6 +206,18 @@ const ManagerDashboard = () => {
                     <div className="flex justify-between text-[#333333] font-[600]">
                         <p>Team Performance Distribution</p>
                         <MoreIcon />
+                    </div>
+                    
+                    <div className="flex flex-col gap-3">
+                        <div className=" flex gap-3 items-center mt-5">
+                            <ProgressDiagram />
+                            <p className="text-[18px] font-[500]">Overall Rating</p>
+                        </div>
+
+                        <div className=" flex gap-3 items-center mt-5">
+                            <ProgressDiagram />
+                            <p className="text-[18px] font-[500]">Overall Rating</p>
+                        </div>
                     </div>
                 </div>
             </div>
