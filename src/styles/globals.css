@@ -8,3 +8,7 @@
   box-sizing: border-box;
   /* scroll-behavior: smooth; */
 }
+
+/* progress[value] {
+  --color: red;
+} */
