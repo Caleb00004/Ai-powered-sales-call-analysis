@@ -13,7 +13,7 @@ import InfoIcon from "../../../public/svgs/info-icon.svg"
 
 const Navbar = () => {
     const [openNav, setOpenNav] = useState(false)
-    const [dropdown, setDropDown] = useState("" as "features" | "integrations" | "resources")
+    const [dropdown, setDropDown] = useState("" as "features" | "integrations" | "resources" | undefined)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     
     const FEATURES = 
@@ -43,26 +43,26 @@ const Navbar = () => {
 
     const INTEGRATIONS = 
         <div className="text-[14px] text-white overflow-hidden absolute w-[14em] z-[2] bg-[#02010E] mt-[4em] -ml-10 rounded-2xl top-0 px-1 ">        
-            <Link href={"#"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={"/durekt-meet"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={google} alt="google" height={1000} width={1000} />
                 </div>
                 <p className="">Google Meet</p>
             </Link>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[0.9px]" />
-            <div className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={"/durekt-kixie"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={kixie} alt="kixie" className="bg-[#02010E]" height={1000} width={1000} />
                 </div>
                 <p className="">Kixie</p>
-            </div>
+            </Link>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[1px]" />
-            <div className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={"/durekt-zoom"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={zoom} alt="zoom" height={1000} width={1000} />
                 </div>
                 <p className="">Zoom Call</p>
-            </div>
+            </Link>
         </div>
 
     const RESOURCES = 
@@ -81,7 +81,7 @@ const Navbar = () => {
     const handleDropdown = (value: "features" | "integrations" | "resources" ) => {
         if (value === dropdown) {
             setIsDropdownOpen(false)
-            setDropDown("")
+            setDropDown(undefined)
             return
         }
         setIsDropdownOpen(true)
