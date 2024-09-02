@@ -98,17 +98,17 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] px-[5em] py-[5em] overflow-hidden">
-        <div className="flex justify-between ">
-          <div className=" w-[28.5em] mt-7 ">
-            <h1 className="text-[3em] leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781]">AI-Powered</span> Call Analysis</h1>
+      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[5em] overflow-hidden">
+        <div className="flex flex-col mdx3:flex-row justify-between ">
+          <div className=" w-[90%] sm:w-[28.5em] mt-7 ">
+            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781]">AI-Powered</span> Call Analysis</h1>
             <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
             <div className="flex gap-4">
               <Button className="py-3 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Get Started</Button>
               <Button className="py-3 rounded-sm bg-transparent border text-[#B3387F] border-[#B3387F] hover:bg-[#B3387F] transition-all active:scale-[0.95]">Download Extension</Button>
             </div>
           </div>
-          <div className="relative mx-auto ">
+          <div className="relative mx-auto mt-[5em] mdx3:mt-0 ">
             <Image className="absolute scale-[3] opacity-[0.6] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
             <div className="flex relative z-[1] flex-col gap-1 ">
@@ -154,9 +154,9 @@ export default function Home() {
       </div>
       
       {/* FEATURES */}
-      <div className="bg-[#000000] relative px-[5em] py-[5em] text-center ">
+      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[1em] mdx3:pb-[0em] pt-[4em] mdx3:pt-0 mdx3:py-[5em] text-center ">
         <h2 className="text-colour-gradient">FEATURES</h2>
-        <h1 className="text-white text-[40px] font-[500]">Most essential features</h1>
+        <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
         <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
 
         <div className="flex mt-10 border border-[#495677] rounded-lg overflow-hidden">
@@ -180,24 +180,24 @@ export default function Home() {
             <Image src={featureimg} className="w-[100%] h-[23vw]" alt="feature" width={10000} height={10000} />
           </div>
         </div>
-        <div className="py-5 z-[2] relative px-8 border border-[#495677] rounded-lg bg-gradient-to-r from-[#414F729C] to-[#323E5A28] mt-5 flex gap-4">
+        <div className="flex flex-col gap-10 mdx3:flex-row mdx3:gap-4 py-5 z-[2] relative px-8 border border-[#495677] rounded-lg bg-gradient-to-r from-[#414F729C] to-[#323E5A28] mt-5 ">
           
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700] w-[18em] text-[18px]">AI-Powered Performance Grading</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
             <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
           </div>
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700] w-[18em] text-[18px]">AI-Powered Performance Grading</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
             <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
           </div>
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700] w-[18em] text-[18px]">AI-Powered Performance Grading</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
             <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
           </div>
 
@@ -207,10 +207,10 @@ export default function Home() {
       </div>
         
       {/* TESTIMONIALS */}
-      <div className="bg-black px-[5em] pt-[12em] pb-[10em] flex">
-        <div className=" flex-1">
+      <div className="flex flex-col mdx3:flex-row bg-black px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[12em] pb-[10em] ">
+        <div className=" flex-1 flex flex-col items-center mdx3:items-start mb-[3em]">
           <h1 className="text-colour-gradient">Testimonials</h1>
-          <h1 className="text-[40px] w-[8.5em] leading-[40px] mt-3">What Our Valuable Clients Say About Us</h1>
+          <h1 className="text-[30px] text-center mdx3:text-left mdx3:text-[40px] w-[80%] mdx3:w-[8.5em] leading-[40px] mt-3">What Our Valuable Clients Say About Us</h1>
           <div className="w-[10em] mt-8">
             <Button>View all Testimonials</Button>
           </div>
@@ -283,12 +283,12 @@ export default function Home() {
       </div>
 
       {/* HOW IT WORKS */}
-      <div className="bg-[#161529] px-[5em] py-[10em] flex gap-12">
+      <div className="flex flex-col-reverse mdx5:flex-row bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3.5em] mdx5:py-[10em] gap-12">
         
         <div className="relative flex-[0.85]">
           <Image className="absolute scale-[1.5] right-[140px] opacity-[0.7] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
-          <div className="relative flex py-8 px-10 flex-col  bg-[#000000c0] rounded-lg z-[2]  ">
+          <div className="relative flex py-8 px-4 sm:px-10 flex-col  bg-[#000000c0] rounded-lg z-[2]  ">
               
               {howItWorks.map((item, i) => (
                 <div className="mb-8">
@@ -312,7 +312,7 @@ export default function Home() {
 
           <div className="w-[28em]">
             <h2 className="text-colour-gradient" >HOW IT WORKS</h2>
-            <h1 className="text-[40px] leading-[40px] mt-3">Discover the seamless process using Durekt</h1>
+            <h1 className="text-[30px] mdx3:text-[40px] leading-[40px] mt-3">Discover the seamless process using Durekt</h1>
             <p className="text-[#A1A1AA] text-[16px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
 
             <div className="w-[10em]">
@@ -325,17 +325,17 @@ export default function Home() {
       </div>
       
       {/* OUR PRICING */}
-      <div className="bg-[#000000] px-[8em] py-[9em] text-center">
+      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[8em] py-[4em] mdx4:py-[9em] text-center">
           <div>
             <h2 className="text-colour-gradient">OUR PRICING</h2>
-            <h1 className="text-[45px] leading-[40px] ">Simple, easy pricing</h1>
-            <div className="relative inline-block mt-5">
+            <h1 className="text-[35px] sm:text-[45px] leading-[40px] ">Simple, easy pricing</h1>
+            <div className="relative inline-block mt-2 sm:mt-5 text-[13px] sm:text-[14px]">
               <p className="text-[#A1A1AA] ">Best Pricing for you, for more information <span className="text-[#C32782] underline font-[700]">Click Here</span></p>
               <Line2 className="absolute scale-[0.8] right-0 translate-x-[75%]" />
             </div>
           </div>
 
-          <div className="flex gap-8 mt-[7em]">
+          <div className="grid mdx3:grid-cols-2 mdx5:flex gap-[1em] sm:gap-[2%] mt-[3em] sm:mt-[7em]">
             {[0, 2, 2].map((item, index) => (
               <div
                 className="p-[1.5px] flex-1 rounded-md"
@@ -388,12 +388,12 @@ export default function Home() {
       </div>
 
       {/* FAQ */}
-      <div className="bg-[#161529] px-[5em] py-[5em] relative">
+      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[5em] relative">
         <h2 className="text-colour-gradient ">FAQ</h2>
-        <h1 className="text-[50px] w-[13em] leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
-        <Image className="absolute scale-[0.5] bottom-[-500px] opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        <h1 className="text-[30px] sm:text-[50px] w-[90%] sm:w-[13em] leading-[37px] sm:leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
+        <Image className="hidden sm:flex absolute scale-[0.5] bottom-[-500px] opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
-        <div className="mt-[80px]">
+        <div className="mt-[40px] sm:mt-[80px]">
           {faqs.slice(0, visible).map((faq, index) => {
             return (
               <Accordion key={index} className="mt-[5px] py-1 z-[2] px-2 bg-[#000000B2] border-b border-b-[#C32782] text-[#DBDBDB] ">
@@ -443,8 +443,8 @@ export default function Home() {
       </div>
 
       {/* READY TRANSFORM */}
-      <div className="bg-[#161529] relative px-[5em] pt-[15em] pb-[10em] text-center flex flex-col">
-          <h1 className="text-[50px] font-[500]">Ready to Transform Your Sales Team?</h1>
+      <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[3em] sm:pt-[15em] pb-[10em] text-center flex flex-col">
+          <h1 className="text-[35px] sm:text-[50px] font-[500]">Ready to Transform Your Sales Team?</h1>
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
           <div className="flex gap-4 w-[25em] mx-auto mt-14">
@@ -452,8 +452,8 @@ export default function Home() {
               <Button className=" rounded-sm">Request a Demo</Button>
           </div>
 
-          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[80px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
-          <Image className="absolute scale-[1] h-[18em] w-[18em] right-[80px] opacity-[1] z-[1] rotate-[180deg]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
+          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:left-[80px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
+          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:right-[80px] opacity-[1] z-[1] rotate-[180deg]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
 
       </div>
     </HomeLayout>
