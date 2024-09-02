@@ -100,10 +100,10 @@ export default function Home() {
     <HomeLayout>
       <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[5em] overflow-hidden">
         <div className="flex flex-col mdx3:flex-row justify-between ">
-          <div className=" w-[90%] sm:w-[28.5em] mt-7 ">
-            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781]">AI-Powered</span> Call Analysis</h1>
+          <div className=" w-[100%] sm:w-[28.5em] mt-7 z-[2] ">
+            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
             <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mx-auto w-[80%] sm:w-auto flex-wrap sm:flex-nowrap">
               <Button className="py-3 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Get Started</Button>
               <Button className="py-3 rounded-sm bg-transparent border text-[#B3387F] border-[#B3387F] hover:bg-[#B3387F] transition-all active:scale-[0.95]">Download Extension</Button>
             </div>
@@ -154,12 +154,12 @@ export default function Home() {
       </div>
       
       {/* FEATURES */}
-      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[1em] mdx3:pb-[0em] pt-[4em] mdx3:pt-0 mdx3:py-[5em] text-center ">
+      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[1em] mdx3:pb-[0em] pt-[4em]  mdx3:py-[5em] text-center ">
         <h2 className="text-colour-gradient">FEATURES</h2>
         <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
         <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
 
-        <div className="flex mt-10 border border-[#495677] rounded-lg overflow-hidden">
+        <div className="flex flex-col-reverse mdx4:flex-row mt-10 border border-[#495677] rounded-lg overflow-hidden">
           <div className="flex flex-col justify-center relative bg-gradient-to-r from-[#414F729C] to-[#323E5A28] px-8 py-14 flex-1 text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
@@ -177,7 +177,7 @@ export default function Home() {
           </div>
           {/*  */}
           <div className="bg-[#71717A] px-3 py-12 flex-1 ">
-            <Image src={featureimg} className="w-[100%] h-[23vw]" alt="feature" width={10000} height={10000} />
+            <Image src={featureimg} className="w-[100%] h-[20em] mdx4:h-[23vw]" alt="feature" width={10000} height={10000} />
           </div>
         </div>
         <div className="flex flex-col gap-10 mdx3:flex-row mdx3:gap-4 py-5 z-[2] relative px-8 border border-[#495677] rounded-lg bg-gradient-to-r from-[#414F729C] to-[#323E5A28] mt-5 ">
@@ -310,7 +310,7 @@ export default function Home() {
         {/*  */}
         <div className=" flex-1 flex flex-col justify-center ">
 
-          <div className="w-[28em]">
+          <div className="w-[100%] sm:w-[28em]">
             <h2 className="text-colour-gradient" >HOW IT WORKS</h2>
             <h1 className="text-[30px] mdx3:text-[40px] leading-[40px] mt-3">Discover the seamless process using Durekt</h1>
             <p className="text-[#A1A1AA] text-[16px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
@@ -325,13 +325,12 @@ export default function Home() {
       </div>
       
       {/* OUR PRICING */}
-      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[8em] py-[4em] mdx4:py-[9em] text-center">
+      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[4em] mdx4:py-[9em] text-center">
           <div>
             <h2 className="text-colour-gradient">OUR PRICING</h2>
             <h1 className="text-[35px] sm:text-[45px] leading-[40px] ">Simple, easy pricing</h1>
             <div className="relative inline-block mt-2 sm:mt-5 text-[13px] sm:text-[14px]">
-              <p className="text-[#A1A1AA] ">Best Pricing for you, for more information <span className="text-[#C32782] underline font-[700]">Click Here</span></p>
-              <Line2 className="absolute scale-[0.8] right-0 translate-x-[75%]" />
+              <p className="text-[#A1A1AA] ">Best Pricing for you, for more information <span className="text-[#C32782] underline font-[700] relative inline-block">Click Here <Line2 className="absolute scale-[0.8] right-0 translate-x-[75%]" /></span></p>
             </div>
           </div>
 
@@ -356,7 +355,7 @@ export default function Home() {
                   <div className="h-[1px] bg-[#27272A] my-7" />
                   <div className="flex flex-col gap-5">
                     {[1,2,3,4,5].map((item, index) => ( 
-                      <div className="flex items-center gap-2">
+                      <div className="flex text-[13px] sm:text-[14px] items-center gap-2">
                       <CheckIcon />
                       <p className="text-slate-300">Full Access to Landingfolio</p>
                       <InfoIcon />
@@ -444,16 +443,16 @@ export default function Home() {
 
       {/* READY TRANSFORM */}
       <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[3em] sm:pt-[15em] pb-[10em] text-center flex flex-col">
-          <h1 className="text-[35px] sm:text-[50px] font-[500]">Ready to Transform Your Sales Team?</h1>
+          <h1 className="text-[35px] leading-[50px] pb-3 sm:text-[50px] font-[500]">Ready to Transform Your Sales Team?</h1>
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
-          <div className="flex gap-4 w-[25em] mx-auto mt-14">
+          <div className="flex flex-col sm:flex-row gap-4 w-[80%] sm:w-[25em] mx-auto mt-14">
               <Button className=" rounded-sm bg-[#334155]">Start Free Trial</Button>
               <Button className=" rounded-sm">Request a Demo</Button>
           </div>
 
-          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:left-[80px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
-          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:right-[80px] opacity-[1] z-[1] rotate-[180deg]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
+          <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:left-[0px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
+          <Image className="absolute scale-[1] h-[18em] w-[18em] right-[0px] sm:right-[0px] opacity-[1] z-[1] rotate-[180deg]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
 
       </div>
     </HomeLayout>
