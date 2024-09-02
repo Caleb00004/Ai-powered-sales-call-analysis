@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .border-gradient {
+    @apply border;
+    border-width: 1px;
+    border-image: linear-gradient(to right, #48D0FF, #C32782) 1;
+  }
+}
+
+
+
+.text-colour-gradient {
+  /* background-image: radial-gradient(circle, #00FFB0, #48D0FF, #5F5FC9, #C32782);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+  font-size: 20px;
+  font-weight: 600;
+  animation: animate-gradient-text 1s ease 0s infinite alternate;
+}
+
+@keyframes animate-gradient-text {
+  0% {
+    color: #00FFB0;
+  }
+
+  33% {
+    color: #48D0FF;
+  }
+
+  66% {
+    color: #5F5FC9;
+  }
+
+  100% {
+    color: #C32782;
+  }
+
+}
+
 * {
   margin: 0;
   padding: 0;

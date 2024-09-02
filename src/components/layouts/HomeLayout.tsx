@@ -8,13 +8,13 @@ interface props {
 
 const HomeLayout:FC<props> = ({children}) => {
     return (
-        <>
+        <div className="overflow-hidden">
             <Navbar />
             <main className="text-white">
                 {children}
             </main>
             <Footer />
-        </>
+        </div>
     )
 }
 
