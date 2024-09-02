@@ -98,7 +98,7 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[5em] overflow-hidden">
+      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em] overflow-hidden">
         <div className="flex flex-col mdx3:flex-row justify-between ">
           <div className=" w-[100%] sm:w-[28.5em] mt-7 z-[2] ">
             <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
@@ -228,7 +228,7 @@ export default function Home() {
               }}
             >
             </div>
-            <div className="relative z-10 bg-[#18181B] px-6 py-8 rounded-xl">
+            <div className="relative z-[4] bg-[#18181B] px-6 py-8 rounded-xl">
               <div className="flex gap-2">
                 <StarIcon className="h-[20px] w-[20px]"  />
                 <StarIcon className="h-[20px] w-[20px]"  />
@@ -259,7 +259,7 @@ export default function Home() {
               }}
             >
             </div>
-            <div className="relative z-10 bg-[#18181B] px-6 py-8 rounded-xl">
+            <div className="relative z-[4] bg-[#18181B] px-6 py-8 rounded-xl">
               <div className="flex gap-2">
                 <StarIcon className="h-[20px] w-[20px]"  />
                 <StarIcon className="h-[20px] w-[20px]"  />

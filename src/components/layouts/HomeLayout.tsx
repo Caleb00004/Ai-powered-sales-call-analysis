@@ -10,7 +10,7 @@ const HomeLayout:FC<props> = ({children}) => {
     return (
         <div className="overflow-hidden">
             <Navbar />
-            <main className="text-white">
+            <main className="text-white pt-[4.5em] bg-[#161529]">
                 {children}
             </main>
             <Footer />

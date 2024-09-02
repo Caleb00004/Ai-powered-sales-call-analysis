@@ -21,6 +21,10 @@
   animation: animate-gradient-text 1s ease 0s infinite alternate;
 }
 
+.animate-nav-text {
+  animation: animate-gradient-text 1s ease 0s infinite alternate;
+}
+
 @keyframes animate-gradient-text {
   0% {
     color: #00FFB0;
