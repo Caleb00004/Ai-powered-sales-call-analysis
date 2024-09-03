@@ -6,4 +6,36 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* scroll-behavior: smooth; */
+}
+
+/* progress[value] {
+  --color: red;
+} */
+.circular-progress {
+  width: 7em;
+  height: 7em;
+  /* background: conic-gradient(#4CB4FF 50%, #d4d4d4  50%); */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.circular-progress .circle {
+  width: 5em;
+  height: 5em;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.circular-progress .score {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
 }

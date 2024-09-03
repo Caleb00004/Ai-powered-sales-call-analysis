@@ -46,9 +46,9 @@ const SideNav = () => {
                     <DealsIcon />
                     <p>Deals</p>
                 </Link>
-                <Link href={"/dashboard/managers"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "managers" && "bg-[#2B2A3D] text-white"}`}>
+                <Link href={"/dashboard/teams"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
                     <ManagerIcon />
-                    <p>Managers</p>
+                    <p>Teams</p>
                 </Link>
                 <Link href={"/dashboard/trainings"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
                     <TrainingIcon />

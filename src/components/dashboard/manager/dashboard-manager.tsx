@@ -5,6 +5,7 @@ import { DataGrid } from "@mui/x-data-grid"
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid"
 import { callData } from "@/testData"
 import { Box, useTheme } from "@mui/material"
+import ProgressDiagram from "@/components/secondary/ProgressDiagram"
 // import { tokens } from "@/components/util/theme"
 
 const ManagerDashboard = () => {
@@ -54,7 +55,7 @@ const ManagerDashboard = () => {
                 <h1 className="text-[1.5em] font-[600] text-[#333333]">Overview</h1>
                 <OutlineIcon className=" scale-[0.85] translate-y-[1px]" />
             </div>
-            <div className="flex justify-between gap-3">
+            <div className="flex flex-col mdx2:flex-row justify-between gap-3">
                 <div className="grid grid-cols-2 gap-4 w-full flex-[2]">
                     <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
@@ -69,7 +70,7 @@ const ManagerDashboard = () => {
                         <h1 className="text-[32px] font-semibold text-[#333333] py-1">800</h1>
                         <p className="text-[#828282] text-[12px]">sales calls analyzed this month</p>
                     </div>
-                                        <div className="bg-white rounded-2xl p-3">
+                    <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
                             <div className="flex gap-2 items-center">
                                 <CallIcon />
@@ -120,38 +121,57 @@ const ManagerDashboard = () => {
                         <tbody >
                             <tr>
                                 <th className="text-[12px] text-[#333333] font-[600] py-2 text-left">Sales Rep</th>
-                                <th className="text-[12px] text-[#333333] font-[600]">Overall</th>
-                                <th className="text-[12px] text-[#333333] font-[600]">Top Skills</th>
+                                <th className="text-[12px] text-[#333333] font-[600] text-center mdx2:text-left">Overall</th>
+                                <th className="text-[12px] text-[#333333] font-[600] text-center">Top Skills</th>
                             </tr>
                         </tbody>
-                        <tbody className="gap-4">
+                        <tbody className="gap-4 ">
                             <tr>
-                                <td className="flex items-center gap-2 ">
-                                   <p className="text-[12px]">1</p> 
+                                <td className="flex items-center gap-2 mb-3 ">
+                                   <p className="text-[12px] font-[600]">1</p> 
                                    <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
                                    <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
                                 </td>
                                 <td className="">
-                                    <div className="bg-slate-800 mx-auto rounded-full w-12 h-12"></div>
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                        <p className="font-[700] text-white">60</p>
+                                    </div>
                                 </td>
                                 <td className="" >
-                                    <div className=" bg-slate-800 mx-auto rounded-full h-12 w-12"></div>
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                        <p className="font-[700] text-white">GG</p>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
-                        <tbody>
+
+                        <tbody className="gap-4 ">
                             <tr>
-                                <td>Hello</td>
-                                <td>Hello</td>
-                                <td>Hello</td>
+                                <td className="flex items-center gap-2 ">
+                                   <p className="text-[12px] font-[600]">1</p> 
+                                   <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
+                                   <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
+                                </td>
+                                <td className="">
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                        <p className="font-[700] text-white">60</p>
+                                    </div>
+                                </td>
+                                <td className="" >
+                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                        <p className="font-[700] text-white">GG</p>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
+
+
                     </table>
                 </div>
             </div>
 
-            <div className="flex mt-4 gap-4">
-                <div className=" flex-[2] bg-white p-3 rounded-lg w-[100px]">
+            <div className="flex flex-col mdx2:flex-row mt-4 gap-4">
+                <div className=" flex-[2] bg-white p-3 rounded-lg mdx2:w-[100px]">
                     <div className="flex justify-between ">
                         <p className="text-[16px] text-[#333333] font-[600]">Recent call Analysis</p>
                         <p className=" underline text-[#C32782] text-[14px]">See all</p>
@@ -187,6 +207,18 @@ const ManagerDashboard = () => {
                     <div className="flex justify-between text-[#333333] font-[600]">
                         <p>Team Performance Distribution</p>
                         <MoreIcon />
+                    </div>
+                    
+                    <div className="flex flex-col gap-3">
+                        <div className=" flex gap-3 items-center mt-5">
+                            <ProgressDiagram />
+                            <p className="text-[18px] font-[500]">Overall Rating</p>
+                        </div>
+
+                        <div className=" flex gap-3 items-center mt-5">
+                            <ProgressDiagram />
+                            <p className="text-[18px] font-[500]">Overall Rating</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -44,11 +44,11 @@ const CustomGridFooter = () => {
             }}
         >
 
-            <div>
+            <div className='mt-4 sm:mt-0'>
                 <p className='text-[#626262] font-light text-[14px]'>{`Showing ${start} - ${end} of ${totalRowCount} entries`}</p>
             </div>
-            <div className='flex gap-4'>
-                <div className='flex items-center gap-2 justify-between'>
+            <div className='flex flex-col-reverse sm:flex-row gap-4  w-full sm:w-auto'>
+                <div className='flex items-center gap-2 justify-between mt-4 sm:mt-0 '>
                     <button className='mr-3 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1' onClick={handlePreviousPage} disabled={page === 0}><NavIcon /></button>
                     <div className='flex items-center gap-1 text-[#333333]'>
                         <p>Page</p>
@@ -64,7 +64,7 @@ const CustomGridFooter = () => {
                         value={pageSize}
                         onChange={handlePageSizeChange}
                         sx={{ height: "100%", border: "none"}}
-                        className=' border-rose-600 w-[70px] text-[13px] font-[500]'
+                        className=' border-rose-600 w-[70px] text-[13px] font-[500] ml-auto'
                     >
                         <MenuItem value={5}>5</MenuItem>
                         <MenuItem value={10}>10</MenuItem>
