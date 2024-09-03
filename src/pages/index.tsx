@@ -395,7 +395,7 @@ export default function Home() {
         <div className="mt-[40px] sm:mt-[80px]">
           {faqs.slice(0, visible).map((faq, index) => {
             return (
-              <Accordion key={index} className="mt-[5px] py-1 z-[2] px-2 bg-[#000000B2] border-b border-b-[#C32782] text-[#DBDBDB] ">
+              <Accordion key={index} className="mt-[5px] py-1 z-[2] px-2 bg-[#00000099] border-b border-b-[#C32782] text-[#DBDBDB] ">
                 <AccordionSummary
                   expandIcon={
                     <ArrowIcon className="rotate-[90deg] text-[#DBDBDB]" />
@@ -404,6 +404,7 @@ export default function Home() {
                   id="panel1a-header"
                 >
                   <Typography
+                    className="text-[14px] sm:text-[16px]"
                     sx={{
                       fontWeight: "400",
                       // color: "#4A2A23",
@@ -414,9 +415,9 @@ export default function Home() {
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography
+                    className="text-[13px] sm:text-[16px]"
                     sx={{
                       fontWeight: "500",
-                      fontSize: "14px",
                       color: "#FFFFFF",
                     }}
                   >
