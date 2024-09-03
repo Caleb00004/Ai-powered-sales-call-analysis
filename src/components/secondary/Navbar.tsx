@@ -119,7 +119,7 @@ const Navbar = () => {
                         <Arrorw onClick={() => handleDropdown("features")} className={` cursor-pointer rotate-[90deg] scale-[0.9]`} />
                         {(isDropdownOpen && dropdown === "features" ) && FEATURES}
                     </div>
-                    <Link className="text-[14px]" href={"#"} >Pricing</Link>
+                    <Link className="text-[14px]" href={"/pricing"} >Pricing</Link>
                     <div className={`${dropdown === "integrations" && "animate-nav-text"} flex gap-0 items-center relative`}>
                         <Link className="text-[14px]" href={"#"} >Integrations</Link>
                         <Arrorw onClick={() => handleDropdown("integrations")} className="cursor-pointer rotate-[90deg] scale-[0.9]" />
@@ -153,7 +153,7 @@ const Navbar = () => {
                         <p>Features</p>
                         <Arrorw className={` cursor-pointer rotate-[90deg] scale-[0.9]`} />
                     </div>
-                    <Link href={"#"} >Pricing</Link>
+                    <Link href={"/pricing"} >Pricing</Link>
                     <div onClick={() => handleDropdown("integrations")} className={`${dropdown === "integrations" && "animate-nav-text"} relative flex items-center`}>
                         <p>Integration</p>
                         <Arrorw className={` cursor-pointer rotate-[90deg] scale-[0.9]`} />

@@ -26,6 +26,8 @@ import Typography from "@mui/material/Typography";
 import rectangleImg from "../../public/images/homepage/rectangle.png"
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import gsap from "gsap";
+import PricingUi from "@/components/secondary/PricingUI";
+import FaqUI from "@/components/secondary/FaqUI";
 
 export const faqs = [
   {
@@ -334,56 +336,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid mdx3:grid-cols-2 mdx5:flex gap-[1em] sm:gap-[2%] mt-[3em] sm:mt-[7em]">
-            {[0, 2, 2].map((item, index) => (
-              <div
-                className="p-[1.5px] flex-1 rounded-md"
-                style={index + 1 == 2 ? {
-                  background: 'linear-gradient(to right, #48D0FF, #C32782)',
-                  transform: 'rotate(0deg)',
-                  transition: 'all 0.5s ease-in-out',
-                } : {
-
-                }}
-              >
-                <div className="bg-[#18181B] rounded-md text-left pt-8 pb-10 px-5">
-                  <div className="w-[80%]">
-                    <h2 className="text-[18px]">Personal</h2>
-                    <h1><span className="text-[40px]">$12</span><span className="text-[#71717A] pl-2">/month</span></h1>
-                    <p className="text-[#A1A1AA] pt-2">All the basic features to boost your freelance career</p>
-                  </div>
-                  <div className="h-[1px] bg-[#27272A] my-7" />
-                  <div className="flex flex-col gap-5">
-                    {[1,2,3,4,5].map((item, index) => ( 
-                      <div className="flex text-[13px] sm:text-[14px] items-center gap-2">
-                      <CheckIcon />
-                      <p className="text-slate-300">Full Access to Landingfolio</p>
-                      <InfoIcon />
-                    </div>))}
-                  </div>
-                  <Button className={`${index + 1 == 2 ? "bg-[#B3387F]" : "bg-transparent border rounded-md border-gradient "} mt-8 py-3 rounded-sm`}>Get 14 Days Free Trial</Button>
-                </div>
-              </div>
-            ))}
-
-            {/* <div className="relative bg-[#18181B] px-[1px] py-[1px] rounded-xl overflow-hidden">
-              <div 
-                ref={borderRef} 
-                className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-[#48D0FF] to-[#C32782]"
-                style={{
-                  background: 'linear-gradient(to right, #48D0FF, #C32782)',
-                  transform: 'rotate(0deg)',
-                  transition: 'all 0.5s ease-in-out',
-                }}
-              >
-              </div>
-              <h1>Hello</h1>
-                            <h1>Hello</h1>
-                                          <h1>Hello</h1>
-                                                        <h1>Hello</h1>
-
-            </div> */}
-          </div>
+          <PricingUi />
       </div>
 
       {/* FAQ */}
@@ -393,52 +346,7 @@ export default function Home() {
         <Image className="hidden sm:flex absolute scale-[0.5] bottom-[-500px] opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
         <div className="mt-[40px] sm:mt-[80px]">
-          {faqs.slice(0, visible).map((faq, index) => {
-            return (
-              <Accordion key={index} className="mt-[5px] py-1 z-[2] px-2 bg-[#00000099] border-b border-b-[#C32782] text-[#DBDBDB] ">
-                <AccordionSummary
-                  expandIcon={
-                    <ArrowIcon className="rotate-[90deg] text-[#DBDBDB]" />
-                  }
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    className="text-[14px] sm:text-[16px]"
-                    sx={{
-                      fontWeight: "400",
-                      // color: "#4A2A23",
-                    }}
-                  >
-                    {faq.question}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    className="text-[13px] sm:text-[16px]"
-                    sx={{
-                      fontWeight: "500",
-                      color: "#FFFFFF",
-                    }}
-                  >
-                    {faq.answer}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            );
-          })}
-          {/* <div className="w-[330px] bg-rose-500 flex items-center justify-center ">
-            <button
-              onClick={() => {
-                setShowMore(!showMore);
-                !showMore ? setVisible(faqs.length) : setVisible(4);
-              }}
-              className="text-[#087E18] flex items-center justify-center font-[600] transition-transform duration-200 delay-200  "
-            >
-              {!showMore ? `Show All (${faqs.length})` : "Show Less"}
-              <ArrowIcon className={`${showMore ? "text-[#585858] transition-transform transform rotate-[280deg] ease-out" : "text-[#585858]"} rotate-[90deg]`} />
-            </button>
-          </div> */}
+          <FaqUI />
         </div>
       </div>
 
