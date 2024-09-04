@@ -88,19 +88,29 @@ export default function Home() {
   const borderRef = useRef(null);
   const [showMore, setShowMore] = useState(false);
   const [visible, setVisible] = useState(5);
+  const scrollContentRef = useRef(null)
 
-  // useEffect(() => {
-  //   gsap.to(borderRef.current, {
-  //     rotation: 360,
-  //     duration: 1,
-  //     repeat: -1,
-  //     ease: 'linear'
+  // useEffect(() => { 
+  //   const scrollContent = scrollContentRef.current;
+
+  //   // Duplicate content for seamless scrolling
+  //   scrollContent.innerHTML += scrollContent.innerHTML;
+
+  //   // Infinite scroll using GSAP
+  //   gsap.to('.scroll-content', {
+  //     xPercent: -50, // Scroll 50% of the width
+  //     duration: 15,  // Adjust speed
+  //     ease: 'none',  // Linear movement
+  //     repeat: -1,    // Infinite repeat
+  //     modifiers: {
+  //       xPercent: gsap.utils.wrap(-100, 0),  // Ensures smooth continuous scrolling
+  //     },
   //   });
-  // }, []);
+  // },[])
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em] overflow-hidden">
+      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
         <div className="flex flex-col mdx3:flex-row justify-between ">
           <div className=" w-[100%] sm:w-[28.5em] mt-7 z-[2] ">
             <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
@@ -131,27 +141,39 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-[11em] mb-[3em] flex flex-col">
-          <p 
-            className=" mx-auto inline-block text-[20px] font-[600]"
-           style={{
-              backgroundImage: "radial-gradient(circle, #00FFB0, #48D0FF, #5F5FC9, #C32782)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
-            }}
-          >Trusted by Top Sales Teams Worldwide</p>
-          <div className="flex gap-12 justify-center mt-10 z-[2]">
-            <Waverio className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <Incanto className="hover:scale-[1.08] cursor-pointer transition-all " />
-          </div>
-          <div className="flex gap-8 justify-center mt-10 z-[2]">
-            <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <Preso className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all " />
-            <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all " />
-          </div>
+      </div>
+
+      {/* <div className="infinite-scroll-container">
+        <div className="scroll-content flex gap-12 mt-10 " ref={scrollContentRef}>
+          <Waverio className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Incanto className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Preso className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+          <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
+        </div>
+      </div> */}
+
+      <div className="mt-[11em] mb-[8em] flex flex-col">
+        <p 
+          className=" mx-auto inline-block text-[20px] font-[600]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #00FFB0, #48D0FF, #5F5FC9, #C32782)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          }}
+        >Trusted by Top Sales Teams Worldwide</p>
+        <div className="flex gap-12 pl-[18em] justify-center mt-10 z-[2] w-full overflow-auto scroll scroll no-scrollbar">
+          <Waverio className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Incanto className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Preso className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+          <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
         </div>
       </div>
       
