@@ -28,6 +28,8 @@ import rectangleImg from "../../public/images/homepage/rectangle.png"
 import gsap from "gsap";
 import PricingUi from "@/components/secondary/PricingUI";
 import FaqUI from "@/components/secondary/FaqUI";
+import Input from "@/components/primary/input";
+import TickIcon from "../../public/svgs/tick-icon.svg"
 
 export const faqs = [
   {
@@ -62,24 +64,24 @@ export const faqs = [
 
 const howItWorks = [
   {
-    header: "Easy Integration",
-    body: "Connect with your preferred communication platform in just a few clicks."
+    header: "Flexible Team Management",
+    body: "Lorem ipsum dolor sit amet consectetur. Eget non sit egestas nulla volutpat. Dictum mi suspendisse commodo non id est.",
+    img: "/images/homepage/flexible-team.png"
   },
   {
-    header: "Automatic Call Recording",
-    body: "Automatically record all your sales calls for analysis."
+    header: "Accurate Transcription and Analysis",
+    body: "Transcribe calls with high accuracy, even with diverse accents. Let AI analyze and grade calls based on your unique sales skills.",
+    img: "/images/homepage/accurate-transcription.png"
   },
   {
-    header: "Accurate Transcription",
-    body: "Transcribe calls into text with high accuracy, even with diverse accents."
+    header: "Accurate Transcription and Analysis",
+    body: "Transcribe calls with high accuracy, even with diverse accents. Let AI analyze and grade calls based on your unique sales skills.",
+    img: "/images/homepage/right-skills.png"
   },
   {
-    header: "AI-Powered Analysis",
-    body: "Let AI analyze and grade calls based on your unique sales training material."
-  },
-  {
-    header: "Actionable Insights",
-    body: "View detailed insights and feedback on a user-friendly dashboard."
+    header: "Accurate Transcription and Analysis",
+    body: "Transcribe calls with high accuracy, even with diverse accents. Let AI analyze and grade calls based on your unique sales skills.",
+    img: "/images/homepage/multi-lingual.png"
   },
 ]
 const inter = Inter({ subsets: ["latin"] });
@@ -110,75 +112,55 @@ export default function Home() {
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
-        <div className="flex flex-col mdx3:flex-row justify-between ">
-          <div className=" w-[100%] sm:w-[28.5em] mt-7 z-[2] ">
-            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
+      <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
+        <div className="flex flex-col justify-between ">
+          <div className=" w-[100%] text-center mt-7 z-[2] ">
+            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
             <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
-            <div className="flex gap-4 mx-auto w-[80%] sm:w-auto flex-wrap sm:flex-nowrap">
-              <Button className="py-3 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Get Started</Button>
-              <Button className="py-3 rounded-sm bg-transparent border text-[#B3387F] border-[#B3387F] hover:bg-[#B3387F] transition-all active:scale-[0.95]">Download Extension</Button>
+            <div className="flex gap-2 mx-auto w-[100%] sm:w-[35em] ">
+              <input type="text" placeholder="Enter your email" className="h-auto flex-1 px-4 bg-transparent border border-[#D4D4D4] rounded-sm" name="email" value="" onChange={() => {}} />
+              <Button className="flex-[0.75] sm:flex-[0.4] py-1 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Sign Up free</Button>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
+              <p className="text-white flex items-center gap-2"> <TickIcon /> Free 14-day trial</p>
+              <p className="text-white flex items-center gap-2"> <TickIcon /> No Credit card required</p>
             </div>
           </div>
-          <div className="relative mx-auto mt-[5em] mdx3:mt-0 ">
-            <Image className="absolute scale-[3] opacity-[0.6] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
-            <div className="flex relative z-[1] flex-col gap-1 ">
-              <div className="py-5 pl-4 pr-16 bg-[#000000B2] cursor-pointer hover:scale-[1.03] origin-bottom-right transition-all">
-                <h1 className="text-[2.5em] font-[400]">1M+</h1>
-                <p className="text-[#A1A1AA] text-[15px]">Analysis Delivered This Month</p>
-              </div>
-              <div className="py-5 pl-4 pr-16 bg-[#000000B2] cursor-pointer hover:scale-[1.03] origin-bottom-right transition-all">
-                <h1 className="text-[2.5em] font-[400]">46K+</h1>
-                <p className="text-[#A1A1AA] text-[15px]">Active Customers Rate</p>
-              </div>
-              <div className="py-5 pl-4 pr-16 bg-[#000000B2] cursor-pointer hover:scale-[1.03] origin-bottom-right transition-all">
-                <h1 className="text-[2.5em] font-[400]">99%</h1>
-                <p className="text-[#A1A1AA] text-[15px]">Customer Satisfaction Rate</p>
-              </div>
-            </div>
-
+          <div className="relative z-[2] mt-[3em] sm:mt-[7em] ">
+            <Image className="w-[100%] " src={"/images/homepage/hero-img.png"} alt="ellips" width={10000} height={10000} />
           </div>
         </div>
-
+          
+        <Image className="hidden sm:flex absolute origin-top-right scale-[0.45] translate-x-[200px] rotate-[10deg] top-[-100px]  opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        <Image className="hidden sm:flex absolute origin-top-left scale-[0.45] rotate-[-40deg] -translate-x-[35%] left-0 top-[350px]  opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        <Image className="flex sm:hidden absolute top-10 opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
       </div>
 
-      {/* <div className="infinite-scroll-container">
-        <div className="scroll-content flex gap-12 mt-10 " ref={scrollContentRef}>
-          <Waverio className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Incanto className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Preso className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-          <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0" />
-        </div>
-      </div> */}
-
-      <div className="mt-[11em] mb-[8em] flex flex-col">
+      <div className="mt-[2em] sm:mt-[0em] mb-[8em] flex flex-col ">
         <p 
-          className=" mx-auto inline-block text-[20px] font-[600]"
+          className=" mx-auto inline-block text-center text-[20px] font-[600]"
           style={{
             backgroundImage: "radial-gradient(circle, #00FFB0, #48D0FF, #5F5FC9, #C32782)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}
         >Trusted by Top Sales Teams Worldwide</p>
-        <div className="flex gap-12 pl-[18em] justify-center mt-10 z-[2] w-full overflow-auto scroll scroll no-scrollbar">
-          <Waverio className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Incanto className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Preso className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
-          <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 " />
+        <div className="flex gap-12 mt-5 sm:mt-10 z-[2] px-4 w-[100%] mx-auto overflow-auto scroll no-scrollbar">
+          <Waverio className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <LogoIpsum className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Alterbone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Incanto className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Tinygone className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Preso className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Ridoria className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
+          <Carbonia className="hover:scale-[1.08] cursor-pointer transition-all flex-shrink-0 h-[40px] w-[140px] sm:w-[170px] " />
         </div>
       </div>
       
       {/* FEATURES */}
-      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[1em] mdx3:pb-[0em] pt-[4em]  mdx3:py-[5em] text-center ">
+      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
         <h2 className="text-colour-gradient">FEATURES</h2>
         <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
         <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
@@ -201,7 +183,7 @@ export default function Home() {
           </div>
           {/*  */}
           <div className="bg-[#71717A] px-3 py-12 flex-1 ">
-            <Image src={featureimg} className="w-[100%] h-[20em] mdx4:h-[23vw]" alt="feature" width={10000} height={10000} />
+            <Image src={"/images/homepage/features.png"} className="w-[100%] h-[15em] mdx4:h-[23vw]" alt="feature" width={10000} height={10000} />
           </div>
         </div>
         <div className="flex flex-col gap-10 mdx3:flex-row mdx3:gap-4 py-5 z-[2] relative px-8 border border-[#495677] rounded-lg bg-gradient-to-r from-[#414F729C] to-[#323E5A28] mt-5 ">
@@ -229,17 +211,40 @@ export default function Home() {
 
        <Image className="absolute right-[25%] bottom-[-250px] scale-[1.4] h-[40em] w-[40em] rotate-[180deg] opacity-[0.25] " src={ellipse1} alt="ellips" width={10000} height={10000} />
       </div>
+      
+      {/* CALL ANALYSIS */}
+      <div className=" bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
+        <div className="w-[95%] sm:w-[32em]">
+          <h1 className="text-white text-[30px] sm:text-[40px] font-[600] leading-[43px]">Durekt <span className="text-[#C32782] inline-block">AI-Powered</span> Call Analysis</h1>
+          <p className="text-[#A1A1AA] mt-3 ">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 mt-14 sm:mt-24 gap-6 relative ">
+          {howItWorks.map(item => (
+            <div className="bg-[#000000B2] flex flex-col justify-between py-6 rounded-lg z-[2] ">
+              <Image alt="flexible-img" src={item.img} className="w-[100%]" height={5000} width={5000} />
+              <div className="mt-6 text-center px-6">
+                <h1 className="text-white font-[700] text-[20px]">{item.header}</h1>
+                <p className="text-[#A1A1AA] text-[14px] mt-2">{item.body}</p>
+              </div>
+            </div>
+          ))}
+
+          <Image className="hidden sm:flex absolute scale-[0.5] origin-bottom-left bottom-20 opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+          <Image className="hidden sm:flex absolute scale-[0.5] origin-bottom-right bottom-20 opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        </div>
+
+
+      </div>
         
       {/* TESTIMONIALS */}
-      <div className="flex flex-col mdx3:flex-row bg-black px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[12em] pb-[10em] ">
+      <div className="flex flex-col bg-black px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[4em] pb-[10em] ">
         <div className=" flex-1 flex flex-col items-center mdx3:items-start mb-[3em]">
           <h1 className="text-colour-gradient">Testimonials</h1>
-          <h1 className="text-[30px] text-center mdx3:text-left mdx3:text-[40px] w-[80%] mdx3:w-[8.5em] leading-[40px] mt-3">What Our Valuable Clients Say About Us</h1>
-          <div className="w-[10em] mt-8">
-            <Button>View all Testimonials</Button>
-          </div>
+          <h1 className="text-[30px] text-center mdx3:text-left mdx3:text-[45px] w-[100%] font-[600] leading-[40px] mt-3">What Our Valuable Clients Say About Us</h1>
         </div>
-        <div className="flex flex-col gap-6 flex-1">
+
+        <div className="flex gap-6 flex-1">
           
           <div className="relative bg-[#18181B] px-[1px] py-[1px] rounded-xl overflow-hidden">
             <div 
@@ -306,8 +311,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* HOW IT WORKS */}
-      <div className="flex flex-col-reverse mdx5:flex-row bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3.5em] mdx5:py-[10em] gap-12">
+      {/* <div className="flex flex-col-reverse mdx5:flex-row bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3.5em] mdx5:py-[10em] gap-12">
         
         <div className="relative flex-[0.85]">
           <Image className="absolute scale-[1.5] right-[140px] opacity-[0.7] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
@@ -331,7 +335,7 @@ export default function Home() {
 
           </div>
         </div>
-        {/*  */}
+
         <div className=" flex-1 flex flex-col justify-center ">
 
           <div className="w-[100%] sm:w-[28em]">
@@ -347,9 +351,10 @@ export default function Home() {
         </div>
 
       </div>
-      
+       */}
+
       {/* OUR PRICING */}
-      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[4em] mdx4:py-[9em] text-center">
+      {/* <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[4em] mdx4:py-[9em] text-center">
           <div>
             <h2 className="text-colour-gradient">OUR PRICING</h2>
             <h1 className="text-[35px] sm:text-[45px] leading-[40px] ">Simple, easy pricing</h1>
@@ -359,13 +364,44 @@ export default function Home() {
           </div>
 
           <PricingUi />
+      </div> */}
+
+      {/* HOW IT WORKS */}
+      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[4em] mdx4:py-[9em] text-center">
+        <h2 className="z-[2] relative text-colour-gradient" >HOW IT WORKS</h2>
+        <h1 className="z-[2] relative text-[30px] mdx3:text-[45px] leading-[40px] mt-5 font-[600]">Discover the seamless process using Durekt</h1>
+        <p className="z-[2] relative text-[#A1A1AA] text-[16px] sm:text-[20px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
+
+        <div className="flex overflow-y-hidden overflow-x-auto sm:grid sm:grid-cols-2 mdx4:grid-cols-3 gap-y-10 gap-x-6 px-[0em] sm:px-[2em] mdx2:px-[4em] mt-3 relative">
+          {[0,2,3,4,5,5].map(item => (
+            <div className="relative w-[18em] sm:w-auto flex-shrink-0 bg-[#18181B] z-[2] pb-[2px] rounded-sm overflow-hidden">
+              <div 
+                ref={borderRef} 
+                className="absolute inset-0 rounded-sm border-2 border-transparent bg-gradient-to-r from-[#48D0FF] to-[#C32782]"
+                style={{
+                  background: 'linear-gradient(to right, #48D0FF, #C32782)',
+                  transform: 'rotate(0deg)',
+                  transition: 'all 0.5s ease-in-out',
+                }}
+              >
+              </div>
+              <div className=" relative py-8 px-4 bg-[#18181B] flex flex-col items-center">
+                  <div className="bg-[#040408] w-10 h-10 rounded-full text-white text-center flex items-center justify-center">1</div>
+                  <h1 className="font-[700] text-[18px]">Sign Up</h1>
+                    <p className="text-[#A1A1AA] text-[14.5px] ">Lorem ipsum dolor sit amet consectetur. Leo et sit amet nunc bibendum scelerisque. Bibendum.</p>
+              </div>
+            </div>              
+          ))}
+
+          <Image className="absolute scale-[0.4] origin-bottom-left left-[30%] -bottom-24 opacity-[0.7] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        </div>
       </div>
 
       {/* FAQ */}
       <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[5em] relative">
         <h2 className="text-colour-gradient ">FAQ</h2>
-        <h1 className="text-[30px] sm:text-[50px] w-[90%] sm:w-[13em] leading-[37px] sm:leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
-        <Image className="hidden sm:flex absolute scale-[0.5] bottom-[-500px] opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        <h1 className="text-[30px] md:text-[50px] w-[90%] sm:w-[13em] leading-[37px] md:leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
+        <Image className="hidden sm:flex absolute scale-[0.5] border origin-top-right top-[50px] right-[25%]  opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
         <div className="mt-[40px] sm:mt-[80px]">
           <FaqUI />
