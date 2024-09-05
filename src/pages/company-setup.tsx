@@ -61,6 +61,7 @@ const CompanySetup = () => {
         },500)
     }
 
+    // @ts-ignore
     const handleUpdateSkills = (skill) => {
         console.log(skill)
         if (!(companyDetails.topSkills.includes(skill))) {
@@ -127,12 +128,12 @@ const CompanySetup = () => {
 
                 </div>}
 
-                {currentStep === 1 && <div className="flex flex-col items-center w-[90%] sm:w-[35em] ">
+                {currentStep === 1 && <div className="flex flex-col items-center w-[93%] sm:w-[35em] ">
                     <Logo />
-                    <h1 className="text-[1.5em] sm:text-[30px] font-[500] mt-3 " >Let's Completely Get you Set Up</h1>     
+                    <h1 className="text-[1.5em] sm:text-[30px] font-[500] mt-3 text-center " >Let's Completely Get you Set Up</h1>     
 
                     <div className="w-full" >
-                        <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md flex flex-col items-center px-[50px] py-8 mt-14">
+                        <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md flex flex-col items-center px-[20px] sm:px-[50px] py-8 mt-14">
                             <Picture />
                             <h1 className="text-[#333333] font-[600] text-[20px]">Hello, Evelyn Michael</h1>
                             <p className="text-[#71717A] text-[16px] pt-2">First tell us about your company</p>

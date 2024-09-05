@@ -8,6 +8,7 @@ import React, { FC, useState } from "react"
 import { useAuthSignUpMutation } from "../../../../../api-feature/apiSlice"
 import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import { useRouter } from "next/router"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -15,6 +16,7 @@ interface props {
 }
 
 const Signup:FC<props> = ({changeSection, accountType}) => {
+    const routeTo = useRouter()
     const [authSignUp] = useAuthSignUpMutation()
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
@@ -35,6 +37,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        routeTo.push("/company-setup")
         if (formDetails.password !== formDetails.confirm_password) {
             setPassWordsMatch(false)
             return

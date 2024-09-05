@@ -115,7 +115,7 @@ export default function Home() {
       <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
         <div className="flex flex-col justify-between ">
           <div className=" w-[100%] text-center mt-7 z-[2] ">
-            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
+            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="animate-nav-text text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
             <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
             <div className="flex gap-2 mx-auto w-[100%] sm:w-[35em] ">
               <input type="text" placeholder="Enter your email" className="h-auto flex-1 px-4 bg-transparent border border-[#D4D4D4] rounded-sm" name="email" value="" onChange={() => {}} />
@@ -401,7 +401,7 @@ export default function Home() {
       <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[5em] relative">
         <h2 className="text-colour-gradient ">FAQ</h2>
         <h1 className="text-[30px] md:text-[50px] w-[90%] sm:w-[13em] leading-[37px] md:leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
-        <Image className="hidden sm:flex absolute scale-[0.5] border origin-top-right top-[50px] right-[25%]  opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        <Image className="hidden sm:flex absolute scale-[0.5] origin-top-right top-[50px] right-[25%]  opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
 
         <div className="mt-[40px] sm:mt-[80px]">
           <FaqUI />
@@ -414,7 +414,7 @@ export default function Home() {
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
           <div className="flex flex-col sm:flex-row gap-4 w-[80%] sm:w-[25em] mx-auto mt-14">
-              <Button className=" rounded-sm bg-[#334155]">Start Free Trial</Button>
+              <Button className=" rounded-sm " color="bg-[#334155]">Start Free Trial</Button>
               <Button className=" rounded-sm">Request a Demo</Button>
           </div>
 

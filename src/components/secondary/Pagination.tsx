@@ -14,7 +14,7 @@ interface props {
         handlePageSizeChange: (event: React.ChangeEvent<{ value: unknown }>) => void,
     }) => ReactNode, // Custom footer as a function
 }
-
+// @ts-ignore
 export const getProgressColor = (value) => {
   if (value <= 69) return 'bg-[#FF5A60]';
   if (value >= 70 && value <= 79) return 'bg-[#F9CA24]';
@@ -37,6 +37,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
     };
 
     // Function to handle page change
+    // @ts-ignore
     const handlePageChange = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);

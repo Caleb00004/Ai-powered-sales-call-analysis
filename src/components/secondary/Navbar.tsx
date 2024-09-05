@@ -107,37 +107,37 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="fixed w-full z-[5] bg-[#161529] text-white border-b-[0.1px] border-b-[#71717A] " >
+        <nav className="fixed w-full z-[6] bg-[#161529] text-white border-b-[0.1px] border-b-[#71717A] " >
             <div className="z-[4] bg-[#161529] relative py-6 mdx3:py-4 flex justify-between items-center px-6">
                 <Link href={"/"}>
                     <Logo2 />
                 </Link>
                 {/* WEB NAV */}
                 <div className="hidden  mdx4:flex gap-5 items-center ">
-                    <div className={`${dropdown === "features" && "animate-nav-text"} flex gap-0 items-center relative`}>
-                        <Link className="text-[14px]" href={"#"} >Features</Link>
-                        <Arrorw onClick={() => handleDropdown("features")} className={` cursor-pointer rotate-[90deg] scale-[0.9]`} />
+                    <div onClick={() => handleDropdown("features")} className={`${dropdown === "features" && "animate-nav-text"} flex gap-0 cursor-pointer items-center relative`}>
+                        <div className="text-[14px]" >Features</div>
+                        <Arrorw className={` rotate-[90deg] scale-[0.9]`} />
                         {(isDropdownOpen && dropdown === "features" ) && FEATURES}
                     </div>
                     <Link className="text-[14px]" href={"/pricing"} >Pricing</Link>
-                    <div className={`${dropdown === "integrations" && "animate-nav-text"} flex gap-0 items-center relative`}>
-                        <Link className="text-[14px]" href={"#"} >Integrations</Link>
-                        <Arrorw onClick={() => handleDropdown("integrations")} className="cursor-pointer rotate-[90deg] scale-[0.9]" />
+                    <div  onClick={() => handleDropdown("integrations")} className={`${dropdown === "integrations" && "animate-nav-text"} flex gap-0 cursor-pointer items-center relative`}>
+                        <div className="text-[14px]" >Integrations</div>
+                        <Arrorw className=" rotate-[90deg] scale-[0.9]" />
                         {(isDropdownOpen && dropdown === "integrations") && INTEGRATIONS}
                     </div>
-                    <div className={`${dropdown === "resources" && "animate-nav-text"} flex gap-0 items-center relative`}>
-                        <Link className="text-[14px]" href={"#"} >Resources</Link>
-                        <Arrorw onClick={() => handleDropdown("resources")} className="cursor-pointer rotate-[90deg] scale-[0.9]" />
+                    <div onClick={() => handleDropdown("resources")} className={`${dropdown === "resources" && "animate-nav-text"} flex gap-0 cursor-pointer items-center relative`}>
+                        <div className="text-[14px]" >Resources</div>
+                        <Arrorw className=" rotate-[90deg] scale-[0.9]" />
                         {(isDropdownOpen && dropdown === "resources" )  && RESOURCES}
                     </div>
                 </div>
                 <div className="hidden mdx4:flex gap-3 w-[13em]  z-[2]">
-                    <div className="w-[100%] ">
+                    <Link href={"/onboarding"} className="w-[100%] ">
                         <Button className="font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
-                    </div>
-                    <div className="w-[100%] ">
+                    </Link>
+                    <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="w-[100%] ">
                         <Button className="font-light ">Sign up</Button>
-                    </div>
+                    </Link>
                 </div>
                 {/* FOR MOBILE */}
                 <div onClick={toggleNav} className="flex cursor-pointer mdx4:hidden flex-col gap-2 py-1">
@@ -164,8 +164,12 @@ const Navbar = () => {
                     </div>
                     
                     <div className="flex w-[120px] flex-col gap-3">
-                        <Button className=" font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
-                        <Button className="font-light ">Sign up</Button>
+                        <Link href={"/onboarding"} className="w-[100%] ">
+                            <Button className=" font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>                        
+                        </Link>
+                        <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}}>
+                            <Button className="font-light ">Sign up</Button>
+                        </Link>
                     </div>
                 </div>
 

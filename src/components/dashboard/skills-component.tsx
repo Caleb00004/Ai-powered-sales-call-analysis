@@ -24,8 +24,10 @@ const SkillsComponent = () => {
                         renderItems={(data) => (
                             data.map(item => (
                                 <div className="flex hover:bg-slate-100 mdx4:hover:scale-[1.025]  transition-all cursor-pointer py-2 justify-between border-b  items-center">
+                                    {/* @ts-ignore */}
                                     <p className="font-[500]">{item.short}</p>
                                     <div className="flex items-center justify-between gap-5 ">
+                                        {/* @ts-ignore */}
                                         <p className={`${getProgressColor(item.score)} h-6 rounded-md px-8 font-[600]`}>{item.score}</p>
                                         <p className="rotate-[90deg] p-1 scale-[0.9] rounded-full bg-[#2B2A3D99] text-white"><ArrowIcon classname="text-red-400" /></p>
                                     </div>
@@ -94,6 +96,7 @@ const SkillsComponent = () => {
                                     <span className='text-[#333333] text-[14px] font-[400]'>Entries per page:</span>
                                     <Select
                                         value={itemsPerPage}
+                                        // @ts-ignore
                                         onChange={handlePageSizeChange}
                                         sx={{ height: "100%", border: "none"}}
                                         className=' border-rose-600 w-[70px] text-[13px] ml-auto font-[500]'

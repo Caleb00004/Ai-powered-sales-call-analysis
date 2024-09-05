@@ -52,6 +52,7 @@ const TrainingsComponent = () => {
                         <p>Topic</p>
                         <p>Enrolled Team</p>
                     </div>
+                    {/* @ts-ignore */}
                     {!selectedModule.id && 
                         <div className=" flex-1 flex items-center justify-center">
                             <p className="font-[500]">Select A Module</p>
