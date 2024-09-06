@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Inter } from "next/font/google";
 import HomeLayout from "@/components/layouts/HomeLayout";
 import Button from "@/components/primary/Button";
 import Image from "next/image";
@@ -13,23 +12,12 @@ import Tinygone from "../../public/svgs/tinygone.svg"
 import Preso from "../../public/svgs/prese.svg"
 import Ridoria from "../../public/svgs/ridoria.svg"
 import Carbonia from "../../public/svgs/carbonia.svg"
-import featureimg from "../../public/images/homepage/features-img.png"
-import StarIcon from "../../public/svgs/Star-icon.svg"
-import Line2 from "../../public/svgs/Line-2.svg"
-import CheckIcon from "../../public/svgs/check-icon.svg"
-import InfoIcon from "../../public/svgs/outline.svg"
-import ArrowIcon from "../../public/svgs/arrow2-icon.svg"
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import rectangleImg from "../../public/images/homepage/rectangle.png"
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import gsap from "gsap";
 import PricingUi from "@/components/secondary/PricingUI";
 import FaqUI from "@/components/secondary/FaqUI";
-import Input from "@/components/primary/input";
 import TickIcon from "../../public/svgs/tick-icon.svg"
+import Carousel from "@/components/secondary/LandingPageCarousel.";
 
 export const faqs = [
   {
@@ -84,51 +72,54 @@ const howItWorks = [
     img: "/images/homepage/multi-lingual.png"
   },
 ]
-const inter = Inter({ subsets: ["latin"] });
+
+const items = [
+  <div style={{ background: 'red', height: '200px' }}>Item 1</div>,
+  <div style={{ background: 'blue', height: '200px' }}>Item 2</div>,
+  <div style={{ background: 'green', height: '200px' }}>Item 3</div>,
+  <div style={{ background: 'orange', height: '200px' }}>Item 4</div>,
+
+];
 
 export default function Home() {
   const borderRef = useRef(null);
-  const [showMore, setShowMore] = useState(false);
-  const [visible, setVisible] = useState(5);
-  const scrollContentRef = useRef(null)
+  const heroTextRef = useRef(null)
+  const supportRef = useRef(null)
+  const heroImgRef = useRef(null)
 
-  // useEffect(() => { 
-  //   const scrollContent = scrollContentRef.current;
-
-  //   // Duplicate content for seamless scrolling
-  //   scrollContent.innerHTML += scrollContent.innerHTML;
-
-  //   // Infinite scroll using GSAP
-  //   gsap.to('.scroll-content', {
-  //     xPercent: -50, // Scroll 50% of the width
-  //     duration: 15,  // Adjust speed
-  //     ease: 'none',  // Linear movement
-  //     repeat: -1,    // Infinite repeat
-  //     modifiers: {
-  //       xPercent: gsap.utils.wrap(-100, 0),  // Ensures smooth continuous scrolling
-  //     },
-  //   });
-  // },[])
+  useEffect(() => {
+    gsap.timeline()
+      .fromTo(".heroContainer", {autoAlpha: 0}, {autoAlpha: 1})
+      .fromTo(heroTextRef.current, {opacity: 0, x: 20}, {opacity: 1, x: 0, ease: "back"})
+      .fromTo(supportRef.current, {opacity: 0, x: -20}, {opacity: 1, x: 0, ease: "back"}, "<")
+      .fromTo(heroImgRef.current, {scale: 0}, {scale: 1, ease: "back"})
+  }, []);
 
   return (
     <HomeLayout>
-      <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
-        <div className="flex flex-col justify-between ">
+      <div className=" bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
+        <div className="heroContainer invisible flex flex-col justify-between ">
           <div className=" w-[100%] text-center mt-7 z-[2] ">
-            <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="animate-nav-text text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
-            <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
-            <div className="flex gap-2 mx-auto w-[100%] sm:w-[35em] ">
-              <input type="text" placeholder="Enter your email" className="h-auto flex-1 px-4 bg-transparent border border-[#D4D4D4] rounded-sm" name="email" value="" onChange={() => {}} />
-              <Button className="flex-[0.75] sm:flex-[0.4] py-1 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Sign Up free</Button>
+            <div ref={heroTextRef}>
+              <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="animate-nav-text text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
+              <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
-              <p className="text-white flex items-center gap-2"> <TickIcon /> Free 14-day trial</p>
-              <p className="text-white flex items-center gap-2"> <TickIcon /> No Credit card required</p>
+            <div ref={supportRef}>
+              <div className="flex gap-2 mx-auto w-[100%] sm:w-[35em] ">
+                <input type="text" placeholder="Enter your email" className="h-auto flex-1 px-4 bg-transparent border border-[#D4D4D4] rounded-sm" name="email" value="" onChange={() => {}} />
+                <Button className="flex-[0.75] sm:flex-[0.4] py-1 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Sign Up free</Button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
+                <p className="text-white flex items-center gap-2"> <TickIcon /> Free 14-day trial</p>
+                <p className="text-white flex items-center gap-2"> <TickIcon /> No Credit card required</p>
+              </div>
             </div>
+
           </div>
 
-          <div className="relative z-[2] mt-[3em] sm:mt-[7em] ">
+          <div ref={heroImgRef} className="relative z-[2] mt-[3em] sm:mt-[7em] ">
             <Image className="w-[100%] " src={"/images/homepage/hero-img.png"} alt="ellips" width={10000} height={10000} />
           </div>
         </div>
@@ -138,7 +129,7 @@ export default function Home() {
         <Image className="flex sm:hidden absolute top-10 opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
       </div>
 
-      <div className="mt-[2em] sm:mt-[0em] mb-[8em] flex flex-col ">
+      <div className=" mt-[2em] sm:mt-[0em] mb-[8em] flex flex-col ">
         <p 
           className=" mx-auto inline-block text-center text-[20px] font-[600]"
           style={{
@@ -160,7 +151,7 @@ export default function Home() {
       </div>
       
       {/* FEATURES */}
-      <div className="bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
+      <div className=" bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
         <h2 className="text-colour-gradient">FEATURES</h2>
         <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
         <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
@@ -213,7 +204,7 @@ export default function Home() {
       </div>
       
       {/* CALL ANALYSIS */}
-      <div className=" bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
+      <div className="  bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
         <div className="w-[95%] sm:w-[32em]">
           <h1 className="text-white text-[30px] sm:text-[40px] font-[600] leading-[43px]">Durekt <span className="text-[#C32782] inline-block">AI-Powered</span> Call Analysis</h1>
           <p className="text-[#A1A1AA] mt-3 ">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
@@ -238,136 +229,25 @@ export default function Home() {
       </div>
         
       {/* TESTIMONIALS */}
-      <div className="flex flex-col bg-black px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[4em] pb-[10em] ">
+      <div className=" flex flex-col bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[4em] pb-[2em] ">
         <div className=" flex-1 flex flex-col items-center mdx3:items-start mb-[3em]">
           <h1 className="text-colour-gradient">Testimonials</h1>
           <h1 className="text-[30px] text-center mdx3:text-left mdx3:text-[45px] w-[100%] font-[600] leading-[40px] mt-3">What Our Valuable Clients Say About Us</h1>
         </div>
 
-        <div className="flex gap-6 flex-1">
-          
-          <div className="relative bg-[#18181B] px-[1px] py-[1px] rounded-xl overflow-hidden">
-            <div 
-              ref={borderRef} 
-              className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-[#48D0FF] to-[#C32782]"
-              style={{
-                background: 'linear-gradient(to right, #48D0FF, #C32782)',
-                transform: 'rotate(0deg)',
-                transition: 'all 0.5s ease-in-out',
-              }}
-            >
-            </div>
-            <div className="relative z-[4] bg-[#18181B] px-6 py-8 rounded-xl">
-              <div className="flex gap-2">
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon  className="h-[20px] w-[20px]" />
-              </div>
-              <p className="py-4 text-[14.5px]">Lorem ipsum dolor sit amet consectetur. Arcu convallis eget adipiscing pellentesque et semper non. Et diam et at risus convallis hendrerit sit ac quam. Molestie. Arcu convallis eget adipiscing pellentesque et semper non.</p>
-              <div className="mt-2 flex gap-2">
-                <div className="w-[43px]  bg-slate-600 rounded-full">
-                </div>
-                <div>
-                  <p className="text-[#71717A] text-[14.5px] font-[600]">Name Surname</p>
-                  <p className="text-[12px] mt-1 ">Director of ICT, CreativeGig</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative bg-[#18181B] px-[1px] py-[1px] rounded-xl overflow-hidden">
-            <div 
-              ref={borderRef} 
-              className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-[#48D0FF] to-[#C32782]"
-              style={{
-                background: 'linear-gradient(to right, #48D0FF, #C32782)',
-                transform: 'rotate(0deg)',
-                transition: 'all 0.5s ease-in-out',
-              }}
-            >
-            </div>
-            <div className="relative z-[4] bg-[#18181B] px-6 py-8 rounded-xl">
-              <div className="flex gap-2">
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon className="h-[20px] w-[20px]"  />
-                <StarIcon  className="h-[20px] w-[20px]" />
-              </div>
-              <p className="py-4 text-[14.5px]">Lorem ipsum dolor sit amet consectetur. Arcu convallis eget adipiscing pellentesque et semper non. Et diam et at risus convallis hendrerit sit ac quam. Molestie. Arcu convallis eget adipiscing pellentesque et semper non.</p>
-              <div className="mt-2 flex gap-2">
-                <div className="w-[43px]  bg-slate-600 rounded-full">
-                </div>
-                <div>
-                  <p className="text-[#71717A] text-[14.5px] font-[600]">Name Surname</p>
-                  <p className="text-[12px] mt-1 ">Director of ICT, CreativeGig</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* <div className="flex flex-col-reverse mdx5:flex-row bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3.5em] mdx5:py-[10em] gap-12">
-        
-        <div className="relative flex-[0.85]">
-          <Image className="absolute scale-[1.5] right-[140px] opacity-[0.7] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
-
-          <div className="relative flex py-8 px-4 sm:px-10 flex-col  bg-[#000000c0] rounded-lg z-[2]  ">
-              
-              {howItWorks.map((item, i) => (
-                <div className="mb-8">
-                  <div className="flex gap-5">
-                    <div className="w-[50px] flex-shrink-0 h-[50px] flex justify-center items-center rounded-full bg-[#18181B] text-white">
-                      <p>{i+1}</p>
-                    </div>  
-                    <div>
-                      <p className="font-[700] text-[18px]">{item.header}</p>
-                        <p className="text-[#A1A1AA] text-[14px]">{item.body}</p>
-                    </div>
-                  </div>
-                  {!(i + 1 === 5) && <div className="h-[1.3px] w-full mt-8 bg-gradient-to-r from-[#5F5FC9] to-[#C32782]"></div>}
-                </div>
-              ))}
-
-          </div>
-        </div>
-
-        <div className=" flex-1 flex flex-col justify-center ">
-
-          <div className="w-[100%] sm:w-[28em]">
-            <h2 className="text-colour-gradient" >HOW IT WORKS</h2>
-            <h1 className="text-[30px] mdx3:text-[40px] leading-[40px] mt-3">Discover the seamless process using Durekt</h1>
-            <p className="text-[#A1A1AA] text-[16px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
-
-            <div className="w-[10em]">
-              <Button className="rounded-sm">Get Started Now</Button>
-            </div>
-          </div>
-
-        </div>
+         <Carousel
+            items={items}
+            largeScreenItems={2}
+            smallScreenItems={1}
+            gap={20}
+            draggable={true}
+            customItemStyle={{ padding: '10px', borderRadius: '10px' }}
+          />
 
       </div>
-       */}
-
-      {/* OUR PRICING */}
-      {/* <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[4em] mdx4:py-[9em] text-center">
-          <div>
-            <h2 className="text-colour-gradient">OUR PRICING</h2>
-            <h1 className="text-[35px] sm:text-[45px] leading-[40px] ">Simple, easy pricing</h1>
-            <div className="relative inline-block mt-2 sm:mt-5 text-[13px] sm:text-[14px]">
-              <p className="text-[#A1A1AA] ">Best Pricing for you, for more information <span className="text-[#C32782] underline font-[700] relative inline-block">Click Here <Line2 className="absolute scale-[0.8] right-0 translate-x-[75%]" /></span></p>
-            </div>
-          </div>
-
-          <PricingUi />
-      </div> */}
 
       {/* HOW IT WORKS */}
-      <div className="bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[4em] mdx4:py-[9em] text-center">
+      <div className=" bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[4em] mdx4:py-[9em] text-center">
         <h2 className="z-[2] relative text-colour-gradient" >HOW IT WORKS</h2>
         <h1 className="z-[2] relative text-[30px] mdx3:text-[45px] leading-[40px] mt-5 font-[600]">Discover the seamless process using Durekt</h1>
         <p className="z-[2] relative text-[#A1A1AA] text-[16px] sm:text-[20px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
@@ -398,7 +278,7 @@ export default function Home() {
       </div>
 
       {/* FAQ */}
-      <div className="bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[5em] relative">
+      <div className=" bg-[#161529] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[5em] relative">
         <h2 className="text-colour-gradient ">FAQ</h2>
         <h1 className="text-[30px] md:text-[50px] w-[90%] sm:w-[13em] leading-[37px] md:leading-[50px] mt-[0.5em]">Answers to our frequently asked questions</h1>
         <Image className="hidden sm:flex absolute scale-[0.5] origin-top-right top-[50px] right-[25%]  opacity-[0.5] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
@@ -409,7 +289,7 @@ export default function Home() {
       </div>
 
       {/* READY TRANSFORM */}
-      <div className="bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[3em] sm:pt-[15em] pb-[10em] text-center flex flex-col">
+      <div className=" bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pt-[3em] sm:pt-[15em] pb-[10em] text-center flex flex-col">
           <h1 className="text-[35px] leading-[50px] pb-3 sm:text-[50px] font-[500]">Ready to Transform Your Sales Team?</h1>
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
