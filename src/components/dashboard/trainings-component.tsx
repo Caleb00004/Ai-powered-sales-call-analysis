@@ -34,7 +34,7 @@ const TrainingsComponent = () => {
                             <p className="text-[#5B5B5B] text-[14px]">filter by</p>
                         </div>
                     </div>
-                    <Search className="w-[100%]" value="" onChange={() => {}} />
+                    <Search showIcon className="w-[100%]" value="" onChange={() => {}} />
                     <div className="flex flex-col mt-2 ">
                         {ModulesData.map(item => (
                             // @ts-ignore
