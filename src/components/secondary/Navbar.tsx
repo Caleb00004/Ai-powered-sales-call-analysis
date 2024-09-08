@@ -67,16 +67,16 @@ const Navbar = () => {
         </div>
 
     const RESOURCES = 
-        <div className="text-[14px] text-white absolute w-[14em] z-[2] bg-[#02010E] mt-[21em] mdx4:mt-[4em] mdx4:-ml-10 rounded-2xl top-0 px-1 ">        
-            <div className="flex gap-2 items-center py-5 px-3">
+        <div className="text-[14px] text-white absolute w-[14em] z-[2] bg-[#02010E] mt-[21em] mdx4:mt-[4em] mdx4:-ml-10 rounded-2xl top-0 px-1 overflow-hidden ">        
+            <div className="flex gap-2 items-center py-5 px-3 hover:bg-[#0e0c22]">
                 <HelpIcon />
                 <p className="">Help Center</p>
             </div>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[0.9px]" />
-            <div className="flex gap-2 items-center py-5 px-3">                
+            <Link href={"/faq"} className="flex gap-2 items-center py-5 px-3 hover:bg-[#0e0c22]">                
                 <InfoIcon />
                 <p className="">FAQ</p>
-            </div>
+            </Link>
         </div>
 
     const handleDropdown = (value: "features" | "integrations" | "resources" ) => {

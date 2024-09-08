@@ -50,7 +50,7 @@ export const faqs = [
   }
 ];
 
-const howItWorks = [
+const callAnalysis = [
   {
     header: "Flexible Team Management",
     body: "Lorem ipsum dolor sit amet consectetur. Eget non sit egestas nulla volutpat. Dictum mi suspendisse commodo non id est.",
@@ -71,6 +71,33 @@ const howItWorks = [
     body: "Transcribe calls with high accuracy, even with diverse accents. Let AI analyze and grade calls based on your unique sales skills.",
     img: "/images/homepage/multi-lingual.png"
   },
+]
+
+const howItWorks = [
+  {
+    header: "Sign up",
+    body: "Lorem ipsum dolor sit amet consectetur. Placerat venenatis."
+  },
+  {
+    header: "Add Team Members",
+    body: "Lorem ipsum dolor sit amet consectetur. Leo et sit amet nunc bibendum scelerisque. Bibendum."
+  },
+  {
+    header: "Schedule Meetings",
+    body: "Add a deal and provide meeting link"
+  },
+  {
+    header: "Automatic Call Recording",
+    body: "Automatically join and  record all your scheduled sales calls for analysis."
+  },
+  {
+    header: "AI-Powered Analysis",
+    body: "AI analyzes and grade calls based on your unique sales skills"
+  },
+  {
+    header: "Actionable Insights",
+    body: "View detailed insights and feedback on a user-friendly dashboard."
+  }
 ]
 
 const items = [
@@ -211,7 +238,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 mt-14 sm:mt-24 gap-6 relative ">
-          {howItWorks.map(item => (
+          {callAnalysis.map(item => (
             <div className="bg-[#000000B2] flex flex-col justify-between py-6 rounded-lg z-[2] ">
               <Image alt="flexible-img" src={item.img} className="w-[100%]" height={5000} width={5000} />
               <div className="mt-6 text-center px-6">
@@ -252,8 +279,8 @@ export default function Home() {
         <h1 className="z-[2] relative text-[30px] mdx3:text-[45px] leading-[40px] mt-5 font-[600]">Discover the seamless process using Durekt</h1>
         <p className="z-[2] relative text-[#A1A1AA] text-[16px] sm:text-[20px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
 
-        <div className="flex overflow-y-hidden overflow-x-auto sm:grid sm:grid-cols-2 mdx4:grid-cols-3 gap-y-10 gap-x-6 px-[0em] sm:px-[2em] mdx2:px-[4em] mt-3 relative">
-          {[0,2,3,4,5,5].map(item => (
+        <div className="flex pb-2 sm:pb-0 overflow-y-hidden overflow-x-auto sm:grid sm:grid-cols-2 mdx4:grid-cols-3 gap-y-10 gap-x-6 px-[0em] sm:px-[2em] mdx2:px-[4em] mt-3 relative">
+          {howItWorks.map((item, i) => (
             <div className="relative w-[18em] sm:w-auto flex-shrink-0 bg-[#18181B] z-[2] pb-[2px] rounded-sm overflow-hidden">
               <div 
                 ref={borderRef} 
@@ -265,10 +292,10 @@ export default function Home() {
                 }}
               >
               </div>
-              <div className=" relative py-8 px-4 bg-[#18181B] flex flex-col items-center">
-                  <div className="bg-[#040408] w-10 h-10 rounded-full text-white text-center flex items-center justify-center">1</div>
-                  <h1 className="font-[700] text-[18px]">Sign Up</h1>
-                    <p className="text-[#A1A1AA] text-[14.5px] ">Lorem ipsum dolor sit amet consectetur. Leo et sit amet nunc bibendum scelerisque. Bibendum.</p>
+              <div className=" relative py-8 px-4 bg-[#18181B] flex flex-col items-center h-full">
+                  <div className="bg-[#040408] w-10 h-10 rounded-full text-white text-center flex items-center justify-center">{i+1}</div>
+                  <h1 className="font-[700] text-[18px] mt-5">{item.header}</h1>
+                  <p className="text-[#A1A1AA] text-[14.5px] mt-1 ">{item.body}</p>
               </div>
             </div>              
           ))}

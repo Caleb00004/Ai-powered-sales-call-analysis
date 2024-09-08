@@ -200,7 +200,7 @@ const Deals = () => {
                             <div className="bg-white flex items-center gap-3 border-t mt-auto p-3">
                                 <AttachmentIcon />
                                 <div className="flex w-full relative">
-                                    <SendIcon className="absolute right-4 bottom-2 cursor-pointer" />
+                                    <SendIcon className="absolute right-4 bottom-2 cursor-pointer text-[#0073E6]" />
                                     <input className="bg-[#F8F9FD] w-full px-4 py-2 rounded-3xl" type="text" placeholder="Type your message here..." />
                                 </div>
                             </div>

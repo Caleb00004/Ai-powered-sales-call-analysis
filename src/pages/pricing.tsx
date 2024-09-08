@@ -4,9 +4,31 @@ import CheckIcon from "../../public/svgs/check-icon.svg"
 import InfoIcon from "../../public/svgs/outline.svg"
 import PricingUi from "@/components/secondary/PricingUI"
 import FaqUI from "@/components/secondary/FaqUI"
+import { useEffect, useRef, useState } from "react"
+import gsap from "gsap"
 
 
 const Pricing = () => {
+    const [dispalyMonthly, setDisplayMonthly] = useState(true)
+    const backgroundOverlay = useRef(null)
+
+    const animation = useRef<gsap.core.Timeline | null>(null);
+
+    useEffect(() => {
+        // Create the animation timeline only once
+        animation.current = gsap.timeline({ paused: true })
+            .fromTo(backgroundOverlay.current, { x: 0, ease: "power1" }, { x: "100%", ease: "power1" });
+    }, []);
+
+    const handleChangeSection = () => {
+        console.log("Clicked")
+        
+        dispalyMonthly && animation.current?.restart()
+        !dispalyMonthly && animation.current?.reverse()
+
+        setDisplayMonthly(prev => !prev)
+    }
+
     return (
         <HomeLayout>
             <div className="text-[#333333] bg-white py-[3em] sm:py-[4em]">
@@ -15,18 +37,19 @@ const Pricing = () => {
                     <p className="text-[#5B5B5B] font-[500]">User friendly pricing plans for your business</p>
 
                     <div className="border flex flex-col-reverse sm:flex-row gap-2 sm:gap-0 p-[3px] w-full rounded-md mt-4">
-                        <div className="bg-[#C32782] font-[700] text-[15px] text-white rounded-md text-center flex-1 py-1">
-                            <p>Monthly</p>
+                        <div onClick={handleChangeSection} className="relative font-[700] text-[15px] rounded-md text-center flex-1 py-1 cursor-pointer">
+                            <p className={`relative transition-all z-[2] ${dispalyMonthly ? "text-white" : "text-[#333333]"}`}>Monthly</p>
+                            <div ref={backgroundOverlay} className="bg-[#B3387F] rounded-md w-full h-full absolute top-0"></div>
                         </div>
-                        <div className=" flex-1 font-[700] flex justify-center gap-2 mt-1 sm:mt-0 items-center">
-                            <p className="text-[15px]">YEARLY</p>
-                            <span className="text-[12px] flex items-center px-4 bg-[#5F5FC9] text-white rounded-md">SAVE UP TO 20%</span>
+                        <div onClick={handleChangeSection} className=" flex-1 font-[700] flex justify-center gap-2 mt-1 sm:mt-0 items-center cursor-pointer">
+                            <p className={`text-[15px] transition-all relative z-[2] ${!dispalyMonthly ? "text-white" : "text-[#333333]"} `}>YEARLY</p>
+                            <span className="text-[12px] flex items-center px-4 bg-[#5F5FC9] text-white rounded-md relative z-[2]">SAVE UP TO 20%</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="md px-[1em] sm:px-[4em] xl:px-[8em] text-white">
-                    <PricingUi />
+                    <PricingUi monthly={dispalyMonthly} />
                 </div>
 
                 <div className="mx-auto pt-[7em] p-[1em] sm:p-[4em]">
