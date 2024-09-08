@@ -238,21 +238,17 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 mt-14 sm:mt-24 gap-6 relative ">
-          {callAnalysis.map(item => (
+          {callAnalysis.map((item, i) => (
             <div className="bg-[#000000B2] flex flex-col justify-between py-6 rounded-lg z-[2] ">
-              <Image alt="flexible-img" src={item.img} className="w-[100%]" height={5000} width={5000} />
+              <Image alt="flexible-img" src={item.img} className={`w-[100%] my-auto px-2 ${i+1 === 3 && "py-[5em] sm:h-auto"}`} height={5000} width={5000} />
               <div className="mt-6 text-center px-6">
                 <h1 className="text-white font-[700] text-[20px]">{item.header}</h1>
                 <p className="text-[#A1A1AA] text-[14px] mt-2">{item.body}</p>
               </div>
             </div>
           ))}
-
-          <Image className="hidden sm:flex absolute scale-[0.5] origin-bottom-left bottom-20 opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
-          <Image className="hidden sm:flex absolute scale-[0.5] origin-bottom-right bottom-20 opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+        
         </div>
-
-
       </div>
         
       {/* TESTIMONIALS */}

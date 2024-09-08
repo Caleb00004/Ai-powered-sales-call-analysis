@@ -37,11 +37,11 @@ const Pricing = () => {
                     <p className="text-[#5B5B5B] font-[500]">User friendly pricing plans for your business</p>
 
                     <div className="border flex flex-col-reverse sm:flex-row gap-2 sm:gap-0 p-[3px] w-full rounded-md mt-4">
-                        <div onClick={handleChangeSection} className="relative font-[700] text-[15px] rounded-md text-center flex-1 py-1 cursor-pointer">
+                        <div onClick={handleChangeSection} className={`${dispalyMonthly ? "bg-[#B3387F]" : "bg-transparent"} sm:bg-transparent relative font-[700] text-[15px] rounded-md text-center flex-1 py-1 cursor-pointer`}>
                             <p className={`relative transition-all z-[2] ${dispalyMonthly ? "text-white" : "text-[#333333]"}`}>Monthly</p>
-                            <div ref={backgroundOverlay} className="bg-[#B3387F] rounded-md w-full h-full absolute top-0"></div>
+                            <div ref={backgroundOverlay} className="hidden sm:flex bg-[#B3387F] rounded-md w-full h-full absolute top-0"></div>
                         </div>
-                        <div onClick={handleChangeSection} className=" flex-1 font-[700] flex justify-center gap-2 mt-1 sm:mt-0 items-center cursor-pointer">
+                        <div onClick={handleChangeSection} className={`${!dispalyMonthly ? "bg-[#B3387F]" : "bg-transparent"} py-1 sm:py-0 sm:bg-transparent rounded-md flex-1 font-[700] flex justify-center gap-2 sm:mt-0 items-center cursor-pointer`}>
                             <p className={`text-[15px] transition-all relative z-[2] ${!dispalyMonthly ? "text-white" : "text-[#333333]"} `}>YEARLY</p>
                             <span className="text-[12px] flex items-center px-4 bg-[#5F5FC9] text-white rounded-md relative z-[2]">SAVE UP TO 20%</span>
                         </div>

@@ -38,9 +38,31 @@ const HomeLayout:FC<props> = ({children}) => {
                         <p onClick={closeModal} className=" cursor-pointer absolute text-[#545454] right-4 top-3 font-[600]">X</p>
                     </div>
 
-                    <div className="h-[50vh] bg-[#F8F8FA] overflow-auto">
-
+                    {/* MESSAGES SECTION */}
+                    <div className="h-[60vh] bg-[#F8F8FA] overflow-auto text-[#545454] px-4 py-4">
+                        <div className="flex items-center gap-2 mb-4">
+                            <MessageIcon className="h-8 w-8" />
+                            <p>Durekt</p>
+                        </div>
+                        <div className="bg-white mb-3 w-fit pl-2 pr-6 py-3 rounded-r-3xl rounded-tl-2xl">
+                            <p>Hello there! 👋 It's nice to meet you!</p>
+                        </div>
+                        <div className="bg-white mb-3 w-fit pl-2 pr-6 py-3 rounded-r-3xl rounded-tl-2xl">
+                            <p>What brings you here today? Please use the navigation below or ask me anything about Durekt.</p>
+                        </div>
+                        <div className="text-center text-[14px] flex flex-col gap-3">
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                                <p className="text-[#C32782] border border-[#C32782] bg-white flex-1 px-2 py-2 rounded-3xl hover:bg-[#C32782] hover:text-white transition-all active:scale-[0.95] cursor-pointer">Using Durekt</p>
+                                <p className="text-[#C32782] border border-[#C32782] bg-white flex-1 px-2 py-2 rounded-3xl hover:bg-[#C32782] hover:text-white transition-all active:scale-[0.95] cursor-pointer">Free Trail</p>
+                                <p className="text-[#C32782] border border-[#C32782] bg-white flex-1 px-2 py-2 rounded-3xl hover:bg-[#C32782] hover:text-white transition-all active:scale-[0.95] cursor-pointer">Pricing</p>
+                            </div>
+                            <div className="flex gap-2 sm:gap-4">
+                                <p className="text-[#C32782] border border-[#C32782] bg-white flex-1 px-2 py-2 rounded-3xl hover:bg-[#C32782] hover:text-white transition-all active:scale-[0.95] cursor-pointer">I have questions</p>
+                                <p className="text-[#C32782] border border-[#C32782] bg-white flex-1 px-2 py-2 rounded-3xl hover:bg-[#C32782] hover:text-white transition-all active:scale-[0.95] cursor-pointer">Contact Us</p>
+                            </div>
+                        </div>
                     </div>
+
                     <div className="bg-white border flex border-[#D4D4D4]">
                         <div className="relative w-full">
                             <input placeholder="Type Your Mesage here" className="py-2 px-5 w-full text-black"/>
