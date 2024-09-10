@@ -37,6 +37,7 @@ const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRo
                     className="w-[14em]" 
                     value={searchInput}
                     onChange={handleSearchChange}
+                    showIcon
                 />
                 <div className="flex gap-4 items-center">
                     <div onClick={handleFilter} className="cursor-pointer border hover:bg-[#5B5B5B] hover:text-white active:scale-[0.95] transition-all border-[#D4D4D4] flex items-center text-[14px] gap-2 rounded-md text-[#5B5B5B] px-3 py-1">

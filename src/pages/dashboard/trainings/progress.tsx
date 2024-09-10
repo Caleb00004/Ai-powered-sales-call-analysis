@@ -50,7 +50,7 @@ const TrainingProgress = () => {
                             <p className="text-[#5B5B5B] text-[14px]">filter by</p>
                         </div>
                     </div>
-                    <Search className="w-[100%]" value="" onChange={() => {}} />
+                    <Search showIcon className="w-[100%]" value="" onChange={() => {}} />
                     <div className="flex flex-col mt-2 ">
                         {TeamProgresData.map(item => (
                             <div onClick={() => setSelectedMember(item)} className="flex text-[15px] text-[#333333] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] hover:scale-[1.03] duration-[0.09s] py-3 px-2">

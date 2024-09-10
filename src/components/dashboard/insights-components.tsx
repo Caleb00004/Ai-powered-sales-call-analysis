@@ -90,12 +90,14 @@ const InsightsComponent = () => {
                 <div className="flex items-center gap-2 relative">
                     <p className="font-[500] ">Sales Rep:</p>
                     <div onClick={handleDropDown} className="border cursor-pointer border-[#A4A4A4] font-[500] text-[14px] rounded-lg flex justify-between items-center gap-10 pl-2">
+                        {/* @ts-ignore */}
                         <p>{selectedSalesRep ? selectedSalesRep.name : "Select sales-rep"}</p>
                         <ArrorwIcon className="scale-[0.9]" />
                     </div>
 
                     <div className={`${openDropDown ? "h-auto max-h-[50vh] opacity-1" : "h-0 max-h-0 opacity-[0.4]"} bg-white text-[14px] transition-all text-[#333333] font-[500] absolute w-full overflow-auto top-0 mt-9`}>
                         {testSalesRepList.map(item => (
+                            // @ts-ignore
                             <p onClick={() => {handleDropDown(), setSelectedSalesRep(item)}} className="py-2 border-b pl-2 hover:bg-slate-100 cursor-pointer">{item.name}</p>
                         ))}
                     </div>  
@@ -111,12 +113,15 @@ const InsightsComponent = () => {
                         renderItems={(data) => (
                             data.map((item, index) => (
                                 <div className="flex text-[#333333] font-[500] justify-between py-3 border-b" key={index}>
+                                    {/* @ts-ignore */}
                                     <p className="flex flex-1 "><span className="mr-7">{index + 1}</span> {item.short} = {item.name} </p>
                                     <div className="flex gap-4 items-center flex-1">
                                         <div className="relative w-[100%] h-4 bg-gray-200 ">
+                                            {/* @ts-ignore */}
                                             <div className={`h-4 ${getProgressColor(item.score)}`} style={{ width: `${item.score}%` }}>
                                             </div>
                                         </div>
+                                        {/* @ts-ignore */}
                                         <p>{item.score}</p>
                                     </div>
                                 </div>                                
@@ -129,6 +134,7 @@ const InsightsComponent = () => {
                         {selectedSalesRep && <div className="font-[700] rounded-md text-white w-full mb-3 pb-2 pt-3 text-center bg-slate-400 px-2 mx-3 mt-auto">
                             <p className="bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] px-4 py-3 inline-block rounded-full">87</p>
                             <p className="mt-2 text-[18px]">Potential Rating</p>
+                            {/* @ts-ignore */}
                             <p className="bg-green-400 rounded-md py-3 mt-3 text-[25px]">{selectedSalesRep.name}</p>
                         </div>}
                     </div>

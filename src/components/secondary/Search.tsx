@@ -5,13 +5,15 @@ interface props {
     className?: string
     placeholder?: string;
     value: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    containerClassName?: string;
+    showIcon?: boolean
 }
 
-const Search:FC<props> = ({className, value, onChange, placeholder}) => {
+const Search:FC<props> = ({className, value, onChange, placeholder, containerClassName, showIcon}) => {
     return (
-        <div className={` rounded-md border font-light relative `}>
-            <SearchIcon className="absolute right-3 top-[19%]" />
+        <div className={` rounded-md border font-light relative ${containerClassName} `}>
+            {showIcon && <SearchIcon className="absolute right-3 top-[19%]" />}
             <input
                 value={value}
                 onChange={onChange}

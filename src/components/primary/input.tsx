@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from "react"
 import LockIcon from "../../../public/svgs/lock_icon.svg"
 
 interface Props {
-  label: ReactNode; 
+  label?: ReactNode; 
   placeholder: string; 
   type?: "email" | "text" | "password";
   name: string;

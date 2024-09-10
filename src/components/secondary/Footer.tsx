@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Logo2 from "../../../public/svgs/Logo_white.svg"
 import Button from "../primary/Button"
 
@@ -13,19 +14,18 @@ const Footer = () => {
                 <div className="flex flex-col">
                     <p className="text-[#94A3B8] pb-6">COMPANY</p>
                     <div className="flex flex-col gap-5">
-                        <p>About</p>
-                        <p>Features</p>
-                        <p>Pricing</p>
-                        <p>Blog</p>
+                        <Link href={"features-integration"}>Features</Link>
+                        <Link href={"/pricing"}>Pricing</Link>
+                        <Link href={"/durekt-meet"}>Integration</Link>
                     </div>
                 </div>
                 <div className="flex flex-col">
                     <p className="text-[#94A3B8] pb-6">HELP</p>
                     <div className="flex flex-col gap-5">
-                        <p>Customer Support</p>
-                        <p>Delivery Details</p>
-                        <p>Terms & Conditions</p>
-                        <p>Privacy Policy</p>
+                        <p>Contact Us</p>
+                        <p>FAQ</p>
+                        <Link href={"/terms-of-service"}>Terms & Conditions</Link>
+                        <Link href={"/privacy-policy"} >Privacy Policy</Link>
                     </div>
                 </div>
             </div>
