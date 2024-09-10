@@ -11,9 +11,10 @@ interface Props {
   options?: string[]; // For select input options
   select?: boolean; // If true, render a select input
   className?: string;
+  disabled?: boolean
 }
 
-const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', name, value, onChange, options, select, className }) => {
+const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabled, name, value, onChange, options, select, className }) => {
 
   return (
     <div className={`flex w-full flex-col items-start mb-5 ${className}`}>
@@ -37,6 +38,7 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', name, 
           <>
             {type === "password" && <LockIcon className="absolute bottom-[25%] right-4" />}
             <input
+              disabled={disabled}
               value={value}
               onChange={onChange}
               className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md"

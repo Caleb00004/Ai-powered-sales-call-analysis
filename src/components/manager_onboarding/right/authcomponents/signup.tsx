@@ -29,7 +29,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
         confirm_password: ""
     })
 
-     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
         const value = e.target.value
         setFormDetails(prev => ({...prev, [name]: value}))

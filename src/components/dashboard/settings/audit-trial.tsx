@@ -4,29 +4,46 @@ import { AuditLogData } from "@/testData"
 import Table from "@/components/secondary/Table"
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { GridColDef, GridRowHeightParams } from "@mui/x-data-grid"
+import CalenderIcon from "../../../../public/svgs/calendar-icon.svg"
+import Modal from "@/components/primary/Modal"
+
 
 const AuditTrail = () => {
     const [searchInput, setSearchInput] = useState("")
+    const [dateData, setDateData] = useState({
+        start: "",
+        end: ""
+    })
     const rows = AuditLogData
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState(false)
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
 
     useEffect(() => {
         // Function to update screen size state
         const updateScreenSize = () => {
             setIsLargeScreen(window.innerWidth > 940);
         };
-
         // Initial check
         updateScreenSize();
-
-        // Add resize event listener
         window.addEventListener('resize', updateScreenSize);
 
-        // Cleanup listener on component unmount
         return () => {
             window.removeEventListener('resize', updateScreenSize);
         };
     }, []);
+
+    const handleUpdateDate = (e: ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target
+        setDateData(prev => ({...prev, [name]: value}))
+    }
 
     const filteredRows = useMemo(() => {
         return rows.filter(row =>
@@ -97,6 +114,21 @@ const AuditTrail = () => {
 
     return (
         <div>
+            <Modal isOpen={modalOpen} onClose={closeModal}>
+                <div className="p-4 pt-10 flex flex-col sm:flex-row gap-4"> 
+                    <div className="w-full text-left flex flex-col gap-1">
+                        <p className="font-[600]">Start</p>
+                        <input type="date" name="start" value={dateData.start} onChange={handleUpdateDate} className="border w-full px-2 py-1" />
+                    </div>
+                    <div className="w-full text-left flex flex-col gap-1">
+                        <p className="font-[600]">End</p>
+                        <input type="date" name="end" value={dateData.end} onChange={handleUpdateDate} className="border w-full px-2 py-1" />
+                    </div>
+                </div>
+                <div className="px-4 pb-3 mt-2">
+                    <Button onClick={closeModal}>Ok</Button>
+                </div>
+            </Modal>
             <div className="border bg-white px-5 sm:px-7 py-6 mb-6 rounded-md text-left ">
                 <div className="flex flex-col md:flex-row justify-between gap-5">
                     <div className="w-full text-[#6B6C70] ">
@@ -128,15 +160,16 @@ const AuditTrail = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-end justify-between gap-5 mt-5">
+                <div className="flex flex-col lg:flex-row items-end justify-between gap-5 mt-5">
                     <div className="w-full">
                         <p  className=' text-[14px] font-[400] text-[#6B6C70]'>Period</p>
-                        <div className="border p-2 rounded-lg mt-1">
-                            <span>Start to Stop</span>
+                        <div onClick={openModal} className=" cursor-pointer border p-2 rounded-lg mt-1 relative">
+                            <span>{dateData.start || "Start"} to {dateData.end || "End"}</span>
+                            <CalenderIcon className="absolute right-3 top-[27%]" />
                         </div>
                     </div>
                     <div className="w-full flex gap-4  ">
-                        <div className="flex justify-between md:pl-10 w-full gap-3">
+                        <div className="flex justify-between lg:pl-10 w-full gap-3">
                             <Button className="bg-transparent border border-[#B3387F] "><p className="text-[#B3387F]">Clear all</p></Button>
                             <Button>Generate</Button>
                         </div>

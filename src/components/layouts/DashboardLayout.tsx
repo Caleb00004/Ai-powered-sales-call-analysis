@@ -1,14 +1,37 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode, useContext } from "react"
 import SideNav from "../secondary/SideNav"
 import TopNav from "../secondary/DashboardTopNav"
+import { Snackbar } from "@mui/material"
+import { appContext } from "../contexts/appContext"
 
 interface props {
     children: ReactNode
 }
 
 const DashboardLayout:FC<props> = ({children}) => {
+    const {toastDetails, setToastDetails, handleToastClose} = useContext(appContext)
+
     return (
         <>  
+            <Snackbar
+                open={toastDetails.open}
+                autoHideDuration={toastDetails.duration}
+                onClose={handleToastClose}
+                message={toastDetails.message}
+                anchorOrigin={{vertical: "top", horizontal: "center"}}
+                sx={{
+                    "& .MuiSnackbarContent-root": {
+                        backgroundColor: "white",
+                        border: "2px solid #B3387F",
+                        color: "black",
+                        fontSize: "14px",
+                        // marginTop: "50px",
+                        // width: "20em"
+                    }
+                }}
+
+            />
+
             <div className="flex">
                 {/* <div className="flex-col flex-1 "> */}
                 <div className="hidden sm:block sm:w-[30vw] mdx2:w-[20vw] ">

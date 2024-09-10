@@ -4,7 +4,7 @@ import SystemSettings from "../settings/system-settings"
 import AuditTrail from "../settings/audit-trial"
 
 const SettingsManager = () => {
-    const [currentSection, setCurrentSection] = useState<"profile" | "system" | "audit-trial">("audit-trial")
+    const [currentSection, setCurrentSection] = useState<"profile" | "system" | "audit-trial">("profile")
 
     const handleSwitchSection = (newSection: "profile" | "system" | "audit-trial") => {
         setCurrentSection(newSection)
@@ -16,8 +16,8 @@ const SettingsManager = () => {
                 <h1 className="text-[1.5em] font-[600] text-[#333333]">Settings</h1>
             </div>
 
-            <div className={`flex ${currentSection === "audit-trial" ? "flex-col mdx2:flex-row" : "flex-col md:flex-row"} gap-4 text-center mt-3`}>
-                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md w-[100%] md:w-[20em] flex flex-col h-min">
+            <div className={`flex flex-col mdx2:flex-row gap-4 text-center mt-3`}>
+                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md w-[100%] mdx2:w-[20em] flex flex-col h-min">
                     <div className="py-4">
                         <div className="bg-slate-300 rounded-full h-14 w-14 mx-auto">
                         </div>
