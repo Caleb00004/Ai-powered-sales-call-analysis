@@ -12,10 +12,10 @@ import itemImg5 from "../../../../public/images/onboarding_pages/manager_item5.p
 import ellipse1 from "../../../../public/images/onboarding_pages/Ellipse1.png"
 import ellipse3 from "../../../../public/images/onboarding_pages/Ellipse3.png"
 import Image from "next/image"
-
+import { authAccountType } from "@/pages/onboarding"
 
 interface props {
-    accountType: "sales-rep" | "manager"
+    accountType: authAccountType
 }
 
 const LeftContainer:FC<props> = ({accountType}) => {

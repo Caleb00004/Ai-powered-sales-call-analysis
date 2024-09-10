@@ -5,10 +5,10 @@ import LeftContainer from "@/components/manager_onboarding/left/leftContainer";
 import gsap from "gsap";
 import { useEffect } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
- 
+export type authAccountType = "sales-rep" | "manager"
+
 const Onboarding = () => {
-    const ACCOUNT_TYPE: "sales-rep" | "manager" = "sales-rep"
+    const accountType: authAccountType = "sales-rep"
 
     useEffect(() => {
         gsap.timeline()
@@ -23,8 +23,8 @@ const Onboarding = () => {
 
     return (
         <main className="onboarding overflow-hidden invisible flex flex-col mdx3:flex-row mdx3:h-screen ">
-            <LeftContainer accountType={ACCOUNT_TYPE} />
-            <RightContainer accountType={ACCOUNT_TYPE} />
+            <LeftContainer accountType={accountType} />
+            <RightContainer accountType={accountType} />
         </main>
     );
 }

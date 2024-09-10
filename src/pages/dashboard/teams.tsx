@@ -1,11 +1,12 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout"
+import TeamsComponent from "@/components/dashboard/teams-component"
 
-const Managers = () => {
+const Teams = () => {
     return (
         <DashboardLayout>
-            <h1>Managers</h1>
+            <TeamsComponent />
         </DashboardLayout>
     )
 }
 
-export default Managers
+export default Teams
