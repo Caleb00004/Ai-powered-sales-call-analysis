@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { GridColDef, GridEventListener, useGridApiRef } from "@mui/x-data-grid";
+import { GridColDef, GridEventListener, GridRowHeightParams, GridRowHeightReturnValue, useGridApiRef } from "@mui/x-data-grid";
 import Search from "./Search";
 import FilterIcon from "../../../public/svgs/filter-icon.svg"
 import { Box } from '@mui/material';
@@ -15,9 +15,13 @@ interface props {
     csv?: boolean;
     handleSelectCell?: GridEventListener<"cellClick">;
     title?: string
+    columnHeaderHeight?: number
+    rowHeight?: number
+    className?: string,
+    getRowHeight?: (params: GridRowHeightParams) => GridRowHeightReturnValue
 }
 
-const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
+const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeight, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
     const apiRef = useGridApiRef();
 
     function handleExport() {
@@ -65,10 +69,17 @@ const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRo
                             lineHeight: "1.2", // Adjust line height for better readability
                             display: "flex",
                             alignItems: "center",                                
-                        }
+                        },
+                        "& .fullLength-column--cell": {
+                             whiteSpace: "normal", // Ensures text wraps
+                            wordWrap: "break-word", // Allows long words to wrap
+                            display: "block", // Ensures the cell can stretch vertically
+                        },
+                        
                     }}
                 >
                     <DataGrid
+                        className={className}
                         apiRef={apiRef}
                         slots={{footer: CustomGridFooter}}
                         initialState={{
@@ -76,8 +87,9 @@ const Table:FC<props> = React.memo(({searchInput, handleSearchChange, filteredRo
                                 paginationModel: { pageSize: 5 }, // Set the number of rows per page to 5
                             },
                         }}
-                        columnHeaderHeight={68}
-                        rowHeight={75}
+                        columnHeaderHeight={columnHeaderHeight ? columnHeaderHeight : 68}
+                        rowHeight={rowHeight ? rowHeight : 75}
+                        getRowHeight={getRowHeight ? getRowHeight : undefined} // will take a higher precedence over "rowHeight" if defined
                         pageSizeOptions={([5, 10, 20])}
                         rows={filteredRows} 
                         columns={columns} 

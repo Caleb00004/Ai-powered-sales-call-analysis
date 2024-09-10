@@ -1,0 +1,40 @@
+import { useState } from "react"
+import ProfileSettings from "../settings/profile-settings"
+import SystemSettings from "../settings/system-settings"
+import AuditTrail from "../settings/audit-trial"
+
+const SettingsManager = () => {
+    const [currentSection, setCurrentSection] = useState<"profile" | "system" | "audit-trial">("audit-trial")
+
+    const handleSwitchSection = (newSection: "profile" | "system" | "audit-trial") => {
+        setCurrentSection(newSection)
+    }
+
+    return (
+        <div>
+            <div className="flex items-center gap-1">
+                <h1 className="text-[1.5em] font-[600] text-[#333333]">Settings</h1>
+            </div>
+
+            <div className={`flex ${currentSection === "audit-trial" ? "flex-col mdx2:flex-row" : "flex-col md:flex-row"} gap-4 text-center mt-3`}>
+                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md w-[100%] md:w-[20em] flex flex-col h-min">
+                    <div className="py-4">
+                        <div className="bg-slate-300 rounded-full h-14 w-14 mx-auto">
+                        </div>
+                        <p>Lindsey lohan</p>
+                    </div>
+                    <p onClick={() => handleSwitchSection("profile")} className={`${currentSection === "profile" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>My Profile</p>
+                    <p onClick={() => handleSwitchSection("system")} className={`${currentSection === "system" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>System Settings</p>
+                    <p onClick={() => handleSwitchSection("audit-trial")} className={`${currentSection === "audit-trial" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>Audit Trial</p>
+                </div>
+                <div className="w-full ">
+                    {currentSection === "profile" && <ProfileSettings />}
+                    {currentSection === "system" && <SystemSettings />}
+                    {currentSection === "audit-trial" && <AuditTrail />}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default SettingsManager

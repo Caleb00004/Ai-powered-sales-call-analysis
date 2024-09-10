@@ -533,3 +533,69 @@ export const TeamProgresData = [
         ]
     },
 ]
+
+export const AuditLogData = [
+    {
+        id: 1,
+        timeStamp: "01/01/2024 | 12:05 pm",
+        user: "Helen Paul",
+        role: "Project Manager",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail  "
+    },
+    {
+        id: 2,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor "
+    },
+    {
+        id: 3,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail "
+    },
+    {
+        id: 4,
+        timeStamp: "01/01/2024 | 12:05 pm",
+        user: "Helen Paul",
+        role: "Project Manager",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+    {
+        id: 5,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+    {
+        id: 6,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+    {
+        id: 7,
+        timeStamp: "01/01/2024 | 12:05 pm",
+        user: "Helen Paul",
+        role: "Project Manager",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+    {
+        id: 8,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+    {
+        id: 9,
+        timeStamp: "11/03/2024 | 12:05 pm",
+        user: "Jack ",
+        role: "Developer",
+        activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
+    },
+]
