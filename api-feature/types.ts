@@ -1,0 +1,1 @@
+export type ACCOUNT_TYPE = "admin" | "manager" | "sales-rep"

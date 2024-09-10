@@ -2,8 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .border-gradient {
+    @apply border;
+    border-width: 1px;
+    border-image: linear-gradient(to right, #48D0FF, #C32782) 1;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* scroll-behavior: smooth; */
+}
+
+/* Custom scrollbar hiding styles */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* Hide scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* Hide scrollbar for Firefox */
+}
+
+.text-colour-gradient {
+  font-size: 20px;
+  font-weight: 600;
+  animation: animate-gradient-text 1s ease 0s infinite alternate;
+}
+
+.animate-nav-text {
+  animation: animate-gradient-text 1s ease 0s infinite alternate;
+}
+
+@keyframes animate-gradient-text {
+  0% {
+    color: #00FFB0;
+  }
+
+  33% {
+    color: #48D0FF;
+  }
+
+  66% {
+    color: #5F5FC9;
+  }
+
+  100% {
+    color: #C32782;
+  }
+
+}
+
+.circular-progress {
+  width: 7em;
+  height: 7em;
+  /* background: conic-gradient(#4CB4FF 50%, #d4d4d4  50%); */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.circular-progress .circle {
+  width: 5em;
+  height: 5em;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.circular-progress .score {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Activity Indicator */
+.activity-indicator {
+  display: inline-block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+}
+
+.activity-indicator div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  margin: 3px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  animation: activity-indicator 1.2s cubic-bezier(1, 1, 1, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+
+.activity-indicator div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.activity-indicator div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.activity-indicator div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes activity-indicator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
