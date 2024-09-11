@@ -295,6 +295,14 @@ export const dealsData: dealsDataType[] = [
         status: "Open",
         assignedSalesRep: 2
     },
+     {
+        id: 10,
+        name: "Project C",
+        client: "Mike",
+        stage: "Closing",
+        status: "Open",
+        assignedSalesRep: 2
+    },
 ]
 
 export const TeamsData = [

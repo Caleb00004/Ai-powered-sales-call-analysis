@@ -11,6 +11,8 @@ interface props {
         totalPages: number,
         handlePageChange: (page: number) => void,
         itemsPerPage: number,
+        start: number,
+        end: number,
         handlePageSizeChange: (event: React.ChangeEvent<{ value: unknown }>) => void,
     }) => ReactNode, // Custom footer as a function
 }
@@ -28,11 +30,11 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(initialItemsPerPage);
     const totalPages = Math.ceil(items.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
 
     // Get current items based on the current page
     const getPaginatedItems = () => {
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
         return items.slice(start, end);
     };
 
@@ -52,7 +54,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
 
     return (
         <div className="flex flex-col h-full">
-            <div className="flex flex-col overflow-auto mdx4:overflow-visible">
+            <div className="flex flex-col h-full overflow-auto mdx4:overflow-visible">
                 {/* Display the paginated items */}
                 {renderItems(getPaginatedItems())}
             </div>
@@ -60,7 +62,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
             {/* Footer END */}
             {footer ? (
                 <div className={`pt-5 mt-auto ${footerClassname ? footerClassname : ""}`}>
-                    {footer({ currentPage, itemsPerPage, totalPages, handlePageChange, handlePageSizeChange})}
+                    {footer({ currentPage, itemsPerPage, totalPages, start, end, handlePageChange, handlePageSizeChange})}
                 </div>
             ) : (
                 <div className="flex justify-between pt-5 mt-auto ">
