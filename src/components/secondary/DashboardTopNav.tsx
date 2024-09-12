@@ -14,9 +14,11 @@ import TrainingIcon from "../../../public/svgs/dashboardIcons/trainings-icon.svg
 import { useRouter } from "next/router"
 import { useState } from "react"
 import gsap from "gsap"
+import Dropdown from "./Dropdown"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
+    const [displayDropDown, setDisplayDropDown] = useState(false)
     const router = useRouter()
     const routeName = router.pathname.split('/').slice(2).join('/')
 
@@ -37,6 +39,10 @@ const TopNav = () => {
         setOpenNav(prev => !prev)
     }
 
+    const handleDropDown = () => {
+        setDisplayDropDown(prev => !prev)
+    }
+
     return (
         <div className="relative">        
         <div className="bg-white px-4 py-4 flex items-center justify-between border-b border-b[#D4D4D4] z-[8] relative">
@@ -51,10 +57,15 @@ const TopNav = () => {
                 <div className="border border-[#D4D4D4] rounded-md p-1">
                     <NotificationIcon />
                 </div>
-                <div className="flex gap-1 items-center">
-                    <div className="bg-slate-600 w-8 h-8 rounded-full">
+                <div className="flex gap-1 items-center relative">
+                    <div className="flex gap-1 items-center" onClick={handleDropDown}>
+                        <div className="bg-slate-600 w-8 h-8 rounded-full">
+                        </div>
+                        <DropdownIcon />
                     </div>
-                    <DropdownIcon />
+                    <Dropdown isOpen={displayDropDown} className="mt-4">
+                        <Link href={"/dashboard/settings"} className="py-2 px-2 hover:bg-slate-100 cursor-pointer">Settings</Link>
+                    </Dropdown>
                 </div>
             </div>
 

@@ -11,6 +11,11 @@ import { dealsData } from '@/testData';
 import PaginationComponent from '@/components/secondary/Pagination';
 import NavIcon from "../../../../public/svgs/next-icon.svg"
 import PiechartComponent from '@/components/secondary/Piechart';
+import ProgressCircle from '@/components/secondary/ProgressCircle';
+import GradientCircle from '@/components/secondary/GradientCircle';
+import Callicon from "../../../../public/svgs/round-call.svg"
+import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
+import Dropdown from '@/components/secondary/Dropdown';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -27,6 +32,7 @@ const SalesRepManager = () => {
     const [section, setSection] = useState<"table" | "details">("table")
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as callDataType)
     const [displayDropDown, setDisplayDropDown] = useState(false)
+    const [displayTrainingDropdown, setDisplayTrainingDropdown] = useState(false)
     const rows = callData
 
     const filteredRows = useMemo(() => {
@@ -111,45 +117,93 @@ const SalesRepManager = () => {
     const handleDropDown = () => {
         setDisplayDropDown(prev => !prev)
     }
+
+    const handleTrainingDropdown = () => {
+        setDisplayTrainingDropdown(prev => !prev)
+    }
+
+    const sectionDropdown =   
+        <>
+            <BookmarkIcon className="scale-[0.8]" />
+            <div onClick={handleDropDown}><MoreIcon className=" rotate-[90deg] translate-y-2 scale-[0.7]" /></div>
+            <Dropdown isOpen={displayDropDown}>
+                <p onClick={() => (setSection("details"), handleDropDown())} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>View User details</p>
+                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Schedule Training</p>
+                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Message User</p>
+            </Dropdown>
+        </>
     
     return (
         <div className="flex flex-col gap-[20px] w-full">
             <p onClick={() => setSection("table")} className={`${section === "details" ? "scale-[1] pointer-events-auto mb-5" : "scale-[0] pointer-events-none"} cursor-pointer h-0 transition-all w-[45px] text-[#333333] text-[18px]`}>Back</p>
             {selectedSalesRep.meetingName && 
-                <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
-                    <div className='flex gap-3 flex-[0.8]'>
-                        <div className='bg-slate-700 w-[130px] h-[120px] mdx2:h-full rounded-lg'>
+                (section === "table" ?
+                <>    
+                    <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
+                        <div className='flex gap-3 flex-[0.8]'>
+                            <div className='bg-slate-700 w-[130px] h-[120px] mdx2:h-full rounded-lg'>
+
+                            </div>
+                            <div>
+                                <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep.meetingName}</p>
+                                <p className='text-[#828282] text-[14px]'>Senior Project</p>
+                                <p className='text-[#828282] text-[14px]'>Manager</p>
+                            </div>
+                            <div className='flex mdx2:hidden ml-auto flex-[0.1] justify-between relative z-[2] '>
+                                {sectionDropdown}
+                            </div>
+                        </div>
+                        <div className='rounded-lg h-full gap-4 flex-[2] flex flex-col items-center mdx2:items-start sm:flex-row pt-4 mdx2:pt-0 '>
+                            <div className='flex flex-1'><ProgressCircle type="progress" value={80} size={110} label={<span>Overall<br />Rating</span>} /></div>
+                            <div className='flex flex-1'><ProgressCircle type="skill" value={"BT"} size={110} label="BT" /></div>
+                            <div className='hidden mdx2:flex flex-[0.1] justify-between relative z-[2] '>
+                                {sectionDropdown}
+                            </div>
+                        </div>
+                    </div>
+                </>
+                    :
+                <>
+                    <div className="bg-white lg:h-[150px] rounded-2xl flex flex-col lg:flex-row gap-2 p-3">
+                        <div className='bg-slate-700 w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0 '>
 
                         </div>
-                        <div>
-                            <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep.meetingName}</p>
-                            <p className='text-[#828282] text-[14px]'>Senior Project</p>
-                            <p className='text-[#828282] text-[14px]'>Manager</p>
-                        </div>
-                        <div className='flex mdx2:hidden ml-auto flex-[0.1] justify-between relative  '>
-                            <BookmarkIcon />
-                            <div onClick={handleDropDown}><MoreIcon className=" rotate-[90deg] translate-y-2 scale-[0.7]" /></div>
-                            <div style={{transformOrigin: "right top"}} className={` ${displayDropDown ? "scale-1 pointer-events-auto" : " scale-0 pointer-events-none"} bg-white transition-all absolute top-7 border w-[150px] -left-24 text-[13px] flex flex-col text-[#333333]`}>
-                                <p onClick={() => (setSection("details"), handleDropDown())} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>View User details</p>
-                                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Schedule Training</p>
-                                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Message User</p>
+                        <div className='flex-1'>
+                            <div className='flex justify-between'>
+                                <div>
+                                    <p>Elizabeth Parker</p>
+                                    <p className='text-[#828282] text-[14px]'>Senior Project</p>
+                                </div>
+                                <div className='flex justify-between relative z-[2] '>
+                                    {sectionDropdown}
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-2 mt-4 lg:mt-0 lg:flex justify-between gap-10 lg:gap-4'>
+                                <ProgressCircle type="progress" value={80} textClassname='text-[11px]' size={60} label={<span>Overall<br />Rating</span>} />
+                                <div className='flex flex-col sm:flex-row items-center gap-2'>
+                                    <GradientCircle size={60}>
+                                        <Callicon />
+                                    </GradientCircle>
+                                    <div>
+                                        <p className='text-[#333333] font-[600]'>100k+</p>
+                                        <p>Total Calls</p>
+                                    </div>
+                                </div>
+                                <div className='flex flex-col sm:flex-row items-center gap-2'>
+                                    <GradientCircle size={60}>
+                                        <BriefcaseIcon />
+                                    </GradientCircle>
+                                    <div>
+                                        <p className='text-[#333333] font-[600]'>450</p>
+                                        <p>Deals</p>
+                                    </div>
+                                </div>
+                                <ProgressCircle type="skill" value={"BT"} size={60} label="Building Trust" />
                             </div>
                         </div>
                     </div>
-                    <div className='rounded-lg h-full flex-[2] flex'>
-                        <div className='flex flex-1 h-full bg-rose-600'>JJ</div>
-                        <div className='flex flex-1 bg-purple-600'>LL</div>
-                        <div className='hidden mdx2:flex flex-[0.1] justify-between relative '>
-                            <BookmarkIcon className="scale-[0.8]" />
-                            <div onClick={handleDropDown}><MoreIcon className=" rotate-[90deg] translate-y-2 scale-[0.7]" /></div>
-                            <div style={{transformOrigin: "right top"}} className={` ${displayDropDown ? "scale-1 pointer-events-auto" : " scale-0 pointer-events-none"} bg-white transition-all absolute top-7 border w-[150px] -left-24 text-[13px] flex flex-col text-[#333333]`}>
-                                <p onClick={() => (setSection("details"), handleDropDown())} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>View User details</p>
-                                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Schedule Training</p>
-                                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Message User</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </>
+                )        
             }
 
             {section === "table" && 
@@ -223,15 +277,21 @@ const SalesRepManager = () => {
                         <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                             <div className='flex justify-between pb-4'>
                                 <h1 className='text-[#333333] text-[20px] font-[600] '>Scheduled Training</h1>
-                                <div className='border border-[#A4A4A4] w-[30%] rounded-lg pl-3 flex items-center text-[14px] text-[#333333]'>
-                                    <p>All</p>
+                                <div className='relative flex w-[30%]'>
+                                    <div onClick={handleTrainingDropdown} className='border border-[#A4A4A4] w-full relative rounded-lg pl-3 flex items-center text-[14px] text-[#333333]'>
+                                        <p>All</p>
+                                    </div>
+                                    <Dropdown className='-left-5 top-[35px]' isOpen={displayTrainingDropdown}>
+                                        <p onClick={handleTrainingDropdown} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Completed</p>
+                                        <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>In Progress</p>
+                                        <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Not Started</p>
+                                    </Dropdown>
                                 </div>
                             </div>
                             <div>
                                 <PaginationComponent 
                                     items={dealsData}
                                     hidePaginationStatus
-                                    // footerClassname="gap-1 -translate-x-1"
                                     itemsPerPage={5}
                                     renderItems={(data) => (
                                         data.map(item => (

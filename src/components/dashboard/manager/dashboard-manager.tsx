@@ -4,14 +4,12 @@ import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { DataGrid } from "@mui/x-data-grid"
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid"
 import { callData } from "@/testData"
-import { Box, useTheme } from "@mui/material"
+import { Box } from "@mui/material"
 import ProgressDiagram from "@/components/secondary/ProgressDiagram"
-// import { tokens } from "@/components/util/theme"
+import ProgressCircle from "@/components/secondary/ProgressCircle"
+import GradientCircle from "@/components/secondary/GradientCircle"
 
 const ManagerDashboard = () => {
-    // const theme = useTheme();
-    // const colors = tokens(theme.palette.mode);
-    // NOTE: rows = The Data
     const rows = callData.slice(0, 4)
 
     const columns: GridColDef[] = [
@@ -44,9 +42,6 @@ const ManagerDashboard = () => {
         {field: "BF", headerName: "BF", headerClassName: "bg-[#C32782]"},
         {field: "BG", headerName: "BG", headerClassName: "bg-[#C32782]"},
         {field: "MC", headerName: "MC", headerClassName: "bg-[#C32782]"},
-        // { field: 'col1', headerName: 'Column 1', width: 150 },
-        // { field: 'col2', headerName: 'Column 2', width: 150 },
-        // { field: 'col3', headerName: 'Column 3', width: 150 },
     ];
 
     return (
@@ -133,14 +128,14 @@ const ManagerDashboard = () => {
                                    <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
                                 </td>
                                 <td className="">
-                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                    <GradientCircle className="mx-auto">
                                         <p className="font-[700] text-white">60</p>
-                                    </div>
+                                    </GradientCircle>
                                 </td>
                                 <td className="" >
-                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                    <GradientCircle className="mx-auto">
                                         <p className="font-[700] text-white">GG</p>
-                                    </div>
+                                    </GradientCircle>
                                 </td>
                             </tr>
                         </tbody>
@@ -153,14 +148,14 @@ const ManagerDashboard = () => {
                                    <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
                                 </td>
                                 <td className="">
-                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                    <GradientCircle className="mx-auto">
                                         <p className="font-[700] text-white">60</p>
-                                    </div>
+                                    </GradientCircle>
                                 </td>
                                 <td className="" >
-                                    <div className="flex justify-center items-center bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] mx-auto rounded-full w-[40px] h-[40px]">
+                                    <GradientCircle className="mx-auto">
                                         <p className="font-[700] text-white">GG</p>
-                                    </div>
+                                    </GradientCircle>
                                 </td>
                             </tr>
                         </tbody>
@@ -209,16 +204,9 @@ const ManagerDashboard = () => {
                         <MoreIcon />
                     </div>
                     
-                    <div className="flex flex-col gap-3">
-                        <div className=" flex gap-3 items-center mt-5">
-                            <ProgressDiagram />
-                            <p className="text-[18px] font-[500]">Overall Rating</p>
-                        </div>
-
-                        <div className=" flex gap-3 items-center mt-5">
-                            <ProgressDiagram />
-                            <p className="text-[18px] font-[500]">Overall Rating</p>
-                        </div>
+                    <div className="flex flex-col gap-5 pt-5">
+                        <ProgressCircle type="progress" value={80} size={110} label="Overall Rating" />
+                        <ProgressCircle type="skill" value={"BT"} size={110} label="BT" />
                     </div>
                 </div>
             </div>
