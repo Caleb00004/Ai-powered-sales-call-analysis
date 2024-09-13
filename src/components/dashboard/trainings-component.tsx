@@ -5,11 +5,17 @@ import MoreIcon from "../../../public/svgs/more-icon.svg"
 import FilterIcon from "../../../public/svgs/filter-icon.svg"
 import { useRouter } from "next/router"
 import { ModulesData } from "@/testData"
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
+import Dropdown from "../secondary/Dropdown"
 
 const TrainingsComponent = () => {
     const routeTo = useRouter()
     const [selectedModule, setSelectedModule] = useState({})
+    const [openDropdown, setOpenDropdown] = useState(null)
+
+    const handleDropDown = (id: SetStateAction<null>) => {
+        setOpenDropdown(openDropdown === id ? null : id); // Toggle the dropdown for clicked item
+    };
 
     return(
         <div className="text-[#333333]">
@@ -38,11 +44,19 @@ const TrainingsComponent = () => {
                     <div className="flex flex-col mt-2 ">
                         {ModulesData.map(item => (
                             // @ts-ignore
-                            <div onClick={() => setSelectedModule(item)} className={`flex ${item.id === selectedModule.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] hover:scale-[1.03] duration-[0.09s] py-3 px-2`}>
+                            <div onClick={() => (setSelectedModule(item), handleDropDown(item.id))} className={`relative flex ${item.id === selectedModule.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
                                 <p>{item.name}</p>
                                 <div className=" h-4 flex items-center">
                                     <MoreIcon className="rotate-[90deg] scale-[0.7]" />
                                 </div>
+                                <Dropdown className="z-[3] ml-auto right-0" isOpen={openDropdown === item.id}>
+                                    <p className="py-2 px-2 hover:bg-slate-100 cursor-pointer">
+                                        Option 1
+                                    </p>
+                                    <p className="py-2 px-2 hover:bg-slate-100 cursor-pointer">
+                                        Option 2
+                                    </p>
+                                </Dropdown>
                             </div>
                         ))}
                     </div>

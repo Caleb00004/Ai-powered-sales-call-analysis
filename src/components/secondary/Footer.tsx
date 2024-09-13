@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <footer className="grid sm:grid-cols-2 mdx4:flex justify-between text-[13px] bg-black text-white pt-[5em] pb-[9em] px-[1em] sm:px-[1.5em] mdx4:px-10">
             <div className="flex flex-col flex-[0.6]">
-                <Logo2 className="mb-7" />
+                <Logo2 className="mb-7 scale-[0.8] sm:scale-1" />
                 <p className="text-[16px] font-[400]">Durekt gives you the tools you need to Revolutionize Your Sales Performance with AI-Powered Call Analysis</p>
             </div>
             <div className="flex mt-8 sm:mt-0 flex-1 justify-between sm:justify-around">

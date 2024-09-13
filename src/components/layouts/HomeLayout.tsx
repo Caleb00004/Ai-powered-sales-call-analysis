@@ -32,7 +32,7 @@ const HomeLayout:FC<props> = ({children}) => {
                     <div className="bg-white relative flex gap-2 py-3">
                         <MessageIcon className="h-12 w-12" />
                         <div className=" flex flex-col items-start ">
-                            <Logo classname="w-[100px] h-[25px] -translate-x-2" />
+                            <Logo classname="w-[100px] h-[25px] -translate-x-2 scale-[0.8] sm:scale-1" />
                             <p className="text-[#545454]">Online</p>
                         </div>
                         <p onClick={closeModal} className=" cursor-pointer absolute text-[#545454] right-4 top-3 font-[600]">X</p>

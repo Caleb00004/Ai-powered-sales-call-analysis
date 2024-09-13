@@ -7,7 +7,7 @@ interface props {
 
 const Logo:FC<props> = ({classname}) => {
     return (
-        <Durekt className={`mx-auto scale-[0.8] sm:scale-1 ${classname ? classname : "w-[216px] h-[43px]"}`} />
+        <Durekt className={`mx-auto ${classname ? classname : "w-[216px] h-[43px] scale-[0.8] sm:scale-1"}`} />
     )
 }
 

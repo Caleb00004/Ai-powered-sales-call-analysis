@@ -4,7 +4,7 @@ import LockIcon from "../../../public/svgs/lock_icon.svg"
 interface Props {
   label?: ReactNode; 
   placeholder: string; 
-  type?: "email" | "text" | "password";
+  type?: "email" | "text" | "password" | "textarea";
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -37,7 +37,7 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabl
         ) : (
           <>
             {type === "password" && <LockIcon className="absolute bottom-[25%] right-4" />}
-            <input
+            {type !== "textarea" ? <input
               disabled={disabled}
               value={value}
               onChange={onChange}
@@ -45,7 +45,20 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabl
               type={type}
               placeholder={placeholder}
               name={name}
-            />
+            /> : 
+              <textarea 
+                disabled={disabled}
+                value={value}
+                // @ts-ignore
+                onChange={onChange}
+                className="w-full mt-1 min-h-[10em] max-h-[10em] p-2 border border-[#D0D5DD] rounded-md"
+                type={type}
+                placeholder={placeholder}
+                name={name}
+              />
+            }
+
+
           </>
         )}
       </div>

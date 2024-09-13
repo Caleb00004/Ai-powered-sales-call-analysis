@@ -74,7 +74,7 @@ const Navbar = () => {
             </div>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[0.9px]" />
             <Link href={"/faq"} className="flex gap-2 items-center py-5 px-3 hover:bg-[#0e0c22]">                
-                <InfoIcon />
+                <InfoIcon className="text-white h-[24px] w-[24px]" />
                 <p className="">FAQ</p>
             </Link>
         </div>

@@ -4,6 +4,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowIcon from "../../../public/svgs/arrow2-icon.svg"
 import { FC, useState } from "react";
+import { SxProps, Theme } from "@mui/material";
 
 
 export const faqs = [
@@ -40,8 +41,13 @@ export const faqs = [
 interface props {
     className?: string
     detailsClassName?: string
+    containerStyle?: SxProps<Theme> | undefined,
+    headerStyle?: SxProps<Theme> | undefined,
+    detailsStyle?: SxProps<Theme> | undefined,
+    headerClassName?: string
 }
-const FaqUI:FC<props> = ({className, detailsClassName}) => {
+
+const FaqUI:FC<props> = ({className, containerStyle, detailsClassName, headerClassName}) => {
     const [showMore, setShowMore] = useState(false);
     const [visible, setVisible] = useState(5);
 
@@ -49,7 +55,7 @@ const FaqUI:FC<props> = ({className, detailsClassName}) => {
         <>
             {faqs.slice(0, visible).map((faq, index) => {
             return (
-              <Accordion key={index} className={`mt-[5px] py-1 z-[2] px-2  ${className ? className : "bg-[#00000099] border-b border-b-[#C32782] text-[#DBDBDB]"}`}>
+              <Accordion sx={containerStyle} key={index} className={` py-1 z-[2] px-2  ${className ? className : "bg-[#00000099] mt-[5px] border-b border-b-[#C32782] text-[#DBDBDB]"}`}>
                 <AccordionSummary
                   expandIcon={
                     <ArrowIcon className="rotate-[90deg] text-[#DBDBDB]" />
@@ -57,25 +63,18 @@ const FaqUI:FC<props> = ({className, detailsClassName}) => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography
-                    className="text-[14px] sm:text-[16px]"
-                    sx={{
-                      fontWeight: "400",
-                      // color: "#4A2A23",
-                    }}
+                  <p
+                    className={` ${headerClassName ? headerClassName : "text-[14px] sm:text-[16px]"}`}
                   >
                     {faq.question}
-                  </Typography>
+                  </p>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography
+                  <p
                     className={` ${detailsClassName ? detailsClassName : "text-[#FFFFFF] text-[13px] sm:text-[16px]"}`}
-                    sx={{
-                      fontWeight: "500",
-                    }}
                   >
                     {faq.answer}
-                  </Typography>
+                  </p>
                 </AccordionDetails>
               </Accordion>
             );
