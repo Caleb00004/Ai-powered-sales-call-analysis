@@ -3,6 +3,8 @@ import SideNav from "../secondary/SideNav"
 import TopNav from "../secondary/DashboardTopNav"
 import { Snackbar } from "@mui/material"
 import { appContext } from "../contexts/appContext"
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 interface props {
     children: ReactNode
@@ -12,7 +14,7 @@ const DashboardLayout:FC<props> = ({children}) => {
     const {toastDetails, setToastDetails, handleToastClose} = useContext(appContext)
 
     return (
-        <>  
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Snackbar
                 open={toastDetails.open}
                 autoHideDuration={toastDetails.duration}
@@ -40,12 +42,12 @@ const DashboardLayout:FC<props> = ({children}) => {
                 {/* <div className="flex flex-1 sm:flex-[2.5] mdx2:flex-[4] flex-col"> */}
                 <div className="w-[100vw] sm:w-[70vw] mdx2:w-[80vw]">
                     <TopNav />
-                    <main className="bg-[#F8F8FA] h-[90vh] pt-5 px-4 overflow-auto ">
+                    <main className="bg-[#F8F8FA] h-[90.6vh] pt-5 pb-5 px-4 overflow-auto ">
                         {children}
                     </main>
                 </div>
             </div>
-        </>
+        </LocalizationProvider>
     )
 }
 

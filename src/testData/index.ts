@@ -608,3 +608,38 @@ export const AuditLogData = [
         activity: "Lorem ipsum dolor init maxi sit amed dolor nit maxin milaino tempsu ipsum dolor maxil lam mail"
     },
 ]
+
+export const timezones = [
+  { label: "(UTC-12:00) International Date Line West", value: "Etc/GMT+12" },
+  { label: "(UTC-11:00) Coordinated Universal Time-11", value: "Etc/GMT+11" },
+  { label: "(UTC-10:00) Hawaii", value: "Pacific/Honolulu" },
+  { label: "(UTC-09:00) Alaska", value: "America/Anchorage" },
+  { label: "(UTC-08:00) Pacific Time (US & Canada)", value: "America/Los_Angeles" },
+  { label: "(UTC-07:00) Mountain Time (US & Canada)", value: "America/Denver" },
+  { label: "(UTC-06:00) Central Time (US & Canada)", value: "America/Chicago" },
+  { label: "(UTC-05:00) Eastern Time (US & Canada)", value: "America/New_York" },
+  { label: "(UTC-04:00) Atlantic Time (Canada)", value: "America/Halifax" },
+  { label: "(UTC-03:30) Newfoundland", value: "America/St_Johns" },
+  { label: "(UTC-03:00) Buenos Aires", value: "America/Argentina/Buenos_Aires" },
+  { label: "(UTC-02:00) Coordinated Universal Time-02", value: "Etc/GMT+2" },
+  { label: "(UTC-01:00) Azores", value: "Atlantic/Azores" },
+  { label: "(UTC+00:00) London, Lisbon, Casablanca", value: "Europe/London" },
+  { label: "(UTC+01:00) West Africa Time (WAT)", value: "Africa/Lagos" },
+  { label: "(UTC+01:00) Central European Time", value: "Europe/Berlin" },
+  { label: "(UTC+02:00) Eastern European Time", value: "Europe/Istanbul" },
+  { label: "(UTC+03:00) Moscow, Baghdad, Nairobi", value: "Europe/Moscow" },
+  { label: "(UTC+03:30) Tehran", value: "Asia/Tehran" },
+  { label: "(UTC+04:00) Abu Dhabi, Muscat, Baku", value: "Asia/Dubai" },
+  { label: "(UTC+04:30) Kabul", value: "Asia/Kabul" },
+  { label: "(UTC+05:00) Islamabad, Karachi", value: "Asia/Karachi" },
+  { label: "(UTC+05:30) India Standard Time", value: "Asia/Kolkata" },
+  { label: "(UTC+06:00) Dhaka, Astana", value: "Asia/Dhaka" },
+  { label: "(UTC+07:00) Bangkok, Hanoi, Jakarta", value: "Asia/Bangkok" },
+  { label: "(UTC+08:00) Beijing, Perth, Singapore", value: "Asia/Shanghai" },
+  { label: "(UTC+09:00) Tokyo, Seoul, Yakutsk", value: "Asia/Tokyo" },
+  { label: "(UTC+09:30) Adelaide, Darwin", value: "Australia/Adelaide" },
+  { label: "(UTC+10:00) Sydney, Brisbane, Guam", value: "Australia/Sydney" },
+  { label: "(UTC+11:00) Solomon Islands, New Caledonia", value: "Pacific/Guadalcanal" },
+  { label: "(UTC+12:00) Auckland, Fiji, Kamchatka", value: "Pacific/Auckland" },
+  { label: "(UTC+13:00) Nuku'alofa", value: "Pacific/Tongatapu" }
+];

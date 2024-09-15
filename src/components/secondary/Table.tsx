@@ -36,9 +36,9 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeig
     return (
         <div className="bg-white p-4  ">
             <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">{title ? title : "Durekt Table"}</h1>
-            <div className="flex justify-between">
+            <div className="flex flex-col sm:flex-row justify-between gap-3">
                 <Search
-                    className="w-[14em]" 
+                    className="w-full sm:w-[14em]" 
                     value={searchInput}
                     onChange={handleSearchChange}
                     showIcon

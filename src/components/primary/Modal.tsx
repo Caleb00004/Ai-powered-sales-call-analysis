@@ -13,7 +13,17 @@ const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "" }) => 
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        // FOR MATERIAL UI TIME AND DATE PICKER 
+        const pickerPopups = Array.from(document.querySelectorAll(".MuiPopper-root, .MuiPopover-root"));
+        console.log(pickerPopups)
+        for (let popup of pickerPopups) {
+          if (popup.contains(event.target as Node)) {
+            return;
+          }
+        }
+        //////////////////////////////////////////
+
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
           onClose();
         }
       };

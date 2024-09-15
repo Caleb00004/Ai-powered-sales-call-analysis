@@ -3,7 +3,7 @@ import Table from "@/components/secondary/Table"
 import CustomGridFooter from "@/components/secondary/TableFooter"
 import { dealsData, dealsDataType } from "@/testData"
 import { DataGrid, getGridNumericOperators, GridColDef, GridEventListener } from "@mui/x-data-grid"
-import { ChangeEvent, ChangeEventHandler, useCallback, useContext, useMemo, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { GridFilterInputSingleSelect } from '@mui/x-data-grid';
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
@@ -28,6 +28,7 @@ const DealsManager = () => {
     const {salesRepData} = useContext(appContext)
     const [searchInput, setSearchInput] = useState("")
     const [selectedDeal, setSelectedDeal] = useState({} as dealsDataType)
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const rows = dealsData
     const [modalOpen, setModalOpen] = useState(false)
     const [dealModalOpen, setDealModalOpen] = useState(false)
@@ -36,6 +37,10 @@ const DealsManager = () => {
         client: "",
         stage: "",
         saleReps: []
+    })
+
+    useEffect(() => {
+        setIsLargeScreen(window.innerWidth > 940);
     })
 
     const closeDealModal = () => {
@@ -77,20 +82,36 @@ const DealsManager = () => {
 
     const columns: GridColDef[] = useMemo(() => {
         return [
-            {field: "name", flex: 1, headerName: "Name", headerClassName: "bg-[#C32782]"},
-            {field: "client", flex: 1, renderHeader: () => ( 
+            {field: "name", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200,
+                headerName: "Name", headerClassName: "bg-[#C32782]"},
+            {field: "client", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200, 
+                renderHeader: () => ( 
                 <div className="flex items-center mdx2:flex-row flex-col">
                     <p>Client/</p><p>Company</p>
                 </div>
                 ),
                 headerClassName: "bg-[#C32782]"
             },
-            {field: "stage", flex: 0.6, filterOperators: [stageFilterOperator] , headerName: "Stage", headerClassName: "bg-[#C32782]"},
-            {field: "status", flex: 0.5, filterOperators: [statusFilterOperator], headerName: "Status", headerClassName: "bg-[#C32782]"},
-            {field: "assignedSalesRep", flex: 1, filterOperators: getGridNumericOperators() , renderHeader: () =>  (<div className="flex gap-1 flex-col "><p>Assigned <br />Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
+            {field: "stage", 
+                flex: isLargeScreen ? 0.6 : undefined, 
+                width: isLargeScreen ? undefined : 120,
+                filterOperators: [stageFilterOperator] , headerName: "Stage", headerClassName: "bg-[#C32782]"},
+            {field: "status", 
+                flex: isLargeScreen ? 0.5 : undefined, 
+                width: isLargeScreen ? undefined : 100,
+                filterOperators: [statusFilterOperator], headerName: "Status", headerClassName: "bg-[#C32782]"},
+            {field: "assignedSalesRep", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200,
+                filterOperators: getGridNumericOperators() , renderHeader: () =>  (<div className="flex gap-1 flex-col "><p>Assigned <br />Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
             {
                 field: 'actions',
-                flex: 0.5,
+                flex: isLargeScreen ? 0.5 : undefined, 
+                width: isLargeScreen ? undefined : 100,
                 headerClassName: "bg-[#C32782]",
                 headerName: 'Actions',
                 renderCell: (params) => (
@@ -100,12 +121,12 @@ const DealsManager = () => {
                         <MenuItem onClick={() => {}}>Delete</MenuItem>
                     ]} data={params} />
                 ),
-                width: 10,
+                // width: 10,
                 sortable: false,
                 filterable: false,
             },
         ]
-    },[]) 
+    },[isLargeScreen]) 
 
     const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name} = e.target 

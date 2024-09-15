@@ -3,6 +3,7 @@ import ArrorwIcon from "../../../public/svgs/arrow2-icon.svg"
 import PaginationComponent from "../secondary/Pagination"
 import { useState } from "react"
 import { getProgressColor } from "../secondary/Pagination"
+import SkillsExcerpt from "../secondary/SkillsExcerpt"
 
 export const skillsData = [
     {short: "BO", name: "Becoming Obsessed", score: 20}, 
@@ -106,29 +107,8 @@ const InsightsComponent = () => {
             </div>
 
             <div className="mt-5 flex flex-col-reverse mdx2:flex-row gap-5 ">
-                <div className="bg-white min-h-[80vh] px-3 py-6 border rounded-md flex-[0.8] mdx5:flex-[1]">
-                    <PaginationComponent 
-                        items={skillsData}
-                        itemsPerPage={10}
-                        renderItems={(data) => (
-                            data.map((item, index) => (
-                                <div className="flex text-[#333333] font-[500] justify-between py-3 border-b" key={index}>
-                                    {/* @ts-ignore */}
-                                    <p className="flex flex-1 "><span className="mr-7">{index + 1}</span> {item.short} = {item.name} </p>
-                                    <div className="flex gap-4 items-center flex-1">
-                                        <div className="relative w-[100%] h-4 bg-gray-200 ">
-                                            {/* @ts-ignore */}
-                                            <div className={`h-4 ${getProgressColor(item.score)}`} style={{ width: `${item.score}%` }}>
-                                            </div>
-                                        </div>
-                                        {/* @ts-ignore */}
-                                        <p>{item.score}</p>
-                                    </div>
-                                </div>                                
-                            ))
-                        )}
-                    />
-                </div>  
+                <SkillsExcerpt />
+                 
                 <div className="bg-white p-2 flex-[0.5]  border rounded-md">
                     <div className="bg-slate-500 h-[30em] mdx2:h-full flex">
                         {selectedSalesRep && <div className="font-[700] rounded-md text-white w-full mb-3 pb-2 pt-3 text-center bg-slate-400 px-2 mx-3 mt-auto">

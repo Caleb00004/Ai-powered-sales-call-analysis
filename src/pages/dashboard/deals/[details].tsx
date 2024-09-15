@@ -1,7 +1,7 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout"
 import DealsComponent from "@/components/dashboard/deals-component"
 import Button from "@/components/primary/Button"
-import { ChangeEvent, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import Table from "@/components/secondary/Table"
 import { dealsData, dealsDataType } from "@/testData"
 import { GridColDef, GridEventListener } from "@mui/x-data-grid"
@@ -15,6 +15,9 @@ import SendIcon from "../../../../public/svgs/send-icon.svg"
 import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 import Modal from "@/components/primary/Modal"
 import Input from "@/components/primary/input"
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { TimePicker } from "@mui/x-date-pickers"
+import ProgressCircle from "@/components/secondary/ProgressCircle"
 
 type sectionsType = "overview" | "meetings" | "notes"
 
@@ -30,6 +33,7 @@ const Deals = () => {
     const [section, setSection] = useState<sectionsType>("overview")
     const [searchInput, setSearchInput] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const [scheduleMeetingDetails, setScheduleMeetingDetails] = useState<formType>({
         name: "",
         link: "",
@@ -37,6 +41,21 @@ const Deals = () => {
         time: "",
         timezone: ""
     })
+
+    useEffect(() => {
+        // Function to update screen size state
+        const updateScreenSize = () => {
+            setIsLargeScreen(window.innerWidth > 940);
+        };
+        // Initial check
+        updateScreenSize();
+        window.addEventListener('resize', updateScreenSize);
+
+        return () => {
+            window.removeEventListener('resize', updateScreenSize);
+        };
+    }, []);
+
 
     const rows = dealsData
 
@@ -74,19 +93,25 @@ const Deals = () => {
                         <MenuItem >Action 2</MenuItem>
                     ]} data={params} />
                 ),
-                width: 10,
+                // width: 10,
+                flex: isLargeScreen ? 0.2 : undefined, 
+                width: isLargeScreen ? undefined : 10,
                 sortable: false,
                 filterable: false,
             },
             {
                 field: "name",
-                flex: 1,
+                // flex: 1,
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200,
                 headerName: "Name",
                 headerClassName: "bg-[#C32782]"
             },
             {
                 field: "client",
-                flex: 1,
+                // flex: 1,
+                flex: isLargeScreen ? 1 : undefined,
+                width: isLargeScreen ? undefined : 150,
                 renderHeader: () => (
                     <div className="flex items-center mdx2:flex-row flex-col">
                         <p>Client/</p><p>Company</p>
@@ -96,19 +121,25 @@ const Deals = () => {
             },
             {
                 field: "stage",
-                flex: 1,
+                // flex: 1,
+                flex: isLargeScreen ? 1 : undefined,
+                width: isLargeScreen ? undefined : 130,
                 headerName: "Stage",
                 headerClassName: "bg-[#C32782]"
             },
             {
                 field: "status",
-                flex: 1,
+                // flex: 1,
+                flex: isLargeScreen ? 1 : undefined,
+                width: isLargeScreen ? undefined : 130,
                 headerName: "Status",
                 headerClassName: "bg-[#C32782]"
             },
             {
                 field: "assignedSalesRep",
-                flex: 1,
+                // flex: 1,
+                flex: isLargeScreen ? 1 : undefined,
+                width: isLargeScreen ? undefined : 200,
                 renderHeader: () => (
                     <div className="flex gap-0 mdx2:gap-1 mdx2:flex-row flex-col">
                         <p>Assigned</p><p>Sales Rep</p>
@@ -117,7 +148,7 @@ const Deals = () => {
                 headerClassName: "bg-[#C32782]"
             },
         ];
-    }, []);
+    }, [isLargeScreen]);
 
     const notesData = [0, 1, 2, 4, 5, 3, ,3 , 3, 3, 3]
     
@@ -140,7 +171,7 @@ const Deals = () => {
                     isOpen={modalOpen}
                     onClose={closeModal}
                 >
-                    <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-14">
+                    <form onSubmit={handleAddNewDeal} className="relative pt-7 pb-12 px-14">
                         <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Schedule Meeting</p>
                         <Input 
                             className="mb-[8px]"
@@ -161,20 +192,49 @@ const Deals = () => {
                             name="link"
                         />
                         
+                        <div>
+                            <label className="text-[#333333] font-medium text-[0.9em]">Date</label>
+                            <DatePicker sx={{padding: 0, width: "100%", marginTop: "3px" }} value={undefined} onChange={(newValue) => console.log(newValue)} />
+                        </div> 
 
-                        <Button type="submit" >
+                        <div className="flex gap-2">
+                            <div className="mt-2 flex-[1]">
+                                <label className="text-[#333333] font-medium text-[0.9em]">Time</label>
+                                <TimePicker
+                                    sx={{padding: 0, width: "100%", marginTop: "3px" }} 
+                                    label="Select Time"
+                                    value={undefined}
+                                    onChange={(newValue) => console.log(newValue)}
+                                />
+                            </div>
+                            <div className="flex-[0.6] bg-red-500 flex justify-end items-end">
+                                {/* <Input 
+                                    select
+                                    options={["(UTC-10:00) Hawaii", "(UTC-09:00) Alaska", "(UTC-12:00) International Date Line West", "(UTC+03:30) Tehran"]}
+                                    className="mb-0"
+                                    value={""}
+                                    onChange={handleOnChange}
+                                    label={<label className="text-[#333333] font-medium text-[0.9em]">Timezone</label>} 
+                                    placeholder="Enter link"
+                                    type="text"
+                                    name="link"
+                                /> */}
+                            </div>
+                        </div>
+
+                        <Button type="submit" className="mt-5" >
                             Save
                         </Button>
                     </form>
                 </Modal>
 
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-center">
                     <div className="flex items-center gap-0 text-[15px]">
                         <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/deals"}><p >Deals</p></Link>
                         <ArrorwIcon className="scale-[0.8]" />
                         <p className=" text-[#333333] font-[500] ">Deal details</p>
                     </div>
-                    <div style={{width: "10em"}}>
+                    <div style={{width: "10em", marginLeft: "auto"}}>
                         <Button onClick={openModal} className=" py-[6px] text-[13px]">Schedule Meeting</Button>
                     </div>
                 </div>
@@ -186,10 +246,10 @@ const Deals = () => {
                 </div>
                 {section === "overview" && 
                     <>
-                        <div className="flex justify-between gap-4">
+                        <div className="flex flex-col mdx2:flex-row justify-between gap-4">
                             <div className="flex-[1.3] bg-white border p-3 ">
-                                <div className="bg-rose-500 h-[100px]"></div>
-                                <div className="flex flex-col gap-2 mt-4">
+                                <div className=""><div className='flex flex-1'><ProgressCircle type="progress" value={89} size={110} label={<span>Overall<br />Deal Health</span>} /></div></div>
+                                <div className="flex flex-col gap-4 mt-4">
                                     <div className="flex items-center text-[#333333] justify-between">
                                         <p className="font-[600] text-[16px]">Project Name:</p>
                                         <p className="text-[13px] font-[500]">Project A</p>
@@ -204,11 +264,15 @@ const Deals = () => {
                                     </div>
                                     <div className="flex items-center text-[#333333] justify-between">
                                         <p className="font-[600] text-[16px]">Status:</p>
-                                        <p className="text-[13px] font-[500]">Open</p>
+                                        <p className="text-[13px] bg-[#ECF1EB] text-[#2E7E0B] font-[600] py-[3px] px-3">Open</p>
                                     </div>
                                     <div className="flex items-center text-[#333333] justify-between">
-                                        <p className="font-[600] text-[16px]">Status:</p>
-                                        <p className="text-[13px] font-[500]">Open</p>
+                                        <p className="font-[600] text-[16px]">Date Created:</p>
+                                        <p className="text-[13px] font-[500]">12/05/2024</p>
+                                    </div>
+                                    <div className="flex items-center text-[#333333] justify-between">
+                                        <p className="font-[600] text-[16px]">Date Modified:</p>
+                                        <p className="text-[13px] font-[500]">12/05/2024</p>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +310,7 @@ const Deals = () => {
                 }
                 {section === "notes" && 
                     <>
-                        <div className="bg-white flex flex-col border pt-6 h-[75vh]">
+                        <div className="bg-white flex flex-col border pt-6 h-[70vh] sm:h-[75vh]">
                             <div className="flex flex-col gap-4 p-3 overflow-auto">
                                 
                                 {notesData.map(item => (
@@ -257,7 +321,7 @@ const Deals = () => {
                                         <div className="bg-slate-600 flex-shrink-0 h-8 w-8 rounded-full  "></div>
                                         <div>
                                             <div className="flex gap-8 mb-2 items-center ">
-                                                <p className=" text-[#333333] text-[20px] font-[500]">Elizabeth Andrew</p>
+                                                <p className=" text-[#333333] text-[18px] font-[500]">Elizabeth Andrew</p>
                                                 <p className="text-[#6D6D6D] text-[13.5px] font-[500]">8:29am. 19/05/2024</p>
                                             </div>
                                             <p className="text-[#6D6D6D] font-[400] text-[15px] w-[95%]">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam fugiat optio natus atque nihil dolore ipsam, impedit expedita voluptatibus officia aliquam, doloremque inventore rerum necessitatibus ab rem! Ad, veniam! Iusto?</p>

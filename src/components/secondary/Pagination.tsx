@@ -65,7 +65,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
                     {footer({ currentPage, itemsPerPage, totalPages, start, end, handlePageChange, handlePageSizeChange})}
                 </div>
             ) : (
-                <div className="flex justify-between pt-5 mt-auto ">
+                <div className="flex flex-col sm:flex-row justify-between pt-5 mt-auto ">
                     {!hidePaginationStatus && (
                         <p className="text-[#626262]">
                             Showing {Math.min((currentPage - 1) * itemsPerPage + 1, items.length)}-
@@ -73,7 +73,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
                         </p>
                     )}
 
-                    <div className={`${footerClassname ? footerClassname : "gap-3"} justify-between   flex`}>
+                    <div className={`${footerClassname ? footerClassname : "gap-3"} ${hidePaginationStatus && "mx-auto"} justify-between flex mt-5 sm:mt-0`}>
                         <button
                             className="rotate-[180deg] scale-[0.9] hover:bg-[#F1F1F1] active:scale-[0.8] rounded-md"
                             onClick={() => handlePageChange(currentPage - 1)}
