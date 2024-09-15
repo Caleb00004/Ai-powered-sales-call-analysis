@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import Button from "../primary/Button"
 import Table from "../secondary/Table"
 import { TeamsData } from "@/testData"
@@ -20,6 +20,7 @@ type modalType = "add-team" | "Edit"
 
 const TeamsComponent = () => {
     const rows = TeamsData
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
     const [modalType, setModalType] = useState("" as modalType)
@@ -33,6 +34,21 @@ const TeamsComponent = () => {
         role: "",
         permission: []
     })
+
+    useEffect(() => {
+        // Function to update screen size state
+        const updateScreenSize = () => {
+            setIsLargeScreen(window.innerWidth > 940);
+        };
+        // Initial check
+        updateScreenSize();
+        window.addEventListener('resize', updateScreenSize);
+
+        return () => {
+            window.removeEventListener('resize', updateScreenSize);
+        };
+    }, []);
+
 
     const closeModal = () => {
         setModalOpen(false);
@@ -61,7 +77,10 @@ const TeamsComponent = () => {
 
     const columns: GridColDef[] = useMemo(() => {
         return [
-            {field: "name", flex: 1, cellClassName: " text-[#333333] font-[500]", headerName: "Name/Email", headerClassName: "bg-[#C32782]",  
+            {field: "name", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200,
+                cellClassName: " text-[#333333] font-[500]", headerName: "Name/Email", headerClassName: "bg-[#C32782]",  
                 renderCell: (params) => {
                     const {name, email} = params.row
                     console.log(params)
@@ -73,9 +92,18 @@ const TeamsComponent = () => {
                     )
                 },
             },
-            {field: "role", flex: 1, cellClassName: " text-[#333333] font-[500]", headerName: "Role", headerClassName: "bg-[#C32782]"},
-            {field: "department", flex: 1, cellClassName: " text-[#333333] font-[500]", headerName: "Department", headerClassName: "bg-[#C32782]"},
-            {field: "status", flex: 0.5, cellClassName: " text-[#333333] font-[500]", headerAlign: "center", headerName: "Status", headerClassName: "bg-[#C32782]",  renderCell: (params) => {
+            {field: "role", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200, 
+                cellClassName: " text-[#333333] font-[500]", headerName: "Role", headerClassName: "bg-[#C32782]"},
+            {field: "department", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200, 
+                cellClassName: " text-[#333333] font-[500]", headerName: "Department", headerClassName: "bg-[#C32782]"},
+            {field: "status", 
+                flex: isLargeScreen ? 0.5 : undefined, 
+                width: isLargeScreen ? undefined : 150,
+                cellClassName: " text-[#333333] font-[500]", headerAlign: "center", headerName: "Status", headerClassName: "bg-[#C32782]",  renderCell: (params) => {
                 return (
                     <div className="flex justify-center flex-col items-center" >
                         <p className={`${params.value.toLowerCase() === "active" ? "bg-[#00FFB01A] text-[#05875F]" : "bg-[#E189331A] text-[#E18933]"} bg-[#00FFB01A] text-[13px] text-[#05875F] text-center flex justify-center items-center h-[30px] mt-3 rounded-lg w-[80px]`}>{params.value}</p>
@@ -84,7 +112,6 @@ const TeamsComponent = () => {
             }},
             {
                 field: 'actions',
-                flex: 0.5,
                 headerClassName: "bg-[#C32782]",
                 headerName: 'Actions',
                 renderCell: (params) => (
@@ -92,12 +119,14 @@ const TeamsComponent = () => {
                         <MenuItem onClick={() => (openModal("Edit"), setEditDetails({role: params.row.role, permission: params.row.permission}))} >Edit</MenuItem>,
                     ]} data={params} />
                 ),
-                width: 10,
+                // width: 10,
+                flex: isLargeScreen ? 0.3 : undefined, 
+                width: isLargeScreen ? undefined : 120,
                 sortable: false,
                 filterable: false,
             },
         ]
-    },[]) 
+    },[isLargeScreen]) 
 
     const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const key = e.target.name as keyof formType

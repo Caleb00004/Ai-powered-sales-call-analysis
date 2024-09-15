@@ -185,9 +185,9 @@ const TrainingsComponent = () => {
             </Modal>
             
             <div className="text-[#333333]">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between sm:items-center">
                     <h1 className="text-[20px] font-[600] text-[#333333]">Training</h1>
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 ml-auto mt-2 sm:mt-0">
                         <div className="w-[160px]">
                             <Button onClick={() => routeTo.push("./trainings/userId")} className="py-[6px] bg-white border border-[#B3387F] text-[13px]"><span className="text-[#B3387F]">Personal Training</span></Button>
                         </div>
@@ -197,7 +197,7 @@ const TrainingsComponent = () => {
                     </div>
                 </div>
 
-                <div className="flex mt-7 gap-4">
+                <div className="flex flex-col mdx2:flex-row mt-7 gap-4">
                     <div className="bg-white flex-[0.5] h-[75vh] overflow-auto px-3 py-3">
                         <div className="flex justify-between mb-4 items-center">
                             <p className="text-[18px] font-[500]">Modules</p>
@@ -231,7 +231,7 @@ const TrainingsComponent = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="bg-white p-1 flex-[1] flex flex-col overflow-auto">
+                    <div className="bg-white min-h-[30em] mdx2:h-auto p-1 flex-[1] flex flex-col overflow-auto">
                         <div className="bg-[#F8F8FA] py-4 font-[800] text-[16px] flex justify-between px-20">
                             <p>Topic</p>
                             <p>Enrolled Team</p>

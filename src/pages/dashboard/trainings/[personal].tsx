@@ -17,8 +17,11 @@ const PersonalTraining = () => {
     const [searchInput, setSearchInput] = useState("")
     const rows = dealsData
     const routeTo = useRouter()
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
 
     useEffect(() => {
+        setIsLargeScreen(window.innerWidth > 940);
+
         gsap.timeline()
             .to(".trainings-txt", {color: "#5B5B5B", fontSize: "14px", fontWeight: "400", textDecoration: "underline"})
             .to(".topic-txt", {x: 0, opacity: 1})
@@ -51,20 +54,31 @@ const PersonalTraining = () => {
     
     const columns: GridColDef[] = useMemo(() => {
         return [
-            {field: "name", flex: 1, headerName: "Name", headerClassName: "bg-[#C32782]"},
-            {field: "client", flex: 1, renderHeader: () => ( 
+            {field: "name", 
+                flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200,
+                headerName: "Name", headerClassName: "bg-[#C32782]"},
+            {field: "client", 
+                flex: isLargeScreen ? 1 : undefined,
+                width: isLargeScreen ? undefined : 200, 
+                renderHeader: () => ( 
                 <div className="flex items-center mdx2:flex-row flex-col">
                     <p>Client/</p><p>Company</p>
                 </div>
                 ),
                 headerClassName: "bg-[#C32782]"
             },
-            {field: "stage", flex: 0.6, headerName: "Stage", headerClassName: "bg-[#C32782]"},
-            {field: "status", flex: 0.5, headerName: "Status", headerClassName: "bg-[#C32782]"},
-            {field: "assignedSalesRep", flex: 1, renderHeader: () =>  (<div className="flex gap-1 flex-col "><p>Assigned <br />Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
+            {field: "stage", 
+                flex: isLargeScreen ? 0.6 : undefined,
+                width: isLargeScreen ? undefined : 130, 
+                headerName: "Stage", headerClassName: "bg-[#C32782]"},
+            {field: "status", 
+                flex: isLargeScreen ? 0.5 : undefined,
+                width: isLargeScreen ? undefined : 100,
+                headerName: "Status", headerClassName: "bg-[#C32782]"},
+            {field: "assignedSalesRep", flex: 1, renderHeader: () =>  (<div className="flex items-center mdx2:flex-row flex-col"><p>Assigned </p> <p> Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
             {
                 field: 'actions',
-                flex: 0.5,
                 headerClassName: "bg-[#C32782]",
                 headerName: 'Actions',
                 renderCell: (params) => (
@@ -72,12 +86,13 @@ const PersonalTraining = () => {
                         <MenuItem onClick={() => {}}>Action</MenuItem>
                     ]} data={params} />
                 ),
-                width: 10,
+                flex: isLargeScreen ? 0.3 : undefined, 
+                width: isLargeScreen ? undefined : 70,
                 sortable: false,
                 filterable: false,
             },
         ]
-    },[])
+    },[isLargeScreen])
 
     return (
         <DashboardLayout>
@@ -95,9 +110,9 @@ const PersonalTraining = () => {
                 </div>
 
                 <div className="mt-4 ">
-                    <div className="flex justify-between">
+                    <div className="flex flex-col sm:flex-row justify-between">
                         <h1 className="text-[20px] font-[600] text-[#333333]">Training in progress (10)</h1>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 ml-auto">
                             <div onClick={scrollLeft} className="bg-white hover:bg-slate-200 cursor-pointer scale-[0.9] rounded-md active:scale-[0.8] transition-all">
                                 <ArrorwIcon className=" rotate-[180deg]" />
                             </div>
@@ -107,9 +122,10 @@ const PersonalTraining = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white scroll-smooth border px-5 py-3 mt-3 flex overflow-hidden gap-4"  ref={carouselContainer} >
+                    {/* Change overflow-hidden to overflow-auto to allow users to scroll by dragging */}
+                    <div className="bg-white scroll-smooth border px-5 py-3 mt-3 flex overflow-hidden gap-4" ref={carouselContainer} >
                         {tran.map(item => (
-                            <div onClick={() => routeTo.push("/dashboard/trainings/topic")} className="w-[32.3%] flex-shrink-0">
+                            <div onClick={() => routeTo.push("/dashboard/trainings/topic")} className="w-[101%] sm:w-[49%] mdx2:w-[32.3%] flex-shrink-0">
                                 <div className="bg-slate-300 h-[10em] rounded-xl">
                                 </div>
                                 <p className="bg-[#C3278233] text-[12px] rounded-2xl mt-2 font-[600] inline-block pr-12 pl-1 py-1 text-[#C32782]">Module Name</p>
