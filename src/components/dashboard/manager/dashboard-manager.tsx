@@ -50,12 +50,12 @@ const ManagerDashboard = () => {
                 <h1 className="text-[1.5em] font-[600] text-[#333333]">Overview</h1>
                 <OutlineIcon className=" scale-[0.85] translate-y-[1px]" />
             </div>
-            <div className="flex flex-col mdx2:flex-row justify-between gap-3">
-                <div className="grid grid-cols-2 gap-4 w-full flex-[2]">
+            <div className="flex flex-col lg:flex-row justify-between gap-3">
+                <div className="grid sm:grid-cols-2 gap-4 w-full flex-[2]">
                     <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
                             <div className="flex gap-2 items-center">
-                                <CallIcon />
+                                <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Total calls Analyzed</p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -68,7 +68,7 @@ const ManagerDashboard = () => {
                     <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
                             <div className="flex gap-2 items-center">
-                                <CallIcon />
+                                <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Total calls Analyzed</p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -81,7 +81,7 @@ const ManagerDashboard = () => {
                     <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
                             <div className="flex gap-2 items-center">
-                                <CallIcon />
+                                <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Total calls Analyzed</p>
                             </div>
                             <div className="flex gap-1 items-center">
@@ -94,7 +94,7 @@ const ManagerDashboard = () => {
                     <div className="bg-white rounded-2xl p-3">
                         <div className="flex justify-between ">
                             <div className="flex gap-2 items-center">
-                                <CallIcon />
+                                <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Total calls Analyzed</p>
                             </div>
                             <div className="flex gap-1 items-center">

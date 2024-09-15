@@ -27,7 +27,7 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabl
             onChange={onChange}
             className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md"
           >
-            <option disabled selected value={""} hidden >Select Permission</option>
+            <option disabled selected value={""} hidden >{value ? value : placeholder}</option>
             {options?.map((option, index) => (
               <option key={index} value={option}>
                 {option}

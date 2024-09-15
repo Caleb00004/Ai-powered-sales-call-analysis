@@ -36,6 +36,12 @@ const TeamsComponent = () => {
 
     const closeModal = () => {
         setModalOpen(false);
+        setCreateTeamDetails({
+            name: "",
+            email: "",
+            role: "",
+            permission: []
+        })
     };
 
     const openModal = (string: modalType) => {
@@ -98,8 +104,16 @@ const TeamsComponent = () => {
         const value = e.target.value
         
         if (key === "permission") {
-            setCreateTeamDetails(prev => ({...prev,  [key]: [...prev.permission, value]}))
-            return
+            setCreateTeamDetails((prev) => {
+                if (!prev.permission.includes(value)) {
+                    return {
+                        ...prev,
+                        [key]: [...prev.permission, value],
+                    };
+                }
+                return prev;
+            });
+            return;
         }
 
         setCreateTeamDetails(prev => ({...prev, [key]: value}))
@@ -165,7 +179,7 @@ const TeamsComponent = () => {
                         type="text"
                         name="permission"
                     />
-                    <div className="flex gap-2"> 
+                    <div className="flex gap-2 flex-wrap"> 
                         {createTeamDetails.permission.map(item => (
                             <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemovePermission(item)} className="scale-[0.8]" /></p>
                         ))}
@@ -197,11 +211,6 @@ const TeamsComponent = () => {
                             type="text"
                             name="permission"
                         />
-                        {/* <div className="flex gap-2"> 
-                            {editDetails.permission.map(item => (
-                                <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemovePermission(item)} className="scale-[0.8]" /></p>
-                            ))}
-                        </div> */}
                         <Button type="submit" className="mt-3">
                             Save
                         </Button>

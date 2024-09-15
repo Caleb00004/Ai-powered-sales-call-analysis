@@ -222,6 +222,7 @@ export type dealsDataType = {
     assignedSalesRep: number
 }
 
+export const dealStage = ["Prospecting", "Negotiation", "Closing"]
 export const dealsData: dealsDataType[] = [
     {
         id: 1,

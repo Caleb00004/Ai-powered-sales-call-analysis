@@ -27,6 +27,13 @@ const TopNav = () => {
     const [helpDropDown, setHelpDropdown] = useState(false)
     const router = useRouter()
     const routeName = router.pathname.split('/').slice(2).join('/')
+    const [contactDetails, setContactDetails] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        description: ""
+    })
 
     const [modalOpen, setModalOpen] = useState({display: false, type: ""} as {display: boolean, type: "" | "faq" | "support"})
 
@@ -63,6 +70,12 @@ const TopNav = () => {
         setHelpDropdown(prev => !prev)
     }
 
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const name = e.target.name
+        const value = e.target.value
+        setContactDetails(prev => ({...prev, [name]: value}))
+    }
+
     const faqContent = 
         <>
             <Search value="" className="bg-transparent w-full py-2 " showIcon containerClassName="round mb-7 bg-white" onChange={() => {}} placeholder="search" />
@@ -86,11 +99,11 @@ const TopNav = () => {
     const contactSupportContent = 
         <>
             <form>
-                <Input className="text-[15px]" type="text" value="" onChange={() => {}} label={<p className="text-[#333333] text-[14px] font-[500]">First Name</p>} placeholder="John " name="firstName" />
-                <Input className="text-[15px]" type="text" value="" onChange={() => {}} label={<p className="text-[#333333] text-[14px] font-[500]">Last Name</p>} placeholder="Doe" name="lastName" />
-                <Input className="text-[15px]" type="email" value="" onChange={() => {}} label={<p className="text-[#333333] text-[14px] font-[500]">Email</p>} placeholder="johnDoe@gmail.com" name="email" />
-                <Input className="text-[15px]" type="text" value="" onChange={() => {}} label={<p className="text-[#333333] text-[14px] font-[500]">Subject</p>} placeholder="Write here" name="subject" />
-                <Input className="text-[15px]" type="textarea" value="" onChange={() => {}} label={<p className="text-[#333333] text-[14px] font-[500]">Description</p>} placeholder="Describe your issue" name="description" />
+                <Input className="text-[15px]" type="text" value={contactDetails.firstName} onChange={handleOnChange} label={<p className="text-[#333333] text-[14px] font-[500]">First Name</p>} placeholder="John " name="firstName" />
+                <Input className="text-[15px]" type="text" value={contactDetails.lastName} onChange={handleOnChange} label={<p className="text-[#333333] text-[14px] font-[500]">Last Name</p>} placeholder="Doe" name="lastName" />
+                <Input className="text-[15px]" type="email" value={contactDetails.email} onChange={handleOnChange} label={<p className="text-[#333333] text-[14px] font-[500]">Email</p>} placeholder="johnDoe@gmail.com" name="email" />
+                <Input className="text-[15px]" type="text" value={contactDetails.subject} onChange={handleOnChange} label={<p className="text-[#333333] text-[14px] font-[500]">Subject</p>} placeholder="Write here" name="subject" />
+                <Input className="text-[15px]" type="textarea" value={contactDetails.description} onChange={handleOnChange} label={<p className="text-[#333333] text-[14px] font-[500]">Description</p>} placeholder="Describe your issue" name="description" />
 
                 <Button type="submit" className="mt-10 mb-5" >Submit form</Button>
             </form>

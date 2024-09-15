@@ -105,8 +105,8 @@ const InsightsComponent = () => {
 
             </div>
 
-            <div className="mt-5 flex gap-5 ">
-                <div className="bg-white min-h-[80vh] px-3 py-6 border rounded-md flex-[1]">
+            <div className="mt-5 flex flex-col-reverse mdx2:flex-row gap-5 ">
+                <div className="bg-white min-h-[80vh] px-3 py-6 border rounded-md flex-[0.8] mdx5:flex-[1]">
                     <PaginationComponent 
                         items={skillsData}
                         itemsPerPage={10}
@@ -130,7 +130,7 @@ const InsightsComponent = () => {
                     />
                 </div>  
                 <div className="bg-white p-2 flex-[0.5]  border rounded-md">
-                    <div className="bg-slate-500 h-full flex">
+                    <div className="bg-slate-500 h-[30em] mdx2:h-full flex">
                         {selectedSalesRep && <div className="font-[700] rounded-md text-white w-full mb-3 pb-2 pt-3 text-center bg-slate-400 px-2 mx-3 mt-auto">
                             <p className="bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] px-4 py-3 inline-block rounded-full">87</p>
                             <p className="mt-2 text-[18px]">Potential Rating</p>

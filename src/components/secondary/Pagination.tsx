@@ -73,7 +73,7 @@ const PaginationComponent:FC<props> = ({ items, footerClassname, footer, hidePag
                         </p>
                     )}
 
-                    <div className={`${footerClassname ? footerClassname : "gap-3"} justify-between w-full  flex`}>
+                    <div className={`${footerClassname ? footerClassname : "gap-3"} justify-between   flex`}>
                         <button
                             className="rotate-[180deg] scale-[0.9] hover:bg-[#F1F1F1] active:scale-[0.8] rounded-md"
                             onClick={() => handlePageChange(currentPage - 1)}

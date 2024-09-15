@@ -37,7 +37,7 @@ const SkillsComponent = () => {
                     />
                 </div>
             </div>
-            <div className="flex-shrink-0 p-2 flex flex-col flex-1 ">
+            <div className="flex-shrink-0 p-2 flex flex-col flex-1 mdx5:h-[85vh] overflow-auto ">
                 <div className="flex text-[#333333] font-[600] justify-between py-3 mb-4">
                     <p className=" flex-1   translate-x-9">Sales Rep</p>
                     <div className=" flex  flex-1 justify-around gap-6">

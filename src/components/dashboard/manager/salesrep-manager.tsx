@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, Suspense, useState } from 'react';
+import React, { ChangeEvent, useCallback, useMemo, Suspense, useState, useRef } from 'react';
 import { callData } from "@/testData"
 import { GridColDef, GridEventListener } from '@mui/x-data-grid';
 import { Box, LinearProgress, MenuItem, Select } from '@mui/material';
@@ -16,6 +16,7 @@ import GradientCircle from '@/components/secondary/GradientCircle';
 import Callicon from "../../../../public/svgs/round-call.svg"
 import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
 import Dropdown from '@/components/secondary/Dropdown';
+import { scrollToView } from '@/components/util/helperFunctions';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -28,11 +29,13 @@ const piechartdata =
     ]
 
 const SalesRepManager = () => {
+    console.log("Rendered")
     const [searchInput, setSearchInput] = useState("")
     const [section, setSection] = useState<"table" | "details">("table")
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as callDataType)
     const [displayDropDown, setDisplayDropDown] = useState(false)
     const [displayTrainingDropdown, setDisplayTrainingDropdown] = useState(false)
+    const viewRef = useRef<HTMLDivElement>(null)
     const rows = callData
 
     const filteredRows = useMemo(() => {
@@ -110,6 +113,7 @@ const SalesRepManager = () => {
     }, []) 
 
     const handleSelectSalesRep = useCallback((data: {id: string, row: {}}) => {
+        scrollToView(viewRef)
         const rowData = data.row as callDataType
         setSelectedSalesRep(rowData)
     },[])
@@ -134,8 +138,9 @@ const SalesRepManager = () => {
         </>
     
     return (
-        <div className="flex flex-col gap-[20px] w-full">
+        <div className="flex relative flex-col gap-[20px] w-full">
             <p onClick={() => setSection("table")} className={`${section === "details" ? "scale-[1] pointer-events-auto mb-5" : "scale-[0] pointer-events-none"} cursor-pointer h-0 transition-all w-[45px] text-[#333333] text-[18px]`}>Back</p>
+            <div ref={viewRef} className='h-1 absolute bg-transparent pointer-events-none w-1'/>
             {selectedSalesRep.meetingName && 
                 (section === "table" ?
                 <>    

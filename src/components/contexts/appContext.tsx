@@ -7,13 +7,15 @@ interface AppContextProps {
     setToastDetails: React.Dispatch<React.SetStateAction<{open: boolean, duration: number, message: string}>>
     openToast: (duration: number, message: string) => void
     handleToastClose: (event: SyntheticEvent | Event, reason: SnackbarCloseReason) => void
+    salesRepData: string[]
 }
 
 const appContext = createContext<AppContextProps>({
     toastDetails: {open: false, duration: 3000, message: ""},
     setToastDetails: () => {},
     openToast: () => {},
-    handleToastClose: () => {}
+    handleToastClose: () => {},
+    salesRepData: []
 })
 
 
@@ -23,6 +25,7 @@ function ContextProvider({children}: { children: ReactNode }) {
         duration: 3000,
         message: ""
     })
+    const salesRepData = ["Angela", "chris", "John", "Elizabeth", "Michael"]
 
     const handleToastClose = (event: SyntheticEvent | Event, reason: SnackbarCloseReason) => {
         if (reason === "clickaway") {
@@ -39,7 +42,8 @@ function ContextProvider({children}: { children: ReactNode }) {
         toastDetails,
         setToastDetails,
         handleToastClose,
-        openToast
+        openToast,
+        salesRepData
     }
 
     return(

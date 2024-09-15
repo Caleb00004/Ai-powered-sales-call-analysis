@@ -13,13 +13,40 @@ import Link from "next/link"
 import AttachmentIcon from "../../../../public/svgs/attach-icon.svg"
 import SendIcon from "../../../../public/svgs/send-icon.svg"
 import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
+import Modal from "@/components/primary/Modal"
+import Input from "@/components/primary/input"
 
 type sectionsType = "overview" | "meetings" | "notes"
+
+interface formType {
+    name: string,
+    link: string,
+    date: Date,
+    time: string,
+    timezone: string
+}
 
 const Deals = () => {
     const [section, setSection] = useState<sectionsType>("overview")
     const [searchInput, setSearchInput] = useState("")
+    const [modalOpen, setModalOpen] = useState(false)
+    const [scheduleMeetingDetails, setScheduleMeetingDetails] = useState<formType>({
+        name: "",
+        link: "",
+        date: new Date,
+        time: "",
+        timezone: ""
+    })
+
     const rows = dealsData
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
 
     const filteredRows = useMemo(() => {
         return rows.filter(row =>
@@ -93,11 +120,54 @@ const Deals = () => {
     }, []);
 
     const notesData = [0, 1, 2, 4, 5, 3, ,3 , 3, 3, 3]
+    
+    const handleAddNewDeal = () => {
+
+    }
+
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const key = e.target.name as keyof formType
+        const value = e.target.value
+
+        setScheduleMeetingDetails(prev => ({...prev, [key]: value}))
+    }, [])
 
     return (
         <DashboardLayout>
             <div className="flex flex-col">
                 
+                <Modal
+                    isOpen={modalOpen}
+                    onClose={closeModal}
+                >
+                    <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-14">
+                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Schedule Meeting</p>
+                        <Input 
+                            className="mb-[8px]"
+                            value={scheduleMeetingDetails.name}
+                            onChange={handleOnChange}
+                            label={<label className="text-[#333333] font-medium text-[0.9em]">Meeting Name</label>} 
+                            placeholder="Enter name"
+                            type="text"
+                            name="name"
+                        />
+                        <Input 
+                            className="mb-[8px]"
+                            value={scheduleMeetingDetails.link}
+                            onChange={handleOnChange}
+                            label={<label className="text-[#333333] font-medium text-[0.9em]">Meeting Link</label>} 
+                            placeholder="Enter link"
+                            type="text"
+                            name="link"
+                        />
+                        
+
+                        <Button type="submit" >
+                            Save
+                        </Button>
+                    </form>
+                </Modal>
+
                 <div className="flex justify-between items-center">
                     <div className="flex items-center gap-0 text-[15px]">
                         <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/deals"}><p >Deals</p></Link>
@@ -105,7 +175,7 @@ const Deals = () => {
                         <p className=" text-[#333333] font-[500] ">Deal details</p>
                     </div>
                     <div style={{width: "10em"}}>
-                        <Button className=" py-[6px] text-[13px]">Schedule Meeting</Button>
+                        <Button onClick={openModal} className=" py-[6px] text-[13px]">Schedule Meeting</Button>
                     </div>
                 </div>
 

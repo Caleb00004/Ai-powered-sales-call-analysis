@@ -3,7 +3,7 @@ import Table from "@/components/secondary/Table"
 import CustomGridFooter from "@/components/secondary/TableFooter"
 import { dealsData, dealsDataType } from "@/testData"
 import { DataGrid, getGridNumericOperators, GridColDef, GridEventListener } from "@mui/x-data-grid"
-import { ChangeEvent, ChangeEventHandler, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, ChangeEventHandler, useCallback, useContext, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { GridFilterInputSingleSelect } from '@mui/x-data-grid';
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
@@ -11,13 +11,40 @@ import { MenuItem } from "@mui/material"
 import Modal from "@/components/primary/Modal"
 import { stageFilterOperator, statusFilterOperator } from "@/components/util/customFilterOperators"
 import EditTableModal from "@/components/primary/EditTableModal"
+import Input from "@/components/primary/input"
+import { dealStage } from "@/testData"
+import { appContext } from "@/components/contexts/appContext"
+import Xicon from "../../../../public/svgs/x-icon.svg"
+
+type dealFormType = {
+    name: string
+    client: string
+    stage: string,
+    saleReps: string[]
+}
 
 const DealsManager = () => {
     const routeTo = useRouter()
+    const {salesRepData} = useContext(appContext)
     const [searchInput, setSearchInput] = useState("")
     const [selectedDeal, setSelectedDeal] = useState({} as dealsDataType)
     const rows = dealsData
     const [modalOpen, setModalOpen] = useState(false)
+    const [dealModalOpen, setDealModalOpen] = useState(false)
+    const [newDealDetails, setNewDealDetails] = useState<dealFormType>({
+        name: "",
+        client: "",
+        stage: "",
+        saleReps: []
+    })
+
+    const closeDealModal = () => {
+        setDealModalOpen(false);
+    };
+
+    const openDealModal = () => {
+        setDealModalOpen(true);
+    };
 
     const closeModal = () => {
         setModalOpen(false);
@@ -86,6 +113,42 @@ const DealsManager = () => {
         setSelectedDeal(prev => ({...prev, [name]: value}))
     }
 
+    
+    const handleAddNewDeal = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+    }
+
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const key = e.target.name as keyof dealFormType
+        const value = e.target.value
+        
+        if (key === "saleReps") {
+            setNewDealDetails((prev) => {
+                // Check if the team member is already in the array
+                if (!prev.saleReps.includes(value)) {
+                    return {
+                        ...prev,
+                        [key]: [...prev.saleReps, value], // Add team member if not present
+                    };
+                }
+
+                // If the team member is already present, return the state as-is
+                return prev;
+            });
+            return;
+        }
+
+        setNewDealDetails(prev => ({...prev, [key]: value}))
+    }, [])
+
+    const handleRemoveSalesRep = (salesRepToRemove: string) => {
+        setNewDealDetails(prev => ({
+            ...prev,
+            saleReps: prev.saleReps.filter(member => member !== salesRepToRemove)
+        }));
+    }
+
+
     return (
         <div className="flex flex-col gap-[20px] w-full">
             <EditTableModal 
@@ -94,11 +157,68 @@ const DealsManager = () => {
                 cellData={selectedDeal}
                 handleValueChange={handleEditChange}
             />
+
+            <Modal
+                isOpen={dealModalOpen}
+                onClose={closeDealModal}
+            >
+                <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-14">
+                    <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Deal</p>
+                    <Input 
+                        className="mb-[8px]"
+                        value={newDealDetails.name}
+                        onChange={handleOnChange}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Name</label>} 
+                        placeholder="Enter name"
+                        type="text"
+                        name="name"
+                    />
+                    <Input 
+                        className="mb-[8px]"
+                        value={newDealDetails.client}
+                        onChange={handleOnChange}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Client/Company</label>} 
+                        placeholder="Enter company name"
+                        type="text"
+                        name="client"
+                    />
+                    <Input 
+                        className="mb-[8px]"
+                        value={newDealDetails.stage}
+                        onChange={handleOnChange}
+                        select
+                        options={dealStage}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Stage</label>} 
+                        placeholder="Select Stage"
+                        type="text"
+                        name="stage"
+                    />
+                    <Input 
+                        className="mb-[8px]"
+                        value=""
+                        onChange={handleOnChange}
+                        select
+                        options={salesRepData}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Assigned sales rep</label>} 
+                        placeholder="Select sales rep"
+                        type="text"
+                        name="saleReps"
+                    />
+                    <div className="flex gap-2 flex-wrap"> 
+                        {newDealDetails.saleReps.map(item => (
+                            <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemoveSalesRep(item)} className="scale-[0.8]" /></p>
+                        ))}
+                    </div>
+                    <Button type="submit" className="mt-3">
+                        Save
+                    </Button>
+                </form>
+            </Modal>
             
             <div className="flex justify-between items-center">
                 <h1 className="text-[20px] font-[600] text-[#333333]">Deals</h1>
                 <div className="w-[140px]">
-                    <Button className="py-[6px] text-[13px]">Add New Deal</Button>
+                    <Button onClick={openDealModal} className="py-[6px] text-[13px]">Add New Deal</Button>
                 </div>
             </div>
 

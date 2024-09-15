@@ -18,3 +18,12 @@ export const isStrongPassword = (password: string) => {
     // If all conditions pass, password is considered strong
     return true;
 }
+
+export const scrollToView = (ref: React.RefObject<HTMLElement>) => {
+    if (ref.current) {
+        ref?.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
