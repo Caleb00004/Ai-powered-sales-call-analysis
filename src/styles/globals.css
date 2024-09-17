@@ -14,7 +14,32 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* scroll-behavior: smooth; */
+}
+
+/* Custom style for General scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 9px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #939292;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#C32782, #48D0FF);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* ///////////////////////////////// */
+
+.MuiDataGrid-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to left, #C32782, #48D0FF)
 }
 
 /* Custom scrollbar hiding styles */

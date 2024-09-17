@@ -10,12 +10,41 @@ import ManagerIcon from "../../../public/svgs/dashboardIcons/managers-icon.svg"
 import TrainingIcon from "../../../public/svgs/dashboardIcons/trainings-icon.svg"
 import ArrowIcon from "../../../public/svgs/arrow2-icon.svg"
 import { useRouter } from "next/router"
+import gsap from "gsap"
+import { useEffect } from "react"
 
 const SideNav = () => {
     const router = useRouter()
-    const routeName = router.pathname.split('/').slice(2).join('/')
+    const splitName = router.pathname.split('/')
+    const routeName = splitName[2]    
+    // const routeName = router.pathname.split('/').slice(2).join('/')
+    
+    const shakeAnimation = (iconClass: Element) => {
+        gsap.timeline({ defaults: { duration: 0.2 } })
+            .fromTo(iconClass, { rotate: 18 }, { rotate: -18, repeat: 1, yoyo: true })
+            .to(iconClass, { rotate: 0 });
+    };
 
-    console.log(routeName)
+    useEffect(() => {
+        // Select all links and add hover event listener
+        const links = document.querySelectorAll('.sidebar-link');
+        
+        links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const icon = link.querySelector('.sidenav-icon');
+            if (icon) {
+            shakeAnimation(icon);
+            }
+        });
+        });  
+
+        // Clean up the event listeners on unmount
+        return () => {
+        links.forEach(link => {
+            link.removeEventListener('mouseenter', () => {});
+        });
+        };
+    }, []);
 
     return (
         <div className="bg-[#161529] h-screen flex flex-col ">
@@ -23,36 +52,36 @@ const SideNav = () => {
                 <Logo2 />
             </div>
             <div className="flex flex-col text-[#D9D9D9] text-[0.9em] mt-10">
-                <Link href={"/dashboard"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "" && "bg-[#2B2A3D] text-white"}`}>
-                    <DashboardIcon />
+                <Link href={"/dashboard"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${router.pathname === "/dashboard" && "bg-[#2B2A3D] text-white"}`}>
+                    <DashboardIcon className="sidenav-icon" />
                     <p>Dashboard</p>
                 </Link>
-                <Link href={"/dashboard/sales-rep"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
-                    <SalesRepIcon />
+                <Link href={"/dashboard/sales-rep"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                    <SalesRepIcon className="sidenav-icon" />
                     <p>Sales Reps</p>
                 </Link>
-                <Link href={"/dashboard/skills"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && "bg-[#2B2A3D] text-white"}`}>
-                    <SkillsIcon />
+                <Link href={"/dashboard/skills"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && "bg-[#2B2A3D] text-white"}`}>
+                    <SkillsIcon className="sidenav-icon" />
                     <p>Skills</p>
                 </Link>
-                <Link href={"/dashboard/team-rating"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D] text-white"}`}>
-                    <TeamIcon />
+                <Link href={"/dashboard/team-rating"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D] text-white"}`}>
+                    <TeamIcon className="sidenav-icon" />
                     <p>Team Rating</p>
                 </Link>
-                <Link href={"/dashboard/insights"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && "bg-[#2B2A3D] text-white"}`}>
-                    <InsightsIcon />
+                <Link href={"/dashboard/insights"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && "bg-[#2B2A3D] text-white"}`}>
+                    <InsightsIcon className="sidenav-icon" />
                     <p>Insights</p>
                 </Link>
-                <Link href={"/dashboard/deals"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && "bg-[#2B2A3D] text-white"}`}>
-                    <DealsIcon />
+                <Link href={"/dashboard/deals"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && "bg-[#2B2A3D] text-white"}`}>
+                    <DealsIcon className="sidenav-icon" />
                     <p>Deals</p>
                 </Link>
-                <Link href={"/dashboard/teams"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
-                    <ManagerIcon />
+                <Link href={"/dashboard/teams"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
+                    <ManagerIcon className="sidenav-icon" />
                     <p>Teams</p>
                 </Link>
-                <Link href={"/dashboard/trainings"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
-                    <TrainingIcon />
+                <Link href={"/dashboard/trainings"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
+                    <TrainingIcon className="sidenav-icon" />
                     <p>Trainings</p>
                 </Link>
             </div>

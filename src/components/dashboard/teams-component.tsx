@@ -83,7 +83,7 @@ const TeamsComponent = () => {
                 cellClassName: " text-[#333333] font-[500]", headerName: "Name/Email", headerClassName: "bg-[#C32782]",  
                 renderCell: (params) => {
                     const {name, email} = params.row
-                    console.log(params)
+                    // console.log(params)
                     return (
                         <div className="flex flex-col">
                             <p className="leading-3 mt-5">{name}</p>

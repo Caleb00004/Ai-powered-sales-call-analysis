@@ -21,7 +21,7 @@ const TeamRatingComponent = () => {
                         <TopPerformance hideLabel />
                     </div>
                 </div>
-                <div className="bg-red-400 flex flex-col flex-[1]">
+                <div className=" flex flex-col flex-[1]">
                     <SkillsExcerpt />
                 </div>
             </div>

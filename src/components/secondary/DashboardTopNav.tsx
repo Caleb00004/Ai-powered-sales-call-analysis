@@ -3,14 +3,6 @@ import NotificationIcon from "../../../public/svgs/Notification 2.svg"
 import DropdownIcon from "../../../public/svgs/dropdown-icon.svg"
 import Search from "./Search"
 import Link from "next/link"
-import DashboardIcon from "../../../public/svgs/dashboardIcons/dashboard-icon.svg"
-import SalesRepIcon from "../../../public/svgs/dashboardIcons/salesrep-icon.svg"
-import SkillsIcon from "../../../public/svgs/dashboardIcons/skills-icon.svg"
-import TeamIcon from "../../../public/svgs/dashboardIcons/teamrating-icon.svg"
-import InsightsIcon from "../../../public/svgs/dashboardIcons/insights-icon.svg"
-import DealsIcon from "../../../public/svgs/dashboardIcons/deals-icon.svg"
-import ManagerIcon from "../../../public/svgs/dashboardIcons/managers-icon.svg"
-import TrainingIcon from "../../../public/svgs/dashboardIcons/trainings-icon.svg"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import gsap from "gsap"
@@ -20,6 +12,7 @@ import Logo from "../primary/Logo"
 import FaqUI from "./FaqUI"
 import Input from "../primary/input"
 import Button from "../primary/Button"
+import SideNav from "./SideNav"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
@@ -165,39 +158,8 @@ const TopNav = () => {
         </div>
 
         {/* For Mobile */}
-        <div className="sm:hidden phone-nav -translate-y-full bg-[#161529] text-[#757474] pt-[5em] text-center h-[100vh] top-0 absolute w-full z-[7]">
-            <Link href={"/dashboard"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "" && " text-white"}`}>
-                <DashboardIcon />
-                <p>Dashboard</p>
-            </Link>
-            <Link href={"/dashboard/sales-rep"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && " text-white"}`}>
-                <SalesRepIcon />
-                <p>Sales Reps</p>
-            </Link>
-            <Link href={"/dashboard/skills"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && " text-white"}`}>
-                <SkillsIcon />
-                <p>Skills</p>
-            </Link>
-            <Link href={"/dashboard/team-rating"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && " text-white"}`}>
-                <TeamIcon />
-                <p>Team Rating</p>
-            </Link>
-            <Link href={"/dashboard/insights"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && " text-white"}`}>
-                <InsightsIcon />
-                <p>Insights</p>
-            </Link>
-            <Link href={"/dashboard/deals"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && " text-white"}`}>
-                <DealsIcon />
-                <p>Deals</p>
-            </Link>
-            <Link href={"/dashboard/teams"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && " text-white"}`}>
-                <ManagerIcon />
-                <p>Teams</p>
-            </Link>
-            <Link href={"/dashboard/trainings"} className={`flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && " text-white"}`}>
-                <TrainingIcon />
-                <p>Trainings</p>
-            </Link>
+        <div className="sm:hidden phone-nav -translate-y-full h-[100vh] top-0 absolute w-full z-[7]">
+            <SideNav />
         </div>
         </div>
     )
