@@ -18,8 +18,15 @@
 
 /* Custom style for General scroll bar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   height: 9px;
+}
+
+@media screen and (max-width: 700px) {
+::-webkit-scrollbar {
+    width: 5px;
+    height: 9px;
+  }
 }
 
 /* Track */
