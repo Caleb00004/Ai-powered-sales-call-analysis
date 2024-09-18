@@ -4,14 +4,19 @@ import Google from "../../../../../public/svgs/icons_google.svg"
 import Input from "@/components/primary/input"
 import { sectionType } from "../rightContainer"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
-import { FC, useState } from "react"
+import React, { FC, useState } from "react"
 import { useAuthSignUpMutation } from "../../../../../api-feature/apiSlice"
+import { authAccountType } from "@/pages/onboarding"
+import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import { useRouter } from "next/router"
 
 interface props {
     changeSection: (newSection: sectionType) => void
+    accountType: authAccountType
 }
 
-const Signup:FC<props> = ({changeSection}) => {
+const Signup:FC<props> = ({changeSection, accountType}) => {
+    const routeTo = useRouter()
     const [authSignUp] = useAuthSignUpMutation()
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
@@ -30,7 +35,9 @@ const Signup:FC<props> = ({changeSection}) => {
         setFormDetails(prev => ({...prev, [name]: value}))
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        routeTo.push("/company-setup")
         if (formDetails.password !== formDetails.confirm_password) {
             setPassWordsMatch(false)
             return
@@ -41,16 +48,21 @@ const Signup:FC<props> = ({changeSection}) => {
             setDisplayLoading(true);
             const {confirm_password, ...rest} = formDetails
             try {
-                authSignUp(rest).unwrap()
+                authSignUp({...rest, accountType: accountType}).unwrap()
                     .then(fulfilled => {
                         console.log(fulfilled)
+                        setRequestStatus("idle")
+                        setDisplayLoading(false)
                     })
                     .catch(rejected => {
                         console.log(rejected)
+                        setDisplayLoading(false)
+                        setRequestStatus("idle")
                     })
             } catch (err) {
                 console.error(err)
                 setDisplayLoading(false)
+                setRequestStatus("idle")
             }
         }
 
@@ -76,7 +88,7 @@ const Signup:FC<props> = ({changeSection}) => {
                 <p>Or</p>
                 <div className="border-[0.1px] w-full"></div>
             </div>
-            <div className="flex flex-col mb-6">
+            <form onSubmit={handleSubmit} className="flex flex-col mb-6">
                 <Input 
                     value={formDetails.first_name}
                     onChange={handleOnChange}
@@ -118,11 +130,11 @@ const Signup:FC<props> = ({changeSection}) => {
                     name="confirm_password"
                 />
                 {!passwordsMatch && <p className="-my-2 mr-auto text-[0.8em] italic text-red-600">Passwords don't match</p>}
-            </div>
 
-            <Button onClick={handleSubmit}>
-                Sign up
-            </Button>
+                <Button disabled={!formDetails.first_name || !formDetails.last_name || !formDetails.email || !formDetails.password} type="submit" className="mt-7 h-[2.68em] disabled:cursor-not-allowed">
+                    {displayLoading ? <ActivityIndicator /> : "Sign up"}
+                </Button>
+            </form>
 
             <p className="mt-6 text-[0.85em] text-[#475467] font-normal">Already have an account<span  onClick={() => changeSection("signin")} className="cursor-pointer text-[#5272EA] font-medium"> Sign in</span></p>
         </>
