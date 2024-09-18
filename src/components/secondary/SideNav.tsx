@@ -12,11 +12,13 @@ import ArrowIcon from "../../../public/svgs/arrow2-icon.svg"
 import { useRouter } from "next/router"
 import gsap from "gsap"
 import { useEffect } from "react"
+import { globalState } from "../../../api-feature/apiSlice"
 
 const SideNav = () => {
     const router = useRouter()
     const splitName = router.pathname.split('/')
-    const routeName = splitName[2]    
+    const routeName = splitName[2]
+    const ACCOUNT_TYPE = globalState.account_type
     // const routeName = router.pathname.split('/').slice(2).join('/')
     
     const shakeAnimation = (iconClass: Element) => {
@@ -56,14 +58,14 @@ const SideNav = () => {
                     <DashboardIcon className="sidenav-icon" />
                     <p>Dashboard</p>
                 </Link>
-                <Link href={"/dashboard/sales-rep"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                {ACCOUNT_TYPE === "manager" && <Link href={"/dashboard/sales-rep"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
                     <SalesRepIcon className="sidenav-icon" />
                     <p>Sales Reps</p>
-                </Link>
-                <Link href={"/dashboard/skills"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && "bg-[#2B2A3D] text-white"}`}>
+                </Link>}
+                {ACCOUNT_TYPE === "manager" && <Link href={"/dashboard/skills"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "skills" && "bg-[#2B2A3D] text-white"}`}>
                     <SkillsIcon className="sidenav-icon" />
                     <p>Skills</p>
-                </Link>
+                </Link>}
                 <Link href={"/dashboard/team-rating"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D] text-white"}`}>
                     <TeamIcon className="sidenav-icon" />
                     <p>Team Rating</p>
@@ -76,10 +78,10 @@ const SideNav = () => {
                     <DealsIcon className="sidenav-icon" />
                     <p>Deals</p>
                 </Link>
-                <Link href={"/dashboard/teams"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
+                {ACCOUNT_TYPE === "manager" && <Link href={"/dashboard/teams"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
                     <ManagerIcon className="sidenav-icon" />
                     <p>Teams</p>
-                </Link>
+                </Link>}
                 <Link href={"/dashboard/trainings"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
                     <TrainingIcon className="sidenav-icon" />
                     <p>Trainings</p>

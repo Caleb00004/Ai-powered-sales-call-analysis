@@ -301,11 +301,11 @@ const SalesRepManager = () => {
                                     itemsPerPage={5}
                                     renderItems={(data) => (
                                         data.map(item => (
-                                            <div className="flex cursor-pointer py-2 text-[14px] justify-between items-center ">
+                                            <div className="flex cursor-pointer py-2 text-[#333333] text-[14px] justify-between items-center ">
                                                 <div className='flex items-center'>
                                                     <MoreIcon className="rotate-[90deg]" />
                                                     <div>
-                                                        <p>Sample Topic</p>
+                                                        <p className="font-[600]">Sample Topic</p>
                                                         <p className='text-[12px]'>Sample Module Name</p>
                                                     </div>
                                                 </div>
