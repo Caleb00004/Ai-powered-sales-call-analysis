@@ -13,6 +13,7 @@ import FaqUI from "./FaqUI"
 import Input from "../primary/input"
 import Button from "../primary/Button"
 import SideNav from "./SideNav"
+import DropdownItem from "./DropdownItem"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
@@ -56,10 +57,12 @@ const TopNav = () => {
     }
 
     const handleDropDown = () => {
+        setHelpDropdown(false)
         setDisplayDropDown(prev => !prev)
     }
 
     const handleHelpDropdown = () => {
+        setDisplayDropDown(false)
         setHelpDropdown(prev => !prev)
     }
 
@@ -132,8 +135,8 @@ const TopNav = () => {
                         <HelpIcon />
                     </div>
                     <Dropdown isOpen={helpDropDown} className="mt-4">
-                        <p onClick={() => (handleHelpDropdown(), openModal("faq"))} className="py-2 px-2 hover:bg-slate-100 cursor-pointer">FAQ</p>
-                        <p onClick={() => (handleHelpDropdown(), openModal("support"))} className="py-2 px-2 hover:bg-slate-100 cursor-pointer">Contact Support</p>
+                        <DropdownItem text="FAQ" onClick={() => (handleHelpDropdown(), openModal("faq"))} />
+                        <DropdownItem text="Contact Support" onClick={() => (handleHelpDropdown(), openModal("support"))} />
                     </Dropdown>
                 </div>
                 <Link href={"/dashboard/notifications"} className="border border-[#D4D4D4] rounded-md p-1">
@@ -146,7 +149,7 @@ const TopNav = () => {
                         <DropdownIcon />
                     </div>
                     <Dropdown isOpen={displayDropDown} className="mt-4">
-                        <Link href={"/dashboard/settings"} className="py-2 px-2 hover:bg-slate-100 cursor-pointer">Settings</Link>
+                        <Link href={"/dashboard/settings"}><DropdownItem text="Settings" onClick={() => {}} /></Link>
                     </Dropdown>
                 </div>
             </div>

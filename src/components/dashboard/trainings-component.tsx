@@ -11,6 +11,7 @@ import Modal from "../primary/Modal"
 import Input from "../primary/input"
 import Xicon from "../../../public/svgs/x-icon.svg"
 import { Checkbox } from "@mui/material"
+import DropdownItem from "../secondary/DropdownItem"
 
 type formType = {
     module: string
@@ -217,15 +218,9 @@ const TrainingsComponent = () => {
                                         <MoreIcon className="rotate-[90deg] scale-[0.7]" />
                                     </div>
                                     <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openModulesDropdown === item.id}>
-                                        <p onClick={() => openModal("assign-training")} className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                            Assign Training
-                                        </p>
-                                        <p className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                            View Description
-                                        </p>
-                                        <p className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                            View Team Progress
-                                        </p>
+                                        <DropdownItem onClick={() => openModal("assign-training")} text="Assign Training" />
+                                        <DropdownItem onClick={() => {}} text="View Description" />
+                                        <DropdownItem onClick={() => {}} text="View Team Progresss" />
                                     </Dropdown>
                                 </div>
                             ))}
@@ -257,15 +252,9 @@ const TrainingsComponent = () => {
                                 </div>
                                 <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openTopicDropdown === (i + 1)}>
                                     {/* @ts-ignore */}
-                                    <p onClick={() => (openModal("assign-topic"), setSelectedTopic({module: selectedModule.name, topic: item.name}), closeAllDropdowns() )} className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                        Assign Topic
-                                    </p>
-                                    <p className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                        View Description
-                                    </p>
-                                    <p className="py-1 px-2 hover:bg-slate-100 cursor-pointer">
-                                        View Enrolled Team
-                                    </p>
+                                    <DropdownItem onClick={() => (openModal("assign-topic"), setSelectedTopic({module: selectedModule.name, topic: item.name}), closeAllDropdowns() )} text="Assign Topic" />
+                                    <DropdownItem onClick={() => {}} text="View Description" />
+                                    <DropdownItem onClick={() => {}} text="View Enrolled Team" />
                                 </Dropdown>
                             </div>
                         ))}

@@ -17,6 +17,7 @@ import Callicon from "../../../../public/svgs/round-call.svg"
 import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
 import Dropdown from '@/components/secondary/Dropdown';
 import { scrollToView } from '@/components/util/helperFunctions';
+import DropdownItem from '@/components/secondary/DropdownItem';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -131,9 +132,9 @@ const SalesRepManager = () => {
             <BookmarkIcon className="scale-[0.8]" />
             <div onClick={handleDropDown}><MoreIcon className=" rotate-[90deg] translate-y-2 scale-[0.7]" /></div>
             <Dropdown isOpen={displayDropDown}>
-                <p onClick={() => (setSection("details"), handleDropDown())} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>View User details</p>
-                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Schedule Training</p>
-                <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Message User</p>
+                <DropdownItem className='py-1 px-2' onClick={() => (setSection("details"), handleDropDown())} text='View User details' />
+                <DropdownItem className='py-1 px-2' onClick={() => {}} text='Schedule Training' />
+                <DropdownItem className='py-1 px-2' onClick={() => {}} text="Message User" />
             </Dropdown>
         </>
     
@@ -287,9 +288,9 @@ const SalesRepManager = () => {
                                         <p>All</p>
                                     </div>
                                     <Dropdown className='-left-5 top-[35px]' isOpen={displayTrainingDropdown}>
-                                        <p onClick={handleTrainingDropdown} className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Completed</p>
-                                        <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>In Progress</p>
-                                        <p className='hover:bg-slate-200 cursor-pointer px-2 py-1'>Not Started</p>
+                                        <DropdownItem className='py-1 px-2' onClick={handleTrainingDropdown} text='Completed' />
+                                        <DropdownItem className='py-1 px-2' onClick={() => {}} text='In Progress' />
+                                        <DropdownItem className='py-1 px-2' onClick={() => {}} text='Not Started' />
                                     </Dropdown>
                                 </div>
                             </div>
