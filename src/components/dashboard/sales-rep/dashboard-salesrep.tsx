@@ -12,6 +12,7 @@ import { dealsData } from '@/testData';
 import NavIcon from "../../../../public/svgs/next-icon.svg"
 import Callicon from "../../../../public/svgs/round-call.svg"
 import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
+import Link from "next/link"
 
 
 const piechartdata = 
@@ -70,9 +71,9 @@ const SalesrepDashboard = () => {
                     <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
                         <div className="flex justify-between mb-10">
                             <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Area of concern</h1>
-                            <div>
+                            <Link href={"/dashboard/insights"}>
                                 <Button className="bg-white border border-[#C32781] rounded-md px-7 py-[4px]"><p className="text-[#C32781]">View Insight</p></Button>
-                            </div>
+                            </Link>
                         </div>
                         <PiechartComponent data={piechartdata} />
                     </div>
@@ -90,9 +91,9 @@ const SalesrepDashboard = () => {
                     <div className='border flex-1 flex flex-col bg-white p-3 pb-10 px-3 rounded-lg'>
                         <div className="flex justify-between mb-0">
                             <h1 className='text-[#333333] text-[20px] font-[600] pb-4'>Newest Assigned Deals</h1>
-                            <div>
+                            <Link href={"/dashboard/deals"}>
                                 <Button className="bg-white border border-[#C32781] rounded-md px-7 py-[4px]"><p className="text-[#C32781]">View All</p></Button>
-                            </div>
+                            </Link>
                         </div>
                         <div className=' h-full'>
                             <PaginationComponent                                 
@@ -114,9 +115,9 @@ const SalesrepDashboard = () => {
                     <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                         <div className="flex justify-between mb-3">
                             <h1 className='text-[#333333] text-[20px] font-[600] '>Newest Scheduled Training</h1>
-                            <div>
+                            <Link href={"/dashboard/trainings/112"}>
                                 <Button className="bg-white border border-[#C32781] rounded-md px-7 py-[4px]"><p className="text-[#C32781]">View All</p></Button>
-                            </div>
+                            </Link>
                         </div>
                         <div>
                             <PaginationComponent 

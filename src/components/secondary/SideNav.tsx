@@ -82,7 +82,7 @@ const SideNav = () => {
                     <ManagerIcon className="sidenav-icon" />
                     <p>Teams</p>
                 </Link>}
-                <Link href={"/dashboard/trainings"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
+                <Link href={`${ACCOUNT_TYPE === "manager" ? "/dashboard/trainings" : "/dashboard/trainings/112"}`} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
                     <TrainingIcon className="sidenav-icon" />
                     <p>Trainings</p>
                 </Link>

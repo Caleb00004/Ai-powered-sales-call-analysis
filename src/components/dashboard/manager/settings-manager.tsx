@@ -2,8 +2,10 @@ import { useState } from "react"
 import ProfileSettings from "../settings/profile-settings"
 import SystemSettings from "../settings/system-settings"
 import AuditTrail from "../settings/audit-trial"
+import { globalState } from "../../../../api-feature/apiSlice"
 
 const SettingsManager = () => {
+    const account_type = globalState.account_type
     const [currentSection, setCurrentSection] = useState<"profile" | "system" | "audit-trial">("profile")
 
     const handleSwitchSection = (newSection: "profile" | "system" | "audit-trial") => {
@@ -24,8 +26,12 @@ const SettingsManager = () => {
                         <p>Lindsey lohan</p>
                     </div>
                     <p onClick={() => handleSwitchSection("profile")} className={`${currentSection === "profile" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>My Profile</p>
-                    <p onClick={() => handleSwitchSection("system")} className={`${currentSection === "system" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>System Settings</p>
-                    <p onClick={() => handleSwitchSection("audit-trial")} className={`${currentSection === "audit-trial" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>Audit Trial</p>
+                    {account_type === "manager" && 
+                        <>
+                            <p onClick={() => handleSwitchSection("system")} className={`${currentSection === "system" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>System Settings</p>
+                            <p onClick={() => handleSwitchSection("audit-trial")} className={`${currentSection === "audit-trial" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>Audit Trial</p>    
+                        </>
+                    }
                 </div>
                 <div className="w-full ">
                     {currentSection === "profile" && <ProfileSettings />}

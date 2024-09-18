@@ -63,6 +63,10 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeig
                             color: "white",
                             borderBottom: "none",
                         },
+                        "& .center-cell-text": {
+                            textAlign: "center" ,
+                            backgroundColor: "transparent"
+                        },
                         "& .date-column--cell": {
                             whiteSpace: "normal", // Allows text to wrap
                             wordWrap: "break-word", // Breaks long words onto the next line
