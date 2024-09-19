@@ -58,6 +58,42 @@ const SideNav = () => {
                     <DashboardIcon className="sidenav-icon" />
                     <p>Dashboard</p>
                 </Link>
+                {ACCOUNT_TYPE === "admin" && 
+                    <>
+                        <div className="">
+                            <Link href={"#"} className={`sidebar-link py-3 px-4 flex items-center gap-3 hover:bg-[#2B2A3D] hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                                <SalesRepIcon className="sidenav-icon" />
+                                <p>Company Management</p>
+                            </Link>
+                            <div className="mt-0 text-[#D9D9D9] transition-all origin-top h-[6.4em]">
+                                <div className="flex py-3 px-4 items-center gap-2 hover:bg-[#2B2A3D]">
+                                    <div className="h-3 w-3 rounded-full border" />
+                                    <p>Companies</p>
+                                </div>
+                                <div className="flex py-3 px-4 items-center gap-2 hover:bg-[#2B2A3D]">
+                                    <div className="h-3 w-3 rounded-full border" />
+                                    <p>Activity Logs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <Link href={"#"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                            <SalesRepIcon className="sidenav-icon" />
+                            <p>System Performance</p>
+                        </Link>
+                        <Link href={"#"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                            <SalesRepIcon className="sidenav-icon" />
+                            <p>Subscriptions</p>
+                        </Link>
+                        <Link href={"#"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                            <SalesRepIcon className="sidenav-icon" />
+                            <p>Training Management</p>
+                        </Link>
+                        <Link href={"#"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
+                            <SalesRepIcon className="sidenav-icon" />
+                            <p>Account Settings</p>
+                        </Link>
+                    </>
+                }
                 {ACCOUNT_TYPE === "manager" && <Link href={"/dashboard/sales-rep"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-white"}`}>
                     <SalesRepIcon className="sidenav-icon" />
                     <p>Sales Reps</p>
@@ -66,26 +102,30 @@ const SideNav = () => {
                     <SkillsIcon className="sidenav-icon" />
                     <p>Skills</p>
                 </Link>}
-                <Link href={"/dashboard/team-rating"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D] text-white"}`}>
-                    <TeamIcon className="sidenav-icon" />
-                    <p>Team Rating</p>
-                </Link>
-                <Link href={"/dashboard/insights"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && "bg-[#2B2A3D] text-white"}`}>
-                    <InsightsIcon className="sidenav-icon" />
-                    <p>Insights</p>
-                </Link>
-                <Link href={"/dashboard/deals"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && "bg-[#2B2A3D] text-white"}`}>
-                    <DealsIcon className="sidenav-icon" />
-                    <p>Deals</p>
-                </Link>
+                {ACCOUNT_TYPE !== "admin" &&
+                    <>
+                        <Link href={"/dashboard/team-rating"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "team-rating" && "bg-[#2B2A3D] text-white"}`}>
+                            <TeamIcon className="sidenav-icon" />
+                            <p>Team Rating</p>
+                        </Link>
+                        <Link href={"/dashboard/insights"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "insights" && "bg-[#2B2A3D] text-white"}`}>
+                            <InsightsIcon className="sidenav-icon" />
+                            <p>Insights</p>
+                        </Link>
+                        <Link href={"/dashboard/deals"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "deals" && "bg-[#2B2A3D] text-white"}`}>
+                            <DealsIcon className="sidenav-icon" />
+                            <p>Deals</p>
+                        </Link>
+                    </>
+                }
                 {ACCOUNT_TYPE === "manager" && <Link href={"/dashboard/teams"} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "teams" && "bg-[#2B2A3D] text-white"}`}>
                     <ManagerIcon className="sidenav-icon" />
                     <p>Teams</p>
                 </Link>}
-                <Link href={`${ACCOUNT_TYPE === "manager" ? "/dashboard/trainings" : "/dashboard/trainings/112"}`} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
+                {ACCOUNT_TYPE !== "admin" && <Link href={`${ACCOUNT_TYPE === "manager" ? "/dashboard/trainings" : "/dashboard/trainings/112"}`} className={`sidebar-link flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "trainings" && "bg-[#2B2A3D] text-white"}`}>
                     <TrainingIcon className="sidenav-icon" />
                     <p>Trainings</p>
-                </Link>
+                </Link>}
             </div>
             <Link href={"/dashboard/company-permission"} className=" border border-[#D9D9D9] rounded-[150px] flex justify-between mt-auto mb-6 pl-3 pr-1 py-2 mx-2 ">
                 <div>
