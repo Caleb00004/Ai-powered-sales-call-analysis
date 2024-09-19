@@ -10,7 +10,7 @@ interface globalStateType {
 
 export const globalState: globalStateType = {
     userId: "",
-    account_type: "sales-rep",
+    account_type: "admin",
 };
 
 export const apiSlice = createApi({
