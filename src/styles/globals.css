@@ -31,12 +31,14 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #939292;
+  /* background: #939292; */
+  background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#C32782, #48D0FF);
+  border-radius: 10px;
 }
 
 /* Handle on hover */
