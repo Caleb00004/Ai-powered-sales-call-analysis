@@ -6,43 +6,58 @@ import { useState } from "react"
 import Picture from "../../public/svgs/john-doe.svg"
 import { Checkbox } from "@mui/material"
 import gsap from "gsap"
+import { useContext } from "react"
+import { dataContext } from "@/components/contexts/dataContext"
+import { SkillsType, APISTATUS, ApiType, } from "../../api-feature/types"
+import { globalState, useGetAvailableSkillsListQuery, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
 
 
-const skills = [
-    "BO =Becoming Obsessed",
-    "BV =Building Value",
-    "VP =Value Over Price",
-    "MU1 =Mastering Urgency (Comprehensive)",
-    "MU2 =Mastering Urgency (Communication)",
-    "VP =Value Preservation",
-    "MU3 =Mastering Urgency (Implementation)",
-    "UIP =Influence of Passion",
-    "C =Conviction",
-    "FTC =Feeling the Conviction",
-    "CC =Convinced Communication",
-    "MOH =Mastering Objection Handling",
-    "RTS =Rebuttals That Make Sense",
-    "SM =Shifting Mindset",
-    "POS =Preventing Objections Strategically",
-    "CP =Cultivating Perseverance",
-    "NUC =Navigating Unexpected Challenges",
-    "CR =Cultivating Resilient Mindset",
-    "NAS =Navigating Adversity in Sales",
-    "MT =Mastering Transitions",
-    "MPC =Mastering Purposeful Communication",
-    "MG =Mastering Guiding Buyers",
-    "NN =Navigating Negativity",
-    "BT =Building Trust",
-    "BR =Building Relationships",
-]
+// const skills = [
+//     "BO =Becoming Obsessed",
+//     "BV =Building Value",
+//     "VP =Value Over Price",
+//     "MU1 =Mastering Urgency (Comprehensive)",
+//     "MU2 =Mastering Urgency (Communication)",
+//     "VP =Value Preservation",
+//     "MU3 =Mastering Urgency (Implementation)",
+//     "UIP =Influence of Passion",
+//     "C =Conviction",
+//     "FTC =Feeling the Conviction",
+//     "CC =Convinced Communication",
+//     "MOH =Mastering Objection Handling",
+//     "RTS =Rebuttals That Make Sense",
+//     "SM =Shifting Mindset",
+//     "POS =Preventing Objections Strategically",
+//     "CP =Cultivating Perseverance",
+//     "NUC =Navigating Unexpected Challenges",
+//     "CR =Cultivating Resilient Mindset",
+//     "NAS =Navigating Adversity in Sales",
+//     "MT =Mastering Transitions",
+//     "MPC =Mastering Purposeful Communication",
+//     "MG =Mastering Guiding Buyers",
+//     "NN =Navigating Negativity",
+//     "BT =Building Trust",
+//     "BR =Building Relationships",
+// ]
+
+interface skillsApiType extends ApiType {
+  data: SkillsType[]
+}
 
 const CompanySetup = () => {
+    const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
+    // const {availableSkills, availableSkillsStatus} = useContext(dataContext)
+    const [createCompany] = usePostCreateCompanyMutation()
     const [currentStep, setCurrentStep] = useState<1 | 2>(1)
-    const [companyDetails, setCompanyDetails] = useState({
-        companyName: "",
-        topSkills: [""]
+    const [companyDetails, setCompanyDetails] = useState<{name: string, skills: {skillId: number}[]}>({
+        name: "",
+        skills: []
     })  
     const routeTo = useRouter()
+    
+    console.log(availableSkills)
+    console.log(availableSkillsStatus)
+    console.log(availableSkillsError)
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -62,15 +77,60 @@ const CompanySetup = () => {
     }
 
     // @ts-ignore
+    // const handleUpdateSkills = (skill) => {
+    //     console.log(skill)
+    //     if (!(companyDetails.skills.includes(skill))) {
+    //         setCompanyDetails(prev => ({...prev, skills: [...prev.skills, skill]}))
+    //         return
+    //     } else {
+    //         setCompanyDetails(prev => ({...prev, skills: [...prev.skills.filter(item => item !== skill)]}))
+    //         return
+    //     }
+    // }
+
     const handleUpdateSkills = (skill) => {
-        console.log(skill)
-        if (!(companyDetails.topSkills.includes(skill))) {
-            setCompanyDetails(prev => ({...prev, topSkills: [...prev.topSkills, skill]}))
-            return
+        console.log(skill);
+        // Check if the skill is already in the skills array
+        const isSkillIncluded = companyDetails.skills.some(item => item.skillId === skill.skillId);
+
+        if (!isSkillIncluded) {
+            // If the skill is not included, add it
+            setCompanyDetails(prev => ({
+                ...prev,
+                skills: [...prev.skills, skill]
+            }));
         } else {
-            setCompanyDetails(prev => ({...prev, topSkills: [...prev.topSkills.filter(item => item !== skill)]}))
-            return
+            // If the skill is included, remove it
+            setCompanyDetails(prev => ({
+                ...prev,
+                skills: prev.skills.filter(item => item.skillId !== skill.skillId)
+            }));
         }
+    };
+
+    const handleCreateCompany = () => {
+        try {
+            createCompany(companyDetails).unwrap()
+                .then(fulfilled => (
+                    console.log(fulfilled)
+                ))
+                .catch(rejected => {
+                    console.log(rejected)
+                })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    if (!globalState.authorizationToken) {
+        return (
+            <main className="bg-[#F8F8FA] text-[#333333] min-h-screen sm:h-screen flex flex-col justify-center items-center">
+                <h1 className="text-[23px]">You're are unauthorized</h1>
+                <div className="w-[140px] mt-2">
+                    <Button onClick={() => routeTo.push("/onboarding")}>Login</Button>
+                </div>
+            </main>
+        )
     }
 
     return (
@@ -81,37 +141,38 @@ const CompanySetup = () => {
                         <h1 className="text-[1.5em] sm:text-[30px] font-[500] text-[#333333] mt-8 mb-12 text-center ">Select a Minimum of 5 top skills to Continue</h1>
 
                         <div className=" w-[100%] mdx2:w-[55em]">
-                            <div className="flex flex-col sm:flex-row gap-5 mdx3:gap-10 justify-between text-[#333333]">
+                            {availableSkillsStatus === "fulfilled" && <div className="flex flex-col sm:flex-row gap-5 mdx3:gap-10 justify-between text-[#333333]">
                                 <div className="bg-white flex flex-col ">
-                                    {skills.slice(0, 13).map(item => (
+                                    {availableSkills.slice(0, 13).map(item => (
                                         <div onClick={() => handleUpdateSkills(item)} className=" cursor-pointer hover:bg-slate-100 flex items-center border-b py-3">
                                             <Checkbox sx={{
                                                 '&.Mui-checked': {
                                                     color: "#B3387F"
                                                 }
                                                 }} 
-                                                checked={companyDetails.topSkills.includes(item)} onChange={() => console.log(item)} 
+                                                checked={companyDetails.skills.some(skill => skill.skillId === item.id)} onChange={() => console.log(item)} 
                                             />
-                                            <p className="font-[500] pr-5">{item}</p>
+                                            <p className="font-[500] pr-5">{item.symbol} = {item.name}</p>
                                         </div>
                                     ))}
                                 </div>
 
                                 <div className="bg-white flex flex-col">
-                                    {skills.slice(13, 25).map(item => (
+                                    {availableSkills.slice(13, 25).map(item => (
                                         <div onClick={() => handleUpdateSkills(item)} className=" cursor-pointer hover:bg-slate-100 flex items-center border-b py-3">
                                             <Checkbox sx={{
                                                 '&.Mui-checked': {
                                                     color: "#B3387F"
                                                 }
                                                 }} 
-                                                checked={companyDetails.topSkills.includes(item)} 
+                                                checked={companyDetails.skills.some(skill => skill.skillId === item.id)}
+                                                // checked={companyDetails.skills.includes(item => item.)} 
                                             />
-                                            <p className="font-[500] pr-5">{item}</p>
+                                            <p className="font-[500] pr-5">{item.name}</p>
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div>}
 
                             <div className="flex flex-col sm:flex-row gap-5 mt-6 items-start sm:items-center justify-end ">
                                 <p className="text-[#333333] font-[700]">Step 2 of 2</p>
@@ -120,7 +181,7 @@ const CompanySetup = () => {
                                         <Button onClick={() => handleChangeStep(1)} className="py-[5px] bg-transparent border border-[#B3387F]"><p className="text-[#B3387F]">Previous</p></Button>
                                     </div>
                                     <div className="w-[160px]">
-                                        <Button className="py-[5px]">Save and Continue</Button>
+                                        <Button onClick={handleCreateCompany} className="py-[5px]">Save and Continue</Button>
                                     </div>
                                 </div>
                             </div>
@@ -140,19 +201,19 @@ const CompanySetup = () => {
                             <p className="text-[#71717A] text-[16px] pt-2">First tell us about your company</p>
                             <Input
                                 className="mt-8"
-                                value={companyDetails.companyName}
+                                value={companyDetails.name}
                                 onChange={handleOnChange}
                                 label={<label className="text-[#333333] font-medium text-[0.9em]">Company name</label>} 
                                 placeholder="Enter company name"
                                 type="text"
-                                name="company_name"
+                                name="name"
                             />
                         </div>
 
                         <div className="flex gap-5 mt-4 justify-end items-center">
                             <p className="text-[#333333] font-[700]">Step 1 of 2</p>
                             <div className="w-[100px]">
-                                <Button onClick={() => handleChangeStep(2)} className="py-[5px]">Next</Button>
+                                <Button disabled={!companyDetails.name} onClick={() => handleChangeStep(2)} className="py-[5px] disabled:cursor-not-allowed">Next</Button>
                             </div>
                         </div>
                     </div>

@@ -7,16 +7,22 @@ import { FC, FormEventHandler, useState } from "react"
 import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
-import { useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
+import { BASE_URL, globalState, useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
 import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import { useRouter } from "next/router"
+import axios from "axios"
+import { useContext } from "react"
+import { appContext } from "@/components/contexts/appContext"
 
 interface props {
     changeSection: (newSection: sectionType) => void
     accountType: authAccountType
 }
-    
+
 const Signin:FC<props> = ({changeSection, accountType}) => {
+    const {loggedIn, setLoggedIn, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
+    const router = useRouter()
     const [authSignin] = useAuthSignInMutation()
     const [loginRequestStatus, setLoginRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
@@ -35,18 +41,52 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
         setLoginDetails(prev => ({...prev, [name]: value}))
     }
 
+    const getProfileData = async () => {
+        console.log("GETTING PROFILE DATA")
+        try {
+            console.log(globalState.authorizationToken)
+            const response = await axios.get(`${BASE_URL}/user`, {
+                headers: { Authorization: `Bearer ${globalState.authorizationToken}` },
+            }); 
+            setDisplayLoading(false)
+            setLoginRequestStatus("idle")
+            console.log(response)
+            // globalState.currentUser = {
+            //     firstName: response.data.firstName,
+            //     lastName: response.data.lastName,
+            //     email: response.data.email,
+            //     company: response.data.company
+            // };
+            router.push("/dashboard")
+        } catch (error) {
+            setDisplayLoading(false)
+            setLoginRequestStatus("idle")
+            console.error(error);
+            // @ts-ignore
+            if (error?.response?.data?.message === "No company selected") {
+                router.push("/company-setup")
+            // @ts-ignore
+            } else if (error?.response?.data?.message === "Please verify your email") {
+                changeSection("checkmail")
+            } else {
+                
+            }
+        } 
+    }
+
     const handleSignin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("CLicked")
         if (loginRequestStatus == "idle") {
             setLoginRequestStatus("pending")
             setDisplayLoading(true);
             try {
-                authSignin({...loginDetails, accountType: accountType}).unwrap()
+                authSignin({...loginDetails}).unwrap()
                     .then(fulfilled => {
                         console.log(fulfilled)
-                        setDisplayLoading(false)
-                        setLoginRequestStatus("idle")
+                        globalState.authorizationToken = fulfilled.data.accessToken
+                        // setLoggedIn(true)
+                        // saveAuthorizationTokenWithExpiry("durket-token", fulfilled.data.accessToken, 60 )
+                        getProfileData()
                     })
                     .catch(rejected => {
                         setDisplayLoading(false)

@@ -16,14 +16,14 @@ interface props {
 }
 
 const Signup:FC<props> = ({changeSection, accountType}) => {
-    const routeTo = useRouter()
+    const router = useRouter()
     const [authSignUp] = useAuthSignUpMutation()
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
     const [passwordsMatch, setPassWordsMatch] = useState(true)
     const [formDetails, setFormDetails] = useState({
-        first_name: "",
-        last_name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirm_password: ""
@@ -34,22 +34,23 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
         const value = e.target.value
         setFormDetails(prev => ({...prev, [name]: value}))
     }
-
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        routeTo.push("/company-setup")
         if (formDetails.password !== formDetails.confirm_password) {
             setPassWordsMatch(false)
             return
         }
 
+        setPassWordsMatch(true)
+
         if (requestStatus == "idle") {
             setRequestStatus("pending")
             setDisplayLoading(true);
-            const {confirm_password, ...rest} = formDetails
             try {
-                authSignUp({...rest, accountType: accountType}).unwrap()
+                authSignUp(formDetails).unwrap()
                     .then(fulfilled => {
+                        changeSection("signin")
                         console.log(fulfilled)
                         setRequestStatus("idle")
                         setDisplayLoading(false)
@@ -90,20 +91,20 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col mb-6">
                 <Input 
-                    value={formDetails.first_name}
+                    value={formDetails.firstName}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">First name</label>} 
                     placeholder="Enter first name"
                     type="text"
-                    name="first_name"
+                    name="firstName"
                 />
                 <Input 
-                    value={formDetails.last_name}
+                    value={formDetails.lastName}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Last name</label>} 
                     placeholder="Enter last name"
                     type="text"
-                    name="last_name"
+                    name="lastName"
                 />
                 <Input 
                     value={formDetails.email}
@@ -131,7 +132,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                 />
                 {!passwordsMatch && <p className="-my-2 mr-auto text-[0.8em] italic text-red-600">Passwords don't match</p>}
 
-                <Button disabled={!formDetails.first_name || !formDetails.last_name || !formDetails.email || !formDetails.password} type="submit" className="mt-7 h-[2.68em] disabled:cursor-not-allowed">
+                <Button disabled={!formDetails.firstName || !formDetails.lastName || !formDetails.email || !formDetails.password} type="submit" className="mt-7 h-[2.68em] disabled:cursor-not-allowed disabled:bg-slate-500">
                     {displayLoading ? <ActivityIndicator /> : "Sign up"}
                 </Button>
             </form>

@@ -1,6 +1,9 @@
 import { SnackbarCloseReason } from "@mui/material";
 import { createContext, useEffect, ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";
+import { globalState } from "../../../api-feature/apiSlice";
+import { useGetAvailableSkillsListQuery } from "../../../api-feature/apiSlice";
+import { TOKEN_NAME } from "../../../api-feature/types";
 
 interface AppContextProps {
     toastDetails: {open: boolean, duration: number, message: string},
@@ -8,6 +11,11 @@ interface AppContextProps {
     openToast: (duration: number, message: string) => void
     handleToastClose: (event: SyntheticEvent | Event, reason: SnackbarCloseReason) => void
     salesRepData: string[]
+    loggedIn: boolean;
+    setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    checkedLocalStorage: boolean;
+    setCheckedLocalStorage: React.Dispatch<React.SetStateAction<boolean>>;
+    saveAuthorizationTokenWithExpiry: (key: typeof TOKEN_NAME, token: string, expiryInMinutes: number) => void
 }
 
 const appContext = createContext<AppContextProps>({
@@ -15,11 +23,18 @@ const appContext = createContext<AppContextProps>({
     setToastDetails: () => {},
     openToast: () => {},
     handleToastClose: () => {},
-    salesRepData: []
+    salesRepData: [],
+    loggedIn: false,
+    setLoggedIn: () => {},
+    checkedLocalStorage: false,
+    setCheckedLocalStorage: () => {},
+    saveAuthorizationTokenWithExpiry: () => {}
 })
 
 
 function ContextProvider({children}: { children: ReactNode }) {
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [checkedLocalStorage, setCheckedLocalStorage] = useState(false)
     const [toastDetails, setToastDetails] = useState({
         open: false,
         duration: 3000,
@@ -38,12 +53,46 @@ function ContextProvider({children}: { children: ReactNode }) {
         setToastDetails({open: true, duration, message})
     }
 
+    useEffect(() => {
+        const item = localStorage.getItem(TOKEN_NAME)
+        setCheckedLocalStorage(true)
+        if (item) {
+            const data = JSON.parse(item);
+            if (new Date().getTime() < data.expiry) {
+
+                globalState.authorizationToken = data.token
+                setLoggedIn(true)
+                // const {token, ...rest} = data
+                // globalState.currentUser = {...rest}
+            } else {
+                localStorage.removeItem(TOKEN_NAME)
+                globalState.authorizationToken = ''
+            }
+        }
+    }, []);
+
+    
+    const saveAuthorizationTokenWithExpiry = (key: typeof TOKEN_NAME, token: string , expiryInMinutes: number) => {
+        const now = new Date();
+        const item = {
+            token: token,
+            expiry: now.getTime() + expiryInMinutes * 60 * 1000 // Convert expiry time to milliseconds
+        };
+        localStorage.setItem(key, JSON.stringify(item));
+        setCheckedLocalStorage(true)
+    };
+
     const contextValue: AppContextProps = {
         toastDetails,
         setToastDetails,
         handleToastClose,
         openToast,
-        salesRepData
+        salesRepData,
+        loggedIn,
+        setLoggedIn,
+        checkedLocalStorage,
+        setCheckedLocalStorage,
+        saveAuthorizationTokenWithExpiry
     }
 
     return(
