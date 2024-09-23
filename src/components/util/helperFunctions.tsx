@@ -1,5 +1,3 @@
-import { AuthResponseType } from "../../../api-feature/types";
-
 export const isStrongPassword = (password: string) => {
     // Check if password length is at least 6 characters
     if (password.length < 6) {
@@ -29,13 +27,3 @@ export const scrollToView = (ref: React.RefObject<HTMLElement>) => {
         });
     }
 }
-
-export const saveAuthorizationTokenWithExpiry = (key: "unikrib-token", token: string , expiryInMinutes: number) => {
-    const now = new Date();
-    const item = {
-        token: token,
-        expiry: now.getTime() + expiryInMinutes * 60 * 1000 // Convert expiry time to milliseconds
-    };
-    localStorage.setItem(key, JSON.stringify(item));
-    setCheckedLocalStorage(true)
-};

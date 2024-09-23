@@ -14,6 +14,7 @@ import { useRouter } from "next/router"
 import axios from "axios"
 import { useContext } from "react"
 import { appContext } from "@/components/contexts/appContext"
+import toast from "react-hot-toast"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -82,16 +83,24 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
             try {
                 authSignin({...loginDetails}).unwrap()
                     .then(fulfilled => {
-                        console.log(fulfilled)
+                        // console.log(fulfilled)
                         globalState.authorizationToken = fulfilled.data.accessToken
-                        // setLoggedIn(true)
+                        setLoggedIn(true)
                         // saveAuthorizationTokenWithExpiry("durket-token", fulfilled.data.accessToken, 60 )
-                        getProfileData()
+                        toast.success("Logged In, please wait")
+                        getProfileData() 
                     })
                     .catch(rejected => {
                         setDisplayLoading(false)
                         setLoginRequestStatus("idle")
                         console.log(rejected)
+                        if (rejected.status === 400) {
+                            toast.error(rejected?.data?.message)
+                            return
+                        } else {
+                            toast.error("Error Occured, Refresh Page") 
+                            return
+                        }
                     })
             } catch (err) {
                 console.error(err)

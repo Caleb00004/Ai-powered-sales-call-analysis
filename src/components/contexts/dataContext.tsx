@@ -20,8 +20,7 @@ const dataContext = createContext<DataContextProps>({
 
 function DataContextProvider({ children }: { children: ReactNode }) {
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
-    // console.log(globalState)
-    // console.log(availableSkillsError)
+
     const contextValue: DataContextProps = {
         availableSkills,
         availableSkillsStatus

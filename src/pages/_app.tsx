@@ -5,6 +5,7 @@ import { apiSlice } from "../../api-feature/apiSlice";
 import {Montserrat} from "next/font/google"
 import { ContextProvider } from "@/components/contexts/appContext";
 import { DataContextProvider } from "@/components/contexts/dataContext";
+import { Toaster } from "react-hot-toast";
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ApiProvider api={apiSlice}>
         <ContextProvider>
           <DataContextProvider>
+            <Toaster />
             <div className={montserrat.className}>
               <Component {...pageProps} />
             </div>

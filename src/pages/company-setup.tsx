@@ -9,43 +9,25 @@ import gsap from "gsap"
 import { useContext } from "react"
 import { dataContext } from "@/components/contexts/dataContext"
 import { SkillsType, APISTATUS, ApiType, } from "../../api-feature/types"
-import { globalState, useGetAvailableSkillsListQuery, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
+import { globalState, useGetAvailableSkillsListQuery, useGetCompaniesQuery, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
+import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import toast from "react-hot-toast"
 
 
-// const skills = [
-//     "BO =Becoming Obsessed",
-//     "BV =Building Value",
-//     "VP =Value Over Price",
-//     "MU1 =Mastering Urgency (Comprehensive)",
-//     "MU2 =Mastering Urgency (Communication)",
-//     "VP =Value Preservation",
-//     "MU3 =Mastering Urgency (Implementation)",
-//     "UIP =Influence of Passion",
-//     "C =Conviction",
-//     "FTC =Feeling the Conviction",
-//     "CC =Convinced Communication",
-//     "MOH =Mastering Objection Handling",
-//     "RTS =Rebuttals That Make Sense",
-//     "SM =Shifting Mindset",
-//     "POS =Preventing Objections Strategically",
-//     "CP =Cultivating Perseverance",
-//     "NUC =Navigating Unexpected Challenges",
-//     "CR =Cultivating Resilient Mindset",
-//     "NAS =Navigating Adversity in Sales",
-//     "MT =Mastering Transitions",
-//     "MPC =Mastering Purposeful Communication",
-//     "MG =Mastering Guiding Buyers",
-//     "NN =Navigating Negativity",
-//     "BT =Building Trust",
-//     "BR =Building Relationships",
-// ]
 
 interface skillsApiType extends ApiType {
-  data: SkillsType[]
+  data: {success: boolean, data:SkillsType[]}
 }
 
 const CompanySetup = () => {
+    console.log(globalState)
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
+    // const {data, status, error, refetch} = useGetCompaniesQuery(undefined)
+    // console.log(data)
+    // console.log(status)
+    // console.log(error)
+
+    const [loading, setLoading] = useState(false)
     // const {availableSkills, availableSkillsStatus} = useContext(dataContext)
     const [createCompany] = usePostCreateCompanyMutation()
     const [currentStep, setCurrentStep] = useState<1 | 2>(1)
@@ -54,10 +36,6 @@ const CompanySetup = () => {
         skills: []
     })  
     const routeTo = useRouter()
-    
-    console.log(availableSkills)
-    console.log(availableSkillsStatus)
-    console.log(availableSkillsError)
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -76,7 +54,6 @@ const CompanySetup = () => {
         },500)
     }
 
-    // @ts-ignore
     // const handleUpdateSkills = (skill) => {
     //     console.log(skill)
     //     if (!(companyDetails.skills.includes(skill))) {
@@ -88,37 +65,48 @@ const CompanySetup = () => {
     //     }
     // }
 
-    const handleUpdateSkills = (skill) => {
+    const handleUpdateSkills = (skill: SkillsType) => {
         console.log(skill);
         // Check if the skill is already in the skills array
-        const isSkillIncluded = companyDetails.skills.some(item => item.skillId === skill.skillId);
+        const isSkillIncluded = companyDetails.skills.some(item => item.skillId === skill.id);
 
         if (!isSkillIncluded) {
             // If the skill is not included, add it
             setCompanyDetails(prev => ({
                 ...prev,
-                skills: [...prev.skills, skill]
+                skills: [...prev.skills, {skillId: skill.id}]
             }));
         } else {
             // If the skill is included, remove it
             setCompanyDetails(prev => ({
                 ...prev,
-                skills: prev.skills.filter(item => item.skillId !== skill.skillId)
+                skills: prev.skills.filter(item => item.skillId !== skill.id)
             }));
         }
     };
 
     const handleCreateCompany = () => {
+        setLoading(true)
         try {
             createCompany(companyDetails).unwrap()
                 .then(fulfilled => (
-                    console.log(fulfilled)
+                    toast.success("Company created"),
+                    console.log(fulfilled),
+                    setLoading(false)
                 ))
                 .catch(rejected => {
                     console.log(rejected)
+                    if (rejected.status === "FETCH_ERROR") {
+                        toast.error("Error refresh page")
+                    } else {
+                        toast.error("Error occured creating company")
+                    }
+                    setLoading(false)
                 })
         } catch (error) {
-            console.log(error)
+            console.log(error),
+            toast.error("Error occured creating company")
+            setLoading(false)
         }
     }
 
@@ -143,7 +131,7 @@ const CompanySetup = () => {
                         <div className=" w-[100%] mdx2:w-[55em]">
                             {availableSkillsStatus === "fulfilled" && <div className="flex flex-col sm:flex-row gap-5 mdx3:gap-10 justify-between text-[#333333]">
                                 <div className="bg-white flex flex-col ">
-                                    {availableSkills.slice(0, 13).map(item => (
+                                    {availableSkills?.data?.slice(0, 13).map(item => (
                                         <div onClick={() => handleUpdateSkills(item)} className=" cursor-pointer hover:bg-slate-100 flex items-center border-b py-3">
                                             <Checkbox sx={{
                                                 '&.Mui-checked': {
@@ -158,7 +146,7 @@ const CompanySetup = () => {
                                 </div>
 
                                 <div className="bg-white flex flex-col">
-                                    {availableSkills.slice(13, 25).map(item => (
+                                    {availableSkills?.data?.slice(13, 25).map(item => (
                                         <div onClick={() => handleUpdateSkills(item)} className=" cursor-pointer hover:bg-slate-100 flex items-center border-b py-3">
                                             <Checkbox sx={{
                                                 '&.Mui-checked': {
@@ -168,7 +156,7 @@ const CompanySetup = () => {
                                                 checked={companyDetails.skills.some(skill => skill.skillId === item.id)}
                                                 // checked={companyDetails.skills.includes(item => item.)} 
                                             />
-                                            <p className="font-[500] pr-5">{item.name}</p>
+                                            <p className="font-[500] pr-5">{item.symbol} = {item.name}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -181,7 +169,7 @@ const CompanySetup = () => {
                                         <Button onClick={() => handleChangeStep(1)} className="py-[5px] bg-transparent border border-[#B3387F]"><p className="text-[#B3387F]">Previous</p></Button>
                                     </div>
                                     <div className="w-[160px]">
-                                        <Button onClick={handleCreateCompany} className="py-[5px]">Save and Continue</Button>
+                                        <Button disabled={(companyDetails.skills.length < 5 || loading)} onClick={handleCreateCompany} className="py-[5px] h-[33px]">{loading ? <ActivityIndicator /> : "Save and Continue"}</Button>
                                     </div>
                                 </div>
                             </div>

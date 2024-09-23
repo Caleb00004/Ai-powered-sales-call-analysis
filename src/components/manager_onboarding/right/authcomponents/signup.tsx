@@ -9,6 +9,7 @@ import { useAuthSignUpMutation } from "../../../../../api-feature/apiSlice"
 import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import { useRouter } from "next/router"
+import toast from "react-hot-toast"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -51,6 +52,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                 authSignUp(formDetails).unwrap()
                     .then(fulfilled => {
                         changeSection("signin")
+                        toast.success("Account created")
                         console.log(fulfilled)
                         setRequestStatus("idle")
                         setDisplayLoading(false)
@@ -59,15 +61,21 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                         console.log(rejected)
                         setDisplayLoading(false)
                         setRequestStatus("idle")
+                        if (rejected.status === 400) {
+                            toast.error(rejected?.data?.message)
+                            return
+                        } else {
+                            toast.error("Error Occured, Refresh Page") 
+                            return
+                        }
                     })
             } catch (err) {
                 console.error(err)
+                toast.error("Error Occured")
                 setDisplayLoading(false)
                 setRequestStatus("idle")
             }
         }
-
-        console.log(formDetails)
     }
 
     return (

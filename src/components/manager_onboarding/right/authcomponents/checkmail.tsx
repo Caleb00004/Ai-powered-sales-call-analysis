@@ -6,6 +6,7 @@ import Logo from "@/components/primary/Logo"
 import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
 import { useGetOTPMutation, useVerifyOTPMutation} from "../../../../../api-feature/apiSlice"
 import { useRouter } from "next/router"
+import toast from "react-hot-toast"
 interface props {
     changeSection: (newSection: sectionType) => void
 }
@@ -71,9 +72,11 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
                     console.log(fulfilled)
                 ))
                 .catch(rejected => {
+                    toast.error("Error generating code")
                     console.log(rejected)
                 })
         } catch(error) {
+            toast.error("Error generating code")
             console.log(error)
         }
     }
@@ -86,12 +89,15 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
             verifyOTP({code: code}).unwrap()
                 .then(fulfilled => (
                     console.log(fulfilled),
+                    toast.success("Code Verified"),
                     router.push("/company-setup")
                 ))
                 .catch(rejected => {
+                    toast.error("Error occured")
                     console.log(rejected)
                 })
         } catch(error) {
+            toast.error("Error occured")
             console.log(error)
         }
     }
@@ -130,7 +136,7 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
             </Button>
 
             <p onClick={handleGetOTP} className="mt-8 text-[0.9em] text-[#475467]">Didn't receive the email? <span className="text-[#5272EA] font-medium">Click to resend</span></p>
-            <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p>
+            {/* <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p> */}
         </>
     )
 })

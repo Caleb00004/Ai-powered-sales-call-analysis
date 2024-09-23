@@ -2,7 +2,6 @@ import { SnackbarCloseReason } from "@mui/material";
 import { createContext, useEffect, ReactNode, SyntheticEvent } from "react";
 import { useState } from "react";
 import { globalState } from "../../../api-feature/apiSlice";
-import { useGetAvailableSkillsListQuery } from "../../../api-feature/apiSlice";
 import { TOKEN_NAME } from "../../../api-feature/types";
 
 interface AppContextProps {
