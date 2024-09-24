@@ -75,6 +75,16 @@ export const apiSlice = createApi({
                     Authorization: `Bearer ${globalState.authorizationToken}`,
                 }
             })
+        }),
+        postSwitchCompanies: builder.mutation({
+            query: (body) => ({
+                url: "/company/switch-company",
+                method: "POST",
+                body: body,
+                headers: {
+                    Authorization: `Bearer ${globalState.authorizationToken}`,
+                }
+            })
         })
     })
 })
@@ -86,6 +96,7 @@ export const {
     useVerifyOTPMutation,
     useGetAvailableSkillsListQuery,
     usePostCreateCompanyMutation,
-    useGetCompaniesQuery
+    useGetCompaniesQuery,
+    usePostSwitchCompaniesMutation
 } = apiSlice
 

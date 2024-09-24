@@ -9,7 +9,7 @@ import gsap from "gsap"
 import { useContext } from "react"
 import { dataContext } from "@/components/contexts/dataContext"
 import { SkillsType, APISTATUS, ApiType, } from "../../api-feature/types"
-import { globalState, useGetAvailableSkillsListQuery, useGetCompaniesQuery, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
+import { globalState, useGetAvailableSkillsListQuery, useGetCompaniesQuery, usePostSwitchCompaniesMutation, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import toast from "react-hot-toast"
 
@@ -22,6 +22,7 @@ interface skillsApiType extends ApiType {
 const CompanySetup = () => {
     console.log(globalState)
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
+    const [switchCompnay] = usePostSwitchCompaniesMutation()
     // const {data, status, error, refetch} = useGetCompaniesQuery(undefined)
     // console.log(data)
     // console.log(status)
@@ -89,11 +90,12 @@ const CompanySetup = () => {
         setLoading(true)
         try {
             createCompany(companyDetails).unwrap()
-                .then(fulfilled => (
-                    toast.success("Company created"),
-                    console.log(fulfilled),
+                .then(fulfilled => {
+                    toast.success("Company created")
+                    console.log(fulfilled)
                     setLoading(false)
-                ))
+                    // routeTo.push("/onboarding")
+                })
                 .catch(rejected => {
                     console.log(rejected)
                     if (rejected.status === "FETCH_ERROR") {
