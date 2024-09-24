@@ -1,19 +1,23 @@
 import Button from "@/components/primary/Button"
 import Key from "../../../../../public/svgs/key_icon.svg"
-import React, { useState, useRef, FC, ChangeEventHandler, ChangeEvent, useLayoutEffect, useEffect } from "react"
+import React, { useState, useRef, FC, ChangeEvent, useLayoutEffect, useEffect } from "react"
 import { sectionType } from "../rightContainer"
 import Logo from "@/components/primary/Logo"
-import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
 import { useGetOTPMutation, useVerifyOTPMutation} from "../../../../../api-feature/apiSlice"
 import { useRouter } from "next/router"
 import toast from "react-hot-toast"
+import ArrowLeft from "../../../../../public/svgs/arrow-left.svg"
+
 interface props {
     changeSection: (newSection: sectionType) => void
 }
 
 const CheckMail:FC<props> = React.memo(({changeSection}) => {
     const router = useRouter()
-    const [numberSequence, setNumberSequence] = useState<number[]>([0, 1, 2, 3,4,5])
+    const numberSequence = [0, 1, 2, 3,4,5]
+    const [timeLeft, setTimeLeft] = useState(10); // Start from 10 seconds
+    const [countdownComplete, setCountdownComplete] = useState(false); // To track when countdown is done
+    const [isCountdownActive, setIsCountdownActive] = useState(false); // Track if countdown is active
     const [verifyOTP] = useVerifyOTPMutation()
     const [getOTP] = useGetOTPMutation()
     const [userInput, setUserInput] = useState<{ [key: string]: string }>({
@@ -65,19 +69,42 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
         }
     };
 
-    const handleGetOTP = () => {
+
+    const startCountdown = () => {
+        if (isCountdownActive) return; // Prevent starting if countdown is already active
+
+        setCountdownComplete(false); // Reset state before starting
+        setIsCountdownActive(true); // Set countdown to active
+        setTimeLeft(10); // Reset the time to 10 seconds
+
+        let time = 10; // Starting time
+
+        const timer = setInterval(() => {
+        time--; // Decrease time
+        setTimeLeft(time);
+
+        if (time === 0) {
+            clearInterval(timer); // Stop the countdown when it reaches 0
+            setCountdownComplete(true); // Set the state when the countdown finishes
+            setIsCountdownActive(false); // Set countdown to inactive
+        }
+        }, 1000); // Countdown by 1 second intervals
+    };
+
+    const handleGetOTP = (click?: boolean) => {
+        click && startCountdown()
         try {
             getOTP({}).unwrap()
                 .then(fulfilled => (
-                    console.log(fulfilled)
+                    click && toast.success("OTP SENT")
                 ))
                 .catch(rejected => {
                     toast.error("Error generating code")
-                    console.log(rejected)
+                    console.error(rejected)
                 })
         } catch(error) {
             toast.error("Error generating code")
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -94,16 +121,15 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
                 ))
                 .catch(rejected => {
                     toast.error("Error occured")
-                    console.log(rejected)
+                    console.error(rejected)
                 })
         } catch(error) {
             toast.error("Error occured")
-            console.log(error)
+            console.error(error)
         }
     }
     
     useEffect(() => {
-        console.log("COMPONENT RAN")
         handleGetOTP()
     },[])
 
@@ -135,8 +161,8 @@ const CheckMail:FC<props> = React.memo(({changeSection}) => {
                 Verify
             </Button>
 
-            <p onClick={handleGetOTP} className="mt-8 text-[0.9em] text-[#475467]">Didn't receive the email? <span className="text-[#5272EA] font-medium">Click to resend</span></p>
-            {/* <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p> */}
+            <p className="mt-8 text-[0.9em] text-[#475467]">Didn't receive the email? <button disabled={isCountdownActive} onClick={() => handleGetOTP(true)} className="text-[#5272EA] disabled:cursor-not-allowed disabled:text-slate-700 font-medium cursor-pointer ">Click to resend {!countdownComplete && `(${timeLeft})`}</button></p>
+            <p onClick={() => changeSection("signin")} className="flex justify-center items-center gap-2 cursor-pointer text-[0.9em] text-[#475467] font-medium mt-6"><ArrowLeft /> Back to Sign in</p>
         </>
     )
 })

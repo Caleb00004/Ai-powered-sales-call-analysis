@@ -10,6 +10,10 @@ import { authAccountType } from "@/pages/onboarding"
 
 export type sectionType = "signin" | "forgotpassword" | "newpassword" | "checkmail" | "signup"
 
+export type OnboardingQueryParams = {
+  goToSection: sectionType; // Define possible values here
+};
+
 interface props {
     accountType: authAccountType
 }

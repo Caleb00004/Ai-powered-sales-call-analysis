@@ -23,7 +23,7 @@ interface globalStateType {
 
 export const globalState: globalStateType = {
     userId: "",
-    account_type: "admin",
+    account_type: "",
     authorizationToken: "",
     currentUser: {
         firstName: "",
@@ -47,6 +47,15 @@ export const apiSlice = createApi({
     endpoints: builder => ({
         // AUTHENTICATION - USER
         ...authEndpoints(builder),
+        getUserProfile: builder.query({
+            query: () => ({
+                url: "/user",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${globalState.authorizationToken}`,
+                }
+            })
+        }),
         getAvailableSkillsList: builder.query<SkillsType[], void>({
             query: () => ({
                 url: "/company/available-skills",
@@ -97,6 +106,7 @@ export const {
     useGetAvailableSkillsListQuery,
     usePostCreateCompanyMutation,
     useGetCompaniesQuery,
-    usePostSwitchCompaniesMutation
+    usePostSwitchCompaniesMutation,
+    useGetUserProfileQuery
 } = apiSlice
 

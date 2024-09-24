@@ -2,14 +2,15 @@ import DashboardLayout from "@/components/layouts/DashboardLayout"
 import TrainingsComponent from "@/components/dashboard/trainings-component"
 import { globalState } from "../../../../api-feature/apiSlice"
 import { useRouter } from "next/router"
-import { useLayoutEffect } from "react"
+import { useContext, useLayoutEffect } from "react"
+import { appContext } from "@/components/contexts/appContext"
 
 const Trainings = () => {
-    const account_type = globalState.account_type
+    const {accountType: account_type} = useContext(appContext)
     const routeTo = useRouter()
 
     useLayoutEffect(() => {
-        if (account_type !== "manager") {
+        if (account_type !== "manager" && account_type !== "owner" ) {
             routeTo.push("/dashboard")
             return
         }
@@ -17,7 +18,7 @@ const Trainings = () => {
 
     return (
         <DashboardLayout>
-            {account_type === "manager" && <TrainingsComponent />}
+            {(account_type === "manager" || account_type === "owner")&& <TrainingsComponent />}
         </DashboardLayout>
     )
 }

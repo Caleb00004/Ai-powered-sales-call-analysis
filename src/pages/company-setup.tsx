@@ -6,8 +6,6 @@ import { useState } from "react"
 import Picture from "../../public/svgs/john-doe.svg"
 import { Checkbox } from "@mui/material"
 import gsap from "gsap"
-import { useContext } from "react"
-import { dataContext } from "@/components/contexts/dataContext"
 import { SkillsType, APISTATUS, ApiType, } from "../../api-feature/types"
 import { globalState, useGetAvailableSkillsListQuery, useGetCompaniesQuery, usePostSwitchCompaniesMutation, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
@@ -23,13 +21,7 @@ const CompanySetup = () => {
     console.log(globalState)
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
     const [switchCompnay] = usePostSwitchCompaniesMutation()
-    // const {data, status, error, refetch} = useGetCompaniesQuery(undefined)
-    // console.log(data)
-    // console.log(status)
-    // console.log(error)
-
     const [loading, setLoading] = useState(false)
-    // const {availableSkills, availableSkillsStatus} = useContext(dataContext)
     const [createCompany] = usePostCreateCompanyMutation()
     const [currentStep, setCurrentStep] = useState<1 | 2>(1)
     const [companyDetails, setCompanyDetails] = useState<{name: string, skills: {skillId: number}[]}>({
@@ -54,17 +46,6 @@ const CompanySetup = () => {
             setCurrentStep(step)
         },500)
     }
-
-    // const handleUpdateSkills = (skill) => {
-    //     console.log(skill)
-    //     if (!(companyDetails.skills.includes(skill))) {
-    //         setCompanyDetails(prev => ({...prev, skills: [...prev.skills, skill]}))
-    //         return
-    //     } else {
-    //         setCompanyDetails(prev => ({...prev, skills: [...prev.skills.filter(item => item !== skill)]}))
-    //         return
-    //     }
-    // }
 
     const handleUpdateSkills = (skill: SkillsType) => {
         console.log(skill);
@@ -91,10 +72,19 @@ const CompanySetup = () => {
         try {
             createCompany(companyDetails).unwrap()
                 .then(fulfilled => {
-                    toast.success("Company created")
+                    toast.success("company created, switching company...")
                     console.log(fulfilled)
                     setLoading(false)
-                    // routeTo.push("/onboarding")
+                    // @ts-ignore
+                    switchCompnay({companyId: fulfilled.data.companyId}).unwrap()
+                        .then(fulfilled => {
+                            toast.success("company switched")
+                            routeTo.push("/dashboard")
+                        })
+                        .catch(rejected => (
+                            console.error(rejected),
+                            toast.error("Error Switching Company")
+                        ))
                 })
                 .catch(rejected => {
                     console.log(rejected)
@@ -106,7 +96,7 @@ const CompanySetup = () => {
                     setLoading(false)
                 })
         } catch (error) {
-            console.log(error),
+            console.error(error),
             toast.error("Error occured creating company")
             setLoading(false)
         }

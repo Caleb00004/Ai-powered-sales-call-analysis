@@ -10,6 +10,7 @@ import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import { useRouter } from "next/router"
 import toast from "react-hot-toast"
+import { isStrongPassword } from "@/components/util/helperFunctions"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -22,6 +23,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
     const [passwordsMatch, setPassWordsMatch] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
     const [formDetails, setFormDetails] = useState({
         firstName: "",
         lastName: "",
@@ -42,8 +44,12 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
             setPassWordsMatch(false)
             return
         }
-
         setPassWordsMatch(true)
+
+        if (!isStrongPassword(formDetails.password)) {
+            toast.error("Password must be at least 6 characters long and contain a capital letter, number and a special character", {duration: 8000})
+            return
+        }
 
         if (requestStatus == "idle") {
             setRequestStatus("pending")
@@ -76,6 +82,10 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                 setRequestStatus("idle")
             }
         }
+    }
+
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev)
     }
 
     return (
@@ -123,19 +133,23 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                     name="email"
                 />
                 <Input 
+                    password
                     value={formDetails.password}
+                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Password</label>} 
                     placeholder="Enter password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                 />
                 <Input 
+                    password
                     value={formDetails.confirm_password}
+                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Confirm Password</label>} 
                     placeholder="Enter password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="confirm_password"
                 />
                 {!passwordsMatch && <p className="-my-2 mr-auto text-[0.8em] italic text-red-600">Passwords don't match</p>}

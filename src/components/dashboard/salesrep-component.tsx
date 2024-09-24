@@ -1,12 +1,13 @@
 import SalesRepManager from "./manager/salesrep-manager"
-import { globalState } from "../../../api-feature/apiSlice"
+import { appContext } from "../contexts/appContext"
+import { useContext } from "react"
 
 const SalesRepComponent = () => {
-    const {account_type} = globalState
+    const {accountType: account_type} = useContext(appContext)
 
     return(
         <div>
-            {account_type === "manager" && <SalesRepManager />}
+            {(account_type === "manager" || account_type === "owner") && <SalesRepManager />}
         </div>
     )
 }

@@ -15,6 +15,7 @@ import axios from "axios"
 import { useContext } from "react"
 import { appContext } from "@/components/contexts/appContext"
 import toast from "react-hot-toast"
+import { TOKEN_NAME } from "../../../../../api-feature/types"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -23,7 +24,9 @@ interface props {
 
 const Signin:FC<props> = ({changeSection, accountType}) => {
     const {loggedIn, setLoggedIn, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
+    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
+    const {setAccountType} = useContext(appContext)
     const [authSignin] = useAuthSignInMutation()
     const [loginRequestStatus, setLoginRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
@@ -31,10 +34,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
         email: "",
         password: "",
     })
-    const [errorDetails, setErrorDetails] = useState({
-        display: false,
-        message: "",
-    });
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -43,7 +42,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
     }
 
     const getProfileData = async () => {
-        console.log("GETTING PROFILE DATA")
         try {
             console.log(globalState.authorizationToken)
             const response = await axios.get(`${BASE_URL}/user`, {
@@ -51,13 +49,9 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
             }); 
             setDisplayLoading(false)
             setLoginRequestStatus("idle")
-            console.log(response)
-            // globalState.currentUser = {
-            //     firstName: response.data.firstName,
-            //     lastName: response.data.lastName,
-            //     email: response.data.email,
-            //     company: response.data.company
-            // };
+            const data = response.data.data
+            globalState.account_type = data.company.role.toLowerCase()
+            setAccountType(data.company.role.toLowerCase())
             router.push("/dashboard")
         } catch (error) {
             setDisplayLoading(false)
@@ -70,7 +64,8 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
             } else if (error?.response?.data?.message === "Please verify your email") {
                 changeSection("checkmail")
             } else {
-                
+                console.error(error)
+                toast.error("Error getting Profile, reload page")
             }
         } 
     }
@@ -83,17 +78,16 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
             try {
                 authSignin({...loginDetails}).unwrap()
                     .then(fulfilled => {
-                        // console.log(fulfilled)
                         globalState.authorizationToken = fulfilled.data.accessToken
                         setLoggedIn(true)
-                        // saveAuthorizationTokenWithExpiry("durket-token", fulfilled.data.accessToken, 60 )
+                        saveAuthorizationTokenWithExpiry(TOKEN_NAME, fulfilled.data.accessToken, 60 )
                         toast.success("Logged In, please wait")
                         getProfileData() 
                     })
                     .catch(rejected => {
                         setDisplayLoading(false)
                         setLoginRequestStatus("idle")
-                        console.log(rejected)
+                        console.error(rejected)
                         if (rejected.status === 400) {
                             toast.error(rejected?.data?.message)
                             return
@@ -108,6 +102,11 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                 setLoginRequestStatus("idle")
             }
         }
+    }
+
+    
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev)
     }
 
     return (
@@ -141,6 +140,9 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                 />
 
                 <Input 
+                    password
+                    handleShowPassword={handleShowPassword}
+                    type={showPassword ? "text" : "password"}
                     value={loginDetails.password}
                     onChange={handleOnChange}
                     label={
@@ -150,7 +152,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                         </div>
                     } 
                     placeholder="Enter password"
-                    type="password"
                     name="password"
                 />
                 <Button 

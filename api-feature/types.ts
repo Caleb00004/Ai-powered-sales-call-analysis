@@ -1,4 +1,4 @@
-export type ACCOUNT_TYPE = "admin" | "manager" | "sales-rep"
+export type ACCOUNT_TYPE = "" | "admin" | "manager" | "sales-rep" | "owner" 
 
 export type APISTATUS = "fulfilled" | "pending" | "rejected"
 

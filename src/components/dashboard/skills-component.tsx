@@ -1,14 +1,15 @@
-import { globalState } from "../../../api-feature/apiSlice"
 import SkillsManager from "./manager/skills-manager"
 import { useRouter } from "next/router"
 import { useLayoutEffect } from "react"
+import { useContext } from "react"
+import { appContext } from "../contexts/appContext"
 
 const SkillsComponent = () => {
-    const account_type = globalState.account_type
+    const {accountType: account_type} = useContext(appContext)
     const routeTo = useRouter()
-
+    
     useLayoutEffect(() => {
-        if (account_type !== "manager") {
+        if (account_type !== "owner" && account_type !== "manager") {
             routeTo.push("/dashboard")
             return
         }
@@ -16,7 +17,7 @@ const SkillsComponent = () => {
 
     return (
         <div>
-            {account_type === "manager" && <SkillsManager />}
+            {(account_type === "manager" || account_type === "owner") && <SkillsManager />}
         </div>
     )
 }
