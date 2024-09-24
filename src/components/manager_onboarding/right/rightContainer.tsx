@@ -3,12 +3,16 @@ import ForgotPassword from "./authcomponents/forgotpassword"
 import NewPassword from "./authcomponents/newpassword"
 import CheckMail from "./authcomponents/checkmail"
 import Signup from "./authcomponents/signup"
-import { FC, useState } from "react"
+import { FC, useCallback, useState } from "react"
 import gsap from "gsap"
 import { useRouter } from "next/router"
 import { authAccountType } from "@/pages/onboarding"
 
 export type sectionType = "signin" | "forgotpassword" | "newpassword" | "checkmail" | "signup"
+
+export type OnboardingQueryParams = {
+  goToSection: sectionType; // Define possible values here
+};
 
 interface props {
     accountType: authAccountType
@@ -23,7 +27,7 @@ const RightContainer:FC<props> = ({accountType}) => {
     const {goToSection} = router.query as QueryParams
     const [section, setSection] = useState<sectionType>(goToSection ? goToSection : "signin")
     
-    const handleSectionChange = (newsection: sectionType) => {
+    const handleSectionChange = useCallback((newsection: sectionType) => {
         const fadeAnimation = gsap.timeline()
             .to(".auth-right-container", {opacity: 0})
             .to(".auth-right-container", {opacity: 1})
@@ -32,8 +36,7 @@ const RightContainer:FC<props> = ({accountType}) => {
         setTimeout(() => {
             setSection(newsection)
         },500)
-
-    }
+    }, [])
 
     return (
         <div className="right-container auth-right-container mdx3:flex-[1.5] min-h-screen flex flex-col items-center  pt-[4.5%] overflow-y-scroll">
