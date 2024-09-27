@@ -97,7 +97,7 @@ const SideNav = () => {
                                 <ArrowDownIcon className={`ml-auto transition-all h-5 w-5 ${(displayDropdown.type === "company" ) ? "rotate-[180deg]" : "rotate-[0deg]"}`} />
                             </div>
                            <div className={`mt-0 text-[#D9D9D] transition-all overflow-hidden origin-top ${(displayDropdown.type === "company") ? "h-[6.4em]" : "h-0"}`}>
-                                <NavDropItem text="Companies" onClick={() => handleItemClick("/dashboard/company-management/companies")} />
+                                <NavDropItem text="Companies" onClick={() => handleItemClick("/dashboard/company-management")} />
                                 <NavDropItem text="Activity Logs" onClick={() => handleItemClick("/dashboard/company-management/activitylogs")} />
                             </div>
                         </div>

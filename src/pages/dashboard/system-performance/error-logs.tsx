@@ -1,9 +1,10 @@
+import ErrorLogsComponent from "@/components/dashboard/admin/errorlogs-admin"
 import DashboardLayout from "@/components/layouts/DashboardLayout"
 
 const ErrorLogs = () => {
     return (
         <DashboardLayout>
-            <h1>All ErrorLogs Page</h1>
+            <ErrorLogsComponent />
         </DashboardLayout>
     )
 }

@@ -643,3 +643,391 @@ export const timezones = [
   { label: "(UTC+12:00) Auckland, Fiji, Kamchatka", value: "Pacific/Auckland" },
   { label: "(UTC+13:00) Nuku'alofa", value: "Pacific/Tongatapu" }
 ];
+
+
+export const companiesData = [
+    {  
+        id: 1,
+        name: "ebay",
+        email: "ebay@gmail.com",
+        dateAdded: "Aug 10, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 2,
+        name: "Amazon",
+        email: "amazon@gmail.com",
+        dateAdded: "May 9, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 3,
+        name: "Calendly",
+        email: "calendly@gmail.com",
+        dateAdded: "Jun 21, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 4,
+        name: "Facebook",
+        email: "facebook@gmail.com",
+        dateAdded: "Jun 11, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 5,
+        name: "ebay",
+        email: "ebay@gmail.com",
+        dateAdded: "Aug 10, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 6,
+        name: "Amazon",
+        email: "amazon@gmail.com",
+        dateAdded: "May 9, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 7,
+        name: "Calendly",
+        email: "calendly@gmail.com",
+        dateAdded: "Jun 21, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 8,
+        name: "Facebook",
+        email: "facebook@gmail.com",
+        dateAdded: "Jun 11, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 9,
+        name: "ebay",
+        email: "ebay@gmail.com",
+        dateAdded: "Aug 10, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 10,
+        name: "Amazon",
+        email: "amazon@gmail.com",
+        dateAdded: "May 9, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 11,
+        name: "Calendly",
+        email: "calendly@gmail.com",
+        dateAdded: "Jun 21, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 12,
+        name: "Facebook",
+        email: "facebook@gmail.com",
+        dateAdded: "Jun 11, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 13,
+        name: "ebay",
+        email: "ebay@gmail.com",
+        dateAdded: "Aug 10, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 14,
+        name: "Amazon",
+        email: "amazon@gmail.com",
+        dateAdded: "May 9, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    },
+    {
+        id: 15,
+        name: "Calendly",
+        email: "calendly@gmail.com",
+        dateAdded: "Jun 21, 2024",
+        status: "Active",
+        subscription: "Personal",
+    },
+    {
+        id: 16,
+        name: "Facebook",
+        email: "facebook@gmail.com",
+        dateAdded: "Jun 11, 2021",
+        status: "Suspended",
+        subscription: "Free Trial",
+    }
+
+]
+
+export const companyTeamMember = [
+    {
+        id: 1,
+        name: "Akpan Caleb",
+        email: "caleb@gmail.com",
+        role: "developer",
+        permission: "Owner",
+        status: "Active"
+    },
+    {
+        id: 2,
+        name: "John Doe",
+        email: "john@gmail.com",
+        role: "ui/ux designer",
+        permission: "manager",
+        status: "Active",
+    },
+    {
+        id: 3,
+        name: "Jane Doe",
+        email: "jan2@gmail.com",
+        role: "Product Manager",
+        permission: "Sales Rep",
+        status: "Suspended",
+    },
+    {
+        id: 4,
+        name: "Mike Phil",
+        email: "mike@gmail.com",
+        role: "Product Manager",
+        permission: "Manager",
+        status: "Active",
+    },    
+    {
+        id: 5,
+        name: "Akpan Caleb",
+        email: "caleb@gmail.com",
+        role: "developer",
+        permission: "Owner",
+        status: "Active"
+    },
+    {
+        id: 6,
+        name: "John Doe",
+        email: "john@gmail.com",
+        role: "ui/ux designer",
+        permission: "manager",
+        status: "Active",
+    },
+    {
+        id: 7,
+        name: "Jane Doe",
+        email: "jan2@gmail.com",
+        role: "Product Manager",
+        permission: "Sales Rep",
+        status: "Suspended",
+    },
+    {
+        id: 8,
+        name: "Mike Phil",
+        email: "mike@gmail.com",
+        role: "Product Manager",
+        permission: "Manager",
+        status: "Active",
+    },
+    {
+        id: 9,
+        name: "Akpan Caleb",
+        email: "caleb@gmail.com",
+        role: "developer",
+        permission: "Owner",
+        status: "Active"
+    },
+    {
+        id: 10,
+        name: "John Doe",
+        email: "john@gmail.com",
+        role: "ui/ux designer",
+        permission: "manager",
+        status: "Active",
+    },
+    {
+        id: 11,
+        name: "Jane Doe",
+        email: "jan2@gmail.com",
+        role: "Product Manager",
+        permission: "Sales Rep",
+        status: "Suspended",
+    },
+    {
+        id: 12,
+        name: "Mike Phil",
+        email: "mike@gmail.com",
+        role: "Product Manager",
+        permission: "Manager",
+        status: "Active",
+    },
+]
+
+export const activityData = [
+    {
+        id: 1,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 2,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+    {
+        id: 3,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 4,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+    {
+        id: 5,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 6,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+    {
+        id: 7,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 8,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+    {
+        id: 9,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 10,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+    {
+        id: 11,
+        name: "Mike John",
+        email: "mike@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "successs"
+    },
+    {
+        id: 12,
+        name: "John doe",
+        email: "john@gmail.com",
+        description: "Uploaded role permission",
+        timestamp: "2024-08-16",
+        status: "failure"
+    },
+]
+
+export const errorLogsData = [
+    {
+        id: 1,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_500',
+        description: "Internal Server Error",
+        severity: "critical",
+        component: "API Gateway",
+        status: "Resolved",
+    },
+    {
+        id: 2,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_300',
+        description: "Local ERROR",
+        severity: "critical",
+        component: "Database",
+        status: "Resolved",
+    },
+    {
+        id: 3,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_500',
+        description: "Internal Server Error",
+        severity: "critical",
+        component: "API",
+        status: "Resolved",
+    },
+    {
+        id: 4,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_500',
+        description: "Internal Server Error",
+        severity: "critical",
+        component: "API Gateway",
+        status: "Resolved",
+    },
+    {
+        id: 5,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_300',
+        description: "Local ERROR",
+        severity: "critical",
+        component: "API",
+        status: "Resolved",
+    },
+    {
+        id: 6,
+        timestamp: "2024-06-19-0",
+        errorCode: 'ERR_500',
+        description: "Internal Server Error",
+        severity: "critical",
+        component: "API",
+        status: "Resolved",
+    }    
+]

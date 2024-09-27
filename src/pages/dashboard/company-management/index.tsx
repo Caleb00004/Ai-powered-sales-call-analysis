@@ -1,19 +1,13 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout"
-import { useRouter } from "next/router"
-import { useLayoutEffect } from "react"
+import CompanyManagementComponent from "@/components/dashboard/admin/company-management"
 
-const Index = () => {
-    const router = useRouter()
-
-    useLayoutEffect(() => {
-        router.replace("/dashboard")
-    })
+const Companies = () => {
 
     return (
         <DashboardLayout>
-            <></>
+            <CompanyManagementComponent />
         </DashboardLayout>
     )
 }
 
-export default Index
+export default Companies
