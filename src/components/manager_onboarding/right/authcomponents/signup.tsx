@@ -9,6 +9,8 @@ import { useAuthSignUpMutation } from "../../../../../api-feature/apiSlice"
 import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import { useRouter } from "next/router"
+import toast from "react-hot-toast"
+import { isStrongPassword } from "@/components/util/helperFunctions"
 
 interface props {
     changeSection: (newSection: sectionType) => void
@@ -16,14 +18,15 @@ interface props {
 }
 
 const Signup:FC<props> = ({changeSection, accountType}) => {
-    const routeTo = useRouter()
+    const router = useRouter()
     const [authSignUp] = useAuthSignUpMutation()
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
     const [passwordsMatch, setPassWordsMatch] = useState(true)
+    const [showPassword, setShowPassword] = useState(false)
     const [formDetails, setFormDetails] = useState({
-        first_name: "",
-        last_name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirm_password: ""
@@ -34,22 +37,28 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
         const value = e.target.value
         setFormDetails(prev => ({...prev, [name]: value}))
     }
-
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        routeTo.push("/company-setup")
         if (formDetails.password !== formDetails.confirm_password) {
             setPassWordsMatch(false)
+            return
+        }
+        setPassWordsMatch(true)
+
+        if (!isStrongPassword(formDetails.password)) {
+            toast.error("Password must be at least 6 characters long and contain a capital letter, number and a special character", {duration: 8000})
             return
         }
 
         if (requestStatus == "idle") {
             setRequestStatus("pending")
             setDisplayLoading(true);
-            const {confirm_password, ...rest} = formDetails
             try {
-                authSignUp({...rest, accountType: accountType}).unwrap()
+                authSignUp(formDetails).unwrap()
                     .then(fulfilled => {
+                        changeSection("signin")
+                        toast.success("Account created")
                         console.log(fulfilled)
                         setRequestStatus("idle")
                         setDisplayLoading(false)
@@ -58,15 +67,25 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                         console.log(rejected)
                         setDisplayLoading(false)
                         setRequestStatus("idle")
+                        if (rejected.status === 400) {
+                            toast.error(rejected?.data?.message)
+                            return
+                        } else {
+                            toast.error("Error Occured, Refresh Page") 
+                            return
+                        }
                     })
             } catch (err) {
                 console.error(err)
+                toast.error("Error Occured")
                 setDisplayLoading(false)
                 setRequestStatus("idle")
             }
         }
+    }
 
-        console.log(formDetails)
+    const handleShowPassword = () => {
+        setShowPassword(prev => !prev)
     }
 
     return (
@@ -90,20 +109,20 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col mb-6">
                 <Input 
-                    value={formDetails.first_name}
+                    value={formDetails.firstName}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">First name</label>} 
                     placeholder="Enter first name"
                     type="text"
-                    name="first_name"
+                    name="firstName"
                 />
                 <Input 
-                    value={formDetails.last_name}
+                    value={formDetails.lastName}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Last name</label>} 
                     placeholder="Enter last name"
                     type="text"
-                    name="last_name"
+                    name="lastName"
                 />
                 <Input 
                     value={formDetails.email}
@@ -114,24 +133,28 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                     name="email"
                 />
                 <Input 
+                    password
                     value={formDetails.password}
+                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Password</label>} 
                     placeholder="Enter password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                 />
                 <Input 
+                    password
                     value={formDetails.confirm_password}
+                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Confirm Password</label>} 
                     placeholder="Enter password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="confirm_password"
                 />
                 {!passwordsMatch && <p className="-my-2 mr-auto text-[0.8em] italic text-red-600">Passwords don't match</p>}
 
-                <Button disabled={!formDetails.first_name || !formDetails.last_name || !formDetails.email || !formDetails.password} type="submit" className="mt-7 h-[2.68em] disabled:cursor-not-allowed">
+                <Button disabled={!formDetails.firstName || !formDetails.lastName || !formDetails.email || !formDetails.password} type="submit" className="mt-7 h-[2.68em] disabled:cursor-not-allowed disabled:bg-slate-500">
                     {displayLoading ? <ActivityIndicator /> : "Sign up"}
                 </Button>
             </form>
