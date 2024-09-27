@@ -23,7 +23,9 @@ interface globalStateType {
 
 export const globalState: globalStateType = {
     userId: "",
-    account_type: "",
+    // CHANGE
+    // account_type: "",
+    account_type: "admin",
     authorizationToken: "",
     currentUser: {
         firstName: "",

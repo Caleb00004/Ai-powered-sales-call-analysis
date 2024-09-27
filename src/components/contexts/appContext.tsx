@@ -45,7 +45,9 @@ interface profileApiType extends ApiType {
 function ContextProvider({children}: { children: ReactNode }) {
     const router = useRouter()
     const {data, status, error, refetch} = useGetUserProfileQuery<profileApiType>(undefined, {skip: !(globalState.authorizationToken && !globalState.account_type)})
-    const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
+    // CHANGE
+    // const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
+    const [accountType, setAccountType] = useState("admin" as ACCOUNT_TYPE)
     const [loggedIn, setLoggedIn] = useState(false);
     const [checkedLocalStorage, setCheckedLocalStorage] = useState(false)
     const [toastDetails, setToastDetails] = useState({

@@ -122,15 +122,15 @@ const SideNav = () => {
                             </div>
 
                             <div className={`mt-0 text-[#D9D9D] transition-all origin-top overflow-hidden ${(displayDropdown.type === "subscription" ) ? "h-auto mdx5:h-[6.5em]" : "h-0"}`}>
-                                <NavDropItem text="Company Subscriptions" onClick={() => handleItemClick("/dashboard/subscriptions/company-subscriptions")} />
+                                <NavDropItem text="Company Subscriptions" onClick={() => handleItemClick("/dashboard/subscriptions")} />
                                 <NavDropItem text="Manage plans" onClick={() => handleItemClick("/dashboard/subscriptions/manage-plans")} />
                             </div>
                         </div>
-                        <Link href={""} className={`sidebar-link  text-[#D9D9D9B2] flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-[#D9D9D9B2]"}`}>
+                        <Link href={"/dashboard/training-management"} className={`sidebar-link  text-[#D9D9D9B2] flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "training-management" && "bg-[#2B2A3D] text-[#D9D9D9B2]"}`}>
                             <FolderIcon className="sidenav-icon flex-shrink-0" />
                             <p className="text-[#D9D9D9B2]">Training Management</p>
                         </Link>
-                        <Link href={"#"} className={`sidebar-link flex text-[#D9D9D9B2] items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "sales-rep" && "bg-[#2B2A3D] text-[#D9D9D9B2]"}`}>
+                        <Link href={"/dashboard/settings"} className={`sidebar-link flex text-[#D9D9D9B2] items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "settings" && "bg-[#2B2A3D] text-[#D9D9D9B2]"}`}>
                             <SettingIcon className="sidenav-icon flex-shrink-0" />
                             <p className="text-[#D9D9D9B2]">Account Settings</p>
                         </Link>
