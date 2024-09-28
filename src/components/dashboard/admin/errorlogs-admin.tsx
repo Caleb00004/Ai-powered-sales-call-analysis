@@ -94,7 +94,6 @@ const ErrorLogsComponent = () => {
                     checkbox
                     title=" "
                     hideHeader
-                    hideFooter
                     hideHelpers
                     disableRowSelectionOnClick
                     // columnHeaderHeight={10}
@@ -138,7 +137,11 @@ const ErrorLogsComponent = () => {
                                 <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-1">Internal Server Error</p>
                                 <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-[0.55]">Resolved</p>
                                 <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-[0.5]">18 Apr 2021</p>
-                                <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-[0.8]">Progress Bar</p>
+                                <div className="text-[#2B3674] font-[700] items-center flex text-[14px] flex-shrink-0 flex-[0.8]">
+                                    <div className="w-[70%] overflow-hidden bg-[#EFF4FB] h-[8px] rounded-lg ">
+                                        <div className="w-[40%] rounded-lg h-full bg-[#B3387F]" />
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>

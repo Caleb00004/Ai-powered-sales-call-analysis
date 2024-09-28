@@ -1031,3 +1031,141 @@ export const errorLogsData = [
         status: "Resolved",
     }    
 ]
+
+export const subscriptionsData = [
+    {
+        id: 1,
+        company: "ebay",
+        plan: "professional",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Active"
+    },
+    {
+        id: 2,
+        company: "Microsoft",
+        plan: "professional",
+        date: "2021-09-09",
+        expires: "2020-08-09",
+        status: "Active"
+    },
+    {
+        id: 3,
+        company: "Amazon",
+        plan: "Free plan",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Inactive"
+    },
+    {
+        id: 4,
+        company: "ebay",
+        plan: "professional",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Active"
+    },
+    {
+        id: 5,
+        company: "Microsoft",
+        plan: "professional",
+        date: "2021-09-09",
+        expires: "2020-08-09",
+        status: "Active"
+    },
+    {
+        id: 6,
+        company: "Amazon",
+        plan: "Free plan",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Inactive"
+    },
+    {
+        id: 7,
+        company: "ebay",
+        plan: "professional",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Active"
+    },
+    {
+        id: 8,
+        company: "Microsoft",
+        plan: "professional",
+        date: "2021-09-09",
+        expires: "2020-08-09",
+        status: "Active"
+    },
+    {
+        id: 9,
+        company: "Amazon",
+        plan: "Free plan",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Inactive"
+    },
+    {
+        id: 10,
+        company: "ebay",
+        plan: "professional",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Active"
+    },
+    {
+        id: 11,
+        company: "Microsoft",
+        plan: "professional",
+        date: "2021-09-09",
+        expires: "2020-08-09",
+        status: "Active"
+    },
+    {
+        id: 12,
+        company: "Amazon",
+        plan: "Free plan",
+        date: "2024-09-09",
+        expires: "2024-08-09",
+        status: "Inactive"
+    },
+]
+
+export const billingHistoryData = [
+    {
+        id: 1,
+        number: "BFkKK-393930",
+        plan: "premium",
+        amount: "$30",
+        date: "Aug 22, 2024",
+        Expires: "Sep 22 2024",
+        status: "Paid"
+    },
+    {
+        id: 2,
+        number: "BFkKK-393930",
+        plan: "premium",
+        amount: "$30",
+        date: "Aug 22, 2024",
+        Expires: "Sep 22 2024",
+        status: "Paid"
+    },
+    {
+        id: 3,
+        number: "FDDkKK-393930",
+        plan: "premium",
+        amount: "$30",
+        date: "Aug 22, 2024",
+        Expires: "Sep 22 2024",
+        status: "Paid"
+    },
+    {
+        id: 4,
+        number: "KERQSSK-393930",
+        plan: "premium",
+        amount: "$30",
+        date: "Aug 22, 2024",
+        Expires: "Sep 22 2024",
+        status: "Paid"
+    }
+]

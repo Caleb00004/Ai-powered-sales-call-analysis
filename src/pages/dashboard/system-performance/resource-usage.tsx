@@ -1,9 +1,10 @@
+import ResourceComponent from "@/components/dashboard/admin/resource-component"
 import DashboardLayout from "@/components/layouts/DashboardLayout"
 
 const ResourceUsage = () => {
     return (
         <DashboardLayout>
-            <h1>All ResourceUsage Page</h1>
+            <ResourceComponent />
         </DashboardLayout>
     )
 }
