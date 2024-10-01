@@ -20,9 +20,10 @@ import FolderIcon from "../../../public/svgs/dashboardIcons/folder-cloud.svg"
 import SettingIcon from "../../../public/svgs/dashboardIcons/setting-2.svg"
 import ArrowDownIcon from "../../../public/svgs/dashboardIcons/arrow-down.svg"
 
-const NavDropItem:FC<{text: string, onClick: () => void}> = ({text, onClick}) => {
+const NavDropItem:FC<{text: string, onClick: () => void, currentTab: boolean}> = ({text, onClick, currentTab}) => {
     return (
-        <div onClick={onClick} className="flex py-3 text-[14px] px-4 items-center gap-2 hover:bg-[#2B2A3D]">
+        <div onClick={onClick} className="flex py-3 text-[14px] px-4 items-center gap-2 hover:bg-[#2B2A3D] relative">
+            {currentTab && <div className="w-1 h-full left-0 bg-red-500 bg-gradient-to-b from-[#6FA9E2] to-[#B3387F] absolute" />}
             <div className="h-3 w-3 rounded-full border" />
             <p>{text}</p>
         </div>
@@ -36,7 +37,7 @@ const SideNav = () => {
     const ACCOUNT_TYPE = globalState.account_type
     const [displayDropdown, setDisplayDropdown] = useState({display: false, type: "" as "company" | "system" | "subscription"})
     // const routeName = router.pathname.split('/').slice(2).join('/')
-    
+    const currentTab = splitName[3]
     console.log(splitName)
     console.log(routeName)
     const shakeAnimation = (iconClass: Element) => {
@@ -97,8 +98,8 @@ const SideNav = () => {
                                 <ArrowDownIcon className={`ml-auto transition-all h-5 w-5 ${(displayDropdown.type === "company" ) ? "rotate-[180deg]" : "rotate-[0deg]"}`} />
                             </div>
                            <div className={`mt-0 text-[#D9D9D] transition-all overflow-hidden origin-top ${(displayDropdown.type === "company") ? "h-[6.4em]" : "h-0"}`}>
-                                <NavDropItem text="Companies" onClick={() => handleItemClick("/dashboard/company-management")} />
-                                <NavDropItem text="Activity Logs" onClick={() => handleItemClick("/dashboard/company-management/activitylogs")} />
+                                <NavDropItem currentTab={routeName === "company-management" && !currentTab} text="Companies" onClick={() => handleItemClick("/dashboard/company-management")} />
+                                <NavDropItem currentTab={currentTab === "activitylogs"} text="Activity Logs" onClick={() => handleItemClick("/dashboard/company-management/activitylogs")} />
                             </div>
                         </div>
                         <div className="cursor-pointer text-[#D9D9D9B2]">
@@ -109,9 +110,9 @@ const SideNav = () => {
                             </div>
 
                             <div className={`mt-0 transition-all origin-top overflow-hidden ${(displayDropdown.type === "system" ) ? "h-[9.5em]" : "h-0"}`}>
-                                <NavDropItem text="Server Health" onClick={() => handleItemClick("/dashboard/system-performance/server-health")} />
-                                <NavDropItem text="Error Logs" onClick={() => handleItemClick("/dashboard/system-performance/error-logs")} />
-                                <NavDropItem text="Resource Usage" onClick={() => handleItemClick("/dashboard/system-performance/resource-usage")} />
+                                <NavDropItem currentTab={currentTab === "server-health"} text="Server Health" onClick={() => handleItemClick("/dashboard/system-performance/server-health")} />
+                                <NavDropItem currentTab={currentTab === "error-logs"} text="Error Logs" onClick={() => handleItemClick("/dashboard/system-performance/error-logs")} />
+                                <NavDropItem currentTab={currentTab === "resource-usage"} text="Resource Usage" onClick={() => handleItemClick("/dashboard/system-performance/resource-usage")} />
                             </div>
                         </div>
                         <div className="cursor-pointer text-[#D9D9D9B2]">
@@ -122,8 +123,8 @@ const SideNav = () => {
                             </div>
 
                             <div className={`mt-0 text-[#D9D9D] transition-all origin-top overflow-hidden ${(displayDropdown.type === "subscription" ) ? "h-auto mdx5:h-[6.5em]" : "h-0"}`}>
-                                <NavDropItem text="Company Subscriptions" onClick={() => handleItemClick("/dashboard/subscriptions")} />
-                                <NavDropItem text="Manage plans" onClick={() => handleItemClick("/dashboard/subscriptions/manage-plans")} />
+                                <NavDropItem currentTab={routeName === "subscriptions" && !currentTab} text="Company Subscriptions" onClick={() => handleItemClick("/dashboard/subscriptions")} />
+                                <NavDropItem currentTab={currentTab === "manage-plans"} text="Manage plans" onClick={() => handleItemClick("/dashboard/subscriptions/manage-plans")} />
                             </div>
                         </div>
                         <Link href={"/dashboard/training-management"} className={`sidebar-link  text-[#D9D9D9B2] flex items-center gap-3 hover:bg-[#2B2A3D] py-3 px-4 hover:text-white ${routeName === "training-management" && "bg-[#2B2A3D] text-[#D9D9D9B2]"}`}>

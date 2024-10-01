@@ -145,7 +145,7 @@ const ActivityLogsComponent = () => {
                         <ArrorwIcon className="scale-[0.9]" />
                     </div>
 
-                    <div className={`${openDropDown ? "max-h-[50vh] opacity-1" : "max-h-0 opacity-[0.4]"} bg-white text-[13px] z-[2 ] transition-all text-[#333333] font-[500] absolute w-full overflow-auto top-0 mt-9`}>
+                    <div className={`${openDropDown ? "max-h-[50vh] opacity-1" : "max-h-0 opacity-[0.4]"} bg-white text-[13px] z-[2] transition-all text-[#333333] font-[500] absolute w-full overflow-auto top-0 mt-9`}>
                         {companiesData.map(item => (
                             // @ts-ignore
                             <p onClick={() => {handleDropDown(), setSelectedCompany(item)}} className="py-2 border-b pl-2 hover:bg-slate-100 cursor-pointer">{item.name}</p>

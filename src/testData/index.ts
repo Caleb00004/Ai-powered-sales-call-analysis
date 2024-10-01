@@ -1138,7 +1138,7 @@ export const billingHistoryData = [
         plan: "premium",
         amount: "$30",
         date: "Aug 22, 2024",
-        Expires: "Sep 22 2024",
+        expires: "Sep 22 2024",
         status: "Paid"
     },
     {
@@ -1147,7 +1147,7 @@ export const billingHistoryData = [
         plan: "premium",
         amount: "$30",
         date: "Aug 22, 2024",
-        Expires: "Sep 22 2024",
+        expires: "Sep 22 2024",
         status: "Paid"
     },
     {
@@ -1156,7 +1156,7 @@ export const billingHistoryData = [
         plan: "premium",
         amount: "$30",
         date: "Aug 22, 2024",
-        Expires: "Sep 22 2024",
+        expires: "Sep 22 2024",
         status: "Paid"
     },
     {
@@ -1165,7 +1165,7 @@ export const billingHistoryData = [
         plan: "premium",
         amount: "$30",
         date: "Aug 22, 2024",
-        Expires: "Sep 22 2024",
+        expires: "Sep 22 2024",
         status: "Paid"
     }
 ]
