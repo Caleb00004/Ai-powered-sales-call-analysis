@@ -47,7 +47,7 @@ const PLAN = [
 
 const ManageplansComponent = () => {
     const [modalOpen, setModalOpen] = useState(false)
-    const [selectedPlan, setSelectedPlan] = useState({} as {title: string, price: number | string, description: string, features: []})
+    const [selectedPlan, setSelectedPlan] = useState({} as {title: string, price: number, description: string, features: string[]})
     const [modalSection, setModalSection] = useState(1)
     
     const closeModal = () => {
@@ -59,9 +59,31 @@ const ManageplansComponent = () => {
     };
 
     const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const key = e.target.name 
+        const value = e.target.value
 
+        setSelectedPlan(prev => ({...prev, [key]: value}))
     },[])
 
+    const handleUpdateFeatures = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, index: number) => {
+        const { value } = e.target;
+
+        // Update the features array immutably
+        const updatedFeatures = selectedPlan.features.map((feature, ind) =>
+            ind === index ? value : feature
+        );
+
+        // Update the state with the new features array
+        // @ts-ignore
+        setSelectedPlan((prev) => ({
+            ...prev,
+            features: updatedFeatures,
+        }));
+    };
+
+    const handleDeleteFeature = (index: number) => {
+        setSelectedPlan(prev => ({...prev, features: prev.features.filter((item, ind) => ind !== index)}))
+    }
 
     return (
         <div>
@@ -101,6 +123,7 @@ const ManageplansComponent = () => {
                             />
                             <Input 
                                 className="mb-[8px]"
+                                // @ts-ignore
                                 value={selectedPlan.price}
                                 onChange={handleOnChange}
                                 label={<label className="text-[#333333] font-medium text-[0.9em]">Price/month ($)</label>} 
@@ -110,29 +133,22 @@ const ManageplansComponent = () => {
                             />
                             <label className="text-[#333333] font-medium text-[0.9em]">Features</label>
                             {
-                                selectedPlan.features.map(item => (
-                                    <Input 
-                                        className="mb-[5px]"
-                                        value={item}
-                                        onChange={handleOnChange}
-                                        label={<></>} 
-                                        placeholder="Personal"
-                                        type="text"
-                                        name="title"
-                                    />
+                                selectedPlan.features.map((item, index) => (
+                                    <div className="relative">
+                                        <Input 
+                                            className="mb-[5px]"
+                                            value={item}
+                                            onChange={(e) => handleUpdateFeatures(e, index)}
+                                            label={<></>} 
+                                            placeholder="Personal"
+                                            type="text"
+                                            name="title"
+                                        />
+                                        <p onClick={() => handleDeleteFeature(index)} className="cursor-pointer bg-white absolute z-[2] top-[16px] right-3 text-[12.5px] italic text-red-500">Delete</p>
+                                    </div>
                                 ))
                             }
-                            {/* <Input 
-                                className="mb-[5px]"
-                                value={selectedPlan.title}
-                                onChange={handleOnChange}
-                                label={<></>} 
-                                placeholder="Personal"
-                                type="text"
-                                name="title"
-                            /> */}
-
-                            <p className="text-white bg-[#B3387F] px-[6.5px] ml-auto mt-5 w-max rounded-full"><p className="scale-[1.4] ">+</p></p>
+                            <p onClick={() => setSelectedPlan(prev => ({...prev, features: [...prev.features, ""]}))} className="cursor-pointer text-white bg-[#B3387F] px-[6.5px] ml-auto mt-5 w-max rounded-full"><p className="scale-[1.4] ">+</p></p>
 
                             <Button className="mt-5">Update Subscription Plan</Button>
                         </> 

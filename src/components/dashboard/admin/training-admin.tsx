@@ -6,9 +6,12 @@ const AdminTraining = () => {
 
     return (
         <div>
-            <p>Admin Training</p>
-
-            <Button onClick={() => router.push("/dashboard/training-management/3848843")}>Module Details</Button>
+            <div className="flex justify-between items-center">
+                <h1 className="text-[20px] font-[600] text-[#333333]">Training Management</h1>
+                <div className="w-[160px]">
+                    <Button onClick={() => {}} className="py-[6px] text-[13px]">Create New Module</Button>
+                </div>
+            </div>
         </div>
     )
 }
