@@ -170,13 +170,13 @@ const SideNav = () => {
                     <p>Trainings</p>
                 </Link>}
             </div>
-            <Link href={"/dashboard/company-permission"} className=" border border-[#D9D9D9] rounded-[150px] flex justify-between mt-auto mb-6 pl-3 pr-1 py-2 mx-2 ">
+            {ACCOUNT_TYPE !== "admin" && <Link href={"/dashboard/company-permission"} className=" border border-[#D9D9D9] rounded-[150px] flex justify-between mt-auto mb-6 pl-3 pr-1 py-2 mx-2 ">
                 <div>
                     <p className="text-white text-[14px] font-[500]">Bles Sofware</p>
                     <p className=" text-[#D9D9D9] text-[12px]" >Add or switch company</p>
                 </div>
                 <ArrowIcon className="text-white" />
-            </Link>
+            </Link>}
         </div>
     )
 }

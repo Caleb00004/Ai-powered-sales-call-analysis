@@ -6,7 +6,9 @@ import { ChangeEvent, useCallback, useEffect, useLayoutEffect, useMemo, useState
 import { GridColDef } from "@mui/x-data-grid"
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
-
+import Modal from "@/components/primary/Modal"
+import useModal from "@/components/util/useModal"
+import Input from "@/components/primary/input"
 
 const CompanyManagementComponent = () => {
     const router = useRouter()
@@ -16,6 +18,12 @@ const CompanyManagementComponent = () => {
     const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
     },[]);
+    const [companyDetails, setCompanyDetails] = useState({
+        name: "",
+        email: "",
+        role: ""
+    })
+    const {openModal, modalOpen, closeModal} = useModal()
 
     useLayoutEffect(() => {
         setIsLargeScreen(window.innerWidth > 940);
@@ -94,12 +102,61 @@ const CompanyManagementComponent = () => {
         ]
     },[isLargeScreen]) 
 
+    const handleCreateCompany = () => {
+
+    }
+
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const key = e.target.name
+        const value = e.target.value
+        
+        setCompanyDetails(prev => ({...prev, [key]: value})) 
+    },[])
+
     return (
-        <div>             
+        <div>
+            <Modal
+                isOpen={modalOpen}
+                onClose={closeModal}
+            >
+                <form onSubmit={handleCreateCompany} className="pt-7 pb-12 px-14">
+                    <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Company</p>
+                    <Input 
+                        className="mb-[8px]"
+                        value={companyDetails.name}
+                        onChange={handleOnChange}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Name</label>} 
+                        placeholder="Enter Company name"
+                        type="text"
+                        name="name"
+                    />
+                    <Input 
+                        className="mb-[8px]"
+                        value={companyDetails.email}
+                        onChange={handleOnChange}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Email</label>} 
+                        placeholder="Enter email"
+                        type="text"
+                        name="email"
+                    />
+                    <Input 
+                        className="mb-[8px]"
+                        value={companyDetails.role}
+                        onChange={handleOnChange}
+                        label={<label className="text-[#333333] font-medium text-[0.9em]">Owner Role (optional)</label>} 
+                        placeholder="Enter team role e.g Product Manager"
+                        type="text"
+                        name="role"
+                    />
+                    <Button type="submit" className="mt-3">
+                        Save
+                    </Button>
+                </form>
+            </Modal>       
             <div className="flex justify-between items-center">
                 <h1 className="text-[20px] font-[600] text-[#333333]">All Companies</h1>
                 <div className="w-[140px]">
-                    <Button onClick={() => {}} className="py-[6px] text-[13px]">Add New Company</Button>
+                    <Button onClick={openModal} className="py-[6px] text-[13px]">Add New Company</Button>
                 </div>
             </div>
             <br />
