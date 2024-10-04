@@ -22,6 +22,7 @@ const SubscriptionHistory = () => {
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
 
     const [searchInput, setSearchInput] = useState("")
+    // @ts-ignore
     const subscriptionRow = subscriptionsData.filter(item => item.id == id)
 
     const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {

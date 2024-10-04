@@ -45,9 +45,7 @@ interface profileApiType extends ApiType {
 function ContextProvider({children}: { children: ReactNode }) {
     const router = useRouter()
     const {data, status, error, refetch} = useGetUserProfileQuery<profileApiType>(undefined, {skip: !(globalState.authorizationToken && !globalState.account_type)})
-    // CHANGE
-    // const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
-    const [accountType, setAccountType] = useState("admin" as ACCOUNT_TYPE)
+    const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
     const [loggedIn, setLoggedIn] = useState(false);
     const [checkedLocalStorage, setCheckedLocalStorage] = useState(false)
     const [toastDetails, setToastDetails] = useState({
@@ -71,8 +69,9 @@ function ContextProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         if (status === "rejected") {
+            console.log(error)
             // @ts-ignore
-            if (error.data.message === "Please verify your email") {
+            if (error?.data?.message === "Please verify your email") {
                 toast.error("Error, Verify Email!");
                 const goToSection: OnboardingQueryParams['goToSection'] = "checkmail";
 
@@ -81,7 +80,7 @@ function ContextProvider({children}: { children: ReactNode }) {
                     query: { goToSection },
                 });
             // @ts-ignore
-            } else if (error.data.message === "No company selected") {
+            } else if (error?.data?.message === "No company selected") {
                 toast.error("No Company Selected")
                 router.push("/company-setup")
             } else {

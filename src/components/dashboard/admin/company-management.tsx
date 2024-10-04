@@ -87,9 +87,9 @@ const CompanyManagementComponent = () => {
                 headerClassName: " font-[700] ",
                 renderCell: (params) => (
                     <TableActionsMenu  options={[
-                        <MenuItem sx={{fontSize: 14}} onClick={() => {router.push("/dashboard/company-management/kkkdod")}}>View Team Members</MenuItem>,
-                        <MenuItem sx={{fontSize: 14}} onClick={() => {}}>View Activity Logs</MenuItem>,
-                        <MenuItem sx={{fontSize: 14}} onClick={() => {}}>View Subscription</MenuItem>,
+                        <MenuItem sx={{fontSize: 14}} onClick={() => {router.push(`/dashboard/company-management/${params.id}`)}}>View Team Members</MenuItem>,
+                        <MenuItem sx={{fontSize: 14}} onClick={() => {router.push("/dashboard/company-management/activitylogs")}}>View Activity Logs</MenuItem>,
+                        <MenuItem sx={{fontSize: 14}} onClick={() => {router.push(`/dashboard/subscriptions/${params.id}`)}}>View Subscription</MenuItem>,
                         <MenuItem sx={{fontSize: 14}} onClick={() => {}}>Suspend Company</MenuItem>,
                         <MenuItem sx={{color: "red", fontSize: 14}} onClick={() => {}}>Delete Company</MenuItem>
                     ]} data={params} />
@@ -119,7 +119,7 @@ const CompanyManagementComponent = () => {
                 isOpen={modalOpen}
                 onClose={closeModal}
             >
-                <form onSubmit={handleCreateCompany} className="pt-7 pb-12 px-14">
+                <form onSubmit={handleCreateCompany} className="pt-7 pb-12 px-6 sm:px-14">
                     <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Company</p>
                     <Input 
                         className="mb-[8px]"

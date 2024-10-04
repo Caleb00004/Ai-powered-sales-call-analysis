@@ -135,9 +135,9 @@ const ActivityLogsComponent = () => {
 
     return (
         <div>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <h1 className="text-[20px] font-[600] text-[#333333]">Activity Logs</h1>
-                <div className="flex items-center gap-2 relative">
+                <div className="flex items-center gap-2 relative ml-auto">
                     <p className="font-[500] text-[15px] ">Company:</p>
                     <div onClick={handleDropDown} className="border bg-white cursor-pointer border-[#D4D4D4] font-[500] text-[13px] rounded-lg flex justify-between items-center gap-10 pl-2">
                         {/* @ts-ignore */}

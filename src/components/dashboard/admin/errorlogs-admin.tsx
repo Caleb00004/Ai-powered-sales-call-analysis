@@ -104,7 +104,7 @@ const ErrorLogsComponent = () => {
                 />
             </div>
 
-            <div className="flex gap-5 mt-6">
+            <div className="flex flex-col lg:flex-row gap-5 mt-6">
                 <div className="bg-white rounded-xl p-4 flex-[0.6] flex-shrink-0">
                     <div className="flex justify-between">
                         <p className="text-[#333333] text-[18px] font-[700]">Error Trends</p>
@@ -124,20 +124,20 @@ const ErrorLogsComponent = () => {
                         </div>
                     </div>
 
-                    <div className="mt-6 ">
+                    <div className="mt-6 text-[12px] sm:text-[14px] ">
                         <div className="border-b border-b-[#E9EDF7] flex pb-2">
-                            <p className="text-[#A3AED0] font-[500] text-[14px] flex-shrink-0 flex-1">Name</p>
-                            <p className="text-[#A3AED0] font-[500] text-[14px] flex-shrink-0 flex-[0.55]">Status</p>
-                            <p className="text-[#A3AED0] font-[500] text-[14px] flex-shrink-0 flex-[0.5]">Date</p>
-                            <p className="text-[#A3AED0] font-[500] text-[14px] flex-shrink-0 flex-[0.8]">Progress</p>
+                            <p className="text-[#A3AED0] font-[500] flex-shrink-0 flex-1">Name</p>
+                            <p className="text-[#A3AED0] font-[500] flex-shrink-0 flex-[0.55]">Status</p>
+                            <p className="text-[#A3AED0] font-[500] flex-shrink-0 flex-[0.5]">Date</p>
+                            <p className="text-[#A3AED0] font-[500] flex-shrink-0 flex-[0.8]">Progress</p>
                         </div>
 
                         {[0,1,2,3].map(item => (
-                            <div className="flex py-4">
-                                <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-1">Internal Server Error</p>
-                                <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-[0.55]">Resolved</p>
-                                <p className="text-[#2B3674] font-[700] text-[14px] flex-shrink-0 flex-[0.5]">18 Apr 2021</p>
-                                <div className="text-[#2B3674] font-[700] items-center flex text-[14px] flex-shrink-0 flex-[0.8]">
+                            <div className="flex py-4 gap-1">
+                                <p className="text-[#2B3674] font-[700] flex-shrink-0 flex-1">Internal Server Error</p>
+                                <p className="text-[#2B3674] font-[700] flex-shrink-0 flex-[0.55]">Resolved</p>
+                                <p className="text-[#2B3674] font-[700] flex-shrink-0 flex-[0.5]">18 Apr 2021</p>
+                                <div className="text-[#2B3674] font-[700] items-center flex flex-shrink-0 flex-[0.8]">
                                     <div className="w-[70%] overflow-hidden bg-[#EFF4FB] h-[8px] rounded-lg ">
                                         <div className="w-[40%] rounded-lg h-full bg-[#B3387F]" />
                                     </div>

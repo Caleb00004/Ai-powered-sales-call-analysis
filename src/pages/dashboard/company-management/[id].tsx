@@ -242,7 +242,7 @@ const CompanyDetails = () => {
                     </div>
                 }
             </Modal>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <div className="flex items-center gap-0 text-[15px]">
                     <Link className="trainings-txt text-[20px] font-[600] text-[#333333] " href={"/dashboard/company-management"}><p >All Companies</p></Link>
                     {/* <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/trainings"}><p >Trainings</p></Link> */}
@@ -252,7 +252,7 @@ const CompanyDetails = () => {
                     </div>
                 </div>
 
-                <div className="w-[140px]">
+                <div className="w-[140px] ml-auto">
                     <Button onClick={() => (openModal(), setModalType("createTeam"))} className="py-[6px] text-[13px]">Add New Team</Button>
                 </div>
             </div>

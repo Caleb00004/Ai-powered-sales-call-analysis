@@ -92,14 +92,14 @@ const AdminTraining = () => {
                     </div>
                 </div>
             </Modal>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <h1 className="text-[20px] font-[600] text-[#333333]">Training Management</h1>
-                <div className="w-[200px]">
+                <div className="w-[200px] ml-auto">
                     <Button onClick={openModal} className="py-[6px] text-[13px]">Create New Module</Button>
                 </div>
             </div>
 
-            <div className="mt-5 flex gap-5">
+            <div className="mt-5 grid mdx4:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div className="bg-white p-4 rounded-2xl flex gap-5 flex-1">
                     <AnalyticsIcon className="flex-shrink-0 scale-[0.9]" />
                     <div>
@@ -128,7 +128,7 @@ const AdminTraining = () => {
             <div className="mt-8">
                 <h1 className="text-[18px] font-[600] text-[#333333]">Modules</h1>
 
-                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white grid grid-cols-2 mdx2:grid-cols-3 gap-10 px-5 py-8 rounded-lg mt-6">
+                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white grid sm:grid-cols-2 mdx2:grid-cols-3 gap-10 px-5 py-8 rounded-lg mt-6">
                     {[0,2,2,1,4,5,6,2].map((item, index) => (
                         <div className="">
                             <div className="bg-slate-400 w-full h-[135px] rounded-xl" />

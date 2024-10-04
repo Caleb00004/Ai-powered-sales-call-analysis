@@ -9,7 +9,7 @@ const ResourceComponent = () => {
                 <h1 className="text-[20px] font-[600] text-[#333333]">Resource Usage</h1>
             </div>
 
-            <div className="flex gap-8 mt-5">
+            <div className="flex flex-col lg:flex-row gap-8 mt-5">
                 <div className="bg-white p-5 rounded-lg flex-1">
                 </div>
                 <div className="bg-white p-5 rounded-lg flex-1 relative">
