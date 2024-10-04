@@ -69,8 +69,9 @@ function ContextProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         if (status === "rejected") {
+            console.log(error)
             // @ts-ignore
-            if (error.data.message === "Please verify your email") {
+            if (error?.data?.message === "Please verify your email") {
                 toast.error("Error, Verify Email!");
                 const goToSection: OnboardingQueryParams['goToSection'] = "checkmail";
 
@@ -79,7 +80,7 @@ function ContextProvider({children}: { children: ReactNode }) {
                     query: { goToSection },
                 });
             // @ts-ignore
-            } else if (error.data.message === "No company selected") {
+            } else if (error?.data?.message === "No company selected") {
                 toast.error("No Company Selected")
                 router.push("/company-setup")
             } else {

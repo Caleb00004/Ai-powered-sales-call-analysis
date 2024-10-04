@@ -43,7 +43,7 @@ const Input: FC<Props> = React.memo(({ label, password, placeholder, type = 'tex
               disabled={disabled}
               value={value}
               onChange={onChange}
-              className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md"
+              className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md text-[15px]"
               type={type}
               placeholder={placeholder}
               name={name}

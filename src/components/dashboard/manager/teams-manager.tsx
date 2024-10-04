@@ -148,7 +148,7 @@ const TeamsManager = () => {
         setCreateTeamDetails(prev => ({...prev, [key]: value}))
     }, [])
 
-     const handleRemovePermission = (permissionToRemove: string) => {
+    const handleRemovePermission = (permissionToRemove: string) => {
         setCreateTeamDetails(prev => ({
             ...prev,
             permission: prev.permission.filter(permission => permission !== permissionToRemove)

@@ -20,7 +20,7 @@ const SettingsManager = () => {
             </div>
 
             <div className={`flex flex-col mdx2:flex-row gap-4 text-center mt-3`}>
-                <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md w-[100%] mdx2:w-[20em] flex flex-col h-min">
+                {account_type !== "admin" && <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md w-[100%] mdx2:w-[20em] flex flex-col h-min">
                     <div className="py-4">
                         <div className="bg-slate-300 rounded-full h-14 w-14 mx-auto">
                         </div>
@@ -33,7 +33,7 @@ const SettingsManager = () => {
                             <p onClick={() => handleSwitchSection("audit-trial")} className={`${currentSection === "audit-trial" ? "bg-[#077AB233]" : "bg-transparent"} border-b border-b-[#0000000D] py-3 hover:bg-[#077AB233] cursor-pointer`}>Audit Trial</p>    
                         </>
                     }
-                </div>
+                </div>}
                 <div className="w-full ">
                     {currentSection === "profile" && <ProfileSettings />}
                     {currentSection === "system" && <SystemSettings />}
