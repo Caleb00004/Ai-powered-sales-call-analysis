@@ -3,6 +3,7 @@ import { ACCOUNT_TYPE, AuthResponseType, SkillsType } from "./types";
 import authEndpoints from "./auth/authApi";
 import teamRatingEndpoints from "./team-rating";
 import salesRepEndpoints from "./sales-rep";
+import teamEndpoints from "./team/teamApi";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -61,6 +62,7 @@ export const apiSlice = createApi({
         ...authEndpoints(builder),
         ...teamRatingEndpoints(builder),
         ...salesRepEndpoints(builder),
+        ...teamEndpoints(builder),
         getUserProfile: builder.query({
             query: () => ({
                 url: "/user",
@@ -132,6 +134,13 @@ export const {
     useGetAllSalesrepQuery,
     useGetSalesrepPerformanceQuery,
     useGetSalesrepDealsQuery,
-    useGetSalesrepAreaOfConcernQuery
+    useGetSalesrepAreaOfConcernQuery,
+
+    // Team
+    useGetTeamQuery,
+    usePostInviteTeamMutation,
+    useAcceptInviteMutation,
+    useGetRolesQuery,
+    useUpdateRoleMutation,
 } = apiSlice
 

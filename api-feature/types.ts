@@ -21,3 +21,8 @@ export interface SkillsType {
     name: string,
     symbol: string
 }
+
+export interface successResponseType {
+    success: boolean;
+    message: string
+}
