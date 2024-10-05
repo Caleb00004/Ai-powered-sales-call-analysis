@@ -1,12 +1,17 @@
 import { globalState } from "../../../api-feature/apiSlice"
 import DealsManager from "./manager/deals-manager"
+import DealSalesrep from "./sales-rep/deals-salesrep"
+import { useContext } from "react"
+import { appContext } from "../contexts/appContext"
 
 const DealsComponent = () => {
-    const {account_type} = globalState
+    // const {account_type} = globalState
+    const {accountType: account_type} = useContext(appContext)
     
     return (
         <div>
-            {account_type === "manager" && <DealsManager />}
+            {(account_type === "manager" || account_type === "owner") && <DealsManager />}
+            {account_type === "sales-rep" && <DealSalesrep />}
         </div>
     )
 }

@@ -107,7 +107,7 @@ const DealsManager = () => {
             {field: "assignedSalesRep", 
                 flex: isLargeScreen ? 1 : undefined, 
                 width: isLargeScreen ? undefined : 200,
-                filterOperators: getGridNumericOperators() , renderHeader: () =>  (<div className="flex gap-1 flex-col "><p>Assigned <br />Sales Rep</p></div>), headerClassName: " bg-[#C32782]"},
+                filterOperators: getGridNumericOperators() , cellClassName: "center-cell-text", renderHeader: () =>  (<div className="flex gap-1 flex-col ml-[3em]"><p>Assigned <br />Sales Rep</p></div>), headerClassName: "bg-[#C32782]"},
             {
                 field: 'actions',
                 flex: isLargeScreen ? 0.5 : undefined, 

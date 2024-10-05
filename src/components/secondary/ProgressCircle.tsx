@@ -31,7 +31,7 @@ const ProgressCircle:FC<props> = ({ value, type, size, label, labelClassname, te
                     alignItems: "center"
                 }}
             >
-                <p className={`text-[25px] font-[700] rotate-[-110deg] ${textClassname}`}>{value}</p>
+                <p className={` font-[700] rotate-[-110deg] ${textClassname ? textClassname : "text-[25px]"}`}>{value}</p>
             </Box>
             {type === "progress" && <p className={`text-[18px] font-[500] ${labelClassname}`}>{label}</p>}
             {type === "skill" && <p className={`text-[18px] font-[500] flex flex-col ${labelClassname}`}>Top Skills <span className=" inline-block text-[#828282] text-[14px]">{label}</span></p>}

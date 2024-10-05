@@ -42,11 +42,16 @@ const LeftContainer:FC<props> = ({accountType}) => {
             body: "Receive Detailed Feedback and Grades Based on Proven Sales Techniques",
             img: itemImg4
         },
-        ...(accountType === "manager" ? [{
+        {
             header: "Your Dashboard for success",
             body: "Access Insights, Track Progress, and Improve with Real-Time Data",
             img: itemImg5
-        }] : [])
+        }
+        // ...(accountType === "manager" ? [{
+        //     header: "Your Dashboard for success",
+        //     body: "Access Insights, Track Progress, and Improve with Real-Time Data",
+        //     img: itemImg5
+        // }] : [])
     ]
 
     useEffect(() => {
@@ -124,7 +129,8 @@ const LeftContainer:FC<props> = ({accountType}) => {
                             <div onClick={() => handleDirectChange(2)} className={`${currentItem === 2 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
                             <div onClick={() => handleDirectChange(3)} className={`${currentItem === 3 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
                             <div onClick={() => handleDirectChange(4)} className={`${currentItem === 4 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
-                            {accountType === "manager" && <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>}
+                            {/* {accountType === "manager" && <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>} */}
+                            <div onClick={() => handleDirectChange(5)} className={`${currentItem === 5 ? "active" : "notactive"} bg-[#B0ADAD] h-1.5 w-1.5 rounded-full cursor-pointer`}></div>
                         </div>
                         <div onClick={slideNext}>
                             <NextBtn className=" rotate-[180deg]" />

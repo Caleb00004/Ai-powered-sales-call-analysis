@@ -16,6 +16,18 @@
   box-sizing: border-box;
 }
 
+/* Hide the arrows for Chrome, Safari, Edge, and other WebKit-based browsers */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide the arrows for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* Custom style for General scroll bar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -31,12 +43,14 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #939292;
+  /* background: #939292; */
+  background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#C32782, #48D0FF);
+  border-radius: 10px;
 }
 
 /* Handle on hover */

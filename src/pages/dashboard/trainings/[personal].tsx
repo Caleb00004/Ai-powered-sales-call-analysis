@@ -10,8 +10,10 @@ import { GridColDef } from "@mui/x-data-grid"
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
 import { dealsData } from "@/testData"
+import { globalState } from "../../../../api-feature/apiSlice"
 
 const PersonalTraining = () => {
+    const account_type = globalState.account_type
     const carouselContainer = useRef<HTMLDivElement | null>(null)
     const tran = [0, 1, 2, 0, 1, 2, 0, 1, 2, ]
     const [searchInput, setSearchInput] = useState("")
@@ -100,7 +102,7 @@ const PersonalTraining = () => {
                 <div className="flex  flex-col">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-0 text-[15px]">
-                            <Link className="trainings-txt text-[20px] font-[600] " href={"/dashboard/trainings"}><p >Training</p></Link>
+                            <Link className="trainings-txt text-[20px] font-[600] " href={account_type === "manager" ? "/dashboard/trainings" : "#"}><p >Training</p></Link>
                             <div className="topic-txt flex items-center -translate-x-16 opacity-0">
                                 <ArrorwIcon className="scale-[0.8]" />
                                 <p className=" font-[500] ">Personal Training</p>
