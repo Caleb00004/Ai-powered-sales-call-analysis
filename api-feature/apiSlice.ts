@@ -1,6 +1,8 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { ACCOUNT_TYPE, AuthResponseType, SkillsType } from "./types";
 import authEndpoints from "./auth/authApi";
+import teamRatingEndpoints from "./team-rating";
+import salesRepEndpoints from "./sales-rep";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -40,13 +42,25 @@ export const globalState: globalStateType = {
 
 export const apiSlice = createApi({
     reducerPath: "api",
-    tagTypes: ['getAvailableSkills'],
+    tagTypes: ['getAvailableSkills',],
+    // baseQuery: fetchBaseQuery({
+    //     baseUrl: BASE_URL
+    // }),
     baseQuery: fetchBaseQuery({
-        baseUrl: BASE_URL
+        baseUrl: BASE_URL,
+        prepareHeaders: (headers) => {
+            const token = globalState.authorizationToken;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
     endpoints: builder => ({
         // AUTHENTICATION - USER
         ...authEndpoints(builder),
+        ...teamRatingEndpoints(builder),
+        ...salesRepEndpoints(builder),
         getUserProfile: builder.query({
             query: () => ({
                 url: "/user",
@@ -107,6 +121,17 @@ export const {
     usePostCreateCompanyMutation,
     useGetCompaniesQuery,
     usePostSwitchCompaniesMutation,
-    useGetUserProfileQuery
+    useGetUserProfileQuery,
+
+    // Team Rating
+    useGetTopSalesrepQuery,
+    useGetOverallRatingQuery,
+    useGetTeamRatingQuery,
+
+    // Sales Rep
+    useGetAllSalesrepQuery,
+    useGetSalesrepPerformanceQuery,
+    useGetSalesrepDealsQuery,
+    useGetSalesrepAreaOfConcernQuery
 } = apiSlice
 

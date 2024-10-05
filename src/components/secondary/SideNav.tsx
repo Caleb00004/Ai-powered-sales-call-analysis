@@ -38,8 +38,7 @@ const SideNav = () => {
     const [displayDropdown, setDisplayDropdown] = useState({display: false, type: "" as "company" | "system" | "subscription"})
     // const routeName = router.pathname.split('/').slice(2).join('/')
     const currentTab = splitName[3]
-    console.log(splitName)
-    console.log(routeName)
+
     const shakeAnimation = (iconClass: Element) => {
         gsap.timeline({ defaults: { duration: 0.2 } })
             .fromTo(iconClass, { rotate: 18 }, { rotate: -18, repeat: 1, yoyo: true })
@@ -55,8 +54,6 @@ const SideNav = () => {
         setDisplayDropdown({display: false, type: ""})
         router.push(path)
     }
-
-    console.log(displayDropdown)
     
     useEffect(() => {
         // Select all links and add hover event listener
