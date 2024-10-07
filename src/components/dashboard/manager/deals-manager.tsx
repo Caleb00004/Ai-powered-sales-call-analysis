@@ -248,6 +248,7 @@ const DealsManager = () => {
                 columns={columns}
                 searchInput={searchInput}
                 handleSearchChange={handleSearchChange}
+                getRowIdField="id"
             />
         </div>
     )

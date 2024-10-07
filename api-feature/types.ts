@@ -26,3 +26,23 @@ export interface successResponseType {
     success: boolean;
     message: string
 }
+
+type paginatedDataType = {
+    totalDeal: number,
+    totalPages: number,
+    currentPage: number
+}
+
+export interface subscriptionType {
+    id: number;
+    name: string;
+    price: number;
+    billingCycle: string;
+    maxAgents: number;
+    maxTeam: number;
+    features: string[];
+    currency: {
+        name: string;
+        symbol: string;
+    }
+}

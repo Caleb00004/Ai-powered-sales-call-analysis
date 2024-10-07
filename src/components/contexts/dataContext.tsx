@@ -4,13 +4,18 @@ import { APISTATUS, ApiType, SkillsType } from "../../../api-feature/types";
 import { useContext } from "react";
 import { appContext } from "./appContext";
 import { SalesrepType } from "../../../api-feature/sales-rep/salesrep-type";
+import { teamRoleType } from "../../../api-feature/team/team-type";
 
 interface skillsApiType extends ApiType {
-  data: SkillsType[]
+    data: SkillsType[]
 }
 
 interface salesrepApiType extends ApiType {
     data: {data: SalesrepType[], success: boolean}
+}
+
+interface teamRolesApiType extends ApiType {
+    data: teamRoleType[]
 }
 
 interface DataContextProps {
@@ -18,6 +23,8 @@ interface DataContextProps {
     availableSkillsStatus: APISTATUS
     salesRepData: SalesrepType[]
     salesRepsataStatus: APISTATUS
+    teamRolesData: teamRoleType[]
+    teamRolesDataStatus: APISTATUS
 }
 
 const dataContext = createContext<DataContextProps>({
@@ -25,21 +32,27 @@ const dataContext = createContext<DataContextProps>({
     availableSkillsStatus: "pending",
     salesRepData: [],
     salesRepsataStatus: "pending",
+    teamRolesData: [],
+    teamRolesDataStatus: "pending"
 })
  
 
 function DataContextProvider({ children }: { children: ReactNode }) {
     const {loggedIn, accountType} = useContext(appContext)
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
-    const {data: salesRep, status: salesRepsataStatus, error} = useGetAllSalesrepQuery<salesrepApiType>(undefined, {skip: !loggedIn})
+    // Change For Manager and sales rep
+    const {data: salesRep, status: salesRepsataStatus, error: salesRepError} = useGetAllSalesrepQuery<salesrepApiType>(undefined, {skip: !loggedIn})
+    const {data: teamRolesData, status: teamRolesDataStatus, error: teamRolesError} = useGetAllSalesrepQuery<teamRolesApiType>(undefined, {skip: !loggedIn})
 
-    const salesRepData = salesRep.data
+    const salesRepData = salesRep?.data
 
     const contextValue: DataContextProps = {
         availableSkills,
         availableSkillsStatus,
         salesRepData,
-        salesRepsataStatus
+        salesRepsataStatus,
+        teamRolesData,
+        teamRolesDataStatus
     }
 
     return (

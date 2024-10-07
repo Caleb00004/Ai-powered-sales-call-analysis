@@ -15,7 +15,7 @@ const teamEndpoints = (
             method: 'GET',
         }),
     }),
-    postInviteTeam: builder.mutation<createTeambodyType, successResponseType>({
+    postInviteTeam: builder.mutation<successResponseType, createTeambodyType>({
         query: (user) => ({
             url: '/team/invite',
             method: 'POST',

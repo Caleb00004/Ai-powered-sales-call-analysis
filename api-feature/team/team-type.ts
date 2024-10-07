@@ -13,3 +13,8 @@ export interface createTeambodyType {
     position: string;
     roleIds: string[]
 }
+
+export interface teamRoleType {
+    id: number;
+    name: string
+}

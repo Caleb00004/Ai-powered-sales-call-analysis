@@ -1,9 +1,12 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
-import { ACCOUNT_TYPE, AuthResponseType, SkillsType } from "./types";
-import authEndpoints from "./auth/authApi";
-import teamRatingEndpoints from "./team-rating";
-import salesRepEndpoints from "./sales-rep";
-import teamEndpoints from "./team/teamApi";
+import { ACCOUNT_TYPE, AuthResponseType, SkillsType, subscriptionType } from "./types";
+import {authEndpoints, teamEndpoints, teamRatingEndpoints, trainingEndpoints, dealsEndpoints, salesRepEndpoints, companyEndpoints, skillsEndpoints} from "./index"
+// import authEndpoints from "./auth/authApi";
+// import teamRatingEndpoints from "./team-rating";
+// import salesRepEndpoints from "./sales-rep";
+// import teamEndpoints from "./team/teamApi";
+// import dealsEndpoints from "./deals/dealsApi";
+// import trainingEndpoints from "./training/trainingApi";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -58,20 +61,14 @@ export const apiSlice = createApi({
         }
     }),
     endpoints: builder => ({
-        // AUTHENTICATION - USER
         ...authEndpoints(builder),
+        ...companyEndpoints(builder),
         ...teamRatingEndpoints(builder),
         ...salesRepEndpoints(builder),
         ...teamEndpoints(builder),
-        getUserProfile: builder.query({
-            query: () => ({
-                url: "/user",
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${globalState.authorizationToken}`,
-                }
-            })
-        }),
+        ...dealsEndpoints(builder),
+        ...trainingEndpoints(builder),
+        ...skillsEndpoints(builder),
         getAvailableSkillsList: builder.query<SkillsType[], void>({
             query: () => ({
                 url: "/company/available-skills",
@@ -82,35 +79,56 @@ export const apiSlice = createApi({
             }),
             providesTags: ['getAvailableSkills']
         }),
-        postCreateCompany: builder.mutation<unknown, {name: string, skills: {skillId: number}[]}>({
-            query: (body) => ({
-                url: "/company",
-                method: "POST",
-                body: body,
-                headers: {
-                    Authorization: `Bearer ${globalState.authorizationToken}`,
-                }
+        getInsights: builder.query<undefined, string>({
+            query: (userId) => ({
+                url: `/user/${userId}/insights`,
+                method: "GET"
             })
         }),
-        getCompanies: builder.query({
+        getSubscriptions: builder.query<subscriptionType[] ,void>({
             query: () => ({
-                url: "/company/user-companies",
+                url: `/subscription`,
+                method: "GET"
+            })
+        }),
+        getUserProfile: builder.query({
+            query: () => ({
+                url: "/user",
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${globalState.authorizationToken}`,
                 }
             })
         }),
-        postSwitchCompanies: builder.mutation({
-            query: (body) => ({
-                url: "/company/switch-company",
-                method: "POST",
-                body: body,
-                headers: {
-                    Authorization: `Bearer ${globalState.authorizationToken}`,
-                }
-            })
-        })
+        // postCreateCompany: builder.mutation<unknown, {name: string, skills: {skillId: number}[]}>({
+        //     query: (body) => ({
+        //         url: "/company",
+        //         method: "POST",
+        //         body: body,
+        //         headers: {
+        //             Authorization: `Bearer ${globalState.authorizationToken}`,
+        //         }
+        //     })
+        // }),
+        // getCompanies: builder.query({
+        //     query: () => ({
+        //         url: "/company/user-companies",
+        //         method: "GET",
+        //         headers: {
+        //             Authorization: `Bearer ${globalState.authorizationToken}`,
+        //         }
+        //     })
+        // }),
+        // postSwitchCompanies: builder.mutation({
+        //     query: (body) => ({
+        //         url: "/company/switch-company",
+        //         method: "POST",
+        //         body: body,
+        //         headers: {
+        //             Authorization: `Bearer ${globalState.authorizationToken}`,
+        //         }
+        //     })
+        // })
     })
 })
 
@@ -119,11 +137,13 @@ export const {
     useAuthSignInMutation,
     useGetOTPMutation,
     useVerifyOTPMutation,
-    useGetAvailableSkillsListQuery,
+    useGetUserProfileQuery,
+
+    // Companies
     usePostCreateCompanyMutation,
     useGetCompaniesQuery,
     usePostSwitchCompaniesMutation,
-    useGetUserProfileQuery,
+    useGetAvailableSkillsListQuery,
 
     // Team Rating
     useGetTopSalesrepQuery,
@@ -142,5 +162,33 @@ export const {
     useAcceptInviteMutation,
     useGetRolesQuery,
     useUpdateRoleMutation,
+
+    // Deals
+    useGetDealsQuery,
+    usePostCreateDealMutation,
+    useGetDealNotesQuery,
+    usePostCreateNoteMutation,
+    useGetMeetingsQuery,
+    usePostScheduleMeetingMutation,
+    useGetDealStagesQuery,
+    useGetDealOverviewQuery,
+    useGetDealSalesrepPerformanceQuery,
+
+    // Training
+    useGetTrainingsQuery,
+    useGetTrainingTopicsQuery,
+    usePostAssignTopicMutation,
+    useGetEnrolledTrainingQuery,
+    useGetUserEnrolledTopicQuery,
+    useGetUserTopicProgressQuery,
+    useGetUserTrainingProgressQuery,
+
+    // Skills
+    useGetSalesrepSkillsQuery,
+    useGetSkillTrendsQuery,
+
+    // /////////////
+    useGetInsightsQuery,
+    useGetSubscriptionsQuery
 } = apiSlice
 

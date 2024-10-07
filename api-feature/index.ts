@@ -1,0 +1,8 @@
+export {default as authEndpoints} from "./auth/authApi"
+export {default as dealsEndpoints} from "./deals/dealsApi"
+export {default as salesRepEndpoints} from "./sales-rep/index"
+export {default as teamEndpoints} from "./team/teamApi"
+export {default as teamRatingEndpoints} from "./team-rating/index"
+export {default as trainingEndpoints} from "./training/trainingApi"
+export {default as companyEndpoints} from "./company/companyApi"
+export {default as skillsEndpoints} from "./skills/skillsApi"
