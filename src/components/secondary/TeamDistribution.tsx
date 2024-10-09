@@ -35,15 +35,16 @@ const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
             {status === "rejected" && 
                 <div className="text-red-600 text-[14px] text-center pt-6">
                     <p>Error Occured</p>
-                    <p>Reoload Page</p>
+                    <p>Reload Page</p>
                 </div>
             }
-            {(status === "fulfilled" && data?.data) ? 
+            {(status === "fulfilled" && data?.data) &&
                 <div className="flex flex-col gap-8">
                     <ProgressCircle type="progress" value={80} size={110} label="Overall Rating" />
                     <ProgressCircle type="skill" value={"BT"} size={110} label="BT" />
                 </div>
-            : 
+            }
+            {(status === "fulfilled" && !data?.data) && 
                 <div className="text-[14px] text-[#333333] text-center pt-6">
                     <p>Data Unavailable</p>
                 </div> 

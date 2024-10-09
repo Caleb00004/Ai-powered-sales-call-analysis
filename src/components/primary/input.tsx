@@ -8,7 +8,8 @@ interface Props {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  options?: string[]; // For select input options
+  // options?: string[]; // For select input options
+  options?: {value: string | number; name: string}[]; // For select input options
   select?: boolean; // If true, render a select input
   className?: string;
   disabled?: boolean;
@@ -31,8 +32,8 @@ const Input: FC<Props> = React.memo(({ label, password, placeholder, type = 'tex
           >
             <option disabled selected value={""} hidden >{value ? value : placeholder}</option>
             {options?.map((option, index) => (
-              <option key={index} value={option}>
-                {option}
+              <option key={index} value={option?.value}>
+                {option?.name}
               </option>
             ))}
           </select>

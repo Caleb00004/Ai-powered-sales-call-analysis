@@ -47,7 +47,7 @@ const dealsEndpoints = (
             body: data.body,
         }),
     }),
-    getDealStages: builder.query({
+    getDealStages: builder.query<dealStagesType[], void>({
         query: () => ({
             url: '/deal/stages',
             method: 'GET',

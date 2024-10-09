@@ -11,7 +11,7 @@ export interface createTeambodyType {
     firstName: string;
     lastName: string;
     position: string;
-    roleIds: string[]
+    roleIds: number[]
 }
 
 export interface teamRoleType {

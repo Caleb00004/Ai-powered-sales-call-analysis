@@ -1,6 +1,6 @@
 export type ACCOUNT_TYPE = "" | "admin" | "manager" | "sales-rep" | "owner" 
 
-export type APISTATUS = "fulfilled" | "pending" | "rejected"
+export type APISTATUS = "fulfilled" | "pending" | "rejected" | "uninitialized"
 
 export const TOKEN_NAME = "durket-token"
 
@@ -45,4 +45,10 @@ export interface subscriptionType {
         name: string;
         symbol: string;
     }
+}
+
+export interface insightsType {
+    potentialRating: string;
+    skills: {skill: string; grade: number; skillSymbol: string}[]
+    pagination: paginatedDataType
 }

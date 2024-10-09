@@ -85,7 +85,6 @@ const Deals = () => {
         return [
             {
                 field: 'actions',
-                headerClassName: "hidden bg-[#C32782]",
                 headerName: '',
                 renderCell: (params) => (
                     <TableActionsMenu options={[
@@ -105,7 +104,6 @@ const Deals = () => {
                 flex: isLargeScreen ? 1 : undefined, 
                 width: isLargeScreen ? undefined : 200,
                 headerName: "Name",
-                headerClassName: "bg-[#C32782]"
             },
             {
                 field: "client",
@@ -117,7 +115,6 @@ const Deals = () => {
                         <p>Client/</p><p>Company</p>
                     </div>
                 ),
-                headerClassName: "bg-[#C32782]"
             },
             {
                 field: "stage",
@@ -125,7 +122,6 @@ const Deals = () => {
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 130,
                 headerName: "Stage",
-                headerClassName: "bg-[#C32782]"
             },
             {
                 field: "status",
@@ -133,7 +129,6 @@ const Deals = () => {
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 130,
                 headerName: "Status",
-                headerClassName: "bg-[#C32782]"
             },
             {
                 field: "assignedSalesRep",
@@ -145,7 +140,6 @@ const Deals = () => {
                         <p>Assigned</p><p>Sales Rep</p>
                     </div>
                 ),
-                headerClassName: "bg-[#C32782]"
             },
         ];
     }, [isLargeScreen]);
@@ -292,6 +286,7 @@ const Deals = () => {
                                 handleSearchChange={handleSearchChange}
                                 csv
                                 title="Specified Sales Rep Performance"
+                                getRowIdField="id"
                             />
                         </div>                    
                     </>
@@ -304,6 +299,7 @@ const Deals = () => {
                                 columns={columns}
                                 searchInput={searchInput}
                                 handleSearchChange={handleSearchChange}
+                                getRowIdField="id"
                             />
                         </div>    
                     </>

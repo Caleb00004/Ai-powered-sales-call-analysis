@@ -6,7 +6,7 @@ import { successResponseType } from '../types';
 const teamEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | "getTeams" ,
         'api'
     >) => ({
     getTeam: builder.query<teamType, void>({
@@ -14,6 +14,7 @@ const teamEndpoints = (
             url: '/team',
             method: 'GET',
         }),
+        providesTags: ["getTeams"]
     }),
     postInviteTeam: builder.mutation<successResponseType, createTeambodyType>({
         query: (user) => ({
@@ -21,6 +22,7 @@ const teamEndpoints = (
             method: 'POST',
             body: user,
         }),
+        invalidatesTags: ["getTeams"]
     }),
     acceptInvite: builder.mutation<{token: string, password: string}, successResponseType>({
         query: (user) => ({
@@ -29,13 +31,13 @@ const teamEndpoints = (
             body: user,
         }),
     }),
-    getRoles: builder.query({
+    getRoles: builder.query<void, undefined>({
         query: () => ({
             url: "/team/roles",
             method: "GET",
         })
     }),
-    updateRole: builder.mutation<{userId: string | number, position: string, roleIds: string | number[]}, successResponseType>({
+    updateRole: builder.mutation<{userId: string | number, position: string, roleIds: number[]}, successResponseType>({
         query: (user) => ({
             url: '/team/invite',
             method: 'POST',

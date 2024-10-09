@@ -4,56 +4,61 @@ import SkillsExcerpt from "@/components/secondary/SkillsExcerpt"
 import { dataContext } from "@/components/contexts/dataContext"
 import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
 import { useGetInsightsQuery } from "../../../../api-feature/apiSlice"
+import { ApiType, insightsType } from "../../../../api-feature/types"
 
+interface insightsApi extends ApiType {
+    data: {data: insightsType[], page: number, totalPage: number, totalUser: number, success: boolean}
+}
 
 const InsightsManager = () => {
-    const {salesRepData, salesRepsataStatus} = useContext(dataContext)
-    // const {} = useGetInsightsQuery(selectedSalesRep.)
+    const {salesRepData, salesRepsataStatus} = useContext(dataContext)    
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesrepType) 
+    // @ts-ignore
+    const {data, status, error} = useGetInsightsQuery<insightsApi>(selectedSalesRep?.id, {skip: !selectedSalesRep.firstName})
     const [openDropDown, setOpenDropDown] = useState(false)
 
-    const testSalesRepList = [
-        {
-            name: "john donald",
-            id: 1
-        },
-        {
-            name: "michael purr",
-            id: 2
-        },
-        {
-            name: "Giveon john",
-            id: 3
-        },
-        {
-            name: "victor akpan",
-            id: 4
-        },
-        {
-            name: "aquila akpan",
-            id: 5
-        },
-                {
-            name: "john donald",
-            id: 6
-        },
-        {
-            name: "michael purr",
-            id: 7
-        },
-        {
-            name: "Giveon john",
-            id: 8
-        },
-        {
-            name: "victor akpan",
-            id: 9
-        },
-        {
-            name: "aquila akpan",
-            id: 10
-        },
-    ]
+    // const testSalesRepList = [
+    //     {
+    //         name: "john donald",
+    //         id: 1
+    //     },
+    //     {
+    //         name: "michael purr",
+    //         id: 2
+    //     },
+    //     {
+    //         name: "Giveon john",
+    //         id: 3
+    //     },
+    //     {
+    //         name: "victor akpan",
+    //         id: 4
+    //     },
+    //     {
+    //         name: "aquila akpan",
+    //         id: 5
+    //     },
+    //             {
+    //         name: "john donald",
+    //         id: 6
+    //     },
+    //     {
+    //         name: "michael purr",
+    //         id: 7
+    //     },
+    //     {
+    //         name: "Giveon john",
+    //         id: 8
+    //     },
+    //     {
+    //         name: "victor akpan",
+    //         id: 9
+    //     },
+    //     {
+    //         name: "aquila akpan",
+    //         id: 10
+    //     },
+    // ]
 
     const handleDropDown = () => {
         setOpenDropDown(prev => !prev)
@@ -68,8 +73,7 @@ const InsightsManager = () => {
                 <div className="flex items-center gap-2 relative">
                     <p className="font-[500] ">Sales Rep:</p>
                     <div onClick={handleDropDown} className="border cursor-pointer border-[#A4A4A4] font-[500] text-[14px] rounded-lg flex justify-between items-center gap-10 pl-2">
-                        {salesRepsataStatus !== "rejected" ? (<p>{selectedSalesRep.firstName ? `${selectedSalesRep.firstName} ${selectedSalesRep.lastName}` : "select sales-rep"}</p>) : <p className="text-red-600 italic">Error occured</p>}
-                        
+                        {salesRepsataStatus !== "rejected" ? (<p>{selectedSalesRep.firstName ? `${selectedSalesRep.firstName} ${selectedSalesRep.lastName}` : "select sales-rep"}</p>) : <p className="text-red-600 italic">Error occured</p>}                        
                         <ArrorwIcon className="scale-[0.9]" />
                     </div>
 
@@ -78,13 +82,14 @@ const InsightsManager = () => {
                             <p onClick={() => {handleDropDown(), setSelectedSalesRep(item)}} className="py-2 border-b pl-2 hover:bg-slate-100 cursor-pointer">{item.firstName} {item.lastName}</p>
                         ))}
                         {salesRepsataStatus === "fulfilled" && salesRepData.length <= 0 && <p onClick={() => {handleDropDown()}} className="py-2 border-b pl-2 hover:bg-slate-100 cursor-pointer italic">No Sales rep</p>}
+                        {salesRepsataStatus === "pending" && <p onClick={() => {handleDropDown()}} className="py-2 border-b pl-2 hover:bg-slate-100 cursor-pointer">loading...</p>}
                     </div>  
                 </div>
 
             </div>
 
             <div className="mt-5 flex flex-col-reverse mdx2:flex-row gap-5 ">
-                <SkillsExcerpt />
+                <SkillsExcerpt data={data?.data} status={status} />
                  
                 <div className="bg-white p-2 flex-[0.5]  border rounded-md">
                     <div className="bg-slate-500 h-[30em] mdx2:h-full flex">

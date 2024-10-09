@@ -1,7 +1,7 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SalesrepType } from '../sales-rep/salesrep-type';
-import { ratingType } from './teamrating-type';
+import { ratingType, teamRatingType } from './teamrating-type';
 
 const teamRatingEndpoints = (
         builder: EndpointBuilder<
@@ -23,9 +23,10 @@ const teamRatingEndpoints = (
             })
         }),
         // Requires Params
-        getTeamRating: builder.query({
-            query: () => ({
+        getTeamRating: builder.query<teamRatingType[], {start: string, end: string}>({
+            query: (date) => ({
                 url: "/ratings",
+                params: {startData: date.start, endDate: date.end},
                 method: "GET",
             })
         }),

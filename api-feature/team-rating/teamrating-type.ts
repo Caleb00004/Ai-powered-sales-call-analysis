@@ -3,3 +3,10 @@ export interface ratingType {
     skillSymbol: string,
     avgGrade: number
 }
+
+export interface teamRatingType {
+    skillSymbol: string,
+    skillName: string,
+    currentAvg: number,
+    growth: number
+}

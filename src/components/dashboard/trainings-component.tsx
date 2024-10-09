@@ -1,4 +1,4 @@
-import { globalState } from "../../../api-feature/apiSlice"
+import { globalState, useGetTrainingsQuery } from "../../../api-feature/apiSlice"
 import Button from "../primary/Button"
 import Search from "../secondary/Search"
 import MoreIcon from "../../../public/svgs/more-icon.svg"
@@ -7,11 +7,8 @@ import { useRouter } from "next/router"
 import { ModulesData } from "@/testData"
 import { SetStateAction, useCallback, useState } from "react"
 import Dropdown from "../secondary/Dropdown"
-import Modal from "../primary/Modal"
-import Input from "../primary/input"
-import Xicon from "../../../public/svgs/x-icon.svg"
-import { Checkbox } from "@mui/material"
 import DropdownItem from "../secondary/DropdownItem"
+import AssignTrainingModal from "../modals/assigntraining-modal"
 
 type formType = {
     module: string
@@ -22,6 +19,9 @@ type formType = {
 type modalType = "assign-topic" | "assign-training"
 
 const TrainingsComponent = () => {
+    const {data, status, error} = useGetTrainingsQuery()
+    console.log(data)
+    console.log(status)
     const routeTo = useRouter()
     const [selectedModule, setSelectedModule] = useState({})
     const [selectedTopic, setSelectedTopic] = useState({module: "", topic: ""})
@@ -89,101 +89,16 @@ const TrainingsComponent = () => {
 
     return(
         <>
-            <Modal
-                isOpen={modalOpen}
-                onClose={closeModal}
-            >
-                {modalType === "assign-topic" ? 
-                    <div className="pt-7 pb-12 px-14">
-                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Topic</p>
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            value={selectedTopic.module}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Module</label>} 
-                            placeholder="Sample module Name"
-                            type="text"
-                            name="module"
-                        />
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            value={selectedTopic.topic}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Topics</label>} 
-                            placeholder="Sample Topics Name"
-                            type="text"
-                            name="topics"
-                        />
-                        <Input 
-                            className="mb-[8px]"
-                            value=""
-                            onChange={handleOnChange}
-                            select
-                            options={["Angela", "chris", "John"]}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Team Members</label>} 
-                            placeholder="Select Team members"
-                            type="text"
-                            name="teamMembers"
-                        />
-                        <div className="flex gap-2 flex-wrap"> 
-                            {assignTopicDetails.teamMembers.map(item => (
-                                <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemoveTeamMember(item)} className="scale-[0.8]" /></p>
-                            ))}
-                        </div>
-                        <Button className="mt-3">
-                            Save
-                        </Button>
-                    </div>
-                    : 
-                    <div className="pt-7 pb-12 px-14">
-                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Training</p>
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            // @ts-ignore
-                            value={selectedModule.name}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Modules</label>} 
-                            placeholder="Sample Module Name"
-                            type="text"
-                            name="topics"
-                        />
-                        <div className="my-5">
-                            <p className="text-[#333333] font-medium text-[0.9em]">Topics</p>
-                            <div className="grid grid-cols-2 w-[20em] ">
-                                {/* @ts-ignore */}
-                                {selectedModule?.topics?.map(item => (
-                                    <div className="flex text-[14px] items-center gap-0 ">
-                                        <Checkbox className="h-6" />
-                                        <p>{item.name}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        
-                        <Input 
-                            className="mb-[8px]"
-                            value=""
-                            onChange={handleOnChange}
-                            select
-                            options={["Angela", "chris", "John"]}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Team Members</label>} 
-                            placeholder="Select Team members"
-                            type="text"
-                            name="teamMembers"
-                        />
-                        <div className="flex gap-2 flex-wrap"> 
-                            {assignTopicDetails.teamMembers.map(item => (
-                                <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemoveTeamMember(item)} className="scale-[0.8]" /></p>
-                            ))}
-                        </div>
-
-                        <Button className="mt-10">Save</Button>
-                    </div>
-                    }
-            </Modal>
+            <AssignTrainingModal
+                selectedModule={selectedModule}
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                modalType={modalType}
+                handleOnChange={handleOnChange}
+                handleRemoveTeamMember={handleRemoveTeamMember}
+                selectedTopic={selectedTopic}
+                assignTopicDetails={assignTopicDetails}
+            />
             
             <div className="text-[#333333]">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center">

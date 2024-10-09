@@ -1,8 +1,17 @@
+import { useGetTeamRatingQuery } from "../../../api-feature/apiSlice"
+import { teamRatingType } from "../../../api-feature/team-rating/teamrating-type"
+import { ApiType } from "../../../api-feature/types"
 import SkillsExcerpt from "../secondary/SkillsExcerpt"
 import TeamDistribution from "../secondary/TeamDistribution"
 import TopPerformance from "../secondary/TopPerformance"
 
+interface teamratingApi extends ApiType {
+    data: {data: {data: teamRatingType[], page: number, totalPage: number, totalUser: number}}, success: boolean
+}
+
 const TeamRatingComponent = () => {
+    const {data, status, error} = useGetTeamRatingQuery<teamratingApi>({start: "", end: ""})
+
     return (
         <div className="text-[#333333]">
             <div className="flex justify-between">
@@ -22,7 +31,8 @@ const TeamRatingComponent = () => {
                     </div>
                 </div>
                 <div className=" flex flex-col flex-[1]">
-                    <SkillsExcerpt />
+                    {/* @ts-ignore */}
+                    <SkillsExcerpt data={data?.data?.data} status={status} />
                 </div>
             </div>
         </div>

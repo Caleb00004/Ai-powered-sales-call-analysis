@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from "react";
-import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery } from "../../../api-feature/apiSlice";
+import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery, useGetRolesQuery } from "../../../api-feature/apiSlice";
 import { APISTATUS, ApiType, SkillsType } from "../../../api-feature/types";
 import { useContext } from "react";
 import { appContext } from "./appContext";
@@ -15,7 +15,7 @@ interface salesrepApiType extends ApiType {
 }
 
 interface teamRolesApiType extends ApiType {
-    data: teamRoleType[]
+    data: {data: teamRoleType[], success: boolean}
 }
 
 interface DataContextProps {
@@ -42,9 +42,13 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
     // Change For Manager and sales rep
     const {data: salesRep, status: salesRepsataStatus, error: salesRepError} = useGetAllSalesrepQuery<salesrepApiType>(undefined, {skip: !loggedIn})
-    const {data: teamRolesData, status: teamRolesDataStatus, error: teamRolesError} = useGetAllSalesrepQuery<teamRolesApiType>(undefined, {skip: !loggedIn})
-
+    const {data: teamRoles, status: teamRolesDataStatus, error: teamRolesError} = useGetRolesQuery<teamRolesApiType>(undefined, {skip: !loggedIn})
+    
+    console.log(salesRep)
     const salesRepData = salesRep?.data
+    const teamRolesData = teamRoles?.data
+
+    console.log(salesRepData)
 
     const contextValue: DataContextProps = {
         availableSkills,
