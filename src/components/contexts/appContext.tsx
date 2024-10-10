@@ -1,5 +1,5 @@
 import { SnackbarCloseReason } from "@mui/material";
-import { createContext, useEffect, ReactNode, SyntheticEvent } from "react";
+import { createContext, useEffect, ReactNode, SyntheticEvent, useLayoutEffect } from "react";
 import { useState } from "react";
 import { globalState, useGetUserProfileQuery } from "../../../api-feature/apiSlice";
 import { ACCOUNT_TYPE, ApiType, TOKEN_NAME } from "../../../api-feature/types";
@@ -100,7 +100,7 @@ function ContextProvider({children}: { children: ReactNode }) {
         }
     },[status])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const item = localStorage.getItem(TOKEN_NAME)
         setCheckedLocalStorage(true)
         if (item) {

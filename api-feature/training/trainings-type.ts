@@ -1,16 +1,22 @@
 export interface trainingModuleType {
-    id: number | string;
+    id: number;
     title: string;
     description: string;
     thumbnail: string;
     status: boolean;
-    trainingTopic: trainingTopicType[]
+    TrainingTopic: trainingTopicType[]
 }
 
 export interface trainingTopicType {
-    id: number | string;
+    id: number;
     title: string;
     description: string;
     status: boolean;
-    trainingTopicUpload: {url: string; type: string; status: boolean}[]
+    TrainingTopicUpload: {url: string; type: string; status: boolean}[]
+}
+
+export interface userTopicProgress {
+    topicTitle: string;
+    progress: string;
+    assignedAt: Date
 }

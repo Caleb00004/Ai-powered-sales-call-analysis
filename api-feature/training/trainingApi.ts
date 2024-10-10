@@ -39,11 +39,14 @@ const trainingEndpoints = (
             method: 'GET',
         }),
     }),
-    getUserTopicProgress: builder.query<undefined, {topicId: string | number, userId: string | number}>({
-        query: ({topicId, userId}) => ({
-            url: `/training/user-topic-progress/${userId}/${topicId}`,
-            method: 'GET',
-        }),
+    getUserTopicProgress: builder.query<undefined, {trainingId: number, userId: number}>({
+        query: (body) => {
+            console.log(body)
+            const {trainingId, userId} = body
+            return {
+                url: `/training/user-topic-progress/${userId}/${trainingId}`,
+                method: 'GET',
+        }},
     }),
     getUserTrainingProgress: builder.query<undefined, {trainingId: string | number}>({
         query: (trainingId) => ({

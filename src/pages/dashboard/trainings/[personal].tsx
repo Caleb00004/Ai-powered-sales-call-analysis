@@ -2,15 +2,16 @@ import DashboardLayout from "@/components/layouts/DashboardLayout"
 import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 import Link from "next/link"
 import Button from "@/components/primary/Button"
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import React, { ChangeEvent, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import gsap from "gsap"
 import { useRouter } from "next/router"
-import Table from "@/components/secondary/Table"
 import { GridColDef } from "@mui/x-data-grid"
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
 import { dealsData } from "@/testData"
 import { globalState } from "../../../../api-feature/apiSlice"
+
+const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
 const PersonalTraining = () => {
     const account_type = globalState.account_type
@@ -102,7 +103,7 @@ const PersonalTraining = () => {
                 <div className="flex  flex-col">
                     <div className="flex justify-between items-center">
                         <div className="flex items-center gap-0 text-[15px]">
-                            <Link className="trainings-txt text-[20px] font-[600] " href={account_type === "manager" ? "/dashboard/trainings" : "#"}><p >Training</p></Link>
+                            <Link className="trainings-txt text-[20px] font-[600] " href={(account_type === "manager" || account_type === "owner") ? "/dashboard/trainings" : "#"}><p >Training</p></Link>
                             <div className="topic-txt flex items-center -translate-x-16 opacity-0">
                                 <ArrorwIcon className="scale-[0.8]" />
                                 <p className=" font-[500] ">Personal Training</p>
@@ -139,13 +140,16 @@ const PersonalTraining = () => {
                 </div>
 
                 <div className="mt-8">
-                    <Table 
-                        title="Enrolled Training"
-                        filteredRows={filteredRows}
-                        columns={columns}
-                        searchInput={searchInput}
-                        handleSearchChange={handleSearchChange}
-                    />
+                    <Suspense fallback={<div>Loading Table...</div>}>
+                        <LazyTable 
+                            title="Enrolled Training"
+                            filteredRows={filteredRows}
+                            columns={columns}
+                            searchInput={searchInput}
+                            handleSearchChange={handleSearchChange}
+                            getRowIdField="id"
+                        />
+                    </Suspense>
                 </div>
 
             </div>

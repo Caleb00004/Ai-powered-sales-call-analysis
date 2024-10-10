@@ -7,9 +7,7 @@ import { MenuItem } from "@mui/material"
 import Modal from "@/components/primary/Modal"
 import Input from "@/components/primary/input"
 import Xicon from "../../../../public/svgs/x-icon.svg"
-import { useGetTeamQuery, usePostInviteTeamMutation } from "../../../../api-feature/apiSlice"
-import { ApiType } from "../../../../api-feature/types"
-import { teamType } from "../../../../api-feature/team/team-type"
+import { usePostInviteTeamMutation } from "../../../../api-feature/apiSlice"
 import toast from "react-hot-toast"
 import { dataContext } from "@/components/contexts/dataContext"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
@@ -24,17 +22,12 @@ type formType = {
 
 type modalType = "add-team" | "Edit"
 
-interface getTeamsApi extends ApiType {
-    data: {data: {data: teamType[], page: number, totalPage: number, totalUser: number}, success: boolean}
-}
-
 const TeamsManager = () => {
-    const {teamRolesData, teamRolesDataStatus} = useContext(dataContext)
+    const {teamRolesData, teamRolesDataStatus, teamData, teamDataStatus} = useContext(dataContext)
     const [loading, setLoading] = useState(false)
-    const {data, status, error} = useGetTeamQuery<getTeamsApi>()
     const [createTeam] = usePostInviteTeamMutation()
     // const rows = TeamsData
-    const rows = data?.data?.data
+    const rows = teamData
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const [searchInput, setSearchInput] = useState("")
     const [modalOpen, setModalOpen] = useState(false)
@@ -52,8 +45,8 @@ const TeamsManager = () => {
     })
 
     useEffect(() => {
-        status === "rejected" && toast.error("Error occured Fetching data")
-    },[status])
+        teamDataStatus === "rejected" && toast.error("Error occured Fetching data")
+    },[teamDataStatus])
 
     useEffect(() => {
         // Function to update screen size state
@@ -318,7 +311,7 @@ const TeamsManager = () => {
             <br />
 
             <Table 
-                loading={status === "pending"}
+                loading={teamDataStatus === "pending"}
                 getRowIdField="email"
                 filteredRows={filteredRows}
                 columns={columns}

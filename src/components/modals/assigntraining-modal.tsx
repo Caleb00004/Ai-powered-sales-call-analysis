@@ -4,6 +4,7 @@ import Input from "../primary/input"
 import { Checkbox } from "@mui/material"
 import Button from "../primary/Button";
 import Xicon from "../../../public/svgs/x-icon.svg"
+import { trainingModuleType } from "../../../api-feature/training/trainings-type";
 
 type modalType = "assign-topic" | "assign-training"
 
@@ -19,7 +20,7 @@ interface props {
         topics: string,
         teamMembers: string[]
     }
-    selectedModule: {}
+    selectedModule: trainingModuleType
 }
 
 const AssignTrainingModal:FC<props> = ({selectedModule, modalOpen, modalType, closeModal, handleRemoveTeamMember, handleOnChange, selectedTopic, assignTopicDetails}) => {
@@ -77,8 +78,7 @@ const AssignTrainingModal:FC<props> = ({selectedModule, modalOpen, modalType, cl
                     <Input 
                         disabled
                         className="mb-[8px]"
-                        // @ts-ignore
-                        value={selectedModule.name}
+                        value={selectedModule.title}
                         onChange={handleOnChange}
                         label={<label className="text-[#333333] font-medium text-[0.9em]">Modules</label>} 
                         placeholder="Sample Module Name"
@@ -88,11 +88,10 @@ const AssignTrainingModal:FC<props> = ({selectedModule, modalOpen, modalType, cl
                     <div className="my-5">
                         <p className="text-[#333333] font-medium text-[0.9em]">Topics</p>
                         <div className="grid grid-cols-2 w-[20em] ">
-                            {/* @ts-ignore */}
-                            {selectedModule?.topics?.map(item => (
+                            {selectedModule?.TrainingTopic?.map(item => (
                                 <div className="flex text-[14px] items-center gap-0 ">
                                     <Checkbox className="h-6" />
-                                    <p>{item.name}</p>
+                                    <p>{item.title}</p>
                                 </div>
                             ))}
                         </div>
