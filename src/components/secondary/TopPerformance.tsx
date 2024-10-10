@@ -5,6 +5,7 @@ import { SalesrepType } from "../../../api-feature/sales-rep/salesrep-type"
 import { ApiType } from "../../../api-feature/types"
 import ActivityIndicator from "./ActivityIndicator"
 import { useGetTopSalesrepQuery } from "../../../api-feature/apiSlice"
+import Loading from "./LoadingSpinner"
 
 interface props {
     label?: string,
@@ -26,11 +27,7 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
                 <MoreIcon />
             </div>}
 
-            {status === "pending" && 
-                <div className="bg-red-400">
-                    <ActivityIndicator />
-                </div>
-            }
+            {status === "pending" &&  <Loading customStyle={{display: "flex", marginTop: 14}} />}
             {(status === "fulfilled" && data?.data?.length > 0) && 
                 <table className=" w-full ">
                     <tbody >

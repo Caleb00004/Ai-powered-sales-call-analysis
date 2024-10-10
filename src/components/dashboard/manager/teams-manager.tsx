@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState, useContext } from "react"
+import { ChangeEvent, useCallback, useEffect, useMemo, useState, useContext, useLayoutEffect } from "react"
 import Button from "@/components/primary/Button"
 import Table from "@/components/secondary/Table"
 import { GridColDef } from "@mui/x-data-grid"
@@ -48,7 +48,7 @@ const TeamsManager = () => {
         teamDataStatus === "rejected" && toast.error("Error occured Fetching data")
     },[teamDataStatus])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // Function to update screen size state
         const updateScreenSize = () => {
             setIsLargeScreen(window.innerWidth > 940);

@@ -27,7 +27,7 @@ const trainingEndpoints = (
             body: {useIds: data.userIds, trainingTopicIds: data.trainingTopicIds},
         }),
     }),
-    getEnrolledTraining: builder.query<undefined, string>({
+    getEnrolledTraining: builder.query<undefined, void>({
         query: () => ({
             url: `/training/enrolled`,
             method: 'GET',

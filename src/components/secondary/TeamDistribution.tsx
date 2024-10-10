@@ -5,6 +5,7 @@ import { useGetOverallRatingQuery } from "../../../api-feature/apiSlice"
 import { ApiType } from "../../../api-feature/types"
 import { ratingType } from "../../../api-feature/team-rating/teamrating-type"
 import ActivityIndicator from "./ActivityIndicator"
+import Loading from "./LoadingSpinner"
 
 interface props {
     className?: string
@@ -31,7 +32,7 @@ const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
                     <MoreIcon />
                 </div>
             }
-            {status === "pending" && <ActivityIndicator color="black" />}
+            {status === "pending" && <Loading customStyle={{display: "flex"}} />}
             {status === "rejected" && 
                 <div className="text-red-600 text-[14px] text-center pt-6">
                     <p>Error Occured</p>
