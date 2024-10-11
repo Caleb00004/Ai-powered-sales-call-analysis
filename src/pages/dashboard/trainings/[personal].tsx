@@ -63,7 +63,7 @@ const PersonalTraining = () => {
     }
 
      const filteredRows = useMemo(() => {
-        return rows.filter(row =>
+        return rows?.filter(row =>
             row.topicTitle.toLowerCase().includes(searchInput.toLowerCase())
         );
     }, [rows, searchInput]);

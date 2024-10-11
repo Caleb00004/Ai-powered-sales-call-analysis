@@ -3,7 +3,7 @@ export interface salesrepSkillsType {
     lastName: string;
     symbol: string;
     grade: number;
-    label: number
+    label: string
 }
 
 export interface skillTrendType {
