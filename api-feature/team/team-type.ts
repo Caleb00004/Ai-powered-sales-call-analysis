@@ -3,7 +3,8 @@ export interface teamType {
     lastName: string;
     email: string;
     position: string;
-    roles: string[]
+    roles: number[]
+    userId: string;
 }
 
 export interface createTeambodyType {

@@ -24,7 +24,7 @@ const teamEndpoints = (
         }),
         invalidatesTags: ["getTeams"]
     }),
-    acceptInvite: builder.mutation<{token: string, password: string}, successResponseType>({
+    acceptInvite: builder.mutation<successResponseType, {token: string, password: string}>({
         query: (user) => ({
             url: '/team/accept-invite',
             method: 'POST',
@@ -37,12 +37,13 @@ const teamEndpoints = (
             method: "GET",
         })
     }),
-    updateRole: builder.mutation<{userId: string | number, position: string, roleIds: number[]}, successResponseType>({
+    updateRole: builder.mutation<successResponseType, {userId: string | number, position: string, roleIds: number[]}>({
         query: (user) => ({
-            url: '/team/invite',
+            url: '/team/update-role-position',
             method: 'POST',
             body: user,
         }),
+        invalidatesTags: ["getTeams"]
     }),
 });
 
