@@ -15,24 +15,31 @@ const salesRepEndpoints = (
                 method: "GET",
             }),
         }),
-        getSalesrepPerformance: builder.query({
+        getSalesrepPerformance: builder.query<undefined, void>({
             query: () => ({
                 url: "/sales-rep/company-user-overall-performance",
                 method: "GET",
             })
         }),
-        getSalesrepDeals: builder.query({
+        getSalesrepDeals: builder.query<undefined, number>({
             query: (id) => ({
                 url: `/sales-rep/${id}/assigned-deals`,
                 method: "GET",
             })
         }),
-        getSalesrepAreaOfConcern: builder.query({
+        getSalesrepAreaOfConcern: builder.query<undefined, number>({
             query: (id) => ({
                 url: `/sales-rep/${id}/areas-of-concern`,
                 method: "GET",
             })
         }),
+        getSalesrepScheduledTraining: builder.query<undefined, number>({
+            query: (id) => ({
+                url: `/sales-rep/${id}/scheduled-trainings`,
+                method: "GET",
+            })
+        }),
+        
 })
 
 export default salesRepEndpoints

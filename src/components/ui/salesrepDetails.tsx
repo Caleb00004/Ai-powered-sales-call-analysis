@@ -6,7 +6,13 @@ import DropdownItem from "../secondary/DropdownItem"
 import NavIcon from "../../../public/svgs/next-icon.svg"
 import MoreIcon from "../../../public/svgs/more-icon.svg"
 import { dealsData } from "@/testData"
-import { useState } from "react"
+import { FC, useCallback, useState } from "react"
+import { useGetSalesrepAreaOfConcernQuery, useGetSalesrepDealsQuery, useGetSalesrepScheduledTrainingQuery } from "../../../api-feature/apiSlice"
+import { ApiType } from "../../../api-feature/types"
+import { AreaofconcernType, AssignedDealsType, scheduleTrainingsType } from "../../../api-feature/sales-rep/salesrep-type"
+import Loading from "../secondary/LoadingSpinner"
+import useModal from "../util/useModal"
+import MessageModal from "../modals/message-modal"
 
 const piechartdata = 
     [
@@ -16,22 +22,61 @@ const piechartdata =
         // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
     ]
 
+interface areaofConcernApi extends ApiType {
+    data: {success: boolean, data: AreaofconcernType[]}
+}
 
-const SalesRepDetails = () => {
+interface assignedDealsApi extends ApiType {
+    data: {success: boolean, data: {data: AssignedDealsType[]}}
+}
+
+interface scheduledTrainingApi extends ApiType {
+    data: {success: boolean, data: {data: scheduleTrainingsType[]}}
+}
+
+interface props {
+    userId: number
+}
+
+const SalesRepDetails:FC<props> = ({userId}) => {
+    const {modalOpen, openModal, closeModal} = useModal()
+    const [message, setMessage] = useState("")
+    const {data: areaofconcern, status: areaofConcerStatus, error: areaofconcernError} = useGetSalesrepAreaOfConcernQuery<areaofConcernApi>(userId)
+    const {data: assignedData, status: assignedDealsStatus, error: assignedDealsError} = useGetSalesrepDealsQuery<assignedDealsApi>(userId)
+    const {data: datatraining, status: trainingStatus, error: trainingError} = useGetSalesrepScheduledTrainingQuery<scheduledTrainingApi>(userId)
+
+    const trainingData = datatraining?.data?.data
+    const assignedDeals = assignedData?.data?.data
+    const areaofConcernData = areaofconcern?.data
+
     const [displayTrainingDropdown, setDisplayTrainingDropdown] = useState(false)
     const handleTrainingDropdown = () => {
         setDisplayTrainingDropdown(prev => !prev)
     }
+    
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const value = e.target.value
+        setMessage(value)
+    }, [])
+
     return (
         <div className='py-5'>
+            <MessageModal 
+                message={message}
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                handleOnChange={handleOnChange}
+            />
             <div className='flex w-[20em] gap-4 ml-auto'>
-                <Button className='text-[13px] py-1'>Message Elizabeth</Button>
+                <Button onClick={openModal} className='text-[13px] py-1'>Message Elizabeth</Button>
                 <Button className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
             </div>
             <div className='flex flex-col mdx5:flex-row gap-5 mt-5'>
                 <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
                     <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Area of concern</h1>
-                    <PiechartComponent data={piechartdata} />
+                    {areaofConcerStatus === "pending" && <Loading />}
+                    {areaofConcerStatus === "rejected" && <p className="text-red-600 italic text-center">Error occured</p>}
+                    {areaofConcerStatus === "fulfilled" && <PiechartComponent data={piechartdata} />}
                 </div>
                 <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                     <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Dureket Report</h1>
@@ -48,6 +93,8 @@ const SalesRepDetails = () => {
                     <h1 className='text-[#333333] text-[20px] font-[600] pb-4'>Assigned Deals</h1>
                     <div className=' h-full'>
                         <PaginationComponent 
+                            loading={assignedDealsStatus === "pending"}
+                            error={assignedDealsStatus === "rejected"}
                             items={dealsData}
                             hidePaginationStatus
                             itemsPerPage={5}
@@ -94,6 +141,8 @@ const SalesRepDetails = () => {
                     </div>
                     <div>
                         <PaginationComponent 
+                            loading={trainingStatus === "pending"}
+                            error={trainingStatus === "rejected"}
                             items={dealsData}
                             hidePaginationStatus
                             itemsPerPage={5}

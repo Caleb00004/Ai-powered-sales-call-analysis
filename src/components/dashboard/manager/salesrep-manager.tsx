@@ -6,11 +6,6 @@ import { getGridNumericOperators } from '@mui/x-data-grid';
 import { callDataType } from '@/testData';
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import BookmarkIcon from "../../../../public/svgs/bookmark-icon.svg"
-import Button from '@/components/primary/Button';
-import { dealsData } from '@/testData';
-import PaginationComponent from '@/components/secondary/Pagination';
-import NavIcon from "../../../../public/svgs/next-icon.svg"
-import PiechartComponent from '@/components/secondary/Piechart';
 import ProgressCircle from '@/components/secondary/ProgressCircle';
 import GradientCircle from '@/components/secondary/GradientCircle';
 import Callicon from "../../../../public/svgs/round-call.svg"
@@ -19,19 +14,15 @@ import Dropdown from '@/components/secondary/Dropdown';
 import { scrollToView } from '@/components/util/helperFunctions';
 import DropdownItem from '@/components/secondary/DropdownItem';
 import SalesRepDetails from '@/components/ui/salesrepDetails';
+import { useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
-const piechartdata = 
-    [
-        { id: 0, value: 40, color: "#C32781", label: "Building Trust"},
-        { id: 1, value: 45, color: "#00FFB0", label: "Building Value"},
-        { id: 2, value: 60, color: "#49D0FF", label: "Conviction"},
-        // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
-    ]
-
 const SalesRepManager = () => {
-    console.log("Rendered")
+    const {data, status, error} = useGetSalesrepPerformanceQuery()
+    console.log(data)
+    console.log(status)
+    console.log(error)
     const [searchInput, setSearchInput] = useState("")
     const [section, setSection] = useState<"table" | "details">("table")
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as callDataType)
@@ -222,7 +213,7 @@ const SalesRepManager = () => {
             }
             {
                 section === "details" && 
-                <SalesRepDetails />
+                <SalesRepDetails userId={selectedSalesRep.id} />
             }
         </div>
     )

@@ -155,6 +155,7 @@ export const {
     useGetSalesrepPerformanceQuery,
     useGetSalesrepDealsQuery,
     useGetSalesrepAreaOfConcernQuery,
+    useGetSalesrepScheduledTrainingQuery,
 
     // Team
     useGetTeamQuery,
