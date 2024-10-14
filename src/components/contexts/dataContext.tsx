@@ -64,7 +64,7 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     const {data: teamRoles, status: teamRolesDataStatus, error: teamRolesError} = useGetRolesQuery<teamRolesApiType>(undefined, {skip: !loggedIn})
     // For Manager Accounts
     const {data: teamMembers, status: teamDataStatus, error: teamDataError} = useGetTeamQuery<getTeamsApi>(undefined, {skip: !loggedIn})
-    
+
     const salesRepData = salesRep?.data
     const teamRolesData = teamRoles?.data
     const teamData = teamMembers?.data?.data

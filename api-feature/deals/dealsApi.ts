@@ -1,6 +1,6 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { dealSalesrepPerformanceType, dealsDetailsType, dealStagesType, dealsType } from './deal-type';
+import { dealSalesrepPerformanceType, dealsOverviewType, dealStagesType, dealsType } from './deal-type';
 
 const dealsEndpoints = ( 
     builder: EndpointBuilder<
@@ -34,7 +34,7 @@ const dealsEndpoints = (
             body: {message: data.message},
         }),
     }),
-    getMeetings: builder.query<undefined, void>({
+    getMeetings: builder.query<undefined, string>({
         query: (id) => ({
             url: `/deal/${id}/meeting`,
             method: 'GET',
@@ -58,13 +58,13 @@ const dealsEndpoints = (
             return res.data as dealStagesType[]
         }
     }),
-    getDealOverview: builder.query<{success: boolean, data: dealsDetailsType}, void>({
+    getDealOverview: builder.query<{success: boolean, data: dealsOverviewType}, string>({
         query: (dealId) => ({
             url: `/deal/${dealId}/overview`,
             method: 'GET',
         }),
     }),
-    getDealSalesrepPerformance: builder.query<{success: boolean, data: dealSalesrepPerformanceType}, void>({
+    getDealSalesrepPerformance: builder.query<{success: boolean, data: dealSalesrepPerformanceType}, string>({
         query: (dealId) => ({
             url: `/deal/${dealId}/deals-sales-rep-performance`,
             method: 'GET',

@@ -16,20 +16,6 @@ export interface dealStagesType {
     name: dealStage
 }
 
-export interface dealsDetailsType {
-    id: number;
-    name: string;
-    client: string;
-    status: string;
-    createdAt: Date;
-    updatedAt: Date;
-    stage: {
-        name: dealStage
-    }
-    report?: string;
-    overall_deal_health: number
-}
-
 export interface dealSalesrepPerformanceType {
     user: {
         firstName: string;
@@ -40,4 +26,31 @@ export interface dealSalesrepPerformanceType {
     role: string;
     overall: number;
     skills: {}
+}
+
+export interface dealsOverviewType {
+    details: {
+        id: number;
+        name: string;
+        client: string;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        stage: {
+            name: string;
+        }
+        report?: string
+    }
+    overall_deal_health: number
+}
+
+export interface dealMeetingsDataType {
+    meetingName: string;
+    date: Date;
+    status: string;
+    grades: {
+        CP: 0;
+        CC: 0;
+        BR: 0
+    }
 }
