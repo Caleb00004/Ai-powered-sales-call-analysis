@@ -15,7 +15,7 @@ const Invite = () => {
     const router = useRouter()
     const {token} = router.query
 
-    const handleAcceptInbite = () => {
+    const handleAcceptInvite = () => {
         if (!isStrongPassword(password)) {
             toast.error("Password must be at least 6 characters long and contain a capital letter, number and a special character", {duration: 8000})
             return
@@ -74,8 +74,6 @@ const Invite = () => {
                     <div className="w-full" >
                         <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md flex flex-col items-center px-[20px] sm:px-[50px] py-8 mt-14">
                             <Picture />
-                            {/* <h1 className="text-[#333333] font-[600] text-[20px]">Hello, Evelyn Michael</h1>
-                            <p className="text-[#71717A] text-[16px] pt-2">First tell us about your company</p> */}
                             <Input
                                 className="mt-8"
                                 value={password}
@@ -88,9 +86,8 @@ const Invite = () => {
                         </div>
 
                         <div className="flex gap-5 mt-4 justify-end items-center">
-                            {/* <p className="text-[#333333] font-[700]">Step 1 of 2</p> */}
                             <div className="w-[100px]">
-                                <Button disabled={!password || loading} onClick={() => handleAcceptInbite()} className="py-[5px] disabled:cursor-not-allowed">Submit</Button>
+                                <Button disabled={!password || loading} onClick={() => handleAcceptInvite()} className="py-[5px] disabled:cursor-not-allowed">Submit</Button>
                             </div>
                         </div>
                     </div>
