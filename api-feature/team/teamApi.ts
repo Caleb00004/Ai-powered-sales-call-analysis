@@ -25,10 +25,10 @@ const teamEndpoints = (
         invalidatesTags: ["getTeams"]
     }),
     acceptInvite: builder.mutation<successResponseType, {token: string, password: string}>({
-        query: (user) => ({
+        query: (data) => ({
             url: '/team/accept-invite',
             method: 'POST',
-            body: user,
+            body: data,
         }),
     }),
     getRoles: builder.query<void, undefined>({

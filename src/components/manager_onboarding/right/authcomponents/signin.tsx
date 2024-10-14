@@ -24,7 +24,6 @@ interface props {
 
 const Signin:FC<props> = ({changeSection, accountType}) => {
     const {loggedIn, setLoggedIn, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
-    const [showPassword, setShowPassword] = useState(false)
     const router = useRouter()
     const {setAccountType} = useContext(appContext)
     const [authSignin] = useAuthSignInMutation()
@@ -104,11 +103,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
         }
     }
 
-    
-    const handleShowPassword = () => {
-        setShowPassword(prev => !prev)
-    }
-
     return (
         <>
             <Logo />
@@ -140,9 +134,7 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                 />
 
                 <Input 
-                    password
-                    handleShowPassword={handleShowPassword}
-                    type={showPassword ? "text" : "password"}
+                    type={"password"}
                     value={loginDetails.password}
                     onChange={handleOnChange}
                     label={
