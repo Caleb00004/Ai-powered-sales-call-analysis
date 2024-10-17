@@ -5,7 +5,7 @@ import { trainingTopicType, trainingModuleType } from './trainings-type';
 const trainingEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
         'api'
     >) => ({
     getTrainings: builder.query<trainingModuleType[], void>({

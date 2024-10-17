@@ -54,3 +54,12 @@ export interface dealMeetingsDataType {
         BR: 0
     }
 }
+
+export interface notesType {
+    message: string;
+    updatedAt: string;
+    user: {
+        firstName: string;
+        lastName: string;
+    }
+}

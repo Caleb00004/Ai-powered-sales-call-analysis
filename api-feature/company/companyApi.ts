@@ -4,7 +4,7 @@ import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/qu
 const companyEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
         'api'
     >) => ({
     postCreateCompany: builder.mutation<unknown, {name: string, skills: {skillId: number}[]}>({

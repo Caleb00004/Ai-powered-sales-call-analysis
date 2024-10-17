@@ -76,7 +76,7 @@ const NewdealModal:FC<props> = ({modalOpen, closeModal, loading, handleRemoveSal
                         <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{salesRep.find(item => item.value === Number(itemValue))?.name}</span> <Xicon onClick={() => handleRemoveSalesRep(itemValue)} className="scale-[0.8]" /></p>
                     ))}
                 </div>
-                <Button disabled={loading || (!newDealDetails.name || !newDealDetails.client || !newDealDetails.stage || newDealDetails.saleReps.length === 0 )} type="submit" className="mt-3 disabled:bg-slate-600 disabled:cursor-not-allowed">
+                <Button disabled={loading || (!newDealDetails.name || !newDealDetails.client || !newDealDetails.stage || newDealDetails.saleReps.length === 0 )} type="submit" className="mt-3 disabled:bg-slate-600 disabled:cursor-not-allowed h-[2.68em]">
                     {loading ? <ActivityIndicator /> : "Save"}
                 </Button>
             </form>

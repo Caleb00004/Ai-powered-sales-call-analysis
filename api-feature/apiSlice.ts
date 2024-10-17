@@ -1,12 +1,6 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { ACCOUNT_TYPE, AuthResponseType, SkillsType, subscriptionType } from "./types";
 import {authEndpoints, teamEndpoints, teamRatingEndpoints, trainingEndpoints, dealsEndpoints, salesRepEndpoints, companyEndpoints, skillsEndpoints} from "./index"
-// import authEndpoints from "./auth/authApi";
-// import teamRatingEndpoints from "./team-rating";
-// import salesRepEndpoints from "./sales-rep";
-// import teamEndpoints from "./team/teamApi";
-// import dealsEndpoints from "./deals/dealsApi";
-// import trainingEndpoints from "./training/trainingApi";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -46,7 +40,7 @@ export const globalState: globalStateType = {
 
 export const apiSlice = createApi({
     reducerPath: "api",
-    tagTypes: ['getAvailableSkills',],
+    tagTypes: ['getAvailableSkills', 'getDeals' , 'getDealNotes', 'getTeams'],
     // baseQuery: fetchBaseQuery({
     //     baseUrl: BASE_URL
     // }),
@@ -99,36 +93,7 @@ export const apiSlice = createApi({
                     Authorization: `Bearer ${globalState.authorizationToken}`,
                 }
             })
-        }),
-        // postCreateCompany: builder.mutation<unknown, {name: string, skills: {skillId: number}[]}>({
-        //     query: (body) => ({
-        //         url: "/company",
-        //         method: "POST",
-        //         body: body,
-        //         headers: {
-        //             Authorization: `Bearer ${globalState.authorizationToken}`,
-        //         }
-        //     })
-        // }),
-        // getCompanies: builder.query({
-        //     query: () => ({
-        //         url: "/company/user-companies",
-        //         method: "GET",
-        //         headers: {
-        //             Authorization: `Bearer ${globalState.authorizationToken}`,
-        //         }
-        //     })
-        // }),
-        // postSwitchCompanies: builder.mutation({
-        //     query: (body) => ({
-        //         url: "/company/switch-company",
-        //         method: "POST",
-        //         body: body,
-        //         headers: {
-        //             Authorization: `Bearer ${globalState.authorizationToken}`,
-        //         }
-        //     })
-        // })
+        })
     })
 })
 

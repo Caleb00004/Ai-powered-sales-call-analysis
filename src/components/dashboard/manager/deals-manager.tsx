@@ -16,6 +16,8 @@ import { ApiType } from "../../../../api-feature/types"
 import { dealsType } from "../../../../api-feature/deals/deal-type"
 import useModal from "@/components/util/useModal"
 import NewdealModal from "@/components/modals/newDeal-modal"
+import { dataContext } from "@/components/contexts/dataContext"
+import toast from "react-hot-toast"
 
 export type dealFormType = {
     name: string
@@ -29,12 +31,12 @@ interface dealsApi extends ApiType {
 
 
 const DealsManager = () => {
+    const {teamData, teamDataStatus} = useContext(dataContext)
     const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>()
     const {data: dealStagesData, status: dealStagesStatus, error: dealStagesError} = useGetDealStagesQuery()
     const [createDeal] = usePostCreateDealMutation()
     const [loading, setLoading] = useState(false)
     const routeTo = useRouter()
-    const {salesRepData} = useContext(appContext)
     const [searchInput, setSearchInput] = useState("")
     const [selectedDeal, setSelectedDeal] = useState({} as dealsType)
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
@@ -91,7 +93,11 @@ const DealsManager = () => {
             {field: "stage", 
                 flex: isLargeScreen ? 0.6 : undefined, 
                 width: isLargeScreen ? undefined : 120,
-                filterOperators: [stageFilterOperator] , headerName: "Stage"},
+                filterOperators: [stageFilterOperator] , headerName: "Stage", 
+                renderCell: (params) => (
+                    <p>{params.row.stage.name}</p>
+                )
+            },
             {field: "status", 
                 flex: isLargeScreen ? 0.5 : undefined, 
                 width: isLargeScreen ? undefined : 100,
@@ -99,7 +105,11 @@ const DealsManager = () => {
             {field: "assignedSalesRep", 
                 flex: isLargeScreen ? 1 : undefined, 
                 width: isLargeScreen ? undefined : 200,
-                filterOperators: getGridNumericOperators() , cellClassName: "center-cell-text", renderHeader: () =>  (<div className="flex gap-1 flex-col ml-[3em]"><p>Assigned <br />Sales Rep</p></div>)},
+                filterOperators: getGridNumericOperators() , cellClassName: "center-cell-text", renderHeader: () =>  (<div className="flex gap-1 flex-col ml-[3em]"><p>Assigned <br />Sales Rep</p></div>),
+                renderCell: (params) => (
+                    <p className="text-center">{params.row._count.salesReps}</p>
+                )
+            },
             {
                 field: 'actions',
                 flex: isLargeScreen ? 0.5 : undefined, 
@@ -130,16 +140,29 @@ const DealsManager = () => {
         setLoading(true)
 
         const stage = Number(newDealDetails.stage)
+        
+        try {
+            createDeal({name: newDealDetails.name, client: newDealDetails.client, dealStageId: stage, salesReps: newDealDetails.saleReps}).unwrap()
+                .then(fulfilled => {
+                    setLoading(false)
+                    toast.success("Deal Created")
+                    closeDealModal()
+                    setNewDealDetails({
+                        name: "",
+                        client: "",
+                        stage: "",
+                        saleReps: []
+                    })
+                })
+                .catch(rejected => {
+                    setLoading(false)
+                    toast.error("Error occured")
+                })
+        } catch(error) {
+            setLoading(false)
+            toast.error("Error occured")
+        }
 
-        createDeal({name: newDealDetails.name, client: newDealDetails.client, dealStageId: stage, salesReps: newDealDetails.saleReps}).unwrap()
-            .then(fulfilled => {
-                setLoading(false)
-                console.log(fulfilled)
-            })
-            .catch(rejected => {
-                setLoading(false)
-                console.log(rejected)
-            })
     }
 
     const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -178,8 +201,8 @@ const DealsManager = () => {
     const dealOptions = [] as {value: string | number, name: string}[]
     dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
 
-    const testSalesRep = [{name: "Aisha", value: 1}, {name: "Jack", value: 3}]
-
+    const salesRepOptions = [] as {value: number | number, name: string}[]
+    teamData?.map(item => salesRepOptions.push({value: item.userId, name: `${item.firstName} ${item.lastName}`}))
 
     return (
         <div className="flex flex-col gap-[20px] w-full">
@@ -196,7 +219,7 @@ const DealsManager = () => {
                 loading={loading}
                 handleRemoveSalesRep={handleRemoveSalesRep}
                 handleAddNewDeal={handleAddNewDeal}
-                salesRep={testSalesRep}
+                salesRep={salesRepOptions}
                 // @ts-ignore
                 dealStagesData={dealStagesData}
                 handleOnChange={handleOnChange}

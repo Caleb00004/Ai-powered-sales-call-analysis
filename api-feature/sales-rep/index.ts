@@ -5,7 +5,7 @@ import { SalesrepType } from './salesrep-type';
 const salesRepEndpoints = (
         builder: EndpointBuilder<
             BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-            'getAvailableSkills',
+            'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
             'api'
         >
     ) => ({

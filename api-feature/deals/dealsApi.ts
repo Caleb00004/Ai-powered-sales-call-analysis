@@ -5,7 +5,7 @@ import { dealSalesrepPerformanceType, dealsOverviewType, dealStagesType, dealsTy
 const dealsEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
         'api'
     >) => ({
     getDeals: builder.query<dealsType[], void>({
@@ -13,6 +13,7 @@ const dealsEndpoints = (
             url: '/deal',
             method: 'GET',
         }),
+        providesTags: ['getDeals']
     }),
     postCreateDeal: builder.mutation<undefined, {name: string, client: string, dealStageId: number, salesReps: number[]}>({
         query: (deal) => ({
@@ -20,19 +21,22 @@ const dealsEndpoints = (
             method: 'POST',
             body: deal,
         }),
+        invalidatesTags: ['getDeals']
     }),
     getDealNotes: builder.query<undefined, void>({
         query: (dealId) => ({
             url: `/deal/${dealId}/note`,
             method: 'GET',
         }),
+        providesTags: ['getDealNotes']
     }),
-    postCreateNote: builder.mutation<undefined, {message: string, id: string}>({
+    postCreateNote: builder.mutation<undefined, {message: string, id: number}>({
         query: (data) => ({
             url: `/deal/${data.id}/note`,
             method: 'POST',
             body: {message: data.message},
         }),
+        invalidatesTags: ['getDealNotes']
     }),
     getMeetings: builder.query<undefined, string>({
         query: (id) => ({

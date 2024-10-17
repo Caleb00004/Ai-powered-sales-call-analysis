@@ -6,7 +6,7 @@ import { ratingType, teamRatingType } from './teamrating-type';
 const teamRatingEndpoints = (
         builder: EndpointBuilder<
             BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-            'getAvailableSkills',
+            'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
             'api'
         >
     ) => ({

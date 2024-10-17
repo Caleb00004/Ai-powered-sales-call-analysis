@@ -5,7 +5,7 @@ import { salesrepSkillsType, skillTrendType } from './skills-type';
 const skillsEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
         'api'
     >) => ({
     getSalesrepSkills: builder.query<{success: boolean; data:{ salesReps: salesrepSkillsType[]}}, void>({

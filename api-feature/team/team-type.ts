@@ -4,7 +4,7 @@ export interface teamType {
     email: string;
     position: string;
     roles: number[]
-    userId: string;
+    userId: number;
 }
 
 export interface createTeambodyType {

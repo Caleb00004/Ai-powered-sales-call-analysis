@@ -6,7 +6,7 @@ import { successResponseType } from '../types';
 const teamEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills' | "getTeams" ,
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams' ,
         'api'
     >) => ({
     getTeam: builder.query<teamType, void>({

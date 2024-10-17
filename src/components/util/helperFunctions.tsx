@@ -27,3 +27,29 @@ export const scrollToView = (ref: React.RefObject<HTMLElement>) => {
         });
     }
 }
+
+export function formatDateAndTime(dateString: string) {
+  const date = new Date(dateString);
+
+  // Format the time (e.g., "8:29am")
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true, // For am/pm
+  };
+  const time = date.toLocaleString('en-US', timeOptions).toLowerCase();
+
+  // Format the date (e.g., "19/05/2024")
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  };
+  const formattedDate = date.toLocaleString('en-GB', dateOptions); // 'en-GB' to get 'dd/mm/yyyy'
+
+  return {
+    time,
+    date: formattedDate,
+  };
+}
+

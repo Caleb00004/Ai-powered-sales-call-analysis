@@ -14,7 +14,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from "@mui/x-date-pickers"
 import { useGetDealNotesQuery, useGetDealOverviewQuery, useGetDealSalesrepPerformanceQuery, useGetMeetingsQuery } from "../../../api-feature/apiSlice"
 import { ApiType } from "../../../api-feature/types"
-import { dealMeetingsDataType, dealSalesrepPerformanceType, dealsOverviewType } from "../../../api-feature/deals/deal-type"
+import { dealMeetingsDataType, dealSalesrepPerformanceType, dealsOverviewType, notesType } from "../../../api-feature/deals/deal-type"
 import useModal from "../util/useModal"
 import { DealOverview, DealReport, DealNotes } from "../ui/deals"
 
@@ -40,6 +40,10 @@ interface meetingApi extends ApiType {
     data: {success: boolean, data: {meetings: dealMeetingsDataType[]}}
 }
 
+interface notesApi extends ApiType {
+    data: {success: boolean, data: notesType[]}
+}
+
 
 const DealdetailsComponent = () => {
     const router = useRouter()
@@ -51,7 +55,7 @@ const DealdetailsComponent = () => {
     // @ts-ignore
     const {data: meetingsData, status: meetingStatus, error: meetingsError} = useGetMeetingsQuery<meetingApi>(dealID)
     // @ts-ignore
-    const {data: notesDat, status: noteStatus, error: notesError} = useGetDealNotesQuery(dealID)
+    const {data: notesData, status: noteStatus, error: notesError} = useGetDealNotesQuery<notesApi>(dealID)
 
     const dealPerformanceRows = performanceData?.data
     const meetingRows = meetingsData?.data?.meetings
@@ -140,7 +144,16 @@ const DealdetailsComponent = () => {
     }, [isLargeScreen]);
 
     const dealPerformanceColumns: GridColDef[] = useMemo(() => {
-        return [
+
+        const allSkillKeys = new Set<string>();
+
+        performanceData?.data?.forEach((row) => {
+            if (row.skills) {
+            Object.keys(row.skills).forEach((key) => allSkillKeys.add(key));
+            }
+        });
+        
+        const baseColumns: GridColDef[] = [
             {
                 field: "user",
                 // flex: 1,
@@ -149,7 +162,6 @@ const DealdetailsComponent = () => {
                 headerName: "Name",
                 renderCell: (params) => {
                     const {firstName, lastName} = params?.row?.user
-                    console.log(params)
                     return (
                         <div className="flex flex-col">
                             <p className="leading-3 mt-5">{firstName} {lastName}</p>
@@ -164,18 +176,21 @@ const DealdetailsComponent = () => {
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 150,
                 headerName: "Overall"
-            },
-            {
-                field: "status",
-                // flex: 1,
-                flex: isLargeScreen ? 1 : undefined,
-                width: isLargeScreen ? undefined : 130,
-                headerName: "Status",
             }
         ];
-    }, [isLargeScreen]);
 
-    const notesData = [0, 1, 2, 4, 5, 3, ,3 , 3, 3, 3]
+        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
+            field: `skills.${skillKey}`,
+            headerName: skillKey,
+            flex: isLargeScreen ? 0.5 : undefined,
+            width: isLargeScreen ? undefined : 100,
+            renderCell: (params) => {
+            return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
+            },
+        }));
+
+        return [...baseColumns, ...skillColumns];
+    }, [isLargeScreen]);
     
     const handleAddNewDeal = () => {
 
@@ -284,7 +299,7 @@ const DealdetailsComponent = () => {
                                 handleSearchChange={handleDealsSearch}
                                 csv
                                 title="Deal Performance Rating"
-                                getRowIdField="id"
+                                getRowIdField="user.id"
                             />
                         </div>                    
                     </>
@@ -298,7 +313,7 @@ const DealdetailsComponent = () => {
                                 columns={meetingsColumns}
                                 searchInput={meetingSearchInput}
                                 handleSearchChange={handleMeetingsSearch}
-                                getRowIdField="id"
+                                getRowIdField="overall"
                             />
                         </div>    
                     </>
@@ -306,7 +321,7 @@ const DealdetailsComponent = () => {
                 {section === "notes" && 
                     <>
                         {/* @ts-ignore */}
-                        <DealNotes notesData={notesData} />  
+                        <DealNotes notesData={notesData?.data} dealId={dealID} loading={noteStatus === "pending"} error={noteStatus === "rejected"} />  
                     </>
                 }
             </div>
