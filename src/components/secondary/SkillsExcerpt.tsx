@@ -1,6 +1,7 @@
 import React, { FC, Suspense } from "react"
 import { getProgressColor } from "./Pagination"
 import { APISTATUS, insightsType } from "../../../api-feature/types"
+import Loading from "./LoadingSpinner"
 
 const LazyPaginationComponent = React.lazy(() => import("./Pagination"))
 
@@ -55,7 +56,7 @@ const SkillsExcerpt:FC<props> = ({className, data, status}) => {
             }
             {status === "pending" && 
                 <div className="h-full flex items-center justify-center text-[#333333]">
-                    <p className="text-red-500 italic">Loading...</p>
+                    <Loading />
                 </div>
             }
             {(status === "fulfilled" && !data?.length) && 
@@ -66,21 +67,22 @@ const SkillsExcerpt:FC<props> = ({className, data, status}) => {
             {(status === "fulfilled" && data?.length > 0) && 
                 <Suspense fallback={<div>Loading...</div>} >
                     <LazyPaginationComponent 
-                        items={skillsData}
+                        // @ts-ignore
+                        loading={status === "pending"}
+                        // @ts-ignore
+                        error={status === "rejected"}
+                        items={data}
                         itemsPerPage={10}
                         renderItems={(data) => (
-                            data.map((item, index) => (
+                            data?.map((item, index) => (
                                 <div className="flex flex-col mdx4:flex-row text-[#333333] font-[500] justify-between py-3 border-b" key={index}>
-                                    {/* @ts-ignore */}
-                                    <p className="flex flex-1 "><span className="mr-7">{index + 1}</span> {item.short} = {item.name} </p>
+                                    <p className="flex flex-1 "><span className="mr-7">{index + 1}</span> {item?.skillSymbol} = {item?.skill} </p>
                                     <div className="flex gap-4 items-center flex-1">
                                         <div className="relative w-[100%] h-4 bg-gray-200 ">
-                                            {/* @ts-ignore */}
-                                            <div className={`h-4 ${getProgressColor(item.score)}`} style={{ width: `${item.score}%` }}>
+                                            <div className={`h-4 ${getProgressColor(item?.grade)}`} style={{ width: `${item?.grade}%` }}>
                                             </div>
                                         </div>
-                                        {/* @ts-ignore */}
-                                        <p>{item.score}</p>
+                                        <p>{item?.grade}</p>
                                     </div>
                                 </div>                                
                             ))

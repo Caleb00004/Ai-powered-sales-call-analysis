@@ -14,7 +14,7 @@ interface props {
 }
 
 interface ratingApiType extends ApiType {
-    data: {data: ratingType[], success: boolean}
+    data: {data: ratingType, success: boolean}
 }
 
 const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
@@ -41,8 +41,8 @@ const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
             }
             {(status === "fulfilled" && data?.data) &&
                 <div className="flex flex-col gap-8">
-                    <ProgressCircle type="progress" value={80} size={110} label="Overall Rating" />
-                    <ProgressCircle type="skill" value={"BT"} size={110} label="BT" />
+                    <ProgressCircle type="progress" value={data?.data?.avgGrade} size={110} label="Overall Rating" />
+                    <ProgressCircle type="skill" value={data?.data?.skillSymbol} size={110} label="BT" />
                 </div>
             }
             {(status === "fulfilled" && !data?.data) && 

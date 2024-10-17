@@ -51,6 +51,10 @@ const DealsManager = () => {
     })
 
     useEffect(() => {
+        dealStatus === "rejected" && toast.error("Error occured")
+    },[dealStatus])
+
+    useEffect(() => {
         setIsLargeScreen(window.innerWidth > 940);
     })
     

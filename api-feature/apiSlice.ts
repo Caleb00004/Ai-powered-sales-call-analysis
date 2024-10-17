@@ -73,7 +73,7 @@ export const apiSlice = createApi({
             }),
             providesTags: ['getAvailableSkills']
         }),
-        getInsights: builder.query<undefined, string>({
+        getInsights: builder.query<undefined, number>({
             query: (userId) => ({
                 url: `/user/${userId}/insights`,
                 method: "GET"

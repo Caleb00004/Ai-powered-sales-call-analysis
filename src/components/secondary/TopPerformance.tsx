@@ -37,22 +37,22 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
                             <th className="text-[12px] text-[#333333] font-[600] text-center">Top Skills</th>
                         </tr>
                     </tbody>
-                    {data?.data?.map(item => (
+                    {data?.data?.map((item, i) => (
                         <tbody className="gap-4 ">
                             <tr>
                                 <td className="flex items-center gap-2 mb-3 ">
-                                    <p className="text-[12px] font-[600]">1</p> 
+                                    <p className="text-[12px] font-[600]">{i+1}</p> 
                                     <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
-                                    <p className="text-[12px] underline font-[600]">Elizabeth Parker</p>
+                                    <p className="text-[12px] underline font-[600]">{item?.firstName} {item?.lastName}</p>
                                 </td>
                                 <td className="">
                                     <GradientCircle className="mx-auto">
-                                        <p className="font-[700] text-white">60</p>
+                                        <p className="font-[700] text-white">{item?.grade}</p>
                                     </GradientCircle>
                                 </td>
                                 <td className="" >
                                     <GradientCircle className="mx-auto">
-                                        <p className="font-[700] text-white">GG</p>
+                                        <p className="font-[700] text-white text-[13px]">{item?.skillSymbol}</p>
                                     </GradientCircle>
                                 </td>
                             </tr>
