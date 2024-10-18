@@ -20,11 +20,11 @@ const trainingEndpoints = (
             method: 'GET',
         }),
     }),
-    postAssignTopic: builder.mutation<undefined, {userIds: number | string [], trainingTopicIds: number | string [], trainingId: number | string}>({
+    postAssignTopic: builder.mutation<undefined, {userIds: number[], trainingTopicIds: number[], trainingId: number}>({
         query: (data) => ({
             url: `/training/${data.trainingId}/assign-topics`,
             method: 'POST',
-            body: {useIds: data.userIds, trainingTopicIds: data.trainingTopicIds},
+            body: {userIds: data.userIds, trainingTopicIds: data.trainingTopicIds},
         }),
     }),
     getEnrolledTraining: builder.query<undefined, void>({

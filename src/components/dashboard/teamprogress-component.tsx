@@ -16,7 +16,8 @@ import { ApiType } from "../../../api-feature/types"
 import { userTopicProgress } from "../../../api-feature/training/trainings-type"
 
 interface userTopicApi extends ApiType {
-    data: {data: userTopicProgress[], page: number, totalPage: number, totalUser: number, success: boolean}
+    data: {success: boolean, data: userTopicProgress[]}
+    // data: {data: userTopicProgress[], page: number, totalPage: number, totalUser: number, success: boolean}
 }
 
 const TrainingTeamProgress = () => {
@@ -24,8 +25,8 @@ const TrainingTeamProgress = () => {
     const [currentModule, setCurrentModule] = useState(trainingModuleData?.length > 0 ? trainingModuleData[0] : null)
     const [selectedMember, setSelectedMember] = useState({} as teamType)
     const skip = !(selectedMember.email && currentModule?.id)
-    //                                                                                                                                                          change to id
-    const {data: userTopics, status: userTopicStatus, error, refetch} = useGetUserTopicProgressQuery<userTopicApi>({trainingId: currentModule?.id, userId: selectedMember?.email}, {skip: skip})
+    // @ts-ignore
+    const {data: userTopics, status: userTopicStatus, error, refetch} = useGetUserTopicProgressQuery<userTopicApi>({trainingId: currentModule?.id, userId: selectedMember?.userId}, {skip: skip})
     const [openDropDown, setOpenDropDown] = useState(false)
 
     useEffect(() => {
@@ -49,8 +50,6 @@ const TrainingTeamProgress = () => {
         !skip && refetch()
     }
 
-    console.log(userTopicStatus)
-    console.log(error)
     return (
         <>
             <div className="flex text-[#333333] flex-col">
@@ -129,6 +128,7 @@ const TrainingTeamProgress = () => {
                             <p>Error getting progress</p>
                         </div>
                     }
+                    {userTopicStatus === "fulfilled" && userTopics?.data?.length <= 0 && <p className="text-center h-full flex items-center justify-center text-[14px] text-[#333333]" >No Trainings Available</p>}
                     {userTopicStatus === "fulfilled" && userTopics?.data.map(item => (
                         <div className="flex py-4 text-[15px] font-[500] justify-between border-b">
                             <div className="flex pl-3 flex-[0.5] mdx2:flex-1">

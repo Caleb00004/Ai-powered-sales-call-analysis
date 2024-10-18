@@ -14,51 +14,8 @@ interface insightsApi extends ApiType {
 const InsightsManager = () => {
     const {teamData, teamDataStatus} = useContext(dataContext)    
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as teamType) 
-    const {data, status, error} = useGetInsightsQuery<insightsApi>(selectedSalesRep?.userId, {skip: !selectedSalesRep.firstName})
+    const {data, status, error} = useGetInsightsQuery<insightsApi>(selectedSalesRep?.userId, {skip: !selectedSalesRep?.userId})
     const [openDropDown, setOpenDropDown] = useState(false)
-
-    // const testSalesRepList = [
-    //     {
-    //         name: "john donald",
-    //         id: 1
-    //     },
-    //     {
-    //         name: "michael purr",
-    //         id: 2
-    //     },
-    //     {
-    //         name: "Giveon john",
-    //         id: 3
-    //     },
-    //     {
-    //         name: "victor akpan",
-    //         id: 4
-    //     },
-    //     {
-    //         name: "aquila akpan",
-    //         id: 5
-    //     },
-    //             {
-    //         name: "john donald",
-    //         id: 6
-    //     },
-    //     {
-    //         name: "michael purr",
-    //         id: 7
-    //     },
-    //     {
-    //         name: "Giveon john",
-    //         id: 8
-    //     },
-    //     {
-    //         name: "victor akpan",
-    //         id: 9
-    //     },
-    //     {
-    //         name: "aquila akpan",
-    //         id: 10
-    //     },
-    // ]
 
     const handleDropDown = () => {
         setOpenDropDown(prev => !prev)

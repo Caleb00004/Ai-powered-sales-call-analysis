@@ -121,9 +121,9 @@ const DealsManager = () => {
                 headerName: 'Actions',
                 renderCell: (params) => (
                     <TableActionsMenu options={[
-                        <MenuItem onClick={() => handleSelectDeal(params as { id: string; row: {}; }) }>View More</MenuItem>,
-                        <MenuItem onClick={() => handleOpenEditModal(params as { id: string; row: dealsType; })}>Edit</MenuItem>,
-                        <MenuItem onClick={() => {}}>Delete</MenuItem>
+                        <MenuItem key={1} onClick={() => handleSelectDeal(params as { id: string; row: {}; }) }>View More</MenuItem>,
+                        <MenuItem key={2} onClick={() => handleOpenEditModal(params as { id: string; row: dealsType; })}>Edit</MenuItem>,
+                        <MenuItem key={3} onClick={() => {}}>Delete</MenuItem>
                     ]} data={params} />
                 ),
                 sortable: false,

@@ -32,6 +32,8 @@ const PersonalTraining = () => {
     const routeTo = useRouter()
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
 
+    const trainingInProgress = trainingData?.filter(item => item.progress === "in progress")
+
     useEffect(() => {
         status === "rejected" && toast.error("Error, reload page")
     },[status])
@@ -117,7 +119,7 @@ const PersonalTraining = () => {
 
                 <div className="mt-4 ">
                     <div className="flex flex-col sm:flex-row justify-between">
-                        <h1 className="text-[20px] font-[600] text-[#333333]">Training in progress (10)</h1>
+                        <h1 className="text-[20px] font-[600] text-[#333333]">Training in progress ({trainingInProgress?.length})</h1>
                         <div className="flex gap-2 ml-auto">
                             <div onClick={scrollLeft} className="bg-white hover:bg-slate-200 cursor-pointer scale-[0.9] rounded-md active:scale-[0.8] transition-all">
                                 <ArrorwIcon className=" rotate-[180deg]" />
@@ -132,8 +134,8 @@ const PersonalTraining = () => {
                     <div className="bg-white scroll-smooth border px-5 py-3 mt-3 flex overflow-hidden gap-4" ref={carouselContainer} >
                         {status === "pending" && <div className="h-[8em] w-full flex justify-center items-center"><Loading /></div>}
                         {status === "rejected" && <div className="h-[8em] w-full flex justify-center items-center text-[#333333] italic"><p className="text-red-600 italic">Error, reload page</p></div>}
-                        {(status === "fulfilled" && trainingData?.length <= 0) && <div className="h-[10em] w-full flex justify-center items-center text-[#333333] italic"><p>No Training In Progress</p></div>}
-                        {status === "fulfilled" && trainingData.filter(item => item.progress === "in progress").map(item => (
+                        {(status === "fulfilled" && trainingData?.length <= 0) && <div className="h-[12em] w-full flex justify-center items-center text-[#333333] italic text-[14px]"><p>No Training assigned</p></div>}
+                        {status === "fulfilled" && trainingInProgress?.map(item => (
                             <div onClick={() => routeTo.push("/dashboard/trainings/topic")} className="w-[101%] sm:w-[49%] mdx2:w-[32.3%] flex-shrink-0">
                                 <div className="bg-slate-300 h-[10em] rounded-xl">
                                 </div>
@@ -142,6 +144,11 @@ const PersonalTraining = () => {
                                 <p className="text-[#0E0E9E] font-[500]">In Progress</p>
                             </div>
                         ))}
+                        {status === "fulfilled" && trainingInProgress?.length === 0 && 
+                            <div className="h-[12em] w-full flex items-center justify-center text-[#333333] italic text-[14px]">
+                                <p>No Training in progress</p>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -154,7 +161,7 @@ const PersonalTraining = () => {
                             columns={columns}
                             searchInput={searchInput}
                             handleSearchChange={handleSearchChange}
-                            getRowIdField="id"
+                            getRowIdField="topicId"
                         />
                     </Suspense>
                 </div>

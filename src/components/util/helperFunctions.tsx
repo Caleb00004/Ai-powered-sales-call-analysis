@@ -19,6 +19,15 @@ export const isStrongPassword = (password: string) => {
     return true;
 }
 
+export function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
 export const scrollToView = (ref: React.RefObject<HTMLElement>) => {
     if (ref.current) {
         ref?.current?.scrollIntoView({

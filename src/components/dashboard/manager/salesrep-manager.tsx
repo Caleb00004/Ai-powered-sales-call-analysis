@@ -15,24 +15,27 @@ import { scrollToView } from '@/components/util/helperFunctions';
 import DropdownItem from '@/components/secondary/DropdownItem';
 import SalesRepDetails from '@/components/ui/salesrepDetails';
 import { useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
+import { ApiType } from '../../../../api-feature/types';
+import { SalesRepPerformanceType } from '../../../../api-feature/sales-rep/salesrep-type';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
+interface salesPerformanceApi extends ApiType {
+    data: {data: SalesRepPerformanceType[], success: boolean}
+}
+
 const SalesRepManager = () => {
-    const {data, status, error} = useGetSalesrepPerformanceQuery()
-    console.log(data)
-    console.log(status)
-    console.log(error)
+    const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
     const [searchInput, setSearchInput] = useState("")
     const [section, setSection] = useState<"table" | "details">("table")
-    const [selectedSalesRep, setSelectedSalesRep] = useState({} as callDataType)
+    const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
     const [displayDropDown, setDisplayDropDown] = useState(false)
     const viewRef = useRef<HTMLDivElement>(null)
-    const rows = callData
+    const rows = data?.data
 
     const filteredRows = useMemo(() => {
-        return rows.filter(row =>
-            row.meetingName.toLowerCase().includes(searchInput.toLowerCase())
+        return rows?.filter(row =>
+            row.user.firstName.toLowerCase().includes(searchInput.toLowerCase())
         );
     }, [rows, searchInput]);
 
@@ -71,42 +74,57 @@ const SalesRepManager = () => {
     ];
     
     const columns: GridColDef[] = useMemo(() => {
-        return [
-            {field: "meetingName", headerName: "Meeting Name", width: 200, headerClassName: "bg-[#C32782]"},
-            {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
-            {field: "status", headerName: "Status", headerClassName: "bg-[#C32782]",
-                renderCell: (params) => (
-                    <Box
-                        sx={{
-                            color: 'white',
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: '4px',
-                            textAlign: 'center',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    >
-                        <p className={`w-16 h-[30px] rounded-2xl text-[#333333] text-[13px] font-[500] flex justify-center items-center ${params.value === "Past" ? "bg-[#E1335D33]" : "bg-[#32ea2833]"}`}>{params.value}</p>
-                    </Box>
-                )
-            },
-            {field: "overall", headerName: "Overall", headerClassName: "bg-[#C32782]"},
-            {field: "BA", filterOperators: customNumericOperators, description: 'This is used to show BA means lorem ipsum', headerName: "BA", headerClassName: "bg-[#C32782]"},
-            {field: "BB", filterOperators: customNumericOperators, headerName: "BB", headerClassName: "bg-[#C32782]"},
-            {field: "BC", filterOperators: customNumericOperators, headerName: "BC", headerClassName: "bg-[#C32782]"},
-            {field: "BD", filterOperators: customNumericOperators, headerName: "BD", headerClassName: "bg-[#C32782]"},
-            {field: "BE", filterOperators: customNumericOperators, headerName: "BE", headerClassName: "bg-[#C32782]"},
-            {field: "BF", filterOperators: customNumericOperators, headerName: "BF", headerClassName: "bg-[#C32782]"},
-            {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
-            {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
+        const allSkillKeys = new Set<string>();
+
+        data?.data?.forEach((row) => {
+            if (row.skills) {
+            Object.keys(row.skills).forEach((key) => allSkillKeys.add(key));
+            }
+        });
+
+        const baseColumns: GridColDef[] = [
+            {field: "user", headerName: "Name", width: 200, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
+            {field: "overall", headerName: "Overall"},
+
+            // {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
+            // {field: "status", headerName: "Status",
+            //     renderCell: (params) => (
+            //         <Box
+            //             sx={{
+            //                 color: 'white',
+            //                 display: "flex",
+            //                 justifyContent: "center",
+            //                 alignItems: "center",
+            //                 borderRadius: '4px',
+            //                 textAlign: 'center',
+            //                 width: '100%',
+            //                 height: '100%',
+            //             }}
+            //         >
+            //             <p className={`w-16 h-[30px] rounded-2xl text-[#333333] text-[13px] font-[500] flex justify-center items-center ${params.value === "Past" ? "bg-[#E1335D33]" : "bg-[#32ea2833]"}`}>{params.value}</p>
+            //         </Box>
+            //     )
+            // },
+            // {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
+            // {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
         ]; 
-    }, []) 
+
+        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
+            field: `skills.${skillKey}`,
+            headerName: skillKey,
+            // flex: isLargeScreen ? 0.5 : undefined,
+            // width: isLargeScreen ? undefined : 100,
+            renderCell: (params) => {
+            return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
+            },
+        }));
+
+        return [...baseColumns, ...skillColumns]
+    }, [status]) 
 
     const handleSelectSalesRep = useCallback((data: {id: string, row: {}}) => {
         scrollToView(viewRef)
-        const rowData = data.row as callDataType
+        const rowData = data.row as SalesRepPerformanceType
         setSelectedSalesRep(rowData)
     },[])
 
@@ -129,7 +147,7 @@ const SalesRepManager = () => {
         <div className="flex relative flex-col gap-[20px] w-full">
             <p onClick={() => setSection("table")} className={`${section === "details" ? "scale-[1] pointer-events-auto mb-5" : "scale-[0] pointer-events-none"} cursor-pointer h-0 transition-all w-[45px] text-[#333333] text-[18px]`}>Back</p>
             <div ref={viewRef} className='h-1 absolute bg-transparent pointer-events-none w-1'/>
-            {selectedSalesRep.meetingName && 
+            {selectedSalesRep?.user?.id && 
                 (section === "table" ?
                 <>    
                     <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
@@ -138,16 +156,16 @@ const SalesRepManager = () => {
 
                             </div>
                             <div>
-                                <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep.meetingName}</p>
-                                <p className='text-[#828282] text-[14px]'>Senior Project</p>
-                                <p className='text-[#828282] text-[14px]'>Manager</p>
+                                <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
+                                <p className='text-[#828282] text-[14px]'>{selectedSalesRep?.role}</p>
+                                {/* <p className='text-[#828282] text-[14px]'>Manager</p> */}
                             </div>
                             <div className='flex mdx2:hidden ml-auto flex-[0.1] justify-between relative z-[2] '>
                                 {sectionDropdown}
                             </div>
                         </div>
                         <div className='rounded-lg h-full gap-4 flex-[2] flex flex-col items-center mdx2:items-start sm:flex-row pt-4 mdx2:pt-0 '>
-                            <div className='flex flex-1'><ProgressCircle type="progress" value={80} size={110} label={<span>Overall<br />Rating</span>} /></div>
+                            <div className='flex flex-1'><ProgressCircle type="progress" value={selectedSalesRep?.overall} size={110} label={<span>Overall<br />Rating</span>} /></div>
                             <div className='flex flex-1'><ProgressCircle type="skill" value={"BT"} size={110} label="BT" /></div>
                             <div className='hidden mdx2:flex flex-[0.1] justify-between relative z-[2] '>
                                 {sectionDropdown}
@@ -164,15 +182,15 @@ const SalesRepManager = () => {
                         <div className='flex-1'>
                             <div className='flex justify-between'>
                                 <div>
-                                    <p>Elizabeth Parker</p>
-                                    <p className='text-[#828282] text-[14px]'>Senior Project</p>
+                                    <p>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
+                                    <p className='text-[#828282] text-[14px]'>{selectedSalesRep?.role}</p>
                                 </div>
                                 <div className='flex justify-between relative z-[2] '>
                                     {sectionDropdown}
                                 </div>
                             </div>
                             <div className='grid grid-cols-2 mt-4 lg:mt-0 lg:flex justify-between gap-10 lg:gap-4'>
-                                <ProgressCircle type="progress" value={80} textClassname='text-[11px]' size={60} label={<span>Overall<br />Rating</span>} />
+                                <ProgressCircle type="progress" value={selectedSalesRep?.overall} textClassname='text-[15px]' size={60} label={<span>Overall<br />Rating</span>} />
                                 <div className='flex flex-col sm:flex-row items-center gap-2'>
                                     <GradientCircle size={60}>
                                         <Callicon />
@@ -191,7 +209,7 @@ const SalesRepManager = () => {
                                         <p>Deals</p>
                                     </div>
                                 </div>
-                                <ProgressCircle type="skill" value={"BT"} size={60} label="Building Trust" />
+                                <ProgressCircle type="skill" value={"BT"} textClassname='text-[15px]' size={60} label="Building Trust" />
                             </div>
                         </div>
                     </div>
@@ -202,18 +220,19 @@ const SalesRepManager = () => {
             {section === "table" && 
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable
+                        loading={status === "pending"}
                         searchInput={searchInput}
                         handleSearchChange={handleSearchChange}
                         filteredRows={filteredRows}
                         columns={columns}
-                        getRowIdField='id'
+                        getRowIdField='user.id'
                         handleSelectCell={handleSelectSalesRep as GridEventListener<"cellClick">}
                     />
                 </Suspense>
             }
             {
                 section === "details" && 
-                <SalesRepDetails userId={selectedSalesRep.id} />
+                <SalesRepDetails userId={selectedSalesRep?.user?.id} />
             }
         </div>
     )

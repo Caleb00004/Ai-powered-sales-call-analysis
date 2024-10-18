@@ -7,20 +7,21 @@ import NavIcon from "../../../public/svgs/next-icon.svg"
 import MoreIcon from "../../../public/svgs/more-icon.svg"
 import { dealsData } from "@/testData"
 import { FC, useCallback, useState } from "react"
-import { useGetSalesrepAreaOfConcernQuery, useGetSalesrepDealsQuery, useGetSalesrepScheduledTrainingQuery } from "../../../api-feature/apiSlice"
+import { useGetSalesRepActivitiesQuery, useGetSalesrepAreaOfConcernQuery, useGetSalesrepDealsQuery, useGetSalesrepScheduledTrainingQuery } from "../../../api-feature/apiSlice"
 import { ApiType } from "../../../api-feature/types"
 import { AreaofconcernType, AssignedDealsType, scheduleTrainingsType } from "../../../api-feature/sales-rep/salesrep-type"
 import Loading from "../secondary/LoadingSpinner"
 import useModal from "../util/useModal"
 import MessageModal from "../modals/message-modal"
+import { getRandomColor } from "../util/helperFunctions"
 
-const piechartdata = 
-    [
-        { id: 0, value: 40, color: "#C32781", label: "Building Trust"},
-        { id: 1, value: 45, color: "#00FFB0", label: "Building Value"},
-        { id: 2, value: 60, color: "#49D0FF", label: "Conviction"},
-        // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
-    ]
+// const piechartdata = 
+//     [
+//         { id: 0, value: 40, color: "#C32781", label: "Building Trust"},
+//         { id: 1, value: 45, color: "#00FFB0", label: "Building Value"},
+//         { id: 2, value: 60, color: "#49D0FF", label: "Conviction"},
+//         // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
+//     ]
 
 interface areaofConcernApi extends ApiType {
     data: {success: boolean, data: AreaofconcernType[]}
@@ -34,6 +35,10 @@ interface scheduledTrainingApi extends ApiType {
     data: {success: boolean, data: {data: scheduleTrainingsType[]}}
 }
 
+interface activitiesApi extends ApiType {
+    data: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean}
+}
+
 interface props {
     userId: number
 }
@@ -44,10 +49,14 @@ const SalesRepDetails:FC<props> = ({userId}) => {
     const {data: areaofconcern, status: areaofConcerStatus, error: areaofconcernError} = useGetSalesrepAreaOfConcernQuery<areaofConcernApi>(userId)
     const {data: assignedData, status: assignedDealsStatus, error: assignedDealsError} = useGetSalesrepDealsQuery<assignedDealsApi>(userId)
     const {data: datatraining, status: trainingStatus, error: trainingError} = useGetSalesrepScheduledTrainingQuery<scheduledTrainingApi>(userId)
+    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(userId)
 
     const trainingData = datatraining?.data?.data
     const assignedDeals = assignedData?.data?.data
     const areaofConcernData = areaofconcern?.data
+
+    const piechartdata = [] as {id: number, value: number, color: string, label: string}[]
+    areaofConcernData?.map((item, i) => piechartdata.push({id: i, value: item?.grade, color: getRandomColor(), label: item?.skillName.substring(0, 20)}))
 
     const [displayTrainingDropdown, setDisplayTrainingDropdown] = useState(false)
     const handleTrainingDropdown = () => {
@@ -74,18 +83,15 @@ const SalesRepDetails:FC<props> = ({userId}) => {
             <div className='flex flex-col mdx5:flex-row gap-5 mt-5'>
                 <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
                     <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Area of concern</h1>
-                    {areaofConcerStatus === "pending" && <Loading />}
+                    {areaofConcerStatus === "pending" && <div className="flex items-center justify-center my-3"><Loading /></div>}
                     {areaofConcerStatus === "rejected" && <p className="text-red-600 italic text-center">Error occured</p>}
                     {areaofConcerStatus === "fulfilled" && <PiechartComponent data={piechartdata} />}
                 </div>
                 <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
                     <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Dureket Report</h1>
-                    <p className='text-[#4A4A4A] text-[13.5px] font-[400] mdx5:h-[16.5em] overflow-auto'>Lorem ipsum dolor sit amet consectetur. Arcu ut aliquam neque orci sapien nisl. Ligula rhoncus at nisl scelerisque eget enim ut.
-                        At vulputate metus pulvinar leo lorem nec morbi dolor. Tempus fusce vel duis dictum nibh a sed adipiscing in. In egestas aliquam 
-                        id egestas morbi cras vivamus. Ac sed vehicula sem sed dui massa. Netus tincidunt odio ultricies viverra sed porttitor vulputate dui. 
-                        egestas morbi cras vivamus. Ac sed vehicula sem sed dui. In egestas aliquam id egestas morbi cras vivamusmassa.egestas morbi cras vivamus. 
-                        Ac sed vehicula sem sed dui massa. id egestas morbi cras vivamus. Ac sed vehicula sem sed massa. id egestas morbi cras vivamus. Ac sed vehicula sem 
-                        sed dui massa. id egestas morbi cras vivamus. Ac sed vehicula sem sed dui massa. In egestas aliquam id egestas morbi cras vivamus</p>
+                    {activitiesStatus === "pending" && <div className="flex items-center justify-center my-3"><Loading /></div>}
+                    {activitiesStatus === "rejected" && <p className="text-red-600 italic text-center">Error occured</p>}
+                    {activitiesStatus === "fulfilled" && <p className='text-[#4A4A4A] text-[13.5px] font-[400] mdx5:h-[16.5em] overflow-auto'>{activitiesData?.data?.report ?? "No report"}</p>}
                 </div>
             </div>
             <div className='flex flex-col mdx3:flex-row gap-5 mt-5'>
@@ -95,14 +101,13 @@ const SalesRepDetails:FC<props> = ({userId}) => {
                         <PaginationComponent 
                             loading={assignedDealsStatus === "pending"}
                             error={assignedDealsStatus === "rejected"}
-                            items={dealsData}
+                            items={assignedDeals}
                             hidePaginationStatus
                             itemsPerPage={5}
                             renderItems={(data) => (
-                                data.map(item => (
+                                data?.map(item => (
                                     <div className="flex h-full transition-all cursor-pointer py-2 justify-between items-center">
-                                        {/* @ts-ignore */}
-                                        <p className="font-[600] text-[14px] text-[#333333] underline">{item.name}</p>
+                                        <p className="font-[600] mb-auto text-[14px] text-[#333333] underline">{item.name}</p>
                                     </div>
                                 ))
                             )}
@@ -143,20 +148,20 @@ const SalesRepDetails:FC<props> = ({userId}) => {
                         <PaginationComponent 
                             loading={trainingStatus === "pending"}
                             error={trainingStatus === "rejected"}
-                            items={dealsData}
+                            items={trainingData}
                             hidePaginationStatus
                             itemsPerPage={5}
                             renderItems={(data) => (
-                                data.map(item => (
-                                    <div className="flex cursor-pointer py-2 text-[#333333] text-[14px] justify-between items-center ">
+                                data?.map(item => (
+                                    <div className="flex cursor-pointer mb-auto py-2 text-[#333333] text-[14px] justify-between items-center ">
                                         <div className='flex items-center'>
                                             <MoreIcon className="rotate-[90deg]" />
                                             <div>
-                                                <p className="font-[600]">Sample Topic</p>
-                                                <p className='text-[12px]'>Sample Module Name</p>
+                                                <p className="font-[600]">{item?.trainingTopic?.title}</p>
+                                                <p className='text-[12px]'>{item?.trainingTopic?.training?.title}</p>
                                             </div>
                                         </div>
-                                        <p className='px-3 bg-[#D9D9D94D] text-[#333333] rounded-full'>Not Started</p>
+                                        <p className='px-3 bg-[#D9D9D94D] text-[#333333] rounded-full'>{item?.progress}</p>
                                     </div>
                                 ))
                             )}

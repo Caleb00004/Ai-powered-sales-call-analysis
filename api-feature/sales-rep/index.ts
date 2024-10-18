@@ -39,7 +39,12 @@ const salesRepEndpoints = (
                 method: "GET",
             })
         }),
-        
+        getSalesRepActivities: builder.query<undefined, number>({
+            query: (id) => ({
+                url: `/sales-rep/${id}/activities`,
+                method: "GET",
+            })
+        }),
 })
 
 export default salesRepEndpoints

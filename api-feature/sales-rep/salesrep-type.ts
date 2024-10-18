@@ -25,3 +25,15 @@ export interface scheduleTrainingsType {
 export interface AssignedDealsType {
     name: string
 }
+
+export interface SalesRepPerformanceType {
+    user: {
+        firstName: string;
+        lastName: string;
+        id: number;
+        CompanyUser: {position: string}[]
+    },
+    overall: number;
+    role: string;
+    skills: {} 
+}

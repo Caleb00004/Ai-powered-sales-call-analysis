@@ -25,7 +25,7 @@ interface props {
     hideHelpers?: boolean
     disableRowSelectionOnClick?: boolean
     hideHeader?: boolean
-    loading?: boolean
+    loading: boolean
     getRowIdField: string
 }
 
