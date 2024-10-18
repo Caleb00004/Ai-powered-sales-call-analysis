@@ -1,11 +1,10 @@
 import ProgressCircle from "@/components/secondary/ProgressCircle"
-import MoreIcon from "../../../public/svgs/more-icon.svg"
+import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { FC } from "react"
-import { useGetOverallRatingQuery } from "../../../api-feature/apiSlice"
-import { ApiType } from "../../../api-feature/types"
-import { ratingType } from "../../../api-feature/team-rating/teamrating-type"
-import ActivityIndicator from "./ActivityIndicator"
-import Loading from "./LoadingSpinner"
+import { useGetOverallRatingQuery } from "../../../../api-feature/apiSlice"
+import { ApiType } from "../../../../api-feature/types"
+import { ratingType } from "../../../../api-feature/team-rating/teamrating-type"
+import Loading from "../../secondary/LoadingSpinner"
 
 interface props {
     className?: string

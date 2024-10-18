@@ -5,8 +5,8 @@ import { DataGrid } from "@mui/x-data-grid"
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid"
 import { callData } from "@/testData"
 import { Box } from "@mui/material"
-import TeamDistribution from "@/components/secondary/TeamDistribution"
-import TopPerformance from "@/components/secondary/TopPerformance"
+import TeamDistribution from "@/components/ui/dashboard/TeamDistribution"
+import TopPerformance from "@/components/ui/dashboard/TopPerformance"
 
 const ManagerDashboard = () => {
     const rows = callData.slice(0, 4)

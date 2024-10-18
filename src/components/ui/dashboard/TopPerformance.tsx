@@ -1,11 +1,10 @@
-import GradientCircle from "./GradientCircle"
-import MoreIcon from "../../../public/svgs/more-icon.svg"
+import GradientCircle from "../../secondary/GradientCircle"
+import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { FC } from "react"
-import { SalesrepType } from "../../../api-feature/sales-rep/salesrep-type"
-import { ApiType } from "../../../api-feature/types"
-import ActivityIndicator from "./ActivityIndicator"
-import { useGetTopSalesrepQuery } from "../../../api-feature/apiSlice"
-import Loading from "./LoadingSpinner"
+import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
+import { ApiType } from "../../../../api-feature/types"
+import { useGetTopSalesrepQuery } from "../../../../api-feature/apiSlice"
+import Loading from "../../secondary/LoadingSpinner"
 
 interface props {
     label?: string,

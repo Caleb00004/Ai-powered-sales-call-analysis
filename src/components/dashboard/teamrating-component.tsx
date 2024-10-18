@@ -2,8 +2,8 @@ import { useGetTeamRatingQuery } from "../../../api-feature/apiSlice"
 import { teamRatingType } from "../../../api-feature/team-rating/teamrating-type"
 import { ApiType } from "../../../api-feature/types"
 import SkillsExcerpt from "../secondary/SkillsExcerpt"
-import TeamDistribution from "../secondary/TeamDistribution"
-import TopPerformance from "../secondary/TopPerformance"
+import TeamDistribution from "../ui/dashboard/TeamDistribution"
+import TopPerformance from "../ui/dashboard/TopPerformance"
 
 interface teamratingApi extends ApiType {
     data: {data: {data: teamRatingType[], page: number, totalPage: number, totalUser: number}}, success: boolean
