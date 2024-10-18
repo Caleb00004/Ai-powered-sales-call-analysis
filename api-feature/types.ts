@@ -33,6 +33,18 @@ type paginatedDataType = {
     currentPage: number
 }
 
+export interface profileType {
+    firstName: string;
+    lastName: string;
+    email: string;
+    company: {
+        id: number;
+        name: string;
+        position: string;
+        role: ACCOUNT_TYPE
+    }
+}
+
 export interface subscriptionType {
     id: number;
     name: string;

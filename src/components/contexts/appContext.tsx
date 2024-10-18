@@ -2,7 +2,7 @@ import { SnackbarCloseReason } from "@mui/material";
 import { createContext, useEffect, ReactNode, SyntheticEvent, useLayoutEffect } from "react";
 import { useState } from "react";
 import { globalState, useGetUserProfileQuery } from "../../../api-feature/apiSlice";
-import { ACCOUNT_TYPE, ApiType, TOKEN_NAME } from "../../../api-feature/types";
+import { ACCOUNT_TYPE, ApiType, profileType, TOKEN_NAME } from "../../../api-feature/types";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { OnboardingQueryParams } from "../manager_onboarding/right/rightContainer";
@@ -20,6 +20,8 @@ interface AppContextProps {
     saveAuthorizationTokenWithExpiry: (key: typeof TOKEN_NAME, token: string, expiryInMinutes: number) => void
     accountType: ACCOUNT_TYPE,
     setAccountType: React.Dispatch<React.SetStateAction<ACCOUNT_TYPE>>
+    userProfile: profileType
+    setUserProfile: React.Dispatch<React.SetStateAction<profileType>>
 }
 
 const appContext = createContext<AppContextProps>({
@@ -35,16 +37,19 @@ const appContext = createContext<AppContextProps>({
     saveAuthorizationTokenWithExpiry: () => {},
     accountType: "",
     setAccountType: () => {},
+    userProfile: {} as profileType,
+    setUserProfile: () => {}
 })
 
 interface profileApiType extends ApiType {
-  data: {data: {}}
+  data: {data: profileType, success: boolean}
 }
 
 
 function ContextProvider({children}: { children: ReactNode }) {
     const router = useRouter()
     const {data, status, error, refetch} = useGetUserProfileQuery<profileApiType>(undefined, {skip: !(globalState.authorizationToken && !globalState.account_type)})
+    const [userProfile, setUserProfile] = useState({} as profileType)
     const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
     const [loggedIn, setLoggedIn] = useState(false);
     const [checkedLocalStorage, setCheckedLocalStorage] = useState(false)
@@ -69,7 +74,6 @@ function ContextProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         if (status === "rejected") {
-            console.log(error)
             // @ts-ignore
             if (error?.data?.message === "Please verify your email") {
                 toast.error("Error, Verify Email!");
@@ -91,12 +95,13 @@ function ContextProvider({children}: { children: ReactNode }) {
         }
 
         if (status === "fulfilled") {
+            setUserProfile(data?.data)
+            const account_type = data?.data?.company?.role.toLowerCase()
             // @ts-ignore
-            const account_type = data.data.company.role.toLowerCase()
             globalState.account_type = account_type
+            // @ts-ignore
             setAccountType(account_type)
             setLoggedIn(true)
-            console.log(loggedIn)
         }
     },[status])
 
@@ -139,7 +144,9 @@ function ContextProvider({children}: { children: ReactNode }) {
         setCheckedLocalStorage,
         saveAuthorizationTokenWithExpiry,
         accountType,
-        setAccountType
+        setAccountType,
+        userProfile,
+        setUserProfile
     }
 
     return(

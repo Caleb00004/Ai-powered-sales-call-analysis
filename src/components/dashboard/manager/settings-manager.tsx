@@ -6,7 +6,7 @@ import { useContext } from "react"
 import { appContext } from "@/components/contexts/appContext"
 
 const SettingsManager = () => {
-    const { accountType: account_type } = useContext(appContext)
+    const { accountType: account_type, userProfile} = useContext(appContext)
     const [currentSection, setCurrentSection] = useState<"profile" | "system" | "audit-trial">("profile")
 
     const handleSwitchSection = (newSection: "profile" | "system" | "audit-trial") => {
@@ -35,8 +35,8 @@ const SettingsManager = () => {
                     }
                 </div>}
                 <div className="w-full ">
-                    {currentSection === "profile" && <ProfileSettings />}
-                    {currentSection === "system" && <SystemSettings />}
+                    {currentSection === "profile" && <ProfileSettings data={userProfile} />}
+                    {currentSection === "system" && <SystemSettings data={userProfile} />}
                     {currentSection === "audit-trial" && <AuditTrail />}
                 </div>
             </div>

@@ -5,10 +5,69 @@ import Image from "next/image"
 import ChromeIcon from "../../../../public/svgs/chrome-icon.svg"
 import DownloadIcon from "../../../../public/svgs/download-icon.svg"
 import CheckIcon from "../../../../public/svgs/check-icon.svg"
+import { profileType, SkillsType } from "../../../../api-feature/types"
+import { FC, useContext, useEffect, useState } from "react"
+import useModal from "@/components/util/useModal"
+import { dataContext } from "@/components/contexts/dataContext"
+import EditSkillsModal from "@/components/modals/editSkills-modal"
 
-const SystemSettings = () => {
+interface props {
+    data: profileType
+}
+
+const SystemSettings:FC<props> = ({data}) => {
+    const {availableSkills, availableSkillsStatus} = useContext(dataContext)
+    const {modalOpen, openModal, closeModal} = useModal()
+    const existingSkills = [
+        {
+            id: 4,
+            name: "Value Over Price",
+            symbol: "VP"
+        },
+        {
+            id: 2,
+            name: "Becoming Obsessed",
+            symbol: "BO"
+        },
+    ]
+    const [topSkills, setTopSkills] = useState([] as {skillId: number}[])
+    
+    useEffect(() => {
+        const newArray = [] as {skillId: number}[]
+        existingSkills?.map(item => newArray.push({skillId: item.id}))
+
+        setTopSkills(newArray)
+    },[availableSkillsStatus])
+
+    const handleUpdateSkills = (skill: SkillsType) => {
+        console.log(skill);
+        // Check if the skill is already in the skills array
+        const isSkillIncluded = topSkills.some(item => item.skillId === skill.id);
+
+        if (!isSkillIncluded) {
+            // If the skill is not included, add it
+            setTopSkills(prev => ([
+                ...prev, {skillId: skill.id}
+            ]));
+
+        } else {
+            // If the skill is included, remove it
+            setTopSkills(prev => ([
+                ...prev.filter(item => item.skillId !== skill.id)
+            ]));
+        }
+    }
     return (
         <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white px-4 mdx2:px-7 py-6 mb-6 rounded-md text-left text-[14px] ">
+            
+            <EditSkillsModal
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                availableSkills={availableSkills}
+                topSkills={topSkills}
+                handleUpdateSkills={handleUpdateSkills}
+            />
+
             <h1 className="text-[16px] mb-3 text-black font-[600]">System Settings</h1>
             <div className="border flex flex-col mdx2:flex-row gap-4 justify-between px-5 py-6 rounded-lg mb-3 items-center border-[#D4D4D4]">
                 <div className="mr-auto">
@@ -30,7 +89,8 @@ const SystemSettings = () => {
                 <Input 
                     label={<p>Company name</p>}
                     placeholder="company name"
-                    value="Happy Inc."
+                    disabled
+                    value={data?.company?.name}
                     onChange={() => {}}
                     name="companyName"
                     type="text"
@@ -43,7 +103,7 @@ const SystemSettings = () => {
             <div className="border flex flex-col mdx2:flex-row gap-4 justify-between px-5 py-6 rounded-lg mb-3 items-center border-[#4A4B571A]">
                 <p>Top 5 Skills Configuration</p>
                 <div className="w-[100px]">
-                    <Button className=" bg-transparent border border-[#C32781]"><span className="text-[#C32781]">Edit</span></Button>
+                    <Button onClick={openModal} className=" bg-transparent border border-[#C32781]"><span className="text-[#C32781]">Edit</span></Button>
                 </div>
             </div>
 

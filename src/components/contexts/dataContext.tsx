@@ -8,7 +8,7 @@ import { teamRoleType, teamType } from "../../../api-feature/team/team-type";
 import { trainingModuleType } from "../../../api-feature/training/trainings-type";
 
 interface skillsApiType extends ApiType {
-    data: SkillsType[]
+  data: {success: boolean, data:SkillsType[]}
 }
 
 interface salesrepApiType extends ApiType {
@@ -57,7 +57,7 @@ const dataContext = createContext<DataContextProps>({
  
 function DataContextProvider({ children }: { children: ReactNode }) {
     const {loggedIn, accountType} = useContext(appContext)
-    const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
+    const {data: availableSkillsData, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
     const {data: modules, status: trainingModuleStatus, error: modulesError} = useGetTrainingsQuery<trainingApi>(undefined, {skip: !loggedIn})
     // Change For Manager and sales rep
     const {data: salesRep, status: salesRepsataStatus, error: salesRepError} = useGetAllSalesrepQuery<salesrepApiType>(undefined, {skip: !loggedIn})
@@ -69,7 +69,8 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     const teamRolesData = teamRoles?.data
     const teamData = teamMembers?.data?.data
     const trainingModuleData = modules?.data
-
+    const availableSkills = availableSkillsData?.data
+    
     const contextValue: DataContextProps = {
         availableSkills,
         availableSkillsStatus,

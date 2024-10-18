@@ -23,7 +23,7 @@ interface props {
 }
 
 const Signin:FC<props> = ({changeSection, accountType}) => {
-    const {loggedIn, setLoggedIn, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
+    const {loggedIn, setLoggedIn, setUserProfile, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
     const router = useRouter()
     const {setAccountType} = useContext(appContext)
     const [authSignin] = useAuthSignInMutation()
@@ -42,20 +42,15 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
 
     const getProfileData = async () => {
         try {
-            console.log(globalState.authorizationToken)
             const response = await axios.get(`${BASE_URL}/user`, {
                 headers: { Authorization: `Bearer ${globalState.authorizationToken}` },
             }); 
-            setDisplayLoading(false)
-            setLoginRequestStatus("idle")
             const data = response.data.data
+            setUserProfile(data)
             globalState.account_type = data.company.role.toLowerCase()
             setAccountType(data.company.role.toLowerCase())
             router.push("/dashboard")
         } catch (error) {
-            setDisplayLoading(false)
-            setLoginRequestStatus("idle")
-            console.error(error);
             // @ts-ignore
             if (error?.response?.data?.message === "No company selected") {
                 router.push("/company-setup")
@@ -66,7 +61,10 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                 console.error(error)
                 toast.error("Error getting Profile, reload page")
             }
-        } 
+        } finally {
+            setDisplayLoading(false)
+            setLoginRequestStatus("idle")
+        }
     }
 
     const handleSignin = (e: React.FormEvent<HTMLFormElement>) => {
