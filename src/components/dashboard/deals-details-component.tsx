@@ -8,26 +8,15 @@ import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import ArrorwIcon from "../../../public/svgs/arrow2-icon.svg"
-import Modal from "@/components/primary/Modal"
-import Input from "@/components/primary/input"
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from "@mui/x-date-pickers"
 import { useGetDealNotesQuery, useGetDealOverviewQuery, useGetDealSalesrepPerformanceQuery, useGetMeetingsQuery } from "../../../api-feature/apiSlice"
 import { ApiType } from "../../../api-feature/types"
 import { dealMeetingsDataType, dealSalesrepPerformanceType, dealsOverviewType, notesType } from "../../../api-feature/deals/deal-type"
 import useModal from "../util/useModal"
 import { DealOverview, DealReport, DealNotes } from "../ui/deals"
+import ScheduleMeetingModal from "../modals/schedulemeeting-modal."
 
 type sectionsType = "overview" | "meetings" | "notes"
-
-interface formType {
-    name: string,
-    link: string,
-    date: Date,
-    time: string,
-    timezone: string
-}
-
+ 
 interface overviewApi extends ApiType {
     data: {success: boolean, data: dealsOverviewType}
 }
@@ -65,13 +54,6 @@ const DealdetailsComponent = () => {
     const [meetingSearchInput, setMeetingSearchInput] = useState("")
     const {modalOpen, closeModal, openModal} = useModal()
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-    const [scheduleMeetingDetails, setScheduleMeetingDetails] = useState<formType>({
-        name: "",
-        link: "",
-        date: new Date,
-        time: "",
-        timezone: ""
-    })
 
     useEffect(() => {
         // Function to update screen size state
@@ -141,7 +123,7 @@ const DealdetailsComponent = () => {
                 headerName: "Status",
             }
         ];
-    }, [isLargeScreen]);
+    }, [isLargeScreen, meetingRows]);
 
     const dealPerformanceColumns: GridColDef[] = useMemo(() => {
 
@@ -190,83 +172,18 @@ const DealdetailsComponent = () => {
         }));
 
         return [...baseColumns, ...skillColumns];
-    }, [isLargeScreen]);
-    
-    const handleAddNewDeal = () => {
-
-    }
-
-    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const key = e.target.name as keyof formType
-        const value = e.target.value
-
-        setScheduleMeetingDetails(prev => ({...prev, [key]: value}))
-    }, [])
+    }, [isLargeScreen, dealPerformanceRows]);
 
     return (
         <>
             <div className="flex flex-col">
                 
-                <Modal
-                    isOpen={modalOpen}
-                    onClose={closeModal}
-                >
-                    <form onSubmit={handleAddNewDeal} className="relative pt-7 pb-12 px-14 bg-white">
-                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Schedule Meeting</p>
-                        <Input 
-                            className="mb-[8px]"
-                            value={scheduleMeetingDetails.name}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Meeting Name</label>} 
-                            placeholder="Enter name"
-                            type="text"
-                            name="name"
-                        />
-                        <Input 
-                            className="mb-[8px]"
-                            value={scheduleMeetingDetails.link}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Meeting Link</label>} 
-                            placeholder="Enter link"
-                            type="text"
-                            name="link"
-                        />
-                        
-                        <div>
-                            <label className="text-[#333333] font-medium text-[0.9em]">Date</label>
-                            <DatePicker sx={{padding: 0, width: "100%", marginTop: "3px" }} value={undefined} onChange={(newValue) => console.log(newValue)} />
-                        </div> 
-
-                        <div className="flex gap-2">
-                            <div className="mt-2 flex-[1]">
-                                <label className="text-[#333333] font-medium text-[0.9em]">Time</label>
-                                <TimePicker
-                                    sx={{padding: 0, width: "100%", marginTop: "3px" }} 
-                                    label="Select Time"
-                                    value={undefined}
-                                    onChange={(newValue) => console.log(newValue)}
-                                />
-                            </div>
-                            <div className="flex-[0.6] bg-red-500 flex justify-end items-end">
-                                {/* <Input 
-                                    select
-                                    options={["(UTC-10:00) Hawaii", "(UTC-09:00) Alaska", "(UTC-12:00) International Date Line West", "(UTC+03:30) Tehran"]}
-                                    className="mb-0"
-                                    value={""}
-                                    onChange={handleOnChange}
-                                    label={<label className="text-[#333333] font-medium text-[0.9em]">Timezone</label>} 
-                                    placeholder="Enter link"
-                                    type="text"
-                                    name="link"
-                                /> */}
-                            </div>
-                        </div>
-
-                        <Button type="submit" className="mt-5" >
-                            Save
-                        </Button>
-                    </form>
-                </Modal>
+                <ScheduleMeetingModal 
+                    // @ts-ignore
+                    dealId={dealID}
+                    modalOpen={modalOpen}
+                    closeModal={closeModal}
+                />
 
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center">
                     <div className="flex items-center gap-0 text-[15px]">
@@ -313,7 +230,7 @@ const DealdetailsComponent = () => {
                                 columns={meetingsColumns}
                                 searchInput={meetingSearchInput}
                                 handleSearchChange={handleMeetingsSearch}
-                                getRowIdField="overall"
+                                getRowIdField="meetingName"
                             />
                         </div>    
                     </>

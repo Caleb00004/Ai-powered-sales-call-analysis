@@ -14,7 +14,7 @@ import Dropdown from '@/components/secondary/Dropdown';
 import { scrollToView } from '@/components/util/helperFunctions';
 import DropdownItem from '@/components/secondary/DropdownItem';
 import SalesRepDetails from '@/components/ui/salesrepDetails';
-import { useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
+import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
 import { ApiType } from '../../../../api-feature/types';
 import { SalesRepPerformanceType } from '../../../../api-feature/sales-rep/salesrep-type';
 
@@ -24,11 +24,16 @@ interface salesPerformanceApi extends ApiType {
     data: {data: SalesRepPerformanceType[], success: boolean}
 }
 
+interface activitiesApi extends ApiType {
+    data: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean}
+}
+
 const SalesRepManager = () => {
+    const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
     const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
+    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
     const [searchInput, setSearchInput] = useState("")
     const [section, setSection] = useState<"table" | "details">("table")
-    const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
     const [displayDropDown, setDisplayDropDown] = useState(false)
     const viewRef = useRef<HTMLDivElement>(null)
     const rows = data?.data
@@ -196,7 +201,7 @@ const SalesRepManager = () => {
                                         <Callicon />
                                     </GradientCircle>
                                     <div>
-                                        <p className='text-[#333333] font-[600]'>100k+</p>
+                                        <p className='text-[#333333] font-[600]'>{activitiesData?.data?.meetingCount ?? 0}</p>
                                         <p>Total Calls</p>
                                     </div>
                                 </div>
@@ -205,7 +210,7 @@ const SalesRepManager = () => {
                                         <BriefcaseIcon />
                                     </GradientCircle>
                                     <div>
-                                        <p className='text-[#333333] font-[600]'>450</p>
+                                        <p className='text-[#333333] font-[600]'>{activitiesData?.data?.dealCount ?? 0}</p>
                                         <p>Deals</p>
                                     </div>
                                 </div>
@@ -232,7 +237,7 @@ const SalesRepManager = () => {
             }
             {
                 section === "details" && 
-                <SalesRepDetails userId={selectedSalesRep?.user?.id} />
+                <SalesRepDetails userId={selectedSalesRep?.user?.id} activitiesData={activitiesData} activitiesStatus={activitiesStatus} />
             }
         </div>
     )

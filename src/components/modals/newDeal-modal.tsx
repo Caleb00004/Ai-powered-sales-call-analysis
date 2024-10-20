@@ -1,33 +1,101 @@
 import Modal from "../primary/Modal"
 import Input from "../primary/input"
 import Button from "../primary/Button"
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 import { dealFormType } from "../dashboard/manager/deals-manager";
 import ActivityIndicator from "../secondary/ActivityIndicator";
 import { dealStagesType } from "../../../api-feature/deals/deal-type";
 import Xicon from "../../../public/svgs/x-icon.svg"
+import { usePostCreateDealMutation } from "../../../api-feature/apiSlice";
+import toast from "react-hot-toast";
 
 interface props {
     modalOpen: boolean;
     closeModal: () => void;
-    handleOnChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-    handleAddNewDeal: (e:React.FormEvent<HTMLFormElement>) => void;
-    newDealDetails: dealFormType
     dealStagesData: dealStagesType[];
-    loading: boolean
     salesRep: {name: string, value: number}[]
-    handleRemoveSalesRep: (salesRepToRemove: number) => void
 }
 
-const NewdealModal:FC<props> = ({modalOpen, closeModal, loading, handleRemoveSalesRep, handleAddNewDeal, salesRep, dealStagesData, handleOnChange, newDealDetails}) => {
+const NewdealModal:FC<props> = ({modalOpen, closeModal, salesRep, dealStagesData}) => {
+    const [createDeal] = usePostCreateDealMutation()
+    const [loading, setLoading] = useState(false)
+    const [newDealDetails, setNewDealDetails] = useState<dealFormType>({
+        name: "",
+        client: "",
+        stage: "",
+        saleReps: []
+    })
 
+    
+    const handleRemoveSalesRep = (salesRepToRemove: number) => {
+        setNewDealDetails(prev => ({
+            ...prev,
+            saleReps: prev.saleReps.filter(member => member !== salesRepToRemove)
+        }));
+    }
+    
+    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const key = e.target.name as keyof dealFormType
+        const value = e.target.value
+        
+        if (key === "saleReps") {
+            console.log(e)
+            console.log(key)
+            console.log(value)
+            setNewDealDetails((prev) => {
+                // Check if the team member is already in the array
+                if (!prev.saleReps.includes(Number(value))) {
+                    return {
+                        ...prev,
+                        [key]: [...prev.saleReps, Number(value)], // Add team member if not present
+                    };
+                }
+
+                // If the team member is already present, return the state as-is
+                return prev;
+            });
+            return;
+        }
+
+        setNewDealDetails(prev => ({...prev, [key]: value}))
+    }, [])
+
+    const handleAddNewDeal = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+
+        const stage = Number(newDealDetails.stage)
+        
+        try {
+            createDeal({name: newDealDetails.name, client: newDealDetails.client, dealStageId: stage, salesReps: newDealDetails.saleReps}).unwrap()
+                .then(fulfilled => {
+                    setLoading(false)
+                    toast.success("Deal Created")
+                    closeModal()
+                    setNewDealDetails({
+                        name: "",
+                        client: "",
+                        stage: "",
+                        saleReps: []
+                    })
+                })
+                .catch(rejected => {
+                    setLoading(false)
+                    toast.error("Error occured")
+                })
+        } catch(error) {
+            setLoading(false)
+            toast.error("Error occured")
+        }
+
+    }
     const dealOptions = [] as {value: string | number, name: string}[]
     dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
 
     return (
          <Modal
             isOpen={modalOpen}
-            onClose={closeModal}
+            onClose={loading ? () => {} : closeModal}
         >
             <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-14">
                 <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Deal</p>

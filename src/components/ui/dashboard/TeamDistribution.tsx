@@ -19,10 +19,6 @@ interface ratingApiType extends ApiType {
 const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
     const {data, status, error} = useGetOverallRatingQuery<ratingApiType>()
 
-    console.log(data)
-    console.log(status)
-    console.log(error)
-
     return (
         <div className={` p-3 rounded-lg ${className ? className : "flex-[1.07] bg-white"}`}>
             {!hideLabel && 

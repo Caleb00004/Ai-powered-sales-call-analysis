@@ -64,3 +64,10 @@ export interface insightsType {
     skills: {skill: string; grade: number; skillSymbol: string}[]
     pagination: paginatedDataType
 }
+
+export interface platformType {
+    id: number;
+    name: string;
+    status: boolean;
+    logo: string
+}

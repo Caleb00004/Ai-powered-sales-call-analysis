@@ -5,7 +5,7 @@ import { dealSalesrepPerformanceType, dealsOverviewType, dealStagesType, dealsTy
 const dealsEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams' | 'getMeetings',
         'api'
     >) => ({
     getDeals: builder.query<dealsType[], void>({
@@ -43,13 +43,15 @@ const dealsEndpoints = (
             url: `/deal/${id}/meeting`,
             method: 'GET',
         }),
+        providesTags: ["getMeetings"]
     }),
     postScheduleMeeting: builder.mutation<undefined, {id: string, body: {title: string, platform: string, scheduledTime: string}}>({
         query: (data) => ({
-            url: `/deal/${data.id}/note`,
+            url: `/deal/${data.id}/meeting`,
             method: 'POST',
             body: data.body,
         }),
+        invalidatesTags: ["getMeetings"]
     }),
     getDealStages: builder.query<dealStagesType[], void>({
         query: () => ({

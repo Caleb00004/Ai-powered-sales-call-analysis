@@ -39,7 +39,11 @@ const EditSkillsModal:FC<props> = ({modalOpen, closeModal, handleUpdateSkills, a
     }
 
     return (
-        <Modal isOpen={modalOpen} onClose={closeModal} containerClassname="w-[90%] md:w-[45em] h-[70vh] overflow-auto bg-white ">
+        <Modal 
+            isOpen={modalOpen} 
+            onClose={loading ? () => {} : closeModal} 
+            containerClassname="w-[90%] md:w-[45em] h-[70vh] overflow-auto bg-white "
+        >
             <div className="relative">
                 <div className="bg-white border-b w-full h-12 sticky top-0 z-[2] flex justify-between items-center px-5">
                     <p className="text-[18px] text-[#333333] font-[600]">Top 5 skils</p>

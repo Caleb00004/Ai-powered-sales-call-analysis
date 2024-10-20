@@ -93,6 +93,15 @@ export const apiSlice = createApi({
                     Authorization: `Bearer ${globalState.authorizationToken}`,
                 }
             })
+        }),
+        getPlatforms: builder.query({
+            query: () => ({
+                url: "/setting/platforms",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${globalState.authorizationToken}`,
+                }
+            })
         })
     })
 })
@@ -122,6 +131,7 @@ export const {
     useGetSalesrepAreaOfConcernQuery,
     useGetSalesrepScheduledTrainingQuery,
     useGetSalesRepActivitiesQuery,
+    usePostSendSalesrepMessageMutation,
 
     // Team
     useGetTeamQuery,
@@ -156,6 +166,7 @@ export const {
 
     // /////////////
     useGetInsightsQuery,
-    useGetSubscriptionsQuery
+    useGetSubscriptionsQuery,
+    useGetPlatformsQuery
 } = apiSlice
 

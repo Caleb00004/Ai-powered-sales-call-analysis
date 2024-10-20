@@ -8,20 +8,12 @@ import MoreIcon from "../../../public/svgs/more-icon.svg"
 import { dealsData } from "@/testData"
 import { FC, useCallback, useState } from "react"
 import { useGetSalesRepActivitiesQuery, useGetSalesrepAreaOfConcernQuery, useGetSalesrepDealsQuery, useGetSalesrepScheduledTrainingQuery } from "../../../api-feature/apiSlice"
-import { ApiType } from "../../../api-feature/types"
+import { APISTATUS, ApiType } from "../../../api-feature/types"
 import { AreaofconcernType, AssignedDealsType, scheduleTrainingsType } from "../../../api-feature/sales-rep/salesrep-type"
 import Loading from "../secondary/LoadingSpinner"
 import useModal from "../util/useModal"
 import MessageModal from "../modals/message-modal"
 import { getRandomColor } from "../util/helperFunctions"
-
-// const piechartdata = 
-//     [
-//         { id: 0, value: 40, color: "#C32781", label: "Building Trust"},
-//         { id: 1, value: 45, color: "#00FFB0", label: "Building Value"},
-//         { id: 2, value: 60, color: "#49D0FF", label: "Conviction"},
-//         // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
-//     ]
 
 interface areaofConcernApi extends ApiType {
     data: {success: boolean, data: AreaofconcernType[]}
@@ -35,21 +27,17 @@ interface scheduledTrainingApi extends ApiType {
     data: {success: boolean, data: {data: scheduleTrainingsType[]}}
 }
 
-interface activitiesApi extends ApiType {
-    data: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean}
-}
-
 interface props {
-    userId: number
+    userId: number,
+    activitiesData: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean},
+    activitiesStatus: APISTATUS
 }
 
-const SalesRepDetails:FC<props> = ({userId}) => {
+const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus}) => {
     const {modalOpen, openModal, closeModal} = useModal()
-    const [message, setMessage] = useState("")
     const {data: areaofconcern, status: areaofConcerStatus, error: areaofconcernError} = useGetSalesrepAreaOfConcernQuery<areaofConcernApi>(userId)
     const {data: assignedData, status: assignedDealsStatus, error: assignedDealsError} = useGetSalesrepDealsQuery<assignedDealsApi>(userId)
     const {data: datatraining, status: trainingStatus, error: trainingError} = useGetSalesrepScheduledTrainingQuery<scheduledTrainingApi>(userId)
-    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(userId)
 
     const trainingData = datatraining?.data?.data
     const assignedDeals = assignedData?.data?.data
@@ -62,19 +50,13 @@ const SalesRepDetails:FC<props> = ({userId}) => {
     const handleTrainingDropdown = () => {
         setDisplayTrainingDropdown(prev => !prev)
     }
-    
-    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const value = e.target.value
-        setMessage(value)
-    }, [])
 
     return (
         <div className='py-5'>
             <MessageModal 
-                message={message}
                 modalOpen={modalOpen}
                 closeModal={closeModal}
-                handleOnChange={handleOnChange}
+                userId={userId}
             />
             <div className='flex w-[20em] gap-4 ml-auto'>
                 <Button onClick={openModal} className='text-[13px] py-1'>Message Elizabeth</Button>

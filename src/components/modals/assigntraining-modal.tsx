@@ -62,7 +62,7 @@ const AssignTrainingModal:FC<props> = ({selectedModule, teamMembers, modalOpen, 
     return (   
         <Modal
             isOpen={modalOpen}
-            onClose={closeModal}
+            onClose={loading ? () => {} : closeModal}
         >
             {modalType === "assign-topic" ? 
                 <div className="pt-7 pb-12 px-14">

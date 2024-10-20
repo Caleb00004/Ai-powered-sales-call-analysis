@@ -34,8 +34,6 @@ const DealsManager = () => {
     const {teamData, teamDataStatus} = useContext(dataContext)
     const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>()
     const {data: dealStagesData, status: dealStagesStatus, error: dealStagesError} = useGetDealStagesQuery()
-    const [createDeal] = usePostCreateDealMutation()
-    const [loading, setLoading] = useState(false)
     const routeTo = useRouter()
     const [searchInput, setSearchInput] = useState("")
     const [selectedDeal, setSelectedDeal] = useState({} as dealsType)
@@ -43,12 +41,6 @@ const DealsManager = () => {
     const rows = dealsData?.data.deals
     const {modalOpen, openModal, closeModal } = useModal()
     const {modalOpen: dealModalOpen, openModal: openDealModal, closeModal: closeDealModal } = useModal()
-    const [newDealDetails, setNewDealDetails] = useState<dealFormType>({
-        name: "",
-        client: "",
-        stage: "",
-        saleReps: []
-    })
 
     useEffect(() => {
         dealStatus === "rejected" && toast.error("Error occured")
@@ -138,70 +130,6 @@ const DealsManager = () => {
         setSelectedDeal(prev => ({...prev, [name]: value}))
     }
 
-    
-    const handleAddNewDeal = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-
-        const stage = Number(newDealDetails.stage)
-        
-        try {
-            createDeal({name: newDealDetails.name, client: newDealDetails.client, dealStageId: stage, salesReps: newDealDetails.saleReps}).unwrap()
-                .then(fulfilled => {
-                    setLoading(false)
-                    toast.success("Deal Created")
-                    closeDealModal()
-                    setNewDealDetails({
-                        name: "",
-                        client: "",
-                        stage: "",
-                        saleReps: []
-                    })
-                })
-                .catch(rejected => {
-                    setLoading(false)
-                    toast.error("Error occured")
-                })
-        } catch(error) {
-            setLoading(false)
-            toast.error("Error occured")
-        }
-
-    }
-
-    const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const key = e.target.name as keyof dealFormType
-        const value = e.target.value
-        
-        if (key === "saleReps") {
-            console.log(e)
-            console.log(key)
-            console.log(value)
-            setNewDealDetails((prev) => {
-                // Check if the team member is already in the array
-                if (!prev.saleReps.includes(Number(value))) {
-                    return {
-                        ...prev,
-                        [key]: [...prev.saleReps, Number(value)], // Add team member if not present
-                    };
-                }
-
-                // If the team member is already present, return the state as-is
-                return prev;
-            });
-            return;
-        }
-
-        setNewDealDetails(prev => ({...prev, [key]: value}))
-    }, [])
-
-    const handleRemoveSalesRep = (salesRepToRemove: number) => {
-        setNewDealDetails(prev => ({
-            ...prev,
-            saleReps: prev.saleReps.filter(member => member !== salesRepToRemove)
-        }));
-    }
-
     const dealOptions = [] as {value: string | number, name: string}[]
     dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
 
@@ -220,14 +148,9 @@ const DealsManager = () => {
             <NewdealModal 
                 modalOpen={dealModalOpen}
                 closeModal={closeDealModal}
-                loading={loading}
-                handleRemoveSalesRep={handleRemoveSalesRep}
-                handleAddNewDeal={handleAddNewDeal}
                 salesRep={salesRepOptions}
                 // @ts-ignore
                 dealStagesData={dealStagesData}
-                handleOnChange={handleOnChange}
-                newDealDetails={newDealDetails}
             />
             
             <div className="flex justify-between items-center">

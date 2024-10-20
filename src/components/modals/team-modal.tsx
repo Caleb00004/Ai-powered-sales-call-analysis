@@ -33,7 +33,7 @@ const TeamsModal:FC<props> = ({modalOpen, modalType, updateLoading, handleOnChan
     return (
          <Modal
                 isOpen={modalOpen}
-                onClose={closeModal}
+                onClose={(loading || updateLoading) ? () => {} : closeModal}
             >
                 {modalType === "add-team" && <form onSubmit={handleCreateTeam} className="pt-7 pb-12 px-14">
                 <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Create New Team</p>

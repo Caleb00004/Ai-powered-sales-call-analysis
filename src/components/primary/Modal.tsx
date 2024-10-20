@@ -16,7 +16,6 @@ const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "", conta
       const handleClickOutside = (event: MouseEvent) => {
         // FOR MATERIAL UI TIME AND DATE PICKER 
         const pickerPopups = Array.from(document.querySelectorAll(".MuiPopper-root, .MuiPopover-root"));
-        console.log(pickerPopups)
         for (let popup of pickerPopups) {
           if (popup.contains(event.target as Node)) {
             return;

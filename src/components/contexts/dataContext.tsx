@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from "react";
-import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery, useGetRolesQuery, useGetTeamQuery, useGetTrainingsQuery } from "../../../api-feature/apiSlice";
-import { APISTATUS, ApiType, SkillsType } from "../../../api-feature/types";
+import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery, useGetPlatformsQuery, useGetRolesQuery, useGetTeamQuery, useGetTrainingsQuery } from "../../../api-feature/apiSlice";
+import { APISTATUS, ApiType, platformType, SkillsType } from "../../../api-feature/types";
 import { useContext } from "react";
 import { appContext } from "./appContext";
 import { SalesrepType } from "../../../api-feature/sales-rep/salesrep-type";
@@ -27,6 +27,9 @@ interface trainingApi extends ApiType {
     data: {data: trainingModuleType[]}, success: boolean
 }
 
+interface platformApi extends ApiType {
+    data: {data: platformType[], success: boolean}
+}
 
 interface DataContextProps {
     availableSkills: SkillsType[],
@@ -38,7 +41,9 @@ interface DataContextProps {
     teamData: teamType[]
     teamDataStatus: APISTATUS
     trainingModuleData: trainingModuleType[]
-    trainingModuleStatus: APISTATUS
+    trainingModuleStatus: APISTATUS,
+    platformData: platformType[];
+    platformStatus: APISTATUS;
 }
 
 const dataContext = createContext<DataContextProps>({
@@ -51,12 +56,14 @@ const dataContext = createContext<DataContextProps>({
     teamData: [],
     teamDataStatus: "pending",
     trainingModuleData: [],
-    trainingModuleStatus: "pending"
-
+    trainingModuleStatus: "pending",
+    platformData: [],
+    platformStatus: "pending"
 })
  
 function DataContextProvider({ children }: { children: ReactNode }) {
     const {loggedIn, accountType} = useContext(appContext)
+    const {data: platforms, status: platformStatus, error: platformError} = useGetPlatformsQuery<platformApi>(undefined, {skip: !loggedIn})
     const {data: availableSkillsData, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
     const {data: modules, status: trainingModuleStatus, error: modulesError} = useGetTrainingsQuery<trainingApi>(undefined, {skip: !loggedIn})
     // Change For Manager and sales rep
@@ -65,6 +72,7 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     // For Manager Accounts
     const {data: teamMembers, status: teamDataStatus, error: teamDataError} = useGetTeamQuery<getTeamsApi>(undefined, {skip: !loggedIn})
 
+    const platformData = platforms?.data
     const salesRepData = salesRep?.data
     const teamRolesData = teamRoles?.data
     const teamData = teamMembers?.data?.data
@@ -81,7 +89,9 @@ function DataContextProvider({ children }: { children: ReactNode }) {
         teamData,
         teamDataStatus,
         trainingModuleData,
-        trainingModuleStatus
+        trainingModuleStatus,
+        platformData,
+        platformStatus
     }
 
     return (

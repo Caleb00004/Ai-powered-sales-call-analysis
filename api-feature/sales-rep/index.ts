@@ -1,6 +1,7 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SalesrepType } from './salesrep-type';
+import { successResponseType } from '../types';
 
 const salesRepEndpoints = (
         builder: EndpointBuilder<
@@ -43,6 +44,13 @@ const salesRepEndpoints = (
             query: (id) => ({
                 url: `/sales-rep/${id}/activities`,
                 method: "GET",
+            })
+        }),
+        postSendSalesrepMessage: builder.mutation<undefined, {userId: number, content: string}>({
+            query: ({userId, content}) => ({
+                url: `/sales-rep/${userId}/send-message`,
+                method: 'POST',
+                body: {content: content},
             })
         }),
 })
