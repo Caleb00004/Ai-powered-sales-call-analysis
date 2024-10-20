@@ -73,9 +73,14 @@ function ContextProvider({children}: { children: ReactNode }) {
 
 
     useEffect(() => {
-        if (status === "rejected") {
+        const toastId = toast
+
+        if (status === "pending") {
+            toastId.loading("loading")
+        } else if (status === "rejected") {
             // @ts-ignore
             if (error?.data?.message === "Please verify your email") {
+                toastId.dismiss()
                 toast.error("Error, Verify Email!");
                 const goToSection: OnboardingQueryParams['goToSection'] = "checkmail";
 
@@ -86,15 +91,16 @@ function ContextProvider({children}: { children: ReactNode }) {
             // @ts-ignore
             } else if (error?.data?.message === "No company selected") {
                 toast.error("No Company Selected")
+                toastId.dismiss()
                 router.push("/company-setup")
             } else {
+                toastId.dismiss()
                 toast.error("Error occured, reload page")
             }
 
             return            
-        }
-
-        if (status === "fulfilled") {
+        } else if (status === "fulfilled") {
+            toastId.dismiss()
             setUserProfile(data?.data)
             const account_type = data?.data?.company?.role.toLowerCase()
             // @ts-ignore
