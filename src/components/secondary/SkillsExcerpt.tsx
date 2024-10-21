@@ -2,6 +2,7 @@ import React, { FC, Suspense } from "react"
 import { getProgressColor } from "./Pagination"
 import { APISTATUS, insightsType } from "../../../api-feature/types"
 import Loading from "./LoadingSpinner"
+import { teamRatingType } from "../../../api-feature/team-rating/teamrating-type"
 
 const LazyPaginationComponent = React.lazy(() => import("./Pagination"))
 
@@ -35,13 +36,13 @@ export const skillsData = [
 
 interface props {
     className?: string
-    data: insightsType[]
-    status: APISTATUS
+    data: insightsType[] | teamRatingType[]
+    status: APISTATUS;
+    teamRating?: boolean
 }
 
-const SkillsExcerpt:FC<props> = ({className, data, status}) => {
-    console.log(data)
-    console.log(status)
+const SkillsExcerpt:FC<props> = ({className, data, status, teamRating}) => {
+
     return (
         <div className={`bg-white mdx3:min-h-[80vh] px-3 py-6 border rounded-md  ${className ? className : "flex-[0.8] mdx5:flex-[1]"}`}>
             {status === "uninitialized" && 
@@ -76,13 +77,13 @@ const SkillsExcerpt:FC<props> = ({className, data, status}) => {
                         renderItems={(data) => (
                             data?.map((item, index) => (
                                 <div className="flex flex-col mdx4:flex-row text-[#333333] font-[500] justify-between py-3 border-b" key={index}>
-                                    <p className="flex flex-1 "><span className="mr-7">{index + 1}</span> {item?.skillSymbol} = {item?.skill} </p>
+                                    <p className="flex flex-1 text-[14px] "><span className="mr-7">{index + 1}</span> {item?.skillSymbol} = {teamRating ? item?.skillName : item?.skill} </p>
                                     <div className="flex gap-4 items-center flex-1">
                                         <div className="relative w-[100%] h-4 bg-gray-200 ">
-                                            <div className={`h-4 ${getProgressColor(item?.grade)}`} style={{ width: `${item?.grade}%` }}>
+                                            <div className={`h-4 ${getProgressColor(teamRating ? item?.currentAvg : item?.grade)}`} style={{ width: `${teamRating ? item?.currentAvg : item?.grade}%` }}>
                                             </div>
                                         </div>
-                                        <p>{item?.grade}</p>
+                                        <p>{teamRating ? item?.currentAvg : item?.grade}</p>
                                     </div>
                                 </div>                                
                             ))

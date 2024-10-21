@@ -8,6 +8,8 @@ import { APISTATUS } from "../../../../api-feature/types"
 import Loading from "@/components/secondary/LoadingSpinner"
 import { notesType } from "../../../../api-feature/deals/deal-type"
 import { formatDateAndTime } from "@/components/util/helperFunctions"
+import Dropdown from "@/components/secondary/Dropdown"
+import DropdownItem from "@/components/secondary/DropdownItem"
 
 interface props {
     notesData: notesType[];
@@ -19,50 +21,77 @@ interface props {
 const DealNotes:FC<props> = ({notesData, dealId, loading: getLoading, error}) => {
     const [note, setNote] = useState("")
     const [createNote] = usePostCreateNoteMutation()
+    const [openDropdown, setOpenDropdown] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [editing, setEditing] = useState<{isEditing: boolean, note: string, id?: number}>({
+        isEditing: false,
+        note: "",
+        id: undefined
+    })
 
     const dateAndTime = (dateString: string) => {
         const {time, date} = formatDateAndTime(dateString)
-
         return `${time} ${date}`
     }
 
-    const handleCreateNote = () => {
-        const toastId = toast.loading("loading")
+    const closeDropDown = () => {
+        setOpenDropdown(null)
+    }
 
-        setLoading(true)
+    const handleDropDown = (id: number) => {
+        // @ts-ignore
+        setOpenDropdown(openDropdown === id ? null : id); // Toggle the dropdown for clicked item
+    };
+
+    const handleSubmitNote = async () => {
+        const toastId = toast.loading("loading")
         
         try {
-            createNote({message: note, id: dealId}).unwrap()
+            setLoading(true)
+
+            await createNote({message: note, id: dealId}).unwrap()
                 .then(fulfilled => {
-                    setLoading(false)
-                    toast.dismiss(toastId)
                     setNote("")
                     toast.success("Note Updated")
-                    console.log(fulfilled)
                 })
                 .catch(rejected => {
-                    setLoading(false)
-                    toast.dismiss(toastId)
                     toast.error("Error occured")
-                    console.log(rejected)
                 })
         } catch(error) {
-            setLoading(false)
-            toast.dismiss(toastId)
             toast.error("Error occured")
+        } finally {
+            toast.dismiss(toastId)
+            setLoading(false)
         }
     }
 
+    const handleUpdateNote = () => {
+
+    }
+
+    const handleStartEditing = (id: number, note: string) => {
+        setEditing({isEditing: true, note: note, id: id})        
+    }
+
     return (
-        <div className="bg-white flex flex-col border pt-6 h-[70vh] sm:h-[75vh]">
-            <div className="flex flex-col gap-4 p-3 overflow-auto">
+        <div className="bg-white flex flex-col border pt-6 h-[70vh] sm:h-[75vh] relative">
+            {editing.isEditing && 
+                <p 
+                    onClick={() => {setEditing({isEditing: false, note: "", id: undefined})}} 
+                    className="absolute cursor-pointer top-2 right-4 z-[2] text-[12px] bg-red-600 text-white px-2 py-[3px] rounded-xl flex items-center"
+                >
+                    <p className="bg-red-400 px-[6px] origin-left rounded-full scale-[0.7]">x</p> 
+                    Stop Editing
+                </p>
+            }
+
+            <div className="flex flex-col gap-4 p-3 overflow-auto h-full">
                 {getLoading && <Loading />}
                 {error && <p className="text-red-500 italic text-center">An Error Occured</p>}
-                {(!loading && !error) && notesData.length <= 0 && <p>No notes Available</p>}
-                {notesData?.map(item => (
+                {(!loading && !error && !getLoading) && notesData.length <= 0 && <p>No notes Available</p>}
+                {(!getLoading && !error) && notesData?.map((item, i) => (
                     <div className="flex w-full rounded-lg flex-shrink-0 bg-[#6FA9E21A] px-2 pt-2 pb-4 gap-3 relative">
-                        <div onClick={() => console.log("CJJ")}  className=" absolute right-4 rotate-[90deg] scale-[0.8] py-2 cursor-pointer">
+                        <div onClick={() => handleDropDown(i)} className=" absolute right-4 rotate-[90deg] scale-[0.8] py-2 cursor-pointer">
                             <MoreIcon  />
                         </div>
                         <div className="bg-slate-600 flex-shrink-0 h-8 w-8 rounded-full  "></div>
@@ -73,14 +102,30 @@ const DealNotes:FC<props> = ({notesData, dealId, loading: getLoading, error}) =>
                             </div>
                             <p className="text-[#6D6D6D] font-[400] text-[15px] w-[95%]">{item?.message}</p>
                         </div>
+                        <Dropdown className="right-0 ml-auto mt-1 z-[2]" isOpen={openDropdown === i}>
+                            <DropdownItem onClick={() => (handleStartEditing(i, item.message), closeDropDown())} text="Edit" />
+                            <DropdownItem onClick={() => closeDropDown()} text="Delete" />
+                        </Dropdown>
                     </div>
                 ))}
             </div>
             <div className="bg-white flex items-center gap-3 border-t mt-auto p-3">
                 <AttachmentIcon />
                 <div className="flex w-full relative">
-                    <button disabled={loading} onClick={handleCreateNote} className=" disabled:cursor-not-allowed"><SendIcon className="absolute right-4 bottom-2 cursor-pointer text-[#0073E6]"/></button>
-                    <input className="bg-[#F8F9FD] w-full px-4 py-2 rounded-3xl" type="text" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Type your message here..." />
+                    <button
+                        disabled={loading} 
+                        onClick={editing.isEditing ? handleUpdateNote : handleSubmitNote} 
+                        className=" disabled:cursor-not-allowed"
+                    >
+                        <SendIcon className="absolute right-4 bottom-2 cursor-pointer text-[#0073E6]"/>
+                    </button>
+                    <input 
+                        className="bg-[#F8F9FD] w-full px-4 py-2 rounded-3xl" 
+                        type="text" 
+                        value={editing.isEditing ? editing.note : note}
+                        onChange={(e) => editing.isEditing ? setEditing(prev => ({...prev, note: e.target.value})) : setNote(e.target.value)}
+                        placeholder="Type your message here..." 
+                    />
                 </div>
             </div>
         </div>  

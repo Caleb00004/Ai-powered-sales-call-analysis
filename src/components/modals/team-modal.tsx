@@ -35,7 +35,7 @@ const TeamsModal:FC<props> = ({modalOpen, modalType, updateLoading, handleOnChan
                 isOpen={modalOpen}
                 onClose={(loading || updateLoading) ? () => {} : closeModal}
             >
-                {modalType === "add-team" && <form onSubmit={handleCreateTeam} className="pt-7 pb-12 px-14">
+                {modalType === "add-team" && <form onSubmit={handleCreateTeam} className="pt-7 pb-12 px-6 sm:px-14">
                 <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Create New Team</p>
                 <Input 
                     className="mb-[8px]"
@@ -99,7 +99,7 @@ const TeamsModal:FC<props> = ({modalOpen, modalType, updateLoading, handleOnChan
                 </Button>
             </form>}
             {modalType === "Edit" && 
-                <div className="pt-7 pb-12 px-14">
+                <div className="pt-7 pb-12 px-6 sm:px-14">
                     <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Edit Role and Permissions</p>
                     <Input 
                         className="mb-[8px]"
@@ -117,7 +117,7 @@ const TeamsModal:FC<props> = ({modalOpen, modalType, updateLoading, handleOnChan
                         select
                         options={roleOptions}
                         label={<label className="text-[#333333] font-medium text-[0.9em]">Role</label>} 
-                        placeholder="Enter Position"
+                        placeholder="Select Role"
                         type="text"
                         name="role"
                     /> 
@@ -126,7 +126,7 @@ const TeamsModal:FC<props> = ({modalOpen, modalType, updateLoading, handleOnChan
                             <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{teamRolesData.find(item => item.id === Number(itemValue))?.name}</span> <Xicon onClick={() => handleRemoveRole(itemValue, true)} className="scale-[0.8]" /></p>
                         ))}
                     </div>
-                    <Button onClick={handleUpdateRolePosition} disabled={loading} type="submit" className="mt-3 disabled:cursor-not-allowed disabled:bg-slate-600 h-10">
+                    <Button onClick={handleUpdateRolePosition} disabled={updateLoading || !editDetails.position || editDetails.role.length <= 0} type="submit" className="mt-3 disabled:cursor-not-allowed disabled:bg-slate-600 h-10">
                         {updateLoading ? <ActivityIndicator /> : "Save"}
                     </Button>
                 </div>

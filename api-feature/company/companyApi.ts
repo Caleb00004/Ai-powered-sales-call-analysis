@@ -14,7 +14,7 @@ const companyEndpoints = (
             body: body,
         })
     }),
-    getCompanies: builder.query({
+    getCompanies: builder.query<undefined, void>({
         query: () => ({
             url: "/company/user-companies",
             method: "GET",

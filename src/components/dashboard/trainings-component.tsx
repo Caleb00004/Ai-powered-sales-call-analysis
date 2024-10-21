@@ -142,18 +142,18 @@ const TrainingsComponent = () => {
                             </div>
                         </div>
                         <Search showIcon className="w-[100%]" value="" onChange={() => {}} />
-                        <div className="flex flex-col mt-2 ">
+                        <div className="flex flex-col mt-2 min-h-[10em] mdx2:min-h-auto ">
                             {trainingModuleStatus === "rejected" && <p className="text-red-500 italic mt-6 text-center">Error occured</p>}
                             {trainingModuleStatus === "pending" && <Loading customStyle={{marginTop: 20}} />}
                             {trainingModuleStatus === "fulfilled" && 
                                 <>
                                     {trainingModuleData?.map((item, i) => (
-                                        <div key={i} onClick={() => (setSelectedModule(item))} className={`relative flex ${item.id === selectedModule.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
-                                            <p>{item.title}</p>
-                                            <div onClick={() => (closeAllDropdowns(), handleModulesDropDown(item.id))} className=" h-4 flex items-center">
+                                        <div key={i} onClick={() => (setSelectedModule(item))} className={`relative flex ${item?.id === selectedModule?.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
+                                            <p>{item?.title}</p>
+                                            <div onClick={() => (closeAllDropdowns(), handleModulesDropDown(item?.id))} className=" h-4 flex items-center">
                                                 <MoreIcon className="rotate-[90deg] scale-[0.7]" />
                                             </div>
-                                            <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openModulesDropdown === item.id}>
+                                            <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openModulesDropdown === item?.id}>
                                                 <DropdownItem onClick={() => (openModal("assign-training"), closeAllDropdowns())} text="Assign Training" />
                                                 <DropdownItem onClick={() => {}} text="View Description" />
                                                 <DropdownItem onClick={() => {}} text="View Team Progresss" />

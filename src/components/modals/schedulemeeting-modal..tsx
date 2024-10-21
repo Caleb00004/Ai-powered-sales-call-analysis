@@ -44,6 +44,12 @@ const ScheduleMeetingModal:FC<props> = ({modalOpen, closeModal, dealId}) => {
                 .then(fulfilled => {
                     toast.success("Meeting scheduled")
                     closeModal()
+                    setMeetingDetails({
+                        name: "",
+                        platform: undefined,
+                        date: "",   
+                        time: "",
+                    })
                 })
                 .catch(rejected => {
                     console.error(rejected)

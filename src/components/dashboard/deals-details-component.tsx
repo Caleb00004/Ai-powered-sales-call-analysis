@@ -113,7 +113,26 @@ const DealdetailsComponent = () => {
                 // flex: 1,
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 150,
-                headerName: "Date"
+                cellClassName: "date-column--cell",
+                headerName: "Date",
+                renderCell: (params) => {
+                    const {date} = params.row
+                    const dateObject = new Date(date);
+
+                    const getDate = dateObject.toLocaleDateString();
+
+                    let time = dateObject.toLocaleTimeString();
+                    time = time.split(':').slice(0, 2).join(':') + ' ' + time.split(' ')[1];  // "6:50 PM"
+
+
+                    //.log(params)
+                    return (
+                        <div className="flex flex-col">
+                            <p className="leading-3 mt-2">{getDate}</p>
+                            <p className="leading-6 ">{time}</p>
+                        </div>
+                    )
+                },
             },
             {
                 field: "status",

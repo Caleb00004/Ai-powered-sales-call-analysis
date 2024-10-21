@@ -60,9 +60,7 @@ export interface subscriptionType {
 }
 
 export interface insightsType {
-    potentialRating: string;
-    skills: {skill: string; grade: number; skillSymbol: string}[]
-    pagination: paginatedDataType
+    skill: string; grade: number; skillSymbol: string
 }
 
 export interface platformType {

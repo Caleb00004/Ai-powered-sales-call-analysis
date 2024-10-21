@@ -65,7 +65,7 @@ const AssignTrainingModal:FC<props> = ({selectedModule, teamMembers, modalOpen, 
             onClose={loading ? () => {} : closeModal}
         >
             {modalType === "assign-topic" ? 
-                <div className="pt-7 pb-12 px-14">
+                <div className="pt-7 pb-12 px-6 sm:px-14">
                     <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Topic</p>
                     <Input 
                         disabled
@@ -108,7 +108,7 @@ const AssignTrainingModal:FC<props> = ({selectedModule, teamMembers, modalOpen, 
                     </Button>
                 </div>
                 : 
-                <div className="pt-7 pb-12 px-14">
+                <div className="pt-7 pb-12 px-6 sm:px-14">
                     <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Training</p>
                     <Input 
                         disabled

@@ -12,11 +12,11 @@ import toast from "react-hot-toast";
 interface props {
     modalOpen: boolean;
     closeModal: () => void;
-    dealStagesData: dealStagesType[];
+    dealOptions: {name: string, value: number}[];
     salesRep: {name: string, value: number}[]
 }
 
-const NewdealModal:FC<props> = ({modalOpen, closeModal, salesRep, dealStagesData}) => {
+const NewdealModal:FC<props> = ({modalOpen, closeModal, salesRep, dealOptions}) => {
     const [createDeal] = usePostCreateDealMutation()
     const [loading, setLoading] = useState(false)
     const [newDealDetails, setNewDealDetails] = useState<dealFormType>({
@@ -89,15 +89,13 @@ const NewdealModal:FC<props> = ({modalOpen, closeModal, salesRep, dealStagesData
         }
 
     }
-    const dealOptions = [] as {value: string | number, name: string}[]
-    dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
 
     return (
          <Modal
             isOpen={modalOpen}
             onClose={loading ? () => {} : closeModal}
         >
-            <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-14">
+            <form onSubmit={handleAddNewDeal} className="pt-7 pb-12 px-6 sm:px-14">
                 <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Deal</p>
                 <Input 
                     className="mb-[8px]"

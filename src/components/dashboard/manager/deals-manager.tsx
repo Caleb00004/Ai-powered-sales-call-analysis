@@ -130,7 +130,7 @@ const DealsManager = () => {
         setSelectedDeal(prev => ({...prev, [name]: value}))
     }
 
-    const dealOptions = [] as {value: string | number, name: string}[]
+    const dealOptions = [] as {value: number, name: string}[]
     dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
 
     const salesRepOptions = [] as {value: number | number, name: string}[]
@@ -141,6 +141,7 @@ const DealsManager = () => {
             <EditTableModal 
                 isOpen={modalOpen}
                 onClose={closeModal}
+                dea
                 // @ts-ignore
                 cellData={selectedDeal}
                 handleValueChange={handleEditChange}
@@ -149,8 +150,7 @@ const DealsManager = () => {
                 modalOpen={dealModalOpen}
                 closeModal={closeDealModal}
                 salesRep={salesRepOptions}
-                // @ts-ignore
-                dealStagesData={dealStagesData}
+                dealOptions={dealOptions}
             />
             
             <div className="flex justify-between items-center">

@@ -6,12 +6,13 @@ import TeamDistribution from "../ui/dashboard/TeamDistribution"
 import TopPerformance from "../ui/dashboard/TopPerformance"
 
 interface teamratingApi extends ApiType {
-    data: {data: {data: teamRatingType[], page: number, totalPage: number, totalUser: number}}, success: boolean
+    // data: {data: {data: teamRatingType[], page: number, totalPage: number, totalUser: number}}, success: boolean
+    data: {data: teamRatingType[], success: boolean}
 }
 
 const TeamRatingComponent = () => {
     const {data, status, error} = useGetTeamRatingQuery<teamratingApi>({start: "", end: ""})
-
+    console.log(data)
     return (
         <div className="text-[#333333]">
             <div className="flex justify-between">
@@ -31,8 +32,7 @@ const TeamRatingComponent = () => {
                     </div>
                 </div>
                 <div className=" flex flex-col flex-[1]">
-                    {/* @ts-ignore */}
-                    <SkillsExcerpt data={data?.data?.data} status={status} />
+                    <SkillsExcerpt teamRating data={data?.data} status={status} />
                 </div>
             </div>
         </div>
