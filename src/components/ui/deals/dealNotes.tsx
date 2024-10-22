@@ -96,7 +96,7 @@ const DealNotes:FC<props> = ({notesData, dealId, loading: getLoading, error}) =>
                         </div>
                         <div className="bg-slate-600 flex-shrink-0 h-8 w-8 rounded-full  "></div>
                         <div>
-                            <div className="flex gap-8 mb-2 items-center ">
+                            <div className="flex flex-col sm:flex-row sm:gap-8 mb-2 items-start sm:items-center ">
                                 <p className=" text-[#333333] text-[18px] font-[500]">{item?.user?.firstName} {item?.user?.lastName}</p>
                                 <p className="text-[#6D6D6D] text-[13.5px] font-[500]">{dateAndTime(item?.updatedAt)}</p>
                             </div>

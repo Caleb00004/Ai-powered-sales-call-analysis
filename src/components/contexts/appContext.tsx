@@ -71,7 +71,6 @@ function ContextProvider({children}: { children: ReactNode }) {
         setToastDetails({open: true, duration, message})
     }
 
-
     useEffect(() => {
         const toastId = toast
 
@@ -108,6 +107,8 @@ function ContextProvider({children}: { children: ReactNode }) {
             // @ts-ignore
             setAccountType(account_type)
             setLoggedIn(true)
+        } else {
+            toastId.dismiss()
         }
     },[status])
 

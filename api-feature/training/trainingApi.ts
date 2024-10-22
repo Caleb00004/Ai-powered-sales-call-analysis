@@ -41,7 +41,6 @@ const trainingEndpoints = (
     }),
     getUserTopicProgress: builder.query<undefined, {trainingId: number, userId: number}>({
         query: (body) => {
-            console.log(body)
             const {trainingId, userId} = body
             return {
                 url: `/training/user-topic-progress/${userId}/${trainingId}`,

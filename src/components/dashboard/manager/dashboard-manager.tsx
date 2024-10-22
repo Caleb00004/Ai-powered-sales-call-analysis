@@ -57,9 +57,9 @@ const ManagerDashboard = () => {
                                 <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Total calls Analyzed</p>
                             </div>
-                            <div className="flex gap-1 items-center">
+                            {/* <div className="flex gap-1 items-center">
                                 <MoreIcon />
-                            </div>
+                            </div> */}
                         </div>
                         <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">800</h1>
                         <p className="text-[#828282] text-[12px]">sales calls analyzed this month</p>
@@ -70,9 +70,9 @@ const ManagerDashboard = () => {
                                 <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Average Performance Score</p>
                             </div>
-                            <div className="flex gap-1 items-center">
+                            {/* <div className="flex gap-1 items-center">
                                 <MoreIcon />
-                            </div>
+                            </div> */}
                         </div>
                         <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">87%</h1>
                         <p className="text-[#828282] text-[12px]">Average performance grade of all analyzed calls</p>
@@ -83,9 +83,9 @@ const ManagerDashboard = () => {
                                 <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Top Performer</p>
                             </div>
-                            <div className="flex gap-1 items-center">
+                            {/* <div className="flex gap-1 items-center">
                                 <MoreIcon />
-                            </div>
+                            </div> */}
                         </div>
                         <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">Elizabeth Parker</h1>
                         <p className="text-[#828282] text-[12px]">Highest-performing salesperson</p>
@@ -96,9 +96,9 @@ const ManagerDashboard = () => {
                                 <CallIcon className="flex-shrink-0" />
                                 <p className=" text-[14px] font-[600]">Improvement Areas</p>
                             </div>
-                            <div className="flex gap-1 items-center">
+                            {/* <div className="flex gap-1 items-center">
                                 <MoreIcon />
-                            </div>
+                            </div> */}
                         </div>
                         <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">10</h1>
                         <p className="text-[#828282] text-[12px]">Calls flagged for needing improvement.</p>

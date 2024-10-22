@@ -78,9 +78,10 @@ const ScheduleMeetingModal:FC<props> = ({modalOpen, closeModal, dealId}) => {
     return (
         <Modal
             isOpen={modalOpen}
-            onClose={loading ? () => {} : closeModal}
+            onClose={(loading ? () => {} : closeModal)}
+            closeOnClickOutside={false}
         >
-            <form onSubmit={handleScheduleMeeting} className="pt-7 pb-12 px-14 ">
+            <form onSubmit={handleScheduleMeeting} className="pt-7 pb-12 px-6 sm:px-14">
                 <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Schedule Meeting</p>
                 <Input 
                     className="mb-[15px]"

@@ -11,7 +11,7 @@ import TrainingIcon from "../../../public/svgs/dashboardIcons/trainings-icon.svg
 import ArrowIcon from "../../../public/svgs/arrow2-icon.svg"
 import { useRouter } from "next/router"
 import gsap from "gsap"
-import { FC, useEffect, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { globalState } from "../../../api-feature/apiSlice"
 import CompanyIcon from "../../../public/svgs/dashboardIcons/user-edit.svg"
 import SystemIcon from "../../../public/svgs/dashboardIcons/frame.svg"
@@ -19,6 +19,7 @@ import SubscriptionIcon from "../../../public/svgs/dashboardIcons/dollar-square.
 import FolderIcon from "../../../public/svgs/dashboardIcons/folder-cloud.svg"
 import SettingIcon from "../../../public/svgs/dashboardIcons/setting-2.svg"
 import ArrowDownIcon from "../../../public/svgs/dashboardIcons/arrow-down.svg"
+import { appContext } from "../contexts/appContext"
 
 const NavDropItem:FC<{text: string, onClick: () => void, currentTab: boolean}> = ({text, onClick, currentTab}) => {
     return (
@@ -34,7 +35,8 @@ const SideNav = () => {
     const router = useRouter()
     const splitName = router.pathname.split('/')
     const routeName = splitName[2]
-    const ACCOUNT_TYPE = globalState.account_type
+    const {accountType: ACCOUNT_TYPE} = useContext(appContext)
+    // const ACCOUNT_TYPE = globalState.account_type
     const [displayDropdown, setDisplayDropdown] = useState({display: false, type: "" as "company" | "system" | "subscription"})
     // const routeName = router.pathname.split('/').slice(2).join('/')
     const currentTab = splitName[3]

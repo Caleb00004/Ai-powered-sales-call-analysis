@@ -59,7 +59,6 @@ const dealsEndpoints = (
             method: 'GET',
         }),
         transformResponse: res => {
-            console.log(res)
             // @ts-ignore
             return res.data as dealStagesType[]
         }

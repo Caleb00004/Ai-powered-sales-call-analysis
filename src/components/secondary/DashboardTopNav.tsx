@@ -134,7 +134,7 @@ const TopNav = () => {
                     <div className="p-1" onClick={handleHelpDropdown}>
                         <HelpIcon />
                     </div>
-                    <Dropdown isOpen={helpDropDown} className="mt-4">
+                    <Dropdown isOpen={helpDropDown} className="mt-4 left-0">
                         <DropdownItem text="FAQ" onClick={() => (handleHelpDropdown(), openModal("faq"))} />
                         <DropdownItem text="Contact Support" onClick={() => (handleHelpDropdown(), openModal("support"))} />
                     </Dropdown>

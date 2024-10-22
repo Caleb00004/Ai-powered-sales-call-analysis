@@ -42,7 +42,7 @@ const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRow
     }
 
     const getNestedFieldValue = (obj: Record<string, any>, path: string): any => {
-        return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+        return path?.split('.').reduce((acc, part) => acc && acc[part], obj);
     };
 
     return (
