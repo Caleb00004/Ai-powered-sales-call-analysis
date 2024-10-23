@@ -33,7 +33,7 @@ const SkillsManager = () => {
                     <p className="font-[600] text-[17px] ">Team Skills</p>
                     <p className="font-[600] text-[17px] ">Trend</p>
                 </div>
-                <div className=" py-1 w-full  sm:h-auto sm:min-h-[75vh]">
+                <div className=" py-1 w-full  mdx5:h-auto mdx5:min-h-[75vh]">
                     <PaginationComponent 
                         loading={skillsTrendStatus === "pending"}
                         error={skillsTrendStatus === "rejected"}
@@ -79,8 +79,8 @@ const SkillsManager = () => {
                                             <p>Rating</p>
                                         </div>
                                         <div className="flex flex-1 justify-end  font-[400] text-[#5B5B5B] items-center gap-2">
-                                            <FilterIcon className="h-4 w-4 text-[#C32782]" />
-                                            <p className="text-[#5B5B5B] text-[14px]">filter by</p>
+                                            {/* <FilterIcon className="h-4 w-4 text-[#C32782]" />
+                                            <p className="text-[#5B5B5B] text-[14px]">filter by</p> */}
                                         </div>
                                     </div>
                                     {data?.length <= 0 && <p className="m-auto flex items-center justify-center h-[63vh]">No Data</p>}

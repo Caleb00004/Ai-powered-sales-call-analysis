@@ -47,7 +47,10 @@ const TrainingTeamProgress = () => {
     
     const getUserProgress = (item: teamType) => {
         setSelectedMember(item)
-        !skip && refetch()
+        // setTimeout(() => {
+        //     console.log("RAN")
+        //     !skip && refetch()
+        // },4000) 
     }
 
     return (
