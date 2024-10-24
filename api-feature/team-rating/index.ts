@@ -26,7 +26,7 @@ const teamRatingEndpoints = (
         getTeamRating: builder.query<teamRatingType[], {start: string, end: string}>({
             query: (date) => ({
                 url: "/ratings",
-                params: {startData: date.start, endDate: date.end},
+                params: {startDate: date.start, endDate: date.end},
                 method: "GET",
             })
         }),

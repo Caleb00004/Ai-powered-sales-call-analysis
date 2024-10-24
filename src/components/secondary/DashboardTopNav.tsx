@@ -126,7 +126,7 @@ const TopNav = () => {
         {/* NORMAL */}
         <div className="bg-white px-4 py-4 flex items-center justify-between border-b border-b[#D4D4D4] z-[8] relative">
             <div className="hidden sm:block ">
-                <Search showIcon value={""} className="w-[14em] mdx4:w-[20em]" onChange={() => {}} />
+                {/* <Search showIcon value={""} className="w-[14em] mdx4:w-[20em]" onChange={() => {}} /> */}
             </div>
 
             <div className="flex gap-3 items-center">

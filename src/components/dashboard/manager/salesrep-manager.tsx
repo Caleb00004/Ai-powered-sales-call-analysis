@@ -147,7 +147,7 @@ const SalesRepManager = () => {
                 <DropdownItem className='py-1 px-2' onClick={() => {}} text="Message User" />
             </Dropdown>
         </>
-    
+        
     return (
         <div className="flex relative flex-col gap-[20px] w-full">
             <p onClick={() => setSection("table")} className={`${section === "details" ? "scale-[1] pointer-events-auto mb-5" : "scale-[0] pointer-events-none"} cursor-pointer h-0 transition-all w-[45px] text-[#333333] text-[18px]`}>Back</p>
@@ -171,7 +171,7 @@ const SalesRepManager = () => {
                         </div>
                         <div className='rounded-lg h-full gap-4 flex-[2] flex flex-col items-center mdx2:items-start sm:flex-row pt-4 mdx2:pt-0 '>
                             <div className='flex flex-1'><ProgressCircle type="progress" value={selectedSalesRep?.overall} size={110} label={<span>Overall<br />Rating</span>} /></div>
-                            <div className='flex flex-1'><ProgressCircle type="skill" value={"BT"} size={110} label="BT" /></div>
+                            <div className='flex flex-1'><ProgressCircle type="skill" value={Object.keys(selectedSalesRep?.skills)?.[0]} size={110} label={Object.keys(selectedSalesRep?.skills)?.[0]} /></div>
                             <div className='hidden mdx2:flex flex-[0.1] justify-between relative z-[2] '>
                                 {sectionDropdown}
                             </div>
@@ -214,7 +214,7 @@ const SalesRepManager = () => {
                                         <p>Deals</p>
                                     </div>
                                 </div>
-                                <ProgressCircle type="skill" value={"BT"} textClassname='text-[15px]' size={60} label="Building Trust" />
+                                <ProgressCircle type="skill" value={Object.keys(selectedSalesRep?.skills)?.[0]} textClassname='text-[15px]' size={60} label={Object.keys(selectedSalesRep?.skills)?.[0]} />
                             </div>
                         </div>
                     </div>
