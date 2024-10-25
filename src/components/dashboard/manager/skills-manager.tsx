@@ -50,7 +50,7 @@ const SkillsManager = () => {
                                         <p className="font-[500]">{item?.skillSymbol}</p>
                                         <div className="flex items-center justify-between gap-5 ">
                                             <p className={`${getProgressColor(item?.avgGrade)} h-6 rounded-md px-8 font-[600]`}>{item?.avgGrade}</p>
-                                            <p className="rotate-[90deg] p-1 scale-[0.9] rounded-full bg-[#2B2A3D99] text-white"><ArrowIcon classname="text-red-400" /></p>
+                                            <p className="rotate-[90deg] p-1 scale-[0.9] rounded-full bg-[#2B2A3D99] text-white"><ArrowIcon /></p>
                                         </div>
                                     </div>
                                 ))}

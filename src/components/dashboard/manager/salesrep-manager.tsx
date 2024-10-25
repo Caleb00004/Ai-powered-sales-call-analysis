@@ -1,9 +1,6 @@
 import React, { ChangeEvent, useCallback, useMemo, Suspense, useState, useRef } from 'react';
-import { callData } from "@/testData"
 import { GridColDef, GridEventListener } from '@mui/x-data-grid';
-import { Box, LinearProgress, MenuItem, Select } from '@mui/material';
 import { getGridNumericOperators } from '@mui/x-data-grid';
-import { callDataType } from '@/testData';
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import BookmarkIcon from "../../../../public/svgs/bookmark-icon.svg"
 import ProgressCircle from '@/components/secondary/ProgressCircle';
@@ -18,6 +15,8 @@ import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '.
 import { ApiType } from '../../../../api-feature/types';
 import { SalesRepPerformanceType } from '../../../../api-feature/manager-owner/sales-rep/salesrep-type';
 import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
+import { useRouter } from 'next/router';
+import useModal from '@/components/util/useModal';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -31,6 +30,8 @@ interface activitiesApi extends ApiType {
 
 const SalesRepManager = () => {
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
+    const {modalOpen, openModal, closeModal} = useModal()
+    const router = useRouter()
     const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
     const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
     const [searchInput, setSearchInput] = useState("")
@@ -144,8 +145,8 @@ const SalesRepManager = () => {
             <div onClick={handleDropDown}><MoreIcon className=" rotate-[90deg] translate-y-2 scale-[0.7]" /></div>
             <Dropdown isOpen={displayDropDown}>
                 <DropdownItem className='py-1 px-2' onClick={() => (setSection("details"), handleDropDown())} text='View User details' />
-                <DropdownItem className='py-1 px-2' onClick={() => {}} text='Schedule Training' />
-                <DropdownItem className='py-1 px-2' onClick={() => {}} text="Message User" />
+                <DropdownItem className='py-1 px-2' onClick={() => {router.push("/dashboard/trainings")}} text='Schedule Training' />
+                <DropdownItem className='py-1 px-2' onClick={() => {setSection("details"), openModal(), handleDropDown()}} text="Message User" />
             </Dropdown>
         </>
         
@@ -238,7 +239,14 @@ const SalesRepManager = () => {
             }
             {
                 section === "details" && 
-                <SalesRepDetails userId={selectedSalesRep?.user?.id} activitiesData={activitiesData} activitiesStatus={activitiesStatus} />
+                <SalesRepDetails 
+                    userId={selectedSalesRep?.user?.id} 
+                    activitiesData={activitiesData} 
+                    activitiesStatus={activitiesStatus} 
+                    modalOpen={modalOpen} 
+                    openModal={openModal} 
+                    closeModal={closeModal} 
+                />
             }
         </div>
     )

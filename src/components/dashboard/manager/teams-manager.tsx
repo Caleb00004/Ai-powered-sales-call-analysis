@@ -132,8 +132,8 @@ const TeamsManager = () => {
                     const {roles} = params.row
                     return (
                         <div className="flex flex-col">
-                            {roles?.map((item: string) => (
-                                <div className=" my-auto h-4">
+                            {roles?.map((item: string, i:number) => (
+                                <div key={i} className=" my-auto h-4">
                                    <p className="leading-3 mt-8">{item}</p>
                                 </div>
                             ))}

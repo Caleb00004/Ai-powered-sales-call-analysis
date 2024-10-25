@@ -14,6 +14,7 @@ import Loading from "../secondary/LoadingSpinner"
 import useModal from "../util/useModal"
 import MessageModal from "../modals/message-modal"
 import { getRandomColor } from "../util/helperFunctions"
+import { useRouter } from "next/router"
 
 interface areaofConcernApi extends ApiType {
     data: {success: boolean, data: AreaofconcernType[]}
@@ -30,11 +31,14 @@ interface scheduledTrainingApi extends ApiType {
 interface props {
     userId: number,
     activitiesData: {data: salesrepActivitiesType, success: boolean},
-    activitiesStatus: APISTATUS
+    activitiesStatus: APISTATUS,
+    modalOpen: boolean;
+    closeModal: () => void;
+    openModal: () => void
 }
 
-const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus}) => {
-    const {modalOpen, openModal, closeModal} = useModal()
+const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus, modalOpen, openModal, closeModal}) => {
+    const router = useRouter()
     const {data: areaofconcern, status: areaofConcerStatus, error: areaofconcernError} = useGetSalesrepAreaOfConcernQuery<areaofConcernApi>(userId)
     const {data: assignedData, status: assignedDealsStatus, error: assignedDealsError} = useGetSalesrepDealsQuery<assignedDealsApi>(userId)
     const {data: datatraining, status: trainingStatus, error: trainingError} = useGetSalesrepScheduledTrainingQuery<scheduledTrainingApi>(userId)
@@ -60,7 +64,7 @@ const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus}) =
             />
             <div className='flex w-[20em] gap-4 ml-auto'>
                 <Button onClick={openModal} className='text-[13px] py-1'>Message Elizabeth</Button>
-                <Button className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
+                <Button onClick={() => router.push("/dashboard/trainings")} className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
             </div>
             <div className='flex flex-col mdx5:flex-row gap-5 mt-5'>
                 <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
@@ -87,8 +91,8 @@ const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus}) =
                             hidePaginationStatus
                             itemsPerPage={5}
                             renderItems={(data) => (
-                                data?.map(item => (
-                                    <div className="flex h-full transition-all cursor-pointer py-2 justify-between items-center">
+                                data?.map((item, i) => (
+                                    <div key={i} className="flex h-full transition-all cursor-pointer py-2 justify-between items-center">
                                         <p className="font-[600] mb-auto text-[14px] text-[#333333] underline">{item.name}</p>
                                     </div>
                                 ))
@@ -134,8 +138,8 @@ const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus}) =
                             hidePaginationStatus
                             itemsPerPage={5}
                             renderItems={(data) => (
-                                data?.map(item => (
-                                    <div className="flex cursor-pointer mb-auto py-2 text-[#333333] text-[14px] justify-between items-center ">
+                                data?.map((item, i) => (
+                                    <div key={i} className="flex cursor-pointer mb-auto py-2 text-[#333333] text-[14px] justify-between items-center ">
                                         <div className='flex items-center'>
                                             <MoreIcon className="rotate-[90deg]" />
                                             <div>

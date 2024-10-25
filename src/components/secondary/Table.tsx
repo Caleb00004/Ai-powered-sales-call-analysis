@@ -44,7 +44,7 @@ const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRow
     const getNestedFieldValue = (obj: Record<string, any>, path: string): any => {
         return path?.split('.').reduce((acc, part) => acc && acc[part], obj);
     };
-
+    
     return (
         <div className="bg-white p-4 rounded-2xl  ">
             {!hideHeader && <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">{title ? title : "Durekt Table"}</h1>}

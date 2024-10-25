@@ -49,6 +49,8 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
             setUserProfile(data)
             globalState.account_type = data.company.role.toLowerCase()
             setAccountType(data.company.role.toLowerCase())
+            // globalState.account_type = "sales-rep"
+            // setAccountType("sales-rep")
             router.push("/dashboard")
         } catch (error) {
             // @ts-ignore

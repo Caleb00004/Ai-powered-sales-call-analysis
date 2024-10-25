@@ -5,7 +5,6 @@ interface props {
 }
 
 const Loading:FC<props> = ({customStyle = {}}) => {
-    console.log(customStyle)
 
     const isObjectEmpty = Object.keys(customStyle).length === 0
 

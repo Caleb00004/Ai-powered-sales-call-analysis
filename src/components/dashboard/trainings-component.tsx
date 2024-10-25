@@ -176,7 +176,7 @@ const TrainingsComponent = () => {
                         }
                         {selectedModule.id && selectedModule?.TrainingTopic?.map((item, i) => {
                             return (
-                                <div className="flex py-4 text-[15px] font-[500] justify-between border-b relative">
+                                <div key={i} className="flex py-4 text-[15px] font-[500] justify-between border-b relative">
                                     <div className="flex gap-16 pl-3 flex-1">
                                         <p>{i+1}</p>
                                         <p>{item?.title}</p>

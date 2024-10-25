@@ -19,7 +19,6 @@ const DealSalesrep = () => {
         setIsLargeScreen(window.innerWidth > 940);
     })
 
-    
     const filteredRows = useMemo(() => {
         return rows.filter(row =>
             row.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -90,10 +89,12 @@ const DealSalesrep = () => {
             </div>
 
             <Table 
+                loading={false}
                 filteredRows={filteredRows}
                 columns={columns}
                 searchInput={searchInput}
                 handleSearchChange={handleSearchChange}
+                getRowIdField="id"
             />
         </div>
     )

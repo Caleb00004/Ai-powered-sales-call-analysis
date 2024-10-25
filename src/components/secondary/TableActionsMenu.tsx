@@ -25,7 +25,7 @@ const TableActionsMenu:FC<props> = ({data, options}) => {
     return (
         <>
             <IconButton onClick={handleOpen}>
-                 <div className=" cursor-pointer h-[30px] flex items-center ">
+                <div className=" cursor-pointer h-[30px] flex items-center ">
                     <MoreIcon className=" rotate-[90deg] scale-[0.7]" />
                 </div>
             </IconButton>
@@ -35,8 +35,6 @@ const TableActionsMenu:FC<props> = ({data, options}) => {
                 onClose={handleClose}
             >
                 <div onClick={handleClose}>{options}</div>
-                {/* <MenuItem onClick={handleClose}>Edit</MenuItem>
-                <MenuItem onClick={handleClose}>Delete</MenuItem> */}
             </Menu>
         </>
     );

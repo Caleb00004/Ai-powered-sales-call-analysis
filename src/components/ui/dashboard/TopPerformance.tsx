@@ -38,7 +38,7 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
                         </tr>
                     </tbody>
                     {data?.data?.map((item, i) => (
-                        <tbody className="gap-4 ">
+                        <tbody key={i} className="gap-4 ">
                             <tr>
                                 <td className="flex items-center gap-2 mb-3 ">
                                     <p className="text-[12px] font-[600]">{i+1}</p> 

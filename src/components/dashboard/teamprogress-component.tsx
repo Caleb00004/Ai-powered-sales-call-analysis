@@ -68,7 +68,7 @@ const TrainingTeamProgress = () => {
                     <div className="relative flex items-center gap-2 ml-auto">
                         <p className="font-[500] ">Module:</p>
                         <div onClick={handleDropDown} className="border border-[#A4A4A4] cursor-pointer font-[500] text-[14px] rounded-lg flex justify-between items-center gap-10 pl-2">
-                            <p>{trainingModuleStatus === "pending" ? "loading" : trainingModuleStatus === "rejected" ? <span className="text-red-500 italic">"Error occured"</span> : trainingModuleStatus === "fulfilled" && <p>{currentModule?.title}</p>}</p>
+                            <p>{trainingModuleStatus === "pending" ? "loading" : trainingModuleStatus === "rejected" ? <span className="text-red-500 italic">"Error occured"</span> : trainingModuleStatus === "fulfilled" && <span>{currentModule?.title}</span>}</p>
                             <ArrorwIcon className="scale-[0.9]" />
                         </div>
 
@@ -95,8 +95,8 @@ const TrainingTeamProgress = () => {
                     <Search showIcon className="w-[100%]" value="" onChange={() => {}} />
                     <div className="flex flex-col mt-2 ">
                         {teamDataStatus === "pending" && <Loading />}
-                        {teamDataStatus === "fulfilled" && teamData?.map(item => (
-                            <div onClick={() => getUserProgress(item)} className="flex text-[15px] text-[#333333] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] hover:scale-[1.03] duration-[0.09s] py-3 px-2">
+                        {teamDataStatus === "fulfilled" && teamData?.map((item, i) => (
+                            <div key={i} onClick={() => getUserProgress(item)} className={`${selectedMember?.userId === item?.userId && "bg-[#CBF3FF66]"} flex text-[15px] text-[#333333] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] hover:scale-[1.03] duration-[0.09s] py-3 px-2`}>
                                 <p>{item?.firstName} {item?.lastName}</p>
                                 <div className=" flex items-center">
                                    <p>0/10</p>
@@ -115,8 +115,7 @@ const TrainingTeamProgress = () => {
                         </div>
 
                     </div>
-                    {/* change to id */}
-                    {!selectedMember.email && 
+                    {!selectedMember?.userId && 
                         <div className=" flex-1 flex items-center justify-center">
                             <p className="font-[500]">Select A Team Member</p>
                         </div>
