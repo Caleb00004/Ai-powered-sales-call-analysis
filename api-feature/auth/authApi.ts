@@ -6,7 +6,7 @@ import { AuthResponseType } from '../types';
 const authEndpoints = ( 
     builder: EndpointBuilder<
         BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-        'getAvailableSkills',
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
         'api'
     >) => ({
     authSignIn: builder.mutation<AuthResponseType, { email: string; password: string }>({

@@ -1,8 +1,8 @@
 import { SnackbarCloseReason } from "@mui/material";
-import { createContext, useEffect, ReactNode, SyntheticEvent } from "react";
+import { createContext, useEffect, ReactNode, SyntheticEvent, useLayoutEffect } from "react";
 import { useState } from "react";
 import { globalState, useGetUserProfileQuery } from "../../../api-feature/apiSlice";
-import { ACCOUNT_TYPE, ApiType, TOKEN_NAME } from "../../../api-feature/types";
+import { ACCOUNT_TYPE, ApiType, profileType, TOKEN_NAME } from "../../../api-feature/types";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { OnboardingQueryParams } from "../manager_onboarding/right/rightContainer";
@@ -20,6 +20,8 @@ interface AppContextProps {
     saveAuthorizationTokenWithExpiry: (key: typeof TOKEN_NAME, token: string, expiryInMinutes: number) => void
     accountType: ACCOUNT_TYPE,
     setAccountType: React.Dispatch<React.SetStateAction<ACCOUNT_TYPE>>
+    userProfile: profileType
+    setUserProfile: React.Dispatch<React.SetStateAction<profileType>>
 }
 
 const appContext = createContext<AppContextProps>({
@@ -35,16 +37,19 @@ const appContext = createContext<AppContextProps>({
     saveAuthorizationTokenWithExpiry: () => {},
     accountType: "",
     setAccountType: () => {},
+    userProfile: {} as profileType,
+    setUserProfile: () => {}
 })
 
 interface profileApiType extends ApiType {
-  data: {data: {}}
+  data: {data: profileType, success: boolean}
 }
 
 
 function ContextProvider({children}: { children: ReactNode }) {
     const router = useRouter()
     const {data, status, error, refetch} = useGetUserProfileQuery<profileApiType>(undefined, {skip: !(globalState.authorizationToken && !globalState.account_type)})
+    const [userProfile, setUserProfile] = useState({} as profileType)
     const [accountType, setAccountType] = useState("" as ACCOUNT_TYPE)
     const [loggedIn, setLoggedIn] = useState(false);
     const [checkedLocalStorage, setCheckedLocalStorage] = useState(false)
@@ -66,12 +71,15 @@ function ContextProvider({children}: { children: ReactNode }) {
         setToastDetails({open: true, duration, message})
     }
 
-
     useEffect(() => {
-        if (status === "rejected") {
-            console.log(error)
+        const toastId = toast
+
+        if (status === "pending") {
+            toastId.loading("loading")
+        } else if (status === "rejected") {
             // @ts-ignore
             if (error?.data?.message === "Please verify your email") {
+                toastId.dismiss()
                 toast.error("Error, Verify Email!");
                 const goToSection: OnboardingQueryParams['goToSection'] = "checkmail";
 
@@ -82,25 +90,29 @@ function ContextProvider({children}: { children: ReactNode }) {
             // @ts-ignore
             } else if (error?.data?.message === "No company selected") {
                 toast.error("No Company Selected")
+                toastId.dismiss()
                 router.push("/company-setup")
             } else {
+                toastId.dismiss()
                 toast.error("Error occured, reload page")
             }
 
             return            
-        }
-
-        if (status === "fulfilled") {
+        } else if (status === "fulfilled") {
+            toastId.dismiss()
+            setUserProfile(data?.data)
+            const account_type = data?.data?.company?.role.toLowerCase()
             // @ts-ignore
-            const account_type = data.data.company.role.toLowerCase()
             globalState.account_type = account_type
+            // @ts-ignore
             setAccountType(account_type)
             setLoggedIn(true)
-            console.log(loggedIn)
+        } else {
+            toastId.dismiss()
         }
     },[status])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const item = localStorage.getItem(TOKEN_NAME)
         setCheckedLocalStorage(true)
         if (item) {
@@ -139,7 +151,9 @@ function ContextProvider({children}: { children: ReactNode }) {
         setCheckedLocalStorage,
         saveAuthorizationTokenWithExpiry,
         accountType,
-        setAccountType
+        setAccountType,
+        userProfile,
+        setUserProfile
     }
 
     return(

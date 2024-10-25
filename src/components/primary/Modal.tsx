@@ -6,17 +6,20 @@ interface modalType {
     children: ReactNode
     className?: unknown;
     containerClassname?: string
+    closeOnClickOutside?: boolean;
 }
 
-const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "", containerClassname }) => {
+const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "", containerClassname, closeOnClickOutside = true }) => {
 
     const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+      
+      if (!closeOnClickOutside) return;
+
       const handleClickOutside = (event: MouseEvent) => {
         // FOR MATERIAL UI TIME AND DATE PICKER 
         const pickerPopups = Array.from(document.querySelectorAll(".MuiPopper-root, .MuiPopover-root"));
-        console.log(pickerPopups)
         for (let popup of pickerPopups) {
           if (popup.contains(event.target as Node)) {
             return;

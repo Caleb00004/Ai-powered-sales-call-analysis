@@ -6,11 +6,6 @@ import { getGridNumericOperators } from '@mui/x-data-grid';
 import { callDataType } from '@/testData';
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import BookmarkIcon from "../../../../public/svgs/bookmark-icon.svg"
-import Button from '@/components/primary/Button';
-import { dealsData } from '@/testData';
-import PaginationComponent from '@/components/secondary/Pagination';
-import NavIcon from "../../../../public/svgs/next-icon.svg"
-import PiechartComponent from '@/components/secondary/Piechart';
 import ProgressCircle from '@/components/secondary/ProgressCircle';
 import GradientCircle from '@/components/secondary/GradientCircle';
 import Callicon from "../../../../public/svgs/round-call.svg"
@@ -18,30 +13,35 @@ import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
 import Dropdown from '@/components/secondary/Dropdown';
 import { scrollToView } from '@/components/util/helperFunctions';
 import DropdownItem from '@/components/secondary/DropdownItem';
+import SalesRepDetails from '@/components/ui/salesrepDetails';
+import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
+import { ApiType } from '../../../../api-feature/types';
+import { SalesRepPerformanceType } from '../../../../api-feature/sales-rep/salesrep-type';
+import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
-const piechartdata = 
-    [
-        { id: 0, value: 40, color: "#C32781", label: "Building Trust"},
-        { id: 1, value: 45, color: "#00FFB0", label: "Building Value"},
-        { id: 2, value: 60, color: "#49D0FF", label: "Conviction"},
-        // { id: 3, value: 80, color: "#C32781", label: "Building Trust"},
-    ]
+interface salesPerformanceApi extends ApiType {
+    data: {data: SalesRepPerformanceType[], success: boolean}
+}
+
+interface activitiesApi extends ApiType {
+    data: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean}
+}
 
 const SalesRepManager = () => {
-    console.log("Rendered")
+    const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
+    const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
+    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
     const [searchInput, setSearchInput] = useState("")
     const [section, setSection] = useState<"table" | "details">("table")
-    const [selectedSalesRep, setSelectedSalesRep] = useState({} as callDataType)
     const [displayDropDown, setDisplayDropDown] = useState(false)
-    const [displayTrainingDropdown, setDisplayTrainingDropdown] = useState(false)
     const viewRef = useRef<HTMLDivElement>(null)
-    const rows = callData
+    const rows = data?.data
 
     const filteredRows = useMemo(() => {
-        return rows.filter(row =>
-            row.meetingName.toLowerCase().includes(searchInput.toLowerCase())
+        return rows?.filter(row =>
+            row.user.firstName.toLowerCase().includes(searchInput.toLowerCase())
         );
     }, [rows, searchInput]);
 
@@ -80,51 +80,62 @@ const SalesRepManager = () => {
     ];
     
     const columns: GridColDef[] = useMemo(() => {
-        return [
-            {field: "meetingName", headerName: "Meeting Name", width: 200, headerClassName: "bg-[#C32782]"},
-            {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
-            {field: "status", headerName: "Status", headerClassName: "bg-[#C32782]",
-                renderCell: (params) => (
-                    <Box
-                        sx={{
-                            color: 'white',
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: '4px',
-                            textAlign: 'center',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    >
-                        <p className={`w-16 h-[30px] rounded-2xl text-[#333333] text-[13px] font-[500] flex justify-center items-center ${params.value === "Past" ? "bg-[#E1335D33]" : "bg-[#32ea2833]"}`}>{params.value}</p>
-                    </Box>
-                )
-            },
-            {field: "overall", headerName: "Overall", headerClassName: "bg-[#C32782]"},
-            {field: "BA", filterOperators: customNumericOperators, description: 'This is used to show BA means lorem ipsum', headerName: "BA", headerClassName: "bg-[#C32782]"},
-            {field: "BB", filterOperators: customNumericOperators, headerName: "BB", headerClassName: "bg-[#C32782]"},
-            {field: "BC", filterOperators: customNumericOperators, headerName: "BC", headerClassName: "bg-[#C32782]"},
-            {field: "BD", filterOperators: customNumericOperators, headerName: "BD", headerClassName: "bg-[#C32782]"},
-            {field: "BE", filterOperators: customNumericOperators, headerName: "BE", headerClassName: "bg-[#C32782]"},
-            {field: "BF", filterOperators: customNumericOperators, headerName: "BF", headerClassName: "bg-[#C32782]"},
-            {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
-            {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
+        const allSkillKeys = new Set<string>();
+
+        data?.data?.forEach((row) => {
+            if (row.skills) {
+            Object.keys(row.skills).forEach((key) => allSkillKeys.add(key));
+            }
+        });
+
+        const baseColumns: GridColDef[] = [
+            {field: "user", headerName: "Name", width: 200, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
+            {field: "overall", headerName: "Overall"},
+
+            // {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
+            // {field: "status", headerName: "Status",
+            //     renderCell: (params) => (
+            //         <Box
+            //             sx={{
+            //                 color: 'white',
+            //                 display: "flex",
+            //                 justifyContent: "center",
+            //                 alignItems: "center",
+            //                 borderRadius: '4px',
+            //                 textAlign: 'center',
+            //                 width: '100%',
+            //                 height: '100%',
+            //             }}
+            //         >
+            //             <p className={`w-16 h-[30px] rounded-2xl text-[#333333] text-[13px] font-[500] flex justify-center items-center ${params.value === "Past" ? "bg-[#E1335D33]" : "bg-[#32ea2833]"}`}>{params.value}</p>
+            //         </Box>
+            //     )
+            // },
+            // {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
+            // {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
         ]; 
-    }, []) 
+
+        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
+            field: `skills.${skillKey}`,
+            headerName: skillKey,
+            // flex: isLargeScreen ? 0.5 : undefined,
+            // width: isLargeScreen ? undefined : 100,
+            renderCell: (params) => {
+            return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
+            },
+        }));
+
+        return [...baseColumns, ...skillColumns]
+    }, [status]) 
 
     const handleSelectSalesRep = useCallback((data: {id: string, row: {}}) => {
         scrollToView(viewRef)
-        const rowData = data.row as callDataType
+        const rowData = data.row as SalesRepPerformanceType
         setSelectedSalesRep(rowData)
     },[])
 
     const handleDropDown = () => {
         setDisplayDropDown(prev => !prev)
-    }
-
-    const handleTrainingDropdown = () => {
-        setDisplayTrainingDropdown(prev => !prev)
     }
 
     const sectionDropdown =   
@@ -137,31 +148,31 @@ const SalesRepManager = () => {
                 <DropdownItem className='py-1 px-2' onClick={() => {}} text="Message User" />
             </Dropdown>
         </>
-    
+        
     return (
         <div className="flex relative flex-col gap-[20px] w-full">
             <p onClick={() => setSection("table")} className={`${section === "details" ? "scale-[1] pointer-events-auto mb-5" : "scale-[0] pointer-events-none"} cursor-pointer h-0 transition-all w-[45px] text-[#333333] text-[18px]`}>Back</p>
             <div ref={viewRef} className='h-1 absolute bg-transparent pointer-events-none w-1'/>
-            {selectedSalesRep.meetingName && 
+            {selectedSalesRep?.user?.id && 
                 (section === "table" ?
                 <>    
                     <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
                         <div className='flex gap-3 flex-[0.8]'>
-                            <div className='bg-slate-700 w-[130px] h-[120px] mdx2:h-full rounded-lg'>
-
+                            <div className='w-[130px] p-0 h-[120px] mdx2:h-full rounded-lg relative overflow-hidden'>
+                                <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
                             </div>
                             <div>
-                                <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep.meetingName}</p>
-                                <p className='text-[#828282] text-[14px]'>Senior Project</p>
-                                <p className='text-[#828282] text-[14px]'>Manager</p>
+                                <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
+                                <p className='text-[#828282] text-[14px]'>{selectedSalesRep?.role}</p>
+                                {/* <p className='text-[#828282] text-[14px]'>Manager</p> */}
                             </div>
                             <div className='flex mdx2:hidden ml-auto flex-[0.1] justify-between relative z-[2] '>
                                 {sectionDropdown}
                             </div>
                         </div>
                         <div className='rounded-lg h-full gap-4 flex-[2] flex flex-col items-center mdx2:items-start sm:flex-row pt-4 mdx2:pt-0 '>
-                            <div className='flex flex-1'><ProgressCircle type="progress" value={80} size={110} label={<span>Overall<br />Rating</span>} /></div>
-                            <div className='flex flex-1'><ProgressCircle type="skill" value={"BT"} size={110} label="BT" /></div>
+                            <div className='flex flex-1'><ProgressCircle type="progress" value={selectedSalesRep?.overall} size={110} label={<span>Overall<br />Rating</span>} /></div>
+                            <div className='flex flex-1'><ProgressCircle type="skill" value={Object.keys(selectedSalesRep?.skills)?.[0]} size={110} label={Object.keys(selectedSalesRep?.skills)?.[0]} /></div>
                             <div className='hidden mdx2:flex flex-[0.1] justify-between relative z-[2] '>
                                 {sectionDropdown}
                             </div>
@@ -171,27 +182,27 @@ const SalesRepManager = () => {
                     :
                 <>
                     <div className="bg-white lg:h-[150px] rounded-2xl flex flex-col lg:flex-row gap-2 p-3">
-                        <div className='bg-slate-700 w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0 '>
-
+                        <div className='w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0  relative overflow-hidden  '>
+                            <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
                         </div>
                         <div className='flex-1'>
                             <div className='flex justify-between'>
                                 <div>
-                                    <p>Elizabeth Parker</p>
-                                    <p className='text-[#828282] text-[14px]'>Senior Project</p>
+                                    <p>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
+                                    <p className='text-[#828282] text-[14px]'>{selectedSalesRep?.role}</p>
                                 </div>
                                 <div className='flex justify-between relative z-[2] '>
                                     {sectionDropdown}
                                 </div>
                             </div>
                             <div className='grid grid-cols-2 mt-4 lg:mt-0 lg:flex justify-between gap-10 lg:gap-4'>
-                                <ProgressCircle type="progress" value={80} textClassname='text-[11px]' size={60} label={<span>Overall<br />Rating</span>} />
+                                <ProgressCircle type="progress" value={selectedSalesRep?.overall} textClassname='text-[15px]' size={60} label={<span>Overall<br />Rating</span>} />
                                 <div className='flex flex-col sm:flex-row items-center gap-2'>
                                     <GradientCircle size={60}>
                                         <Callicon />
                                     </GradientCircle>
                                     <div>
-                                        <p className='text-[#333333] font-[600]'>100k+</p>
+                                        <p className='text-[#333333] font-[600]'>{activitiesData?.data?.meetingCount ?? 0}</p>
                                         <p>Total Calls</p>
                                     </div>
                                 </div>
@@ -200,11 +211,11 @@ const SalesRepManager = () => {
                                         <BriefcaseIcon />
                                     </GradientCircle>
                                     <div>
-                                        <p className='text-[#333333] font-[600]'>450</p>
+                                        <p className='text-[#333333] font-[600]'>{activitiesData?.data?.dealCount ?? 0}</p>
                                         <p>Deals</p>
                                     </div>
                                 </div>
-                                <ProgressCircle type="skill" value={"BT"} size={60} label="Building Trust" />
+                                <ProgressCircle type="skill" value={Object.keys(selectedSalesRep?.skills)?.[0]} textClassname='text-[15px]' size={60} label={Object.keys(selectedSalesRep?.skills)?.[0]} />
                             </div>
                         </div>
                     </div>
@@ -215,126 +226,19 @@ const SalesRepManager = () => {
             {section === "table" && 
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable
+                        loading={status === "pending"}
                         searchInput={searchInput}
                         handleSearchChange={handleSearchChange}
                         filteredRows={filteredRows}
                         columns={columns}
+                        getRowIdField='user.id'
                         handleSelectCell={handleSelectSalesRep as GridEventListener<"cellClick">}
                     />
                 </Suspense>
             }
             {
                 section === "details" && 
-                <div className='py-5'>
-                    <div className='flex w-[20em] gap-4 ml-auto'>
-                        <Button className='text-[13px] py-1'>Message Elizabeth</Button>
-                        <Button className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
-                    </div>
-                    <div className='flex flex-col mdx5:flex-row gap-5 mt-5'>
-                        <div className='border flex-1 bg-white p-3 pb-10 px-3 rounded-lg'>
-                            <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Area of concern</h1>
-                            <PiechartComponent data={piechartdata} />
-                        </div>
-                        <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
-                            <h1 className='text-[#333333] text-[20px] font-[600] pb-2'>Dureket Report</h1>
-                            <p className='text-[#4A4A4A] text-[13.5px] font-[400] mdx5:h-[16.5em] overflow-auto'>Lorem ipsum dolor sit amet consectetur. Arcu ut aliquam neque orci sapien nisl. Ligula rhoncus at nisl scelerisque eget enim ut.
-                                At vulputate metus pulvinar leo lorem nec morbi dolor. Tempus fusce vel duis dictum nibh a sed adipiscing in. In egestas aliquam 
-                                id egestas morbi cras vivamus. Ac sed vehicula sem sed dui massa. Netus tincidunt odio ultricies viverra sed porttitor vulputate dui. 
-                                egestas morbi cras vivamus. Ac sed vehicula sem sed dui. In egestas aliquam id egestas morbi cras vivamusmassa.egestas morbi cras vivamus. 
-                                Ac sed vehicula sem sed dui massa. id egestas morbi cras vivamus. Ac sed vehicula sem sed massa. id egestas morbi cras vivamus. Ac sed vehicula sem 
-                                sed dui massa. id egestas morbi cras vivamus. Ac sed vehicula sem sed dui massa. In egestas aliquam id egestas morbi cras vivamus</p>
-                        </div>
-                    </div>
-                    <div className='flex flex-col mdx3:flex-row gap-5 mt-5'>
-                        <div className='border flex-1 flex flex-col bg-white p-3 pb-10 px-3 rounded-lg'>
-                            <h1 className='text-[#333333] text-[20px] font-[600] pb-4'>Assigned Deals</h1>
-                            <div className=' h-full'>
-                                <PaginationComponent 
-                                    items={dealsData}
-                                    hidePaginationStatus
-                                    itemsPerPage={5}
-                                    renderItems={(data) => (
-                                        data.map(item => (
-                                            <div className="flex h-full transition-all cursor-pointer py-2 justify-between items-center">
-                                                {/* @ts-ignore */}
-                                                <p className="font-[600] text-[14px] text-[#333333] underline">{item.name}</p>
-                                            </div>
-                                        ))
-                                    )}
-                                    footer={({ currentPage, totalPages, handlePageChange, itemsPerPage, handlePageSizeChange, start, end }) => (
-                                        <div className='flex flex-col xl:flex-row justify-between gap-4'>
-                                            <div className='mt-4 sm:mt-0'>
-                                                <p className='text-[#626262] font-light text-[14px]'>{`Showing ${start} - ${end} of ${dealsData.length} entries`}</p>
-                                            </div>
-                                            <div className='flex items-center gap-2 justify-between'>
-                                                <button className='mr-3 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1' onClick={() => handlePageChange(currentPage - 1)}  disabled={currentPage === 1}><NavIcon /></button>
-                                                <div className='flex items-center gap-1 text-[#333333]'>
-                                                    <p>Page</p>
-                                                    <div className=' border border-[#D4D4D4] ml-3 mr-1 rounded-md w-14 pl-2 '><p>{currentPage}</p></div>
-                                                    <p>of <span className='pl-1'>{totalPages}</span></p>
-                                                </div>
-                                                <button className="rotate-[180deg] ml-2 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1" onClick={() => handlePageChange(currentPage + 1)}  disabled={currentPage === totalPages}><NavIcon /></button>
-                                            </div>
-                                        </div>
-                                    )}
-                                />
-                            </div>
-                        </div>
-                        <div className='border flex-1 bg-white pt-3 pb-10 px-3 rounded-lg'>
-                            <div className='flex justify-between pb-4'>
-                                <h1 className='text-[#333333] text-[20px] font-[600] '>Scheduled Training</h1>
-                                <div className='relative flex w-[30%]'>
-                                    <div onClick={handleTrainingDropdown} className='border border-[#A4A4A4] w-full relative rounded-lg pl-3 flex items-center text-[14px] text-[#333333]'>
-                                        <p>All</p>
-                                    </div>
-                                    <Dropdown className='-left-5 top-[35px]' isOpen={displayTrainingDropdown}>
-                                        <DropdownItem className='py-1 px-2' onClick={handleTrainingDropdown} text='Completed' />
-                                        <DropdownItem className='py-1 px-2' onClick={() => {}} text='In Progress' />
-                                        <DropdownItem className='py-1 px-2' onClick={() => {}} text='Not Started' />
-                                    </Dropdown>
-                                </div>
-                            </div>
-                            <div>
-                                <PaginationComponent 
-                                    items={dealsData}
-                                    hidePaginationStatus
-                                    itemsPerPage={5}
-                                    renderItems={(data) => (
-                                        data.map(item => (
-                                            <div className="flex cursor-pointer py-2 text-[#333333] text-[14px] justify-between items-center ">
-                                                <div className='flex items-center'>
-                                                    <MoreIcon className="rotate-[90deg]" />
-                                                    <div>
-                                                        <p className="font-[600]">Sample Topic</p>
-                                                        <p className='text-[12px]'>Sample Module Name</p>
-                                                    </div>
-                                                </div>
-                                                <p className='px-3 bg-[#D9D9D94D] text-[#333333] rounded-full'>Not Started</p>
-                                            </div>
-                                        ))
-                                    )}
-                                    footer={({ currentPage, totalPages, handlePageChange, itemsPerPage, handlePageSizeChange, start, end }) => (
-                                        <div className='flex flex-col xl:flex-row justify-between gap-4 '>
-                                            <div className='mt-4 sm:mt-0'>
-                                                <p className='text-[#626262] font-light text-[14px]'>{`Showing ${start} - ${end} of ${dealsData.length} entries`}</p>
-                                            </div>
-                                            <div className='flex items-center gap-2 justify-between'>
-                                                <button className='mr-3 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1' onClick={() => handlePageChange(currentPage - 1)}  disabled={currentPage === 1}><NavIcon /></button>
-                                                <div className='flex items-center gap-1 text-[#333333]'>
-                                                    <p>Page</p>
-                                                    <div className=' border border-[#D4D4D4] ml-3 mr-1 rounded-md w-14 pl-2 '><p>{currentPage}</p></div>
-                                                    <p>of <span className='pl-1'>{totalPages}</span></p>
-                                                </div>
-                                                <button className="rotate-[180deg] ml-2 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1" onClick={() => handlePageChange(currentPage + 1)}  disabled={currentPage === totalPages}><NavIcon /></button>
-                                            </div>
-                                        </div>
-                                    )}
-                                />
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+                <SalesRepDetails userId={selectedSalesRep?.user?.id} activitiesData={activitiesData} activitiesStatus={activitiesStatus} />
             }
         </div>
     )

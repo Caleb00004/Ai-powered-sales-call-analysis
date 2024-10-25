@@ -5,9 +5,8 @@ import { useContext } from "react"
 import { appContext } from "../contexts/appContext"
 
 const DealsComponent = () => {
-    // const {account_type} = globalState
     const {accountType: account_type} = useContext(appContext)
-    
+
     return (
         <div>
             {(account_type === "manager" || account_type === "owner") && <DealsManager />}

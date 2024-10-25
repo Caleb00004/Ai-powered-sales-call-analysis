@@ -22,8 +22,7 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
     const [authSignUp] = useAuthSignUpMutation()
     const [requestStatus, setRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
-    const [passwordsMatch, setPassWordsMatch] = useState(true)
-    const [showPassword, setShowPassword] = useState(false)
+    const [passwordsMatch, setPassWordsMatch] = useState(true);
     const [formDetails, setFormDetails] = useState({
         firstName: "",
         lastName: "",
@@ -84,10 +83,6 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
         }
     }
 
-    const handleShowPassword = () => {
-        setShowPassword(prev => !prev)
-    }
-
     return (
         <>
             <Logo />
@@ -133,23 +128,19 @@ const Signup:FC<props> = ({changeSection, accountType}) => {
                     name="email"
                 />
                 <Input 
-                    password
                     value={formDetails.password}
-                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Password</label>} 
                     placeholder="Enter password"
-                    type={showPassword ? "text" : "password"}
+                    type={"password"}
                     name="password"
                 />
                 <Input 
-                    password
                     value={formDetails.confirm_password}
-                    handleShowPassword={handleShowPassword}
                     onChange={handleOnChange}
                     label={<label className="text-[#333333] font-medium text-[0.9em]">Confirm Password</label>} 
                     placeholder="Enter password"
-                    type={showPassword ? "text" : "password"}
+                    type={"password"}
                     name="confirm_password"
                 />
                 {!passwordsMatch && <p className="-my-2 mr-auto text-[0.8em] italic text-red-600">Passwords don't match</p>}

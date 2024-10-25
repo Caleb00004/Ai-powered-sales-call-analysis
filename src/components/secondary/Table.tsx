@@ -25,9 +25,11 @@ interface props {
     hideHelpers?: boolean
     disableRowSelectionOnClick?: boolean
     hideHeader?: boolean
+    loading: boolean
+    getRowIdField: string
 }
 
-const Table:FC<props> = React.memo(({searchInput, getRowHeight, disableRowSelectionOnClick, checkbox, hideFooter, hideHeader, hideHelpers, columnHeaderHeight, admin, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
+const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRowHeight, disableRowSelectionOnClick, checkbox, hideFooter, hideHeader, hideHelpers, columnHeaderHeight, admin, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
     const apiRef = useGridApiRef();
 
     function handleExport() {
@@ -38,6 +40,10 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, disableRowSelect
         apiRef.current.showFilterPanel()
 
     }
+
+    const getNestedFieldValue = (obj: Record<string, any>, path: string): any => {
+        return path?.split('.').reduce((acc, part) => acc && acc[part], obj);
+    };
 
     return (
         <div className="bg-white p-4 rounded-2xl  ">
@@ -100,6 +106,13 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, disableRowSelect
                         sx={admin ? {
                             border: "none",
                         }: {}}
+                        loading={loading}
+                        getRowId={(row) => 
+                            typeof getRowIdField === "function" 
+                            // @ts-ignore
+                            ? getRowIdField(row) // If a custom function is provided, use it
+                            : getNestedFieldValue(row, getRowIdField) // Otherwise, handle both direct and nested fields
+                        }
                         checkboxSelection={checkbox}
                         disableRowSelectionOnClick={disableRowSelectionOnClick}
                         hideFooter={hideFooter}
