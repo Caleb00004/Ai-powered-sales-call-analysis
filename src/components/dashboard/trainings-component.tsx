@@ -1,30 +1,31 @@
-import { globalState } from "../../../api-feature/apiSlice"
+import { globalState, useGetTrainingsQuery } from "../../../api-feature/apiSlice"
 import Button from "../primary/Button"
 import Search from "../secondary/Search"
 import MoreIcon from "../../../public/svgs/more-icon.svg"
 import FilterIcon from "../../../public/svgs/filter-icon.svg"
 import { useRouter } from "next/router"
-import { ModulesData } from "@/testData"
-import { SetStateAction, useCallback, useState } from "react"
+// import { ModulesData } from "@/testData"
+import { SetStateAction, useCallback, useContext, useState } from "react"
 import Dropdown from "../secondary/Dropdown"
-import Modal from "../primary/Modal"
-import Input from "../primary/input"
-import Xicon from "../../../public/svgs/x-icon.svg"
-import { Checkbox } from "@mui/material"
 import DropdownItem from "../secondary/DropdownItem"
+import AssignTrainingModal from "../modals/assigntraining-modal"
+import { trainingModuleType, trainingTopicType } from "../../../api-feature/training/trainings-type"
+import Loading from "../secondary/LoadingSpinner"
+import { dataContext } from "../contexts/dataContext"
 
 type formType = {
     module: string
     topics: string
-    teamMembers: string[]
+    teamMembers: number[]
 }
 
 type modalType = "assign-topic" | "assign-training"
 
 const TrainingsComponent = () => {
+    const {trainingModuleData, trainingModuleStatus, teamData} = useContext(dataContext)
     const routeTo = useRouter()
-    const [selectedModule, setSelectedModule] = useState({})
-    const [selectedTopic, setSelectedTopic] = useState({module: "", topic: ""})
+    const [selectedModule, setSelectedModule] = useState({} as trainingModuleType)
+    const [selectedTopic, setSelectedTopic] = useState([] as {module: string, topic: string, id: number}[])
     const [openModulesDropdown, setOpenModulesDropdown] = useState(null)
     const [modalOpen, setModalOpen] = useState(false)
     const [modalType, setModalType] = useState("" as modalType)
@@ -50,6 +51,13 @@ const TrainingsComponent = () => {
 
     const closeModal = () => {
         setModalOpen(false);
+        setAssignTopicDetails({
+            module: "",
+            topics: "",
+            teamMembers: []
+        })
+        setSelectedModule({} as trainingModuleType)
+        setSelectedTopic([])
     };
 
     const openModal = (string: modalType) => {
@@ -64,10 +72,10 @@ const TrainingsComponent = () => {
         if (key === "teamMembers") {
             setAssignTopicDetails((prev) => {
                 // Check if the team member is already in the array
-                if (!prev.teamMembers.includes(value)) {
+                if (!prev.teamMembers.includes(Number(value))) {
                     return {
                         ...prev,
-                        [key]: [...prev.teamMembers, value], // Add team member if not present
+                        [key]: [...prev.teamMembers, Number(value)], // Add team member if not present
                     };
                 }
 
@@ -80,110 +88,36 @@ const TrainingsComponent = () => {
         setAssignTopicDetails(prev => ({...prev, [key]: value}))
     }, [])
 
-    const handleRemoveTeamMember = (memberToRemove: string) => {
+    const handleRemoveTeamMember = (memberToRemove: number) => {
         setAssignTopicDetails(prev => ({
             ...prev,
             teamMembers: prev.teamMembers.filter(member => member !== memberToRemove)
         }));
     }
 
+    const handleSelectTopic = (item: trainingTopicType, checked: boolean) => {
+        checked ? 
+            setSelectedTopic(prev => ([...prev, {module: selectedModule.title, topic: item.title, id: item.id}])) :
+            setSelectedTopic(prev => (prev.filter(prevItem => prevItem.id !== item.id)))
+    }
+
+    const teamMemberOptions = [] as {value: number | number, name: string}[]
+    teamData?.map(item => teamMemberOptions.push({value: item.userId, name: `${item.firstName} ${item.lastName}`}))
+
     return(
         <>
-            <Modal
-                isOpen={modalOpen}
-                onClose={closeModal}
-            >
-                {modalType === "assign-topic" ? 
-                    <div className="pt-7 pb-12 px-14">
-                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Topic</p>
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            value={selectedTopic.module}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Module</label>} 
-                            placeholder="Sample module Name"
-                            type="text"
-                            name="module"
-                        />
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            value={selectedTopic.topic}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Topics</label>} 
-                            placeholder="Sample Topics Name"
-                            type="text"
-                            name="topics"
-                        />
-                        <Input 
-                            className="mb-[8px]"
-                            value=""
-                            onChange={handleOnChange}
-                            select
-                            options={["Angela", "chris", "John"]}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Team Members</label>} 
-                            placeholder="Select Team members"
-                            type="text"
-                            name="teamMembers"
-                        />
-                        <div className="flex gap-2 flex-wrap"> 
-                            {assignTopicDetails.teamMembers.map(item => (
-                                <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemoveTeamMember(item)} className="scale-[0.8]" /></p>
-                            ))}
-                        </div>
-                        <Button className="mt-3">
-                            Save
-                        </Button>
-                    </div>
-                    : 
-                    <div className="pt-7 pb-12 px-14">
-                        <p className="text-center text-[24px] text-[#333333] font-[500] pb-8">Assign Training</p>
-                        <Input 
-                            disabled
-                            className="mb-[8px]"
-                            // @ts-ignore
-                            value={selectedModule.name}
-                            onChange={handleOnChange}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Modules</label>} 
-                            placeholder="Sample Module Name"
-                            type="text"
-                            name="topics"
-                        />
-                        <div className="my-5">
-                            <p className="text-[#333333] font-medium text-[0.9em]">Topics</p>
-                            <div className="grid grid-cols-2 w-[20em] ">
-                                {/* @ts-ignore */}
-                                {selectedModule?.topics?.map(item => (
-                                    <div className="flex text-[14px] items-center gap-0 ">
-                                        <Checkbox className="h-6" />
-                                        <p>{item.name}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        
-                        <Input 
-                            className="mb-[8px]"
-                            value=""
-                            onChange={handleOnChange}
-                            select
-                            options={["Angela", "chris", "John"]}
-                            label={<label className="text-[#333333] font-medium text-[0.9em]">Team Members</label>} 
-                            placeholder="Select Team members"
-                            type="text"
-                            name="teamMembers"
-                        />
-                        <div className="flex gap-2 flex-wrap"> 
-                            {assignTopicDetails.teamMembers.map(item => (
-                                <p className="bg-[#C3278126] flex items-center gap-3 py-1 px-3 rounded-3xl text-[14px] text-[#333333]"><span className=" -translate-y-[1px]">{item}</span> <Xicon onClick={() => handleRemoveTeamMember(item)} className="scale-[0.8]" /></p>
-                            ))}
-                        </div>
-
-                        <Button className="mt-10">Save</Button>
-                    </div>
-                    }
-            </Modal>
+            <AssignTrainingModal
+                handleSelectTopic={handleSelectTopic}
+                teamMembers={teamMemberOptions}
+                selectedModule={selectedModule}
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                modalType={modalType}
+                handleOnChange={handleOnChange}
+                handleRemoveTeamMember={handleRemoveTeamMember}
+                selectedTopic={selectedTopic}
+                assignTopicDetails={assignTopicDetails}
+            />
             
             <div className="text-[#333333]">
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center">
@@ -208,22 +142,26 @@ const TrainingsComponent = () => {
                             </div>
                         </div>
                         <Search showIcon className="w-[100%]" value="" onChange={() => {}} />
-                        <div className="flex flex-col mt-2 ">
-                            {ModulesData.map(item => (
-                                // @ts-ignore
-                                <div onClick={() => (setSelectedModule(item))} className={`relative flex ${item.id === selectedModule.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
-                                    <p>{item.name}</p>
-                                    {/* @ts-ignore */}
-                                    <div onClick={() => (closeAllDropdowns(), handleModulesDropDown(item.id))} className=" h-4 flex items-center">
-                                        <MoreIcon className="rotate-[90deg] scale-[0.7]" />
-                                    </div>
-                                    <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openModulesDropdown === item.id}>
-                                        <DropdownItem onClick={() => openModal("assign-training")} text="Assign Training" />
-                                        <DropdownItem onClick={() => {}} text="View Description" />
-                                        <DropdownItem onClick={() => {}} text="View Team Progresss" />
-                                    </Dropdown>
-                                </div>
-                            ))}
+                        <div className="flex flex-col mt-2 min-h-[10em] mdx2:min-h-auto ">
+                            {trainingModuleStatus === "rejected" && <p className="text-red-500 italic mt-6 text-center">Error occured</p>}
+                            {trainingModuleStatus === "pending" && <Loading customStyle={{marginTop: 20}} />}
+                            {trainingModuleStatus === "fulfilled" && 
+                                <>
+                                    {trainingModuleData?.map((item, i) => (
+                                        <div key={i} onClick={() => (setSelectedModule(item))} className={`relative flex ${item?.id === selectedModule?.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
+                                            <p>{item?.title}</p>
+                                            <div onClick={() => (closeAllDropdowns(), handleModulesDropDown(item?.id))} className=" h-4 flex items-center">
+                                                <MoreIcon className="rotate-[90deg] scale-[0.7]" />
+                                            </div>
+                                            <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openModulesDropdown === item?.id}>
+                                                <DropdownItem onClick={() => (openModal("assign-training"), closeAllDropdowns())} text="Assign Training" />
+                                                <DropdownItem onClick={() => {}} text="View Description" />
+                                                <DropdownItem onClick={() => {}} text="View Team Progresss" />
+                                            </Dropdown>
+                                        </div>
+                                    ))}
+                                </>
+                            }
                         </div>
                     </div>
                     <div className="bg-white min-h-[30em] mdx2:h-auto p-1 flex-[1] flex flex-col overflow-auto">
@@ -231,33 +169,32 @@ const TrainingsComponent = () => {
                             <p>Topic</p>
                             <p>Enrolled Team</p>
                         </div>
-                        {/* @ts-ignore */}
                         {!selectedModule.id && 
                             <div className=" flex-1 flex items-center justify-center">
                                 <p className="font-[500]">Select A Module</p>
                             </div>
                         }
-                        {/*  @ts-ignore */}
-                        {selectedModule.id && selectedModule?.topics?.map((item, i) =>(
-                            <div className="flex py-4 text-[15px] font-[500] justify-between border-b relative">
-                                <div className="flex gap-16 pl-3 flex-1">
-                                    <p>{i+1}</p>
-                                    <p>{item?.name}</p>
-                                </div>
-                                <div className="flex items-center justify-end gap-14 flex-1">
-                                    <p>{item?.enrolledTeam}</p>
-                                    <div onClick={() => (closeAllDropdowns(), handleTopicDropDown(i + 1))} className=" h-4 flex items-center mr-8">
-                                        <MoreIcon className="rotate-[90deg] scale-[0.7]" />
+                        {selectedModule.id && selectedModule?.TrainingTopic?.map((item, i) => {
+                            return (
+                                <div className="flex py-4 text-[15px] font-[500] justify-between border-b relative">
+                                    <div className="flex gap-16 pl-3 flex-1">
+                                        <p>{i+1}</p>
+                                        <p>{item?.title}</p>
                                     </div>
+                                    <div className="flex items-center justify-end gap-14 flex-1">
+                                        <p>{item?.enrolledTeam}</p>
+                                        <div onClick={() => (closeAllDropdowns(), handleTopicDropDown(i + 1))} className=" h-4 flex items-center mr-8">
+                                            <MoreIcon className="rotate-[90deg] scale-[0.7]" />
+                                        </div>
+                                    </div>
+                                    <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openTopicDropdown === (i + 1)}>
+                                        <DropdownItem onClick={() => (openModal("assign-topic"), setSelectedTopic([{module: selectedModule.title, topic: item.title, id: item?.id}]), closeAllDropdowns() )} text="Assign Topic" />
+                                        <DropdownItem onClick={() => {}} text="View Description" />
+                                        <DropdownItem onClick={() => {}} text="View Enrolled Team" />
+                                    </Dropdown>
                                 </div>
-                                <Dropdown className="z-[3] mt-2 ml-auto right-0" isOpen={openTopicDropdown === (i + 1)}>
-                                    {/* @ts-ignore */}
-                                    <DropdownItem onClick={() => (openModal("assign-topic"), setSelectedTopic({module: selectedModule.name, topic: item.name}), closeAllDropdowns() )} text="Assign Topic" />
-                                    <DropdownItem onClick={() => {}} text="View Description" />
-                                    <DropdownItem onClick={() => {}} text="View Enrolled Team" />
-                                </Dropdown>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
 
                 </div>

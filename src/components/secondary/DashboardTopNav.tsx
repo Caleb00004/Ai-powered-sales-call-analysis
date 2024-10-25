@@ -14,6 +14,7 @@ import Input from "../primary/input"
 import Button from "../primary/Button"
 import SideNav from "./SideNav"
 import DropdownItem from "./DropdownItem"
+import UserIcon from "../../../public/svgs/user-icon.svg"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
@@ -126,7 +127,7 @@ const TopNav = () => {
         {/* NORMAL */}
         <div className="bg-white px-4 py-4 flex items-center justify-between border-b border-b[#D4D4D4] z-[8] relative">
             <div className="hidden sm:block ">
-                <Search showIcon value={""} className="w-[14em] mdx4:w-[20em]" onChange={() => {}} />
+                {/* <Search showIcon value={""} className="w-[14em] mdx4:w-[20em]" onChange={() => {}} /> */}
             </div>
 
             <div className="flex gap-3 items-center">
@@ -134,7 +135,7 @@ const TopNav = () => {
                     <div className="p-1" onClick={handleHelpDropdown}>
                         <HelpIcon />
                     </div>
-                    <Dropdown isOpen={helpDropDown} className="mt-4">
+                    <Dropdown isOpen={helpDropDown} className="mt-4 left-0">
                         <DropdownItem text="FAQ" onClick={() => (handleHelpDropdown(), openModal("faq"))} />
                         <DropdownItem text="Contact Support" onClick={() => (handleHelpDropdown(), openModal("support"))} />
                     </Dropdown>
@@ -144,7 +145,8 @@ const TopNav = () => {
                 </Link>
                 <div className="flex gap-1 items-center relative cursor-pointer">
                     <div className="flex gap-1 items-center" onClick={handleDropDown}>
-                        <div className="bg-slate-600 w-8 h-8 rounded-full">
+                        <div className="rounded-full">
+                            <UserIcon className="w-[33px] h-[33px]" />
                         </div>
                         <DropdownIcon />
                     </div>

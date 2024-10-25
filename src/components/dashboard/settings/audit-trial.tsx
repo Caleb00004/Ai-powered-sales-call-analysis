@@ -76,7 +76,7 @@ const AuditTrail = () => {
                     <div className="font-[700]">
                         Timestamp
                     </div>
-                ),  headerClassName: "bg-[#7279881A] rounded-tl-2xl rounded-bl-lg text-[#333333]"},
+                ),  headerClassName: "rounded-tl-2xl rounded-bl-lg text-[#333333] bg-slate-200"},
             {field: "user", 
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 150,
@@ -84,7 +84,7 @@ const AuditTrail = () => {
                     <div className="font-[700]">
                         User
                     </div>
-                ), headerClassName: "bg-[#7279881A] text-[#333333]"},
+                ), headerClassName: "text-[#333333] bg-slate-200"},
             {field: "activity", 
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 300,
@@ -92,7 +92,7 @@ const AuditTrail = () => {
                     <div className="font-[700]">
                         Activity
                     </div>
-                ), headerClassName: "bg-[#7279881A] text-[#333333]", cellClassName: "fullLength-column--cell",
+                ), headerClassName: "text-[#333333] bg-slate-200 rounded-br-lg rounded-tr-lg", cellClassName: "fullLength-column--cell",
                 renderCell: (params) => (
                     <Box
                         sx={{
@@ -186,9 +186,12 @@ const AuditTrail = () => {
                         filteredRows={filteredRows}
                         columns={columns}
                         csv
+                        admin
                         columnHeaderHeight={37}
                         className=" border-none"
                         getRowHeight={getRowHeight}
+                        getRowIdField="id"
+                        loading={false}
                         // handleSelectCell={handleSelectSalesRep as GridEventListener<"cellClick">}
                     />
                 </div>

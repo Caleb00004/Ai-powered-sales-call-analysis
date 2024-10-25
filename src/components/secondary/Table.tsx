@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { GridColDef, GridEventListener, GridRowHeightParams, GridRowHeightReturnValue, useGridApiRef } from "@mui/x-data-grid";
 import Search from "./Search";
 import FilterIcon from "../../../public/svgs/filter-icon.svg"
@@ -14,14 +14,22 @@ interface props {
     columns: GridColDef[];
     csv?: boolean;
     handleSelectCell?: GridEventListener<"cellClick">;
-    title?: string
+    title?: string | ReactNode
     columnHeaderHeight?: number
     rowHeight?: number
     className?: string,
-    getRowHeight?: (params: GridRowHeightParams) => GridRowHeightReturnValue
+    getRowHeight?: (params: GridRowHeightParams) => GridRowHeightReturnValue,
+    admin?: boolean
+    checkbox?: boolean
+    hideFooter?: boolean
+    hideHelpers?: boolean
+    disableRowSelectionOnClick?: boolean
+    hideHeader?: boolean
+    loading: boolean
+    getRowIdField: string
 }
 
-const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeight, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
+const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRowHeight, disableRowSelectionOnClick, checkbox, hideFooter, hideHeader, hideHelpers, columnHeaderHeight, admin, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
     const apiRef = useGridApiRef();
 
     function handleExport() {
@@ -32,11 +40,15 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeig
         apiRef.current.showFilterPanel()
 
     }
-    
+
+    const getNestedFieldValue = (obj: Record<string, any>, path: string): any => {
+        return path?.split('.').reduce((acc, part) => acc && acc[part], obj);
+    };
+
     return (
-        <div className="bg-white p-4  ">
-            <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">{title ? title : "Durekt Table"}</h1>
-            <div className="flex flex-col sm:flex-row justify-between gap-3">
+        <div className="bg-white p-4 rounded-2xl  ">
+            {!hideHeader && <h1 className="pb-3 text-[#333333] text-[20px] font-[500]">{title ? title : "Durekt Table"}</h1>}
+            {!hideHelpers && <div className="flex flex-col sm:flex-row justify-between gap-3">
                 <Search
                     className="w-full sm:w-[14em]" 
                     value={searchInput}
@@ -52,16 +64,18 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeig
                         Export CSV
                     </div>}
                 </div>
-            </div>
+            </div>}
 
             <div className="overflow-hidden flex-1">
                 <Box
-                    m="40px 0 0 0"
+                    m={hideHelpers ? "10px 0 0 0" : "40px 0 0 0"}
                     sx={{
-                        "& .MuiDataGrid-columnHeaders": {
-                            backgroundColor: "red",
+                       "& .MuiDataGrid-root .MuiDataGrid-container--top [role=row]": !admin ? {
+                            background: "linear-gradient(to right, #5F5FC9, #C32782)",
                             color: "white",
-                            borderBottom: "none",
+                        } : {
+                            backgroundColor: "#F4F7FE",
+                            borderRadius: "20px"
                         },
                         "& .center-cell-text": {
                             textAlign: "center" ,
@@ -79,10 +93,29 @@ const Table:FC<props> = React.memo(({searchInput, getRowHeight, columnHeaderHeig
                             wordWrap: "break-word", // Allows long words to wrap
                             display: "block", // Ensures the cell can stretch vertically
                         },
-                        
+                        "& .MuiDataGrid-root .MuiDataGrid-cell": admin ? {
+                            borderTop: "none !important",
+                        }: {},
+                        "& .MuiCheckbox-root": {
+                            color: `#333333 !important`,
+                            transform: "scale(0.8)",       // Reduce size to 80% (adjust as needed)
+                        }
                     }}
                 >
                     <DataGrid
+                        sx={admin ? {
+                            border: "none",
+                        }: {}}
+                        loading={loading}
+                        getRowId={(row) => 
+                            typeof getRowIdField === "function" 
+                            // @ts-ignore
+                            ? getRowIdField(row) // If a custom function is provided, use it
+                            : getNestedFieldValue(row, getRowIdField) // Otherwise, handle both direct and nested fields
+                        }
+                        checkboxSelection={checkbox}
+                        disableRowSelectionOnClick={disableRowSelectionOnClick}
+                        hideFooter={hideFooter}
                         className={className}
                         apiRef={apiRef}
                         slots={{footer: CustomGridFooter}}

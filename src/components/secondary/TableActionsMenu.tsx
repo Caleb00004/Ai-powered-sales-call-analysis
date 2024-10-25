@@ -16,7 +16,6 @@ const TableActionsMenu:FC<props> = ({data, options}) => {
 
     const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget as HTMLElement);
-        console.log(data)
     };
 
     const handleClose = () => {

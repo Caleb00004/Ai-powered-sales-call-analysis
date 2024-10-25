@@ -1,15 +1,16 @@
 import ManagerDashboard from "./manager/dashboard-manager"
 import SalesrepDashboard from "./sales-rep/dashboard-salesrep"
 import AdminDashboard from "./admin/dashboard-admin"
-import { globalState } from "../../../api-feature/apiSlice"
+import { useContext, useEffect } from "react"
+import { appContext } from "../contexts/appContext"
 
 const DashboardComponent = () => {
-    const {account_type} = globalState
-    
+    const {accountType: account_type} = useContext(appContext)
+
     return (
         <div>
             {account_type === "admin" && <AdminDashboard />}
-            {account_type === "manager" && <ManagerDashboard />}
+            {(account_type === "manager" || account_type === "owner") && <ManagerDashboard />}
             {account_type === "sales-rep" && <SalesrepDashboard />}
         </div>
     )

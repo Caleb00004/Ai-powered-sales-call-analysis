@@ -7,16 +7,25 @@ import { FC, FormEventHandler, useState } from "react"
 import { sectionType } from "../rightContainer"
 import Input from "@/components/primary/input"
 import Microsoft from "../../../../../public/svgs/microsoft_icon.svg"
-import { useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
+import { BASE_URL, globalState, useAuthSignInMutation } from "../../../../../api-feature/apiSlice"
 import { authAccountType } from "@/pages/onboarding"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import { useRouter } from "next/router"
+import axios from "axios"
+import { useContext } from "react"
+import { appContext } from "@/components/contexts/appContext"
+import toast from "react-hot-toast"
+import { TOKEN_NAME } from "../../../../../api-feature/types"
 
 interface props {
     changeSection: (newSection: sectionType) => void
     accountType: authAccountType
 }
-    
+
 const Signin:FC<props> = ({changeSection, accountType}) => {
+    const {loggedIn, setLoggedIn, setUserProfile, saveAuthorizationTokenWithExpiry, checkedLocalStorage} = useContext(appContext)
+    const router = useRouter()
+    const {setAccountType} = useContext(appContext)
     const [authSignin] = useAuthSignInMutation()
     const [loginRequestStatus, setLoginRequestStatus] = useState("idle");
     const [displayLoading, setDisplayLoading] = useState(false);
@@ -24,10 +33,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
         email: "",
         password: "",
     })
-    const [errorDetails, setErrorDetails] = useState({
-        display: false,
-        message: "",
-    });
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const name = e.target.name
@@ -35,23 +40,58 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
         setLoginDetails(prev => ({...prev, [name]: value}))
     }
 
+    const getProfileData = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/user`, {
+                headers: { Authorization: `Bearer ${globalState.authorizationToken}` },
+            }); 
+            const data = response.data.data
+            setUserProfile(data)
+            globalState.account_type = data.company.role.toLowerCase()
+            setAccountType(data.company.role.toLowerCase())
+            router.push("/dashboard")
+        } catch (error) {
+            // @ts-ignore
+            if (error?.response?.data?.message === "No company selected") {
+                router.push("/company-setup")
+            // @ts-ignore
+            } else if (error?.response?.data?.message === "Please verify your email") {
+                changeSection("checkmail")
+            } else {
+                console.error(error)
+                toast.error("Error getting Profile, reload page")
+            }
+        } finally {
+            setDisplayLoading(false)
+            setLoginRequestStatus("idle")
+        }
+    }
+
     const handleSignin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("CLicked")
         if (loginRequestStatus == "idle") {
             setLoginRequestStatus("pending")
             setDisplayLoading(true);
             try {
-                authSignin({...loginDetails, accountType: accountType}).unwrap()
+                authSignin({...loginDetails}).unwrap()
                     .then(fulfilled => {
-                        console.log(fulfilled)
-                        setDisplayLoading(false)
-                        setLoginRequestStatus("idle")
+                        globalState.authorizationToken = fulfilled.data.accessToken
+                        setLoggedIn(true)
+                        saveAuthorizationTokenWithExpiry(TOKEN_NAME, fulfilled.data.accessToken, 60 )
+                        toast.success("Logged In, please wait")
+                        getProfileData() 
                     })
                     .catch(rejected => {
                         setDisplayLoading(false)
                         setLoginRequestStatus("idle")
-                        console.log(rejected)
+                        console.error(rejected)
+                        if (rejected.status === 400) {
+                            toast.error(rejected?.data?.message)
+                            return
+                        } else {
+                            toast.error("Error Occured, Refresh Page") 
+                            return
+                        }
                     })
             } catch (err) {
                 console.error(err)
@@ -92,6 +132,7 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                 />
 
                 <Input 
+                    type={"password"}
                     value={loginDetails.password}
                     onChange={handleOnChange}
                     label={
@@ -101,7 +142,6 @@ const Signin:FC<props> = ({changeSection, accountType}) => {
                         </div>
                     } 
                     placeholder="Enter password"
-                    type="password"
                     name="password"
                 />
                 <Button 

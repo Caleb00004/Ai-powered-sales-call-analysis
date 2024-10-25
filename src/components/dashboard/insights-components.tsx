@@ -1,6 +1,8 @@
+import { useContext } from "react"
 import { globalState } from "../../../api-feature/apiSlice"
 import InsightsManager from "./manager/insights-manager"
 import InsightSalesrep from "./sales-rep/insights-salesrep"
+import { appContext } from "../contexts/appContext"
 
 export const skillsData = [
     {short: "BO", name: "Becoming Obsessed", score: 20}, 
@@ -31,11 +33,11 @@ export const skillsData = [
 ]
 
 const InsightsComponent = () => {
-    const {account_type} = globalState
+    const {accountType: account_type} = useContext(appContext)
 
     return (
         <div>
-            {account_type === "manager" && <InsightsManager />}
+            {(account_type === "manager" || account_type === "owner") && <InsightsManager />}
             {account_type === "sales-rep" && <InsightSalesrep />}
         </div>
     )   
