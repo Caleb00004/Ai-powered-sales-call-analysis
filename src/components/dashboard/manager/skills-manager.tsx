@@ -1,5 +1,5 @@
 import PaginationComponent from "@/components/secondary/Pagination"
-import { skillsData } from "../insights-components"
+// import { skillsData } from "../insights-components"
 import { getProgressColor } from "@/components/secondary/Pagination"
 import ArrowIcon from "../../../../public/svgs/arrow-left.svg"
 import FilterIcon from "../../../../public/svgs/filter-icon.svg"
@@ -9,6 +9,7 @@ import { useGetSalesrepSkillsQuery, useGetSkillTrendsQuery } from "../../../../a
 import { ApiType } from "../../../../api-feature/types"
 import { salesrepSkillsType, skillTrendType } from "../../../../api-feature/skills/skills-type"
 import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
+import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 interface skillsTrendApi extends ApiType {
     data: {data: {skills: skillTrendType[], totalPages: number}}, success: boolean
@@ -16,7 +17,6 @@ interface skillsTrendApi extends ApiType {
 
 interface salesRepSkillApi extends ApiType {
     data: {data: {pagination: {currentPage: number, entriesPerPage: number, totalPages: number}, salesReps: salesrepSkillsType[]}}, success: boolean
-    // data: {data: {pagination: {currentPage: number, entriesPerPage: number, totalPages: number}}, salesReps: SalesrepType}, success: boolean
 }
 
 const SkillsManager = () => {
@@ -84,11 +84,11 @@ const SkillsManager = () => {
                                         </div>
                                     </div>
                                     {data?.length <= 0 && <p className="m-auto flex items-center justify-center h-[63vh]">No Data</p>}
-                                    {data.map(item => (
+                                    {data.map((item, i) => (
                                         <div className="bg-white w-[40em] mdx4:w-auto mb-2 border flex px-2 py-3 justify-between rounded-lg">
                                             <div className="flex flex-1 items-center gap-2 ">
-                                                <p className="text-[16px] font-[500] mr-2">1</p> 
-                                                <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
+                                                <p className="text-[16px] font-[500] mr-2">{i+1}</p> 
+                                                <div className="h-12 w-12 rounded-lg overflow-hidden "><UserIcon className="scale-y-[1.2] scale-x-[1.3]" /></div>
                                                 <p className="text-[16.5px] text-[#333333] underline font-[600]">{item?.firstName} {item?.lastName}</p>
                                             </div>
                                             <div className="flex flex-1 ">

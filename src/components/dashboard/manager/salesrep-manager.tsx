@@ -17,6 +17,7 @@ import SalesRepDetails from '@/components/ui/salesrepDetails';
 import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
 import { ApiType } from '../../../../api-feature/types';
 import { SalesRepPerformanceType } from '../../../../api-feature/sales-rep/salesrep-type';
+import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -157,8 +158,8 @@ const SalesRepManager = () => {
                 <>    
                     <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
                         <div className='flex gap-3 flex-[0.8]'>
-                            <div className='bg-slate-700 w-[130px] h-[120px] mdx2:h-full rounded-lg'>
-
+                            <div className='w-[130px] p-0 h-[120px] mdx2:h-full rounded-lg relative overflow-hidden'>
+                                <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
                             </div>
                             <div>
                                 <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
@@ -181,8 +182,8 @@ const SalesRepManager = () => {
                     :
                 <>
                     <div className="bg-white lg:h-[150px] rounded-2xl flex flex-col lg:flex-row gap-2 p-3">
-                        <div className='bg-slate-700 w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0 '>
-
+                        <div className='w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0  relative overflow-hidden  '>
+                            <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
                         </div>
                         <div className='flex-1'>
                             <div className='flex justify-between'>

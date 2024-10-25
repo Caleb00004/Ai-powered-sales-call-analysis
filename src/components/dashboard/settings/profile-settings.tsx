@@ -6,6 +6,7 @@ import { appContext } from "@/components/contexts/appContext"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import { profileType } from "../../../../api-feature/types"
 import toast from "react-hot-toast"
+import UserIcon from "../../../../public/svgs/user-icon.svg"
 
 interface props {
     data: profileType
@@ -22,7 +23,7 @@ const ProfileSettings:FC<props> = ({data}) => {
         firstName: data?.firstName,
         lastName: data?.lastName,
         email: data?.email,
-        phone: data?.phone
+        // phone: data?.phone
     })
     const [passwordsDetails, setPasswordDetails] = useState({
         currentPassword: "",
@@ -45,12 +46,14 @@ const ProfileSettings:FC<props> = ({data}) => {
             try {
                 setRequestStatus("pending")
                 setDetailsLoading(true)
-
+                // @ts-ignore
                 await updateDetails({firstName: details.firstName, lastName: details.lastName}).unwrap()
+                    // @ts-ignore
                     .then(fulfilled => {
                         console.log(fulfilled)
                         toast.success("Details Updated")
                     })
+                    // @ts-ignore
                     .catch(rejected => {
                         console.log(rejected)
                         toast.error("error occured")
@@ -82,12 +85,14 @@ const ProfileSettings:FC<props> = ({data}) => {
             try {
                 setRequestStatus("pending")
                 setPasswordLoading(true)
-
+                // @ts-ignore
                 await updatePassword({oldPassword: passwordsDetails.currentPassword, newPassword: passwordsDetails.newPassword}).unwrap()
+                    // @ts-ignore
                     .then(fulfilled => {
                         console.log(fulfilled)
                         toast.success("Password Updated")
                     })
+                    // @ts-ignore
                     .catch(rejected => {
                         console.log(rejected)
                         toast.error("error occured")
@@ -106,7 +111,8 @@ const ProfileSettings:FC<props> = ({data}) => {
     return (
         <div>
             <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white px-5 sm:px-7 py-6 mb-6 rounded-md text-left ">
-                <div className="bg-slate-300 rounded-full h-[100px] w-[100px] mx-auto">
+                <div className="rounded-full h-[100px] w-[100px] mx-auto overflow-hidden">
+                    <UserIcon className="scale-[1.17]" />
                 </div>
                 <div className="mt-5 text-[14px]">
                     <div className="flex flex-col mdx2:flex-row justify-between gap-1 mdx2:gap-5 mdx5:gap-10">
@@ -137,7 +143,7 @@ const ProfileSettings:FC<props> = ({data}) => {
                             type="email" 
                             name="email"  
                         />
-                        <Input 
+                        {/* <Input 
                             label={<p className="text-[#8A8A8A]">Phone</p>} 
                             className="disabled: text-slate-400" 
                             disabled 
@@ -145,7 +151,7 @@ const ProfileSettings:FC<props> = ({data}) => {
                             onChange={() => {}} 
                             placeholder="Phone Number" 
                             name="phone"  
-                        />
+                        /> */}
                     </div>
                     <div className="w-[170px]">
                         <Button 

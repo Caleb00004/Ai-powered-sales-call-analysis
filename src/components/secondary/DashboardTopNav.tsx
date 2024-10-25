@@ -14,6 +14,7 @@ import Input from "../primary/input"
 import Button from "../primary/Button"
 import SideNav from "./SideNav"
 import DropdownItem from "./DropdownItem"
+import UserIcon from "../../../public/svgs/user-icon.svg"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
@@ -144,7 +145,8 @@ const TopNav = () => {
                 </Link>
                 <div className="flex gap-1 items-center relative cursor-pointer">
                     <div className="flex gap-1 items-center" onClick={handleDropDown}>
-                        <div className="bg-slate-600 w-8 h-8 rounded-full">
+                        <div className="rounded-full">
+                            <UserIcon className="w-[33px] h-[33px]" />
                         </div>
                         <DropdownIcon />
                     </div>

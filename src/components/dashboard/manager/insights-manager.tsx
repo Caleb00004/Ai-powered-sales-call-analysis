@@ -6,6 +6,7 @@ import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
 import { useGetInsightsQuery } from "../../../../api-feature/apiSlice"
 import { ApiType, insightsType } from "../../../../api-feature/types"
 import { teamType } from "../../../../api-feature/team/team-type"
+import Image from "next/image"
 
 interface insightsApi extends ApiType {
 
@@ -47,9 +48,10 @@ const InsightsManager = () => {
             <div className="mt-5 flex flex-col mdx2:flex-row gap-5 ">
                 <SkillsExcerpt data={data?.data?.skills} status={status} />
                   
-                <div className="bg-white p-2 flex-[0.5]  border rounded-md">
-                    <div className="bg-slate-500 h-[30em] mdx2:h-full flex">
-                        {selectedSalesRep.firstName && <div className="font-[700] rounded-md text-white w-full mb-3 pb-2 pt-3 text-center bg-slate-400 px-2 mx-3 mt-auto">
+                <div className="bg-white p-2 flex-[0.5] border rounded-md">
+                    <div className="bg-slate-500 h-[30em] flex-grow-0 mdx2:h-full flex relative">
+                        <Image className="h-full w-full object-cover absolute" height={5000} width={5000} alt="insights-img" src={"/images/salesrep-img.png"} />
+                        {selectedSalesRep.firstName && <div className="relative z-[2] font-[700] rounded-md text-white w-full mb-3 pb-2 pt-3 text-center bg-slate-400 px-2 mx-3 mt-auto">
                             <p className="bg-gradient-to-r from-[#6FA9E2] to-[#B3387F] px-4 py-2 inline-block rounded-full">{data?.data?.potentialRating}</p>
                             <p className="mt-2 text-[18px]">Potential Rating</p>
                             <p className="bg-green-400 rounded-md py-3 mt-3 text-[25px]">{selectedSalesRep.firstName} {selectedSalesRep.lastName}</p>

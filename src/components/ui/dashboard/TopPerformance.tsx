@@ -5,6 +5,7 @@ import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
 import { ApiType } from "../../../../api-feature/types"
 import { useGetTopSalesrepQuery } from "../../../../api-feature/apiSlice"
 import Loading from "../../secondary/LoadingSpinner"
+import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 interface props {
     label?: string,
@@ -41,7 +42,7 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
                             <tr>
                                 <td className="flex items-center gap-2 mb-3 ">
                                     <p className="text-[12px] font-[600]">{i+1}</p> 
-                                    <div className="h-12 w-12 bg-slate-600 rounded-lg"></div>
+                                    <div className="h-12 w-12 rounded-lg"><UserIcon /></div>
                                     <p className="text-[12px] underline font-[600]">{item?.firstName} {item?.lastName}</p>
                                 </td>
                                 <td className="">
