@@ -2,10 +2,10 @@ import ArrorwIcon from "../../../../public/svgs/arrow2-icon.svg"
 import { useContext, useState } from "react"
 import SkillsExcerpt from "@/components/secondary/SkillsExcerpt"
 import { dataContext } from "@/components/contexts/dataContext"
-import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
+import { SalesrepType } from "../../../../api-feature/manager-owner/sales-rep/salesrep-type"
 import { useGetInsightsQuery } from "../../../../api-feature/apiSlice"
 import { ApiType, insightsType } from "../../../../api-feature/types"
-import { teamType } from "../../../../api-feature/team/team-type"
+import { teamType } from "../../../../api-feature/manager-owner/team/team-type"
 import Image from "next/image"
 
 interface insightsApi extends ApiType {

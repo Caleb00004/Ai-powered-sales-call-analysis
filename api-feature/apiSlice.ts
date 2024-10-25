@@ -1,6 +1,6 @@
 import { fetchBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 import { ACCOUNT_TYPE, AuthResponseType, SkillsType, subscriptionType } from "./types";
-import {authEndpoints, teamEndpoints, teamRatingEndpoints, trainingEndpoints, dealsEndpoints, salesRepEndpoints, companyEndpoints, skillsEndpoints, overviewEndpoints} from "./index"
+import {authEndpoints, teamEndpoints, teamRatingEndpoints, trainingEndpoints, dealsEndpoints, salesRepEndpoints, companyEndpoints, skillsEndpoints, overviewEndpoints, salesrepDashboardEndpoints} from "./index"
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -64,6 +64,7 @@ export const apiSlice = createApi({
         ...trainingEndpoints(builder),
         ...skillsEndpoints(builder),
         ...overviewEndpoints(builder),
+        ...salesrepDashboardEndpoints(builder),
         getAvailableSkillsList: builder.query<SkillsType[], void>({
             query: () => ({
                 url: "/company/available-skills",
@@ -168,6 +169,14 @@ export const {
     // Overview
     useGetOverviewQuery,
     useGetRecentCallsQuery,
+
+    // SalesRepDashboard
+    useGetSalesDashOverviewQuery,
+    useGetSalesDashAreaOfConcernQuery,
+    useGetSalesDashScheduledTrainingQuery,
+    useGetSalesDashAssignedDealsQuery,
+    useGetSalesDashActivitiesQuery,
+    useGetSalesDashInsightsQuery, 
 
     // /////////////
     useGetInsightsQuery,

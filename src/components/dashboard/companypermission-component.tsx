@@ -6,7 +6,7 @@ import { Checkbox } from "@mui/material"
 import { useRouter } from "next/router"
 import { useGetCompaniesQuery } from "../../../api-feature/apiSlice"
 import { ApiType } from "../../../api-feature/types"
-import { companyType } from "../../../api-feature/company/company-type"
+import { companyType } from "../../../api-feature/manager-owner/company/company-type"
 import Loading from "../secondary/LoadingSpinner"
 
 interface companiesApi extends ApiType {

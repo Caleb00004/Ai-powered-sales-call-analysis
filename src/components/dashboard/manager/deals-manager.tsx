@@ -10,7 +10,7 @@ import { stageFilterOperator, statusFilterOperator } from "@/components/util/cus
 import EditTableModal from "@/components/primary/EditTableModal"
 import { useGetDealsQuery, useGetDealStagesQuery, usePostCreateDealMutation } from "../../../../api-feature/apiSlice"
 import { ApiType } from "../../../../api-feature/types"
-import { dealsType } from "../../../../api-feature/deals/deal-type"
+import { dealsType } from "../../../../api-feature/manager-owner/deals/deal-type"
 import useModal from "@/components/util/useModal"
 import NewdealModal from "@/components/modals/newDeal-modal"
 import { dataContext } from "@/components/contexts/dataContext"

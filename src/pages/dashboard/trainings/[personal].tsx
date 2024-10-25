@@ -11,7 +11,7 @@ import { MenuItem } from "@mui/material"
 import { dealsData } from "@/testData"
 import { globalState, useGetEnrolledTrainingQuery } from "../../../../api-feature/apiSlice"
 import { ApiType } from "../../../../api-feature/types"
-import { trainingEnrolledType } from "../../../../api-feature/training/trainings-type"
+import { trainingEnrolledType } from "../../../../api-feature/manager-owner/training/trainings-type"
 import toast from "react-hot-toast"
 import Loading from "@/components/secondary/LoadingSpinner"
 

@@ -11,9 +11,9 @@ import { TeamProgresData } from "@/testData"
 import { dataContext } from "@/components/contexts/dataContext"
 import Loading from "../secondary/LoadingSpinner"
 import { useGetUserTopicProgressQuery } from "../../../api-feature/apiSlice"
-import { teamType } from "../../../api-feature/team/team-type"
+import { teamType } from "../../../api-feature/manager-owner/team/team-type"
 import { ApiType } from "../../../api-feature/types"
-import { userTopicProgress } from "../../../api-feature/training/trainings-type"
+import { userTopicProgress } from "../../../api-feature/manager-owner/training/trainings-type"
 
 interface userTopicApi extends ApiType {
     data: {success: boolean, data: userTopicProgress[]}

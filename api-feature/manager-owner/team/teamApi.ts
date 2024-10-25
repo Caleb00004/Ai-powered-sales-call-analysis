@@ -1,7 +1,7 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createTeambodyType, teamType } from './team-type';
-import { successResponseType } from '../types';
+import { successResponseType } from '../../types';
 
 const teamEndpoints = ( 
     builder: EndpointBuilder<

@@ -9,7 +9,7 @@ import { SetStateAction, useCallback, useContext, useState } from "react"
 import Dropdown from "../secondary/Dropdown"
 import DropdownItem from "../secondary/DropdownItem"
 import AssignTrainingModal from "../modals/assigntraining-modal"
-import { trainingModuleType, trainingTopicType } from "../../../api-feature/training/trainings-type"
+import { trainingModuleType, trainingTopicType } from "../../../api-feature/manager-owner/training/trainings-type"
 import Loading from "../secondary/LoadingSpinner"
 import { dataContext } from "../contexts/dataContext"
 

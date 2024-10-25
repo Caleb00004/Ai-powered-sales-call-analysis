@@ -7,8 +7,8 @@ import NavIcon from "../../../../public/svgs/next-icon.svg"
 import { Select, MenuItem } from "@mui/material"
 import { useGetSalesrepSkillsQuery, useGetSkillTrendsQuery } from "../../../../api-feature/apiSlice"
 import { ApiType } from "../../../../api-feature/types"
-import { salesrepSkillsType, skillTrendType } from "../../../../api-feature/skills/skills-type"
-import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
+import { salesrepSkillsType, skillTrendType } from "../../../../api-feature/manager-owner/skills/skills-type"
+import { SalesrepType } from "../../../../api-feature/manager-owner/sales-rep/salesrep-type"
 import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 interface skillsTrendApi extends ApiType {

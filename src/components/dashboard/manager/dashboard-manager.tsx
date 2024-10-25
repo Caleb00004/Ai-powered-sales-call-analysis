@@ -6,7 +6,7 @@ import TopPerformance from "@/components/ui/dashboard/TopPerformance"
 import OverviewComponent from "@/components/ui/dashboard/overview"
 import { useGetRecentCallsQuery } from "../../../../api-feature/apiSlice"
 import { ApiType } from "../../../../api-feature/types"
-import { recentCallsType } from "../../../../api-feature/overview/overview-type"
+import { recentCallsType } from "../../../../api-feature/manager-owner/overview/overview-type"
 import Table from "@/components/secondary/Table"
 import { useMemo } from "react"
 

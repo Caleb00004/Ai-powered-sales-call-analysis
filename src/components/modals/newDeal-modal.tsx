@@ -4,7 +4,7 @@ import Button from "../primary/Button"
 import { FC, useCallback, useState } from "react";
 import { dealFormType } from "../dashboard/manager/deals-manager";
 import ActivityIndicator from "../secondary/ActivityIndicator";
-import { dealStagesType } from "../../../api-feature/deals/deal-type";
+import { dealStagesType } from "../../../api-feature/manager-owner/deals/deal-type";
 import Xicon from "../../../public/svgs/x-icon.svg"
 import { usePostCreateDealMutation } from "../../../api-feature/apiSlice";
 import toast from "react-hot-toast";

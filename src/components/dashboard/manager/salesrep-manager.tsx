@@ -16,7 +16,7 @@ import DropdownItem from '@/components/secondary/DropdownItem';
 import SalesRepDetails from '@/components/ui/salesrepDetails';
 import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
 import { ApiType } from '../../../../api-feature/types';
-import { SalesRepPerformanceType } from '../../../../api-feature/sales-rep/salesrep-type';
+import { SalesRepPerformanceType } from '../../../../api-feature/manager-owner/sales-rep/salesrep-type';
 import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))

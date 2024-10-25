@@ -9,7 +9,7 @@ import { dealsData } from "@/testData"
 import { FC, useCallback, useState } from "react"
 import { useGetSalesRepActivitiesQuery, useGetSalesrepAreaOfConcernQuery, useGetSalesrepDealsQuery, useGetSalesrepScheduledTrainingQuery } from "../../../api-feature/apiSlice"
 import { APISTATUS, ApiType } from "../../../api-feature/types"
-import { AreaofconcernType, AssignedDealsType, scheduleTrainingsType } from "../../../api-feature/sales-rep/salesrep-type"
+import { AreaofconcernType, AssignedDealsType, salesrepActivitiesType, scheduleTrainingsType } from "../../../api-feature/manager-owner/sales-rep/salesrep-type"
 import Loading from "../secondary/LoadingSpinner"
 import useModal from "../util/useModal"
 import MessageModal from "../modals/message-modal"
@@ -29,7 +29,7 @@ interface scheduledTrainingApi extends ApiType {
 
 interface props {
     userId: number,
-    activitiesData: {data: {report?: string, dealCount: number, meetingCount: string}, success: boolean},
+    activitiesData: {data: salesrepActivitiesType, success: boolean},
     activitiesStatus: APISTATUS
 }
 

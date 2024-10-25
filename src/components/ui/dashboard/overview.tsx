@@ -1,6 +1,6 @@
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { useGetOverviewQuery } from "../../../../api-feature/apiSlice"
-import { overviewType } from "../../../../api-feature/overview/overview-type"
+import { overviewType } from "../../../../api-feature/manager-owner/overview/overview-type"
 import { ApiType } from "../../../../api-feature/types"
 import CallIcon from "../../../../public/svgs/call-icon.svg"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"

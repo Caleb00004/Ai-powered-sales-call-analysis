@@ -7,7 +7,7 @@ import { MenuItem } from "@mui/material"
 import { usePostInviteTeamMutation, useUpdateRoleMutation } from "../../../../api-feature/apiSlice"
 import toast from "react-hot-toast"
 import { dataContext } from "@/components/contexts/dataContext"
-import { teamType } from "../../../../api-feature/team/team-type"
+import { teamType } from "../../../../api-feature/manager-owner/team/team-type"
 import TeamsModal from "@/components/modals/team-modal"
 import useModal from "@/components/util/useModal"
 

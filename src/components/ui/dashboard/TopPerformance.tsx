@@ -1,7 +1,7 @@
 import GradientCircle from "../../secondary/GradientCircle"
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { FC } from "react"
-import { SalesrepType } from "../../../../api-feature/sales-rep/salesrep-type"
+import { SalesrepType } from "../../../../api-feature/manager-owner/sales-rep/salesrep-type"
 import { ApiType } from "../../../../api-feature/types"
 import { useGetTopSalesrepQuery } from "../../../../api-feature/apiSlice"
 import Loading from "../../secondary/LoadingSpinner"

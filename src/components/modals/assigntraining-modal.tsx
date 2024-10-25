@@ -4,7 +4,7 @@ import Input from "../primary/input"
 import { Checkbox } from "@mui/material"
 import Button from "../primary/Button";
 import Xicon from "../../../public/svgs/x-icon.svg"
-import { trainingModuleType, trainingTopicType } from "../../../api-feature/training/trainings-type";
+import { trainingModuleType, trainingTopicType } from "../../../api-feature/manager-owner/training/trainings-type";
 import { usePostAssignTopicMutation } from "../../../api-feature/apiSlice";
 import ActivityIndicator from "../secondary/ActivityIndicator";
 import toast from "react-hot-toast";

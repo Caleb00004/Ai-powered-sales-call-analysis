@@ -2,7 +2,7 @@ import React, { FC, Suspense } from "react"
 import { getProgressColor } from "./Pagination"
 import { APISTATUS, insightsType } from "../../../api-feature/types"
 import Loading from "./LoadingSpinner"
-import { teamRatingType } from "../../../api-feature/team-rating/teamrating-type"
+import { teamRatingType } from "../../../api-feature/manager-owner/team-rating/teamrating-type"
 
 const LazyPaginationComponent = React.lazy(() => import("./Pagination"))
 

@@ -37,3 +37,9 @@ export interface SalesRepPerformanceType {
     role: string;
     skills: {} 
 }
+
+export interface salesrepActivitiesType {
+    report?: string, 
+    dealCount: number, 
+    meetingCount: string
+}

@@ -3,7 +3,7 @@ import MoreIcon from "../../../../public/svgs/more-icon.svg"
 import { FC } from "react"
 import { useGetOverallRatingQuery } from "../../../../api-feature/apiSlice"
 import { ApiType } from "../../../../api-feature/types"
-import { ratingType } from "../../../../api-feature/team-rating/teamrating-type"
+import { ratingType } from "../../../../api-feature/manager-owner/team-rating/teamrating-type"
 import Loading from "../../secondary/LoadingSpinner"
 
 interface props {

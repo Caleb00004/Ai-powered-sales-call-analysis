@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react"
 import { useGetTeamRatingQuery } from "../../../api-feature/apiSlice"
-import { teamRatingType } from "../../../api-feature/team-rating/teamrating-type"
+import { teamRatingType } from "../../../api-feature/manager-owner/team-rating/teamrating-type"
 import { ApiType } from "../../../api-feature/types"
 import Input from "../primary/input"
 import Modal from "../primary/Modal"

@@ -3,9 +3,9 @@ import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery, useGetPlatforms
 import { APISTATUS, ApiType, platformType, SkillsType } from "../../../api-feature/types";
 import { useContext } from "react";
 import { appContext } from "./appContext";
-import { SalesrepType } from "../../../api-feature/sales-rep/salesrep-type";
-import { teamRoleType, teamType } from "../../../api-feature/team/team-type";
-import { trainingModuleType } from "../../../api-feature/training/trainings-type";
+import { SalesrepType } from "../../../api-feature/manager-owner/sales-rep/salesrep-type";
+import { teamRoleType, teamType } from "../../../api-feature/manager-owner/team/team-type";
+import { trainingModuleType } from "../../../api-feature/manager-owner/training/trainings-type";
 
 interface skillsApiType extends ApiType {
   data: {success: boolean, data:SkillsType[]}

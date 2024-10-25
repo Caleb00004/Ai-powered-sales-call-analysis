@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { dealsOverviewType } from "../../../../api-feature/deals/deal-type"
+import { dealsOverviewType } from "../../../../api-feature/manager-owner/deals/deal-type"
 import Loading from "@/components/secondary/LoadingSpinner"
 
 interface props {

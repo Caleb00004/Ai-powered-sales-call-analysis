@@ -1,7 +1,7 @@
-import { globalState } from '../apiSlice';
+import { globalState } from '../../apiSlice';
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { AuthResponseType } from '../types';
+import { AuthResponseType } from '../../types';
 
 const authEndpoints = ( 
     builder: EndpointBuilder<

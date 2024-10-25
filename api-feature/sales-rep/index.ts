@@ -1,58 +1,48 @@
 import { EndpointBuilder } from '@reduxjs/toolkit/query';
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SalesrepType } from './salesrep-type';
-import { successResponseType } from '../types';
 
-const salesRepEndpoints = (
-        builder: EndpointBuilder<
-            BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
-            'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
-            'api'
-        >
-    ) => ({
-        getAllSalesrep: builder.query<SalesrepType, undefined>({
+const salesrepDashboardEndpoints = ( 
+    builder: EndpointBuilder<
+        BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
+        'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams',
+        'api'
+    >) => ({
+        getSalesDashOverview: builder.query<undefined, void>({
             query: () => ({
-                url: "/sales-rep/overall",
+                url: "/sales-rep/my-overall",
                 method: "GET",
-            }),
+            })
         }),
-        getSalesrepPerformance: builder.query<undefined, void>({
+        getSalesDashAreaOfConcern: builder.query<undefined, void>({
             query: () => ({
-                url: "/sales-rep/company-user-overall-performance",
+                url: "/sales-rep/areas-of-concern",
                 method: "GET",
             })
         }),
-        getSalesrepDeals: builder.query<undefined, number>({
-            query: (id) => ({
-                url: `/sales-rep/${id}/assigned-deals`,
+        getSalesDashScheduledTraining: builder.query<undefined, void>({
+            query: () => ({
+                url: "/sales-rep/scheduled-trainings",
                 method: "GET",
             })
         }),
-        getSalesrepAreaOfConcern: builder.query<undefined, number>({
-            query: (id) => ({
-                url: `/sales-rep/${id}/areas-of-concern`,
+        getSalesDashAssignedDeals: builder.query<undefined, void>({
+            query: () => ({
+                url: "/sales-rep/assigned-deals",
                 method: "GET",
             })
         }),
-        getSalesrepScheduledTraining: builder.query<undefined, number>({
-            query: (id) => ({
-                url: `/sales-rep/${id}/scheduled-trainings`,
+        getSalesDashActivities: builder.query<undefined, void>({
+            query: () => ({
+                url: "/sales-rep/activities",
                 method: "GET",
             })
         }),
-        getSalesRepActivities: builder.query<undefined, number>({
-            query: (id) => ({
-                url: `/sales-rep/${id}/activities`,
+        getSalesDashInsights: builder.query<undefined, void>({
+            query: () => ({
+                url: "/user/insights",
                 method: "GET",
             })
-        }),
-        postSendSalesrepMessage: builder.mutation<undefined, {userId: number, content: string}>({
-            query: ({userId, content}) => ({
-                url: `/sales-rep/${userId}/send-message`,
-                method: 'POST',
-                body: {content: content},
-            })
-        }),
-})
+        })
+});
 
-export default salesRepEndpoints
+export default salesrepDashboardEndpoints;
