@@ -19,10 +19,10 @@ const DealOverview:FC<props> = ({loading, error, data}) => {
                 <>
                     <div className=""><div className='flex flex-1'><ProgressCircle type="progress" value={data?.overall_deal_health ?? 0} size={110} label={<span>Overall<br />Deal Health</span>} /></div></div>
                     <div className="flex flex-col gap-4 mt-4">
-                        <div className="flex items-center text-[#333333] justify-between">
+                        {/* <div className="flex items-center text-[#333333] justify-between">
                             <p className="font-[600] text-[16px]">Project Name:</p>
                             <p className="text-[13px] font-[500]">{data?.details?.name ?? "null"}</p>
-                        </div>
+                        </div> */}
                         <div className="flex items-center text-[#333333] justify-between">
                             <p className="font-[600] text-[16px]">Client/Company:</p>
                             <p className="text-[13px] font-[500]">{data?.details?.client ?? "null"}</p>
@@ -35,14 +35,14 @@ const DealOverview:FC<props> = ({loading, error, data}) => {
                             <p className="font-[600] text-[16px]">Status:</p>
                             <p className="text-[13px] bg-[#ECF1EB] text-[#2E7E0B] font-[600] py-[3px] px-3">{data?.details?.status ?? "null"}</p>
                         </div>
-                        <div className="flex items-center text-[#333333] justify-between">
+                        {/* <div className="flex items-center text-[#333333] justify-between">
                             <p className="font-[600] text-[16px]">Date Created:</p>
                             <p className="text-[13px] font-[500]">{data?.details?.createdAt?.toString() ?? "null"}</p>
                         </div>
                         <div className="flex items-center text-[#333333] justify-between">
                             <p className="font-[600] text-[16px]">Date Modified:</p>
                             <p className="text-[13px] font-[500]">{data?.details?.updatedAt?.toString() ?? "null"}</p>
-                        </div>
+                        </div> */}
                     </div>    
                 </>
             }
