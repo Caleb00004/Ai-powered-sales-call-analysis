@@ -98,6 +98,8 @@ const SubscriptionsComponent = () => {
             <div className="mt-6">
                 <Table 
                     admin
+                    loading={false}
+                    getRowIdField="id"
                     checkbox
                     title=" "
                     hideHeader

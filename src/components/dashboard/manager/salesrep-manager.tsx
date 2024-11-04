@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, Suspense, useState, useRef } from 'react';
+import React, { ChangeEvent, useCallback, useMemo, Suspense, useState, useRef, useLayoutEffect } from 'react';
 import { GridColDef, GridEventListener } from '@mui/x-data-grid';
 import { getGridNumericOperators } from '@mui/x-data-grid';
 import MoreIcon from "../../../../public/svgs/more-icon.svg"
@@ -31,6 +31,7 @@ interface activitiesApi extends ApiType {
 const SalesRepManager = () => {
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
     const {modalOpen, openModal, closeModal} = useModal()
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const router = useRouter()
     const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
     const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
@@ -80,6 +81,10 @@ const SalesRepManager = () => {
         // customLessThanOperator,
     ];
     
+    useLayoutEffect(() => {
+        setIsLargeScreen(window.innerWidth > 940);
+    })
+    
     const columns: GridColDef[] = useMemo(() => {
         const allSkillKeys = new Set<string>();
 
@@ -90,8 +95,10 @@ const SalesRepManager = () => {
         });
 
         const baseColumns: GridColDef[] = [
-            {field: "user", headerName: "Name", width: 200, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
-            {field: "overall", headerName: "Overall"},
+            {field: "user", headerName: "Name", flex: isLargeScreen ? 1 : undefined, 
+                width: isLargeScreen ? undefined : 200, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
+            {field: "overall", headerName: "Overall", flex: isLargeScreen ? 0.7 : undefined, 
+                width: isLargeScreen ? undefined : 130,},
 
             // {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
             // {field: "status", headerName: "Status",
@@ -119,15 +126,15 @@ const SalesRepManager = () => {
         const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
             field: `skills.${skillKey}`,
             headerName: skillKey,
-            // flex: isLargeScreen ? 0.5 : undefined,
-            // width: isLargeScreen ? undefined : 100,
+            flex: isLargeScreen ? 0.5 : undefined,
+            width: isLargeScreen ? undefined : 100,
             renderCell: (params) => {
             return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
             },
         }));
 
         return [...baseColumns, ...skillColumns]
-    }, [status]) 
+    }, [status, isLargeScreen]) 
 
     const handleSelectSalesRep = useCallback((data: {id: string, row: {}}) => {
         scrollToView(viewRef)

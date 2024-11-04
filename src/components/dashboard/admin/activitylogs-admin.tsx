@@ -156,6 +156,8 @@ const ActivityLogsComponent = () => {
 
             <div className="mt-4">
                 <Table 
+                    loading={false}
+                    getRowIdField="id"
                     admin
                     checkbox
                     title=" "

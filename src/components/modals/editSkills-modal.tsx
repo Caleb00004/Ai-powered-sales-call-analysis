@@ -20,12 +20,14 @@ const EditSkillsModal:FC<props> = ({modalOpen, closeModal, handleUpdateSkills, a
     const handleUpdate = async () => {
         try {
             setLoading(true)
-
+            // @ts-ignore
             await updateSkills(topSkills).unwrap()
+                // @ts-ignore
                 .then(fulfilled => {
                     console.log(fulfilled)
                     toast.success("Updated")
                 })
+                // @ts-ignore
                 .catch(rejected => {
                     console.error(rejected)
                     toast.error("Error occured")

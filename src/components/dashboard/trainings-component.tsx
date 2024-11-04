@@ -150,6 +150,7 @@ const TrainingsComponent = () => {
                                     {trainingModuleData?.map((item, i) => (
                                         <div key={i} onClick={() => (setSelectedModule(item))} className={`relative flex ${item?.id === selectedModule?.id ? "bg-[#CBF3FF66]" : "bg-none"} text-[15px] font-[500] justify-between items-center cursor-pointer hover:bg-[#CBF3FF66] duration-[0.09s] py-3 px-2`}>
                                             <p>{item?.title}</p>
+                                            {/* @ts-ignore */}
                                             <div onClick={() => (closeAllDropdowns(), handleModulesDropDown(item?.id))} className=" h-4 flex items-center">
                                                 <MoreIcon className="rotate-[90deg] scale-[0.7]" />
                                             </div>
@@ -182,7 +183,9 @@ const TrainingsComponent = () => {
                                         <p>{item?.title}</p>
                                     </div>
                                     <div className="flex items-center justify-end gap-14 flex-1">
+                                        {/* @ts-ignore */}
                                         <p>{item?.enrolledTeam}</p>
+                                        {/* @ts-ignore */}
                                         <div onClick={() => (closeAllDropdowns(), handleTopicDropDown(i + 1))} className=" h-4 flex items-center mr-8">
                                             <MoreIcon className="rotate-[90deg] scale-[0.7]" />
                                         </div>

@@ -91,6 +91,8 @@ const ErrorLogsComponent = () => {
             <div className="mt-5">
                 <Table
                     admin
+                    loading={false}
+                    getRowIdField="id"
                     checkbox
                     title=" "
                     hideHeader

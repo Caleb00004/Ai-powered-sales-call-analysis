@@ -104,6 +104,7 @@ function ContextProvider({children}: { children: ReactNode }) {
             const account_type = data?.data?.company?.role.toLowerCase()
             // @ts-ignore
             globalState.account_type = account_type
+            // @ts-ignore
             setAccountType(account_type)
             // globalState.account_type = "sales-rep"
             // setAccountType("sales-rep")

@@ -20,6 +20,7 @@ const salesRepEndpoints = (
             query: () => ({
                 url: "/sales-rep/company-user-overall-performance",
                 method: "GET",
+                params: {page: 1, limit: 3}
             })
         }),
         getSalesrepDeals: builder.query<undefined, number>({

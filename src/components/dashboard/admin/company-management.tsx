@@ -162,6 +162,8 @@ const CompanyManagementComponent = () => {
             <br />
             <Table 
                 admin
+                loading={false}
+                getRowIdField="id"
                 checkbox
                 title=" "
                 csv

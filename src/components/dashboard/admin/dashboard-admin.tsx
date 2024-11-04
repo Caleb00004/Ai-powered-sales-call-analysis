@@ -240,6 +240,8 @@ const AdminDashboard = () => {
             <div className="mt-8">
                 <Table 
                     admin
+                    loading={false}
+                    getRowIdField="id"
                     hideFooter
                     checkbox
                     title={<div className="w-full flex justify-between items-center"><h1 className="text-[#2B3674] font-[700]">Recent Company</h1> <p className="text-[12px] text-[#A3AED0]">See all</p></div>}

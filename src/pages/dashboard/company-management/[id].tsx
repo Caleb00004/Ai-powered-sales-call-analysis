@@ -197,6 +197,7 @@ const CompanyDetails = () => {
                         // value={newTeamDetails.permission}
                         onChange={handleOnChange}
                         select
+                        // @ts-ignore
                         options={["Sales rep", "Manager"]}
                         label={<label className="text-[#333333] font-medium text-[0.9em]">Select Permission</label>} 
                         placeholder="Enter Permission"
@@ -230,6 +231,7 @@ const CompanyDetails = () => {
                             value=""
                             onChange={handleOnChange}
                             select
+                            // @ts-ignore
                             options={["Sales rep", "Manager"]}
                             label={<label className="text-[#333333] font-medium text-[0.9em]">Permission</label>} 
                             placeholder="Enter Permission"
@@ -259,6 +261,8 @@ const CompanyDetails = () => {
 
             <div className="mt-8">
                 <Table 
+                    loading={false}
+                    getRowIdField="id"
                     admin
                     checkbox
                     title=" "

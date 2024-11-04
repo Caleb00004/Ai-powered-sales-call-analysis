@@ -77,12 +77,15 @@ const SkillsExcerpt:FC<props> = ({className, data, status, teamRating}) => {
                         renderItems={(data) => (
                             data?.map((item, index) => (
                                 <div className="flex flex-col mdx4:flex-row text-[#333333] font-[500] justify-between py-3 border-b" key={index}>
+                                    {/* @ts-ignore */}
                                     <p className="flex flex-1 text-[14px] "><span className="mr-7">{index + 1}</span> {item?.skillSymbol} = {teamRating ? item?.skillName : item?.skill} </p>
                                     <div className="flex gap-4 items-center flex-1">
                                         <div className="relative w-[100%] h-4 bg-gray-200 ">
+                                            {/* @ts-ignore */}
                                             <div className={`h-4 ${getProgressColor(teamRating ? item?.currentAvg : item?.grade)}`} style={{ width: `${teamRating ? item?.currentAvg : item?.grade}%` }}>
                                             </div>
                                         </div>
+                                        {/* @ts-ignore */}
                                         <p>{teamRating ? item?.currentAvg : item?.grade}</p>
                                     </div>
                                 </div>                                

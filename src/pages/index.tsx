@@ -129,7 +129,7 @@ export default function Home() {
           <div className=" w-[100%] text-center mt-7 z-[2] ">
             <div ref={heroTextRef}>
               <h1 className="text-[35px] sm:text-[50px] leading-[35px] sm:leading-[50px] font-[600]">Revolutionize Your Sales Performance with <span className="animate-nav-text text-[#C32781] inline-block">AI-Powered</span> Call Analysis</h1>
-              <p className="pt-6 pb-6 font-[300]">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
+              <p className="pt-6 pb-6 font-[300]">Durekt instantly increases sales performance, Never have to watch a recorded sales call again</p>
             </div>
 
             <div ref={supportRef}>
@@ -181,18 +181,20 @@ export default function Home() {
       <div className=" bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
         <h2 className="text-colour-gradient">FEATURES</h2>
         <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
-        <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p>
+        <p className="text-white w-[90%] md:w-[30em] text-[14px] mx-auto">Harness the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</p>
+        {/* <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p> */}
 
         <div className="flex flex-col-reverse mdx4:flex-row mt-10 border border-[#495677] rounded-lg overflow-hidden">
           <div className="flex flex-col justify-center relative bg-gradient-to-r from-[#414F729C] to-[#323E5A28] px-8 py-14 flex-1 text-left">
-            <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
+            <p className="w-[80%] pt-3 pb-8 text-[16px] text-slate-200">Take out the guesswork and finally understand your Sales Reps so they can drive more revenue </p>
+            {/* <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
             <p className="text-[#71717A] lead font-[700] w-[18em] text-[18px] leading-5">Seamless Integration with Zoom, Google Meet, and Kixie</p>
             <p className="w-[80%] pt-3 pb-8 text-[15px] text-slate-200">Easily connect your existing communication tools for effortless call recording and management.</p>
 
             <div className="w-[10em]">
               <Button className=" rounded-sm ">Request a Demo</Button>
-            </div>
+            </div> */}
 
             <div className="bg-[#D9D9D9] top-4 left-4 absolute h-1 w-1 rounded-full"></div>
             <div className="bg-[#D9D9D9] top-4 right-4 absolute h-1 w-1 rounded-full"></div>
@@ -201,7 +203,7 @@ export default function Home() {
           </div>
           {/*  */}
           <div className="bg-[#71717A] px-3 py-12 flex-1 ">
-            <Image src={"/images/homepage/features.png"} className="w-[100%] h-[15em] mdx4:h-[23vw]" alt="feature" width={10000} height={10000} />
+            <Image src={"/images/homepage/features.png"} className="w-[100%] h-[52vw] mdx4:h-[25vw]" alt="feature" width={10000} height={10000} />
           </div>
         </div>
         <div className="flex flex-col gap-10 mdx3:flex-row mdx3:gap-4 py-5 z-[2] relative px-8 border border-[#495677] rounded-lg bg-gradient-to-r from-[#414F729C] to-[#323E5A28] mt-5 ">

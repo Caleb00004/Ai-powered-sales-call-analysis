@@ -21,6 +21,10 @@ export type teamFormType = {
 
 type modalType = "add-team" | "Edit"
 
+// export const fetchMoreData = () => {
+//     const useGetTe
+// }
+
 const TeamsManager = () => {
     const {teamRolesData, teamRolesDataStatus, teamData, teamDataStatus} = useContext(dataContext)
     const [updateLoading, setUpdateLoading] = useState(false)
@@ -100,7 +104,7 @@ const TeamsManager = () => {
             const foundObject = teamRolesData.find(obj => obj.name === str);
             return foundObject ? foundObject.id : null;
         }).filter(id => id !== null);  // Remove null values if no match was found
-
+        // @ts-ignore
         setEditDetails({role: idArray, position: data.position, userId: data.userId})
     }
 

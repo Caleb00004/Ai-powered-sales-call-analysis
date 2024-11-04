@@ -181,6 +181,8 @@ const SubscriptionHistory = () => {
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable 
                         admin
+                        loading={false}
+                        getRowIdField="id"
                         hideHeader
                         hideHelpers
                         hideFooter
@@ -198,6 +200,8 @@ const SubscriptionHistory = () => {
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable 
                         admin
+                        loading={false}
+                        getRowIdField="id"
                         csv
                         title={<h1 className="text-[#2B3674] font-[700] text-[20px]">Billing History</h1>}
                         // disableRowSelectionOnClick

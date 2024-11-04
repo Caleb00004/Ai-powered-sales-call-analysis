@@ -1,10 +1,10 @@
 import { useGridApiContext, useGridSelector, gridPageSelector, gridPageCountSelector, gridRowCountSelector, GridToolbar } from '@mui/x-data-grid';
 import NavIcon from "../../../public/svgs/next-icon.svg"
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Box, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-const CustomGridFooter = () => {
- const apiRef = useGridApiContext();
+const CustomGridFooter = React.memo(() => {
+    const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
     const pageCount = useGridSelector(apiRef, gridPageCountSelector);
     const totalRowCount = useGridSelector(apiRef, gridRowCountSelector);
@@ -14,7 +14,11 @@ const CustomGridFooter = () => {
     const end = Math.min((page + 1) * pageSize, totalRowCount);
 
     const handleNextPage = () => {
-        if (page < pageCount - 1) {
+        if (end === 5) {
+            // fetchMoreData()
+            console.log("Call API")
+        }
+        else if (page < pageCount - 1) {
             apiRef.current.setPage(page + 1);
         }
     };
@@ -75,6 +79,6 @@ const CustomGridFooter = () => {
             </div>
         </Box>
     );
-}
+})
 
 export default CustomGridFooter
