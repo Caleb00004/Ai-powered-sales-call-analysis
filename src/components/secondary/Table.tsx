@@ -27,9 +27,10 @@ interface props {
     hideHeader?: boolean
     loading: boolean
     getRowIdField: string
+    fetchMoreData?: () => void
 }
 
-const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRowHeight, disableRowSelectionOnClick, checkbox, hideFooter, hideHeader, hideHelpers, columnHeaderHeight, admin, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
+const Table:FC<props> = React.memo(({searchInput, fetchMoreData, getRowIdField, loading, getRowHeight, disableRowSelectionOnClick, checkbox, hideFooter, hideHeader, hideHelpers, columnHeaderHeight, admin, rowHeight, className, handleSearchChange, filteredRows, columns, csv, handleSelectCell = () => {}, title }) => {
     const apiRef = useGridApiRef();
 
     function handleExport() {
@@ -118,7 +119,13 @@ const Table:FC<props> = React.memo(({searchInput, getRowIdField, loading, getRow
                         hideFooter={hideFooter}
                         className={className}
                         apiRef={apiRef}
+                        // @ts-ignore
                         slots={{footer: CustomGridFooter}}
+                        slotProps={{
+                            footer: {
+                                fetchMoreData
+                            } as any
+                        }}
                         initialState={{
                             pagination: {
                                 paginationModel: { pageSize: 5 }, // Set the number of rows per page to 5

@@ -15,6 +15,7 @@ interface Props {
   disabled?: boolean;
 }
 
+
 const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabled, name, value, onChange, options, select, className }) => {
   const isPassword = type === "password"
   const [showPassword, setShowPassword] = useState(false)

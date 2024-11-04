@@ -21,12 +21,9 @@ export type teamFormType = {
 
 type modalType = "add-team" | "Edit"
 
-// export const fetchMoreData = () => {
-//     const useGetTe
-// }
 
 const TeamsManager = () => {
-    const {teamRolesData, teamRolesDataStatus, teamData, teamDataStatus} = useContext(dataContext)
+    const {teamRolesData, teamRolesDataStatus, teamData, teamDataStatus, getMoreTeamData} = useContext(dataContext)
     const [updateLoading, setUpdateLoading] = useState(false)
     const [updateRole] = useUpdateRoleMutation()
     const [loading, setLoading] = useState(false)
@@ -280,6 +277,7 @@ const TeamsManager = () => {
             <Table 
                 loading={teamDataStatus === "pending"}
                 getRowIdField="email"
+                fetchMoreData={getMoreTeamData}
                 filteredRows={filteredRows}
                 columns={columns}
                 searchInput={searchInput}

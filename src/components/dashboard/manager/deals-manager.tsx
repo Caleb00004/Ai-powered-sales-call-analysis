@@ -15,6 +15,7 @@ import useModal from "@/components/util/useModal"
 import NewdealModal from "@/components/modals/newDeal-modal"
 import { dataContext } from "@/components/contexts/dataContext"
 import toast from "react-hot-toast"
+import usePaginationLimit from "@/components/util/usePaginationLimit"
 
 export type dealFormType = {
     name: string
@@ -29,7 +30,8 @@ interface dealsApi extends ApiType {
 
 const DealsManager = () => {
     const {teamData, teamDataStatus} = useContext(dataContext)
-    const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>()
+    const {dataLimit, getMoreData} = usePaginationLimit()
+    const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>({page: 1, limit: dataLimit})
     const {data: dealStagesData, status: dealStagesStatus, error: dealStagesError} = useGetDealStagesQuery()
     const routeTo = useRouter()
     const [searchInput, setSearchInput] = useState("")
@@ -158,6 +160,7 @@ const DealsManager = () => {
             </div>
 
             <Table 
+                fetchMoreData={getMoreData}
                 loading={dealStatus === "pending"}
                 filteredRows={filteredRows}
                 columns={columns}

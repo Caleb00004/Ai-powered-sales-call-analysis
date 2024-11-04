@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 import { useGetAllSalesrepQuery, useGetAvailableSkillsListQuery, useGetPlatformsQuery, useGetRolesQuery, useGetTeamQuery, useGetTrainingsQuery } from "../../../api-feature/apiSlice";
 import { APISTATUS, ApiType, platformType, SkillsType } from "../../../api-feature/types";
 import { useContext } from "react";
@@ -6,6 +6,7 @@ import { appContext } from "./appContext";
 import { SalesrepType } from "../../../api-feature/manager-owner/sales-rep/salesrep-type";
 import { teamRoleType, teamType } from "../../../api-feature/manager-owner/team/team-type";
 import { trainingModuleType } from "../../../api-feature/manager-owner/training/trainings-type";
+import usePaginationLimit from "../util/usePaginationLimit";
 
 interface skillsApiType extends ApiType {
   data: {success: boolean, data:SkillsType[]}
@@ -44,6 +45,7 @@ interface DataContextProps {
     trainingModuleStatus: APISTATUS,
     platformData: platformType[];
     platformStatus: APISTATUS;
+    getMoreTeamData: () => void;
 }
 
 const dataContext = createContext<DataContextProps>({
@@ -58,11 +60,13 @@ const dataContext = createContext<DataContextProps>({
     trainingModuleData: [],
     trainingModuleStatus: "pending",
     platformData: [],
-    platformStatus: "pending"
+    platformStatus: "pending",
+    getMoreTeamData: () => {}
 })
  
 function DataContextProvider({ children }: { children: ReactNode }) {
     const {loggedIn, accountType} = useContext(appContext)
+    const {dataLimit, getMoreData} = usePaginationLimit()
     const {data: platforms, status: platformStatus, error: platformError} = useGetPlatformsQuery<platformApi>(undefined, {skip: !loggedIn})
     const {data: availableSkillsData, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>(undefined, {skip: !loggedIn})
     const {data: modules, status: trainingModuleStatus, error: modulesError} = useGetTrainingsQuery<trainingApi>(undefined, {skip: !loggedIn})
@@ -70,7 +74,11 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     const {data: salesRep, status: salesRepsataStatus, error: salesRepError} = useGetAllSalesrepQuery<salesrepApiType>(undefined, {skip: !loggedIn})
     const {data: teamRoles, status: teamRolesDataStatus, error: teamRolesError} = useGetRolesQuery<teamRolesApiType>(undefined, {skip: !loggedIn})
     // For Manager Accounts
-    const {data: teamMembers, status: teamDataStatus, error: teamDataError} = useGetTeamQuery<getTeamsApi>(undefined, {skip: !loggedIn})
+    const {data: teamMembers, status: teamDataStatus, error: teamDataError} = useGetTeamQuery<getTeamsApi>({page: 1, limit: dataLimit}, {skip: !loggedIn})
+
+    const getMoreTeamData = () => {
+        getMoreData()
+    }
 
     const platformData = platforms?.data
     const salesRepData = salesRep?.data
@@ -91,7 +99,8 @@ function DataContextProvider({ children }: { children: ReactNode }) {
         trainingModuleData,
         trainingModuleStatus,
         platformData,
-        platformStatus
+        platformStatus,
+        getMoreTeamData
     }
 
     return (

@@ -10,10 +10,10 @@ const teamEndpoints = (
         'api'
     >) => ({
     getTeam: builder.query<teamType, {page: number, limit: number}>({
-        query: ({page = 1, limit = 5}) => ({
+        query: ({page = 1, limit = 40}) => ({
             url: '/team',
             method: 'GET',
-            // params: {page: page, limit: limit}
+            params: {page: page, limit: limit}
         }),
         providesTags: ["getTeams"]
     }),

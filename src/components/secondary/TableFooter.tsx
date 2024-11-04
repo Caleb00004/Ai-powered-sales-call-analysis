@@ -1,9 +1,13 @@
 import { useGridApiContext, useGridSelector, gridPageSelector, gridPageCountSelector, gridRowCountSelector, GridToolbar } from '@mui/x-data-grid';
 import NavIcon from "../../../public/svgs/next-icon.svg"
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Box, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
-const CustomGridFooter = React.memo(() => {
+interface Props {
+    fetchMoreData: () => void
+}
+
+const CustomGridFooter:FC<Props> = React.memo(({fetchMoreData = () => {}}) => {
     const apiRef = useGridApiContext();
     const page = useGridSelector(apiRef, gridPageSelector);
     const pageCount = useGridSelector(apiRef, gridPageCountSelector);
@@ -13,10 +17,9 @@ const CustomGridFooter = React.memo(() => {
     const start = page * pageSize + 1;
     const end = Math.min((page + 1) * pageSize, totalRowCount);
 
-    const handleNextPage = () => {
-        if (end === 5) {
-            // fetchMoreData()
-            console.log("Call API")
+    const handleNextPage = async () => {
+        if (end === totalRowCount) {
+            fetchMoreData()
         }
         else if (page < pageCount - 1) {
             apiRef.current.setPage(page + 1);
@@ -59,7 +62,7 @@ const CustomGridFooter = React.memo(() => {
                         <div className=' border border-[#D4D4D4] ml-3 mr-1 rounded-md w-14 pl-2 '><p>{page + 1}</p></div>
                         <p>of <span className='pl-1'>{pageCount}</span></p>
                     </div>
-                    <button className="rotate-[180deg] ml-2 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1" onClick={handleNextPage} disabled={page >= pageCount - 1}><NavIcon /></button>
+                    <button className="rotate-[180deg] ml-2 scale-[0.85] cursor-pointer hover:bg-slate-300 rounded-lg active:scale-[1.05] transition-all p-1" onClick={handleNextPage} ><NavIcon /></button>
                 </div>
                 
                 <div className="flex items-center border border-[#D4D4D4CC] rounded-md pl-4 h-10 gap-3">
