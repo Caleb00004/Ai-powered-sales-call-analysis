@@ -33,7 +33,7 @@ const Pricing = () => {
         <HomeLayout>
             <div className="text-[#333333] bg-white py-[3em] sm:py-[4em]">
                 <div className="w-[90%] sm:w-[34em] mx-auto text-center">
-                    <h1 className="text-[35px] sm:text-[45px] font-[700] mt-0">Simple, easy pricing</h1>
+                    <h1 className="text-[35px] sm:text-[45px] font-[700] mt-0">Simple pricing that scales with you</h1>
                     <p className="text-[#5B5B5B] font-[500]">User friendly pricing plans for your business</p>
 
                     <div className="border flex flex-col-reverse sm:flex-row gap-2 sm:gap-0 p-[3px] w-full rounded-md mt-4">

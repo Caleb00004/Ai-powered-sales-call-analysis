@@ -9,11 +9,11 @@ const teamEndpoints = (
         'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams' ,
         'api'
     >) => ({
-    getTeam: builder.query<teamType, {page: number, limit: number}>({
-        query: ({page = 1, limit = 40}) => ({
+    getTeam: builder.query<teamType, {page?: number, limit?: number, search?: string}>({
+        query: ({page = 1, limit = 40, search = ""}) => ({
             url: '/team',
             method: 'GET',
-            params: {page: page, limit: limit}
+            params: {page: page, limit: limit, search: search}
         }),
         providesTags: ["getTeams"]
     }),

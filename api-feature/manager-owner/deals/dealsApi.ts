@@ -8,11 +8,11 @@ const dealsEndpoints = (
         'getAvailableSkills' | 'getDeals' | 'getDealNotes' | 'getTeams' | 'getMeetings',
         'api'
     >) => ({
-    getDeals: builder.query<dealsType[], {page: number, limit: number}>({
-        query: ({page, limit}) => ({
+    getDeals: builder.query<dealsType[], {page?: number, limit?: number, search?: string}>({
+        query: ({page = 1, limit = 40, search = ""}) => ({
             url: '/deal',
             method: 'GET',
-            params: {page: page, limit: limit}
+            params: {page: page, limit: limit, search: search}
         }),
         providesTags: ['getDeals']
     }),

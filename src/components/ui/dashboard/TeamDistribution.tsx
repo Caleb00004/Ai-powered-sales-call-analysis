@@ -23,7 +23,7 @@ const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
         <div className={` p-3 rounded-lg ${className ? className : "flex-[1.07] bg-white"}`}>
             {!hideLabel && 
                 <div className="flex pb-8 justify-between text-[#333333] font-[600]">
-                    <p>{label ? label : "Team Performance Distribution"}</p>
+                    <p>{label ? label : "Current Team Performance"}</p>
                     <MoreIcon />
                 </div>
             }

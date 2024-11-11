@@ -31,10 +31,10 @@ interface dealsApi extends ApiType {
 const DealsManager = () => {
     const {teamData, teamDataStatus} = useContext(dataContext)
     const {dataLimit, getMoreData} = usePaginationLimit()
-    const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>({page: 1, limit: dataLimit})
+    const [searchInput, setSearchInput] = useState("")
+    const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>({page: 1, limit: dataLimit, search: searchInput})
     const {data: dealStagesData, status: dealStagesStatus, error: dealStagesError} = useGetDealStagesQuery()
     const routeTo = useRouter()
-    const [searchInput, setSearchInput] = useState("")
     const [selectedDeal, setSelectedDeal] = useState({} as dealsType)
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const rows = dealsData?.data.deals
@@ -162,7 +162,7 @@ const DealsManager = () => {
             <Table 
                 fetchMoreData={getMoreData}
                 loading={dealStatus === "pending"}
-                filteredRows={filteredRows}
+                filteredRows={rows}
                 columns={columns}
                 searchInput={searchInput}
                 handleSearchChange={handleSearchChange}

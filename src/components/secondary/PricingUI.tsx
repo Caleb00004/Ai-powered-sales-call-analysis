@@ -2,12 +2,28 @@ import Button from "../primary/Button"
 import CheckIcon from "../../../public/svgs/check-icon.svg"
 import InfoIcon from "../../../public/svgs/outline.svg"
 import { FC } from "react"
+import { BASE_URL } from "../../../api-feature/apiSlice"
+import axios from "axios"
 
 interface props {
     monthly: boolean
 }
 
 const PricingUi:FC<props> = ({monthly}) => {
+    // NOT WORKING YET
+    const func = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/subscription`)
+            const data = response.data
+
+            console.log(data)
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
+    func()
+
     return (
         <div className="grid mdx3:grid-cols-2 mdx5:flex gap-[1em] sm:gap-[2%] mt-[3em] sm:mt-[7em]">
             {[0, 2, 2].map((item, index) => (

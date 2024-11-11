@@ -1,5 +1,6 @@
 import React, { FC, ReactNode, useState } from "react"
 import LockIcon from "../../../public/svgs/lock_icon.svg"
+import useClickOutside from "../util/useClickOutside";
 
 interface Props {
   label?: ReactNode; 
@@ -15,63 +16,163 @@ interface Props {
   disabled?: boolean;
 }
 
+const Input: FC<Props> = React.memo(({ label, placeholder, type = "text", disabled, name, value, onChange, options, select, className }) => {
+  const isPassword = type === "password";
+  const [showPassword, setShowPassword] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Controls dropdown visibility
 
-const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabled, name, value, onChange, options, select, className }) => {
-  const isPassword = type === "password"
-  const [showPassword, setShowPassword] = useState(false)
+  const dropdownRef = useClickOutside<HTMLDivElement>(() => setIsDropdownOpen(false));
 
   const handleShowPassword = () => {
-    setShowPassword(prev => !prev)
-  }
+    setShowPassword((prev) => !prev);
+  };
+
+  // Filter options based on search term
+  const filteredOptions = options?.filter((option) =>
+    option.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleOptionSelect = (optionValue: string | number) => {
+    if (onChange) {
+      onChange({ target: { value: optionValue, name } } as React.ChangeEvent<HTMLInputElement>);
+    }
+    setIsDropdownOpen(false);
+  };
 
   return (
     <div className={`flex w-full flex-col items-start mb-5 ${className}`}>
       {label}
       <div className="relative w-full">
         {select ? (
-          <select
-            name={name}
-            value={value}
-            onChange={onChange}
-            className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md"
-          >
-            <option disabled selected value={""} hidden >{value ? value : placeholder}</option>
-            {options?.map((option, index) => (
-              <option key={index} value={option?.value}>
-                {option?.name}
-              </option>
-            ))}
-          </select>
+          <div className="relative" ref={dropdownRef} >
+            <div
+              className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md cursor-pointer"
+              onClick={handleDropdownToggle}
+            >
+              {options?.find(item => item.value === value)?.name || placeholder}
+            </div>
+
+            {isDropdownOpen && (
+              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                {/* Search input within the dropdown */}
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full p-2 border-b border-gray-200"
+                />
+
+                {/* Options */}
+                {filteredOptions?.length ? (
+                  filteredOptions.map((option, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleOptionSelect(option?.value)}
+                      className="p-2 hover:bg-gray-200 cursor-pointer"
+                    >
+                      {option.name}
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-2 text-gray-500">No options found</div>
+                )}
+              </div>
+            )}
+          </div>
         ) : (
           <>
             {isPassword && <LockIcon onClick={handleShowPassword} className=" cursor-pointer absolute bottom-[25%] right-4" />}
-            {type !== "textarea" ? <input
-              disabled={disabled}
-              value={value}
-              onChange={onChange}
-              className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md text-[15px]"
-              type={!isPassword ? type : showPassword ? "text" : "password"}
-              placeholder={placeholder}
-              name={name}
-            /> : 
-              <textarea 
+            {type !== "textarea" ? (
+              <input
+                disabled={disabled}
+                value={value}
+                onChange={onChange}
+                className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md text-[15px]"
+                type={!isPassword ? type : showPassword ? "text" : "password"}
+                placeholder={placeholder}
+                name={name}
+              />
+            ) : (
+              <textarea
                 disabled={disabled}
                 value={value}
                 // @ts-ignore
                 onChange={onChange}
                 className="w-full mt-1 min-h-[10em] max-h-[10em] p-2 border border-[#D0D5DD] rounded-md"
-                type={type}
                 placeholder={placeholder}
                 name={name}
               />
-            }
-
-
+            )}
           </>
         )}
       </div>
     </div>
   );
-})
+});
+
+
+// const Input: FC<Props> = React.memo(({ label, placeholder, type = 'text', disabled, name, value, onChange, options, select, className }) => {
+//   const isPassword = type === "password"
+//   const [showPassword, setShowPassword] = useState(false)
+
+//   const handleShowPassword = () => {
+//     setShowPassword(prev => !prev)
+//   }
+
+//   return (
+//     <div className={`flex w-full flex-col items-start mb-5 ${className}`}>
+//       {label}
+//       <div className="relative w-full">
+//         {select ? (
+//           <select
+//             name={name}
+//             value={value}
+//             onChange={onChange}
+//             className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md"
+//           >
+//             <option disabled selected value={""} hidden >{value ? value : placeholder}</option>
+//             {options?.map((option, index) => (
+//               <option key={index} value={option?.value}>
+//                 {option?.name}
+//               </option>
+//             ))}
+//           </select>
+//         ) : (
+//           <>
+//             {isPassword && <LockIcon onClick={handleShowPassword} className=" cursor-pointer absolute bottom-[25%] right-4" />}
+//             {type !== "textarea" ? <input
+//               disabled={disabled}
+//               value={value}
+//               onChange={onChange}
+//               className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md text-[15px]"
+//               type={!isPassword ? type : showPassword ? "text" : "password"}
+//               placeholder={placeholder}
+//               name={name}
+//             /> : 
+//               <textarea 
+//                 disabled={disabled}
+//                 value={value}
+//                 // @ts-ignore
+//                 onChange={onChange}
+//                 className="w-full mt-1 min-h-[10em] max-h-[10em] p-2 border border-[#D0D5DD] rounded-md"
+//                 type={type}
+//                 placeholder={placeholder}
+//                 name={name}
+//               />
+//             }
+
+
+//           </>
+//         )}
+//       </div>
+//     </div>
+//   );
+// })
 
 export default Input;

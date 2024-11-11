@@ -4,12 +4,13 @@ import Table from "@/components/secondary/Table"
 import { GridColDef } from "@mui/x-data-grid"
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
-import { usePostInviteTeamMutation, useUpdateRoleMutation } from "../../../../api-feature/apiSlice"
+import { useGetTeamQuery, usePostInviteTeamMutation, useUpdateRoleMutation } from "../../../../api-feature/apiSlice"
 import toast from "react-hot-toast"
 import { dataContext } from "@/components/contexts/dataContext"
 import { teamType } from "../../../../api-feature/manager-owner/team/team-type"
 import TeamsModal from "@/components/modals/team-modal"
 import useModal from "@/components/util/useModal"
+import { ApiType } from "../../../../api-feature/types"
 
 export type teamFormType = {
     firstName: string;
@@ -21,17 +22,22 @@ export type teamFormType = {
 
 type modalType = "add-team" | "Edit"
 
+interface getTeamsApi extends ApiType {
+    data: {data: {data: teamType[], page: number, totalPage: number, totalUser: number}, success: boolean}
+}
 
 const TeamsManager = () => {
     const {teamRolesData, teamRolesDataStatus, teamData, teamDataStatus, getMoreTeamData} = useContext(dataContext)
+    const [searching, setSearching] = useState(false)
+    const [searchInput, setSearchInput] = useState("")
+    const skip = !searching
+    const {data: teamSearchData, status: teamSearchStatus, error: teamDataError, refetch} = useGetTeamQuery<getTeamsApi>({search: searchInput}, {skip: skip})
     const [updateLoading, setUpdateLoading] = useState(false)
     const [updateRole] = useUpdateRoleMutation()
     const [loading, setLoading] = useState(false)
     const [createTeam] = usePostInviteTeamMutation()
-    // const rows = TeamsData
     const rows = teamData
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-    const [searchInput, setSearchInput] = useState("")
     const {modalOpen, closeModal: handleCloseModal, openModal: handleOpenModal} = useModal()
     const [modalType, setModalType] = useState("" as modalType)
     const [editDetails, setEditDetails] = useState<{role: number[], position: string, userId: string}>({
@@ -92,8 +98,9 @@ const TeamsManager = () => {
 
     const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
+        event.target.value === "" ? setSearching(false) : setSearching(true)
     },[]);
-
+    
     const handleSetEditdetails = (data: teamType) => {
         // Create a new array of ids based on matching names
         const idArray = data.roles.map(str => {
@@ -275,10 +282,10 @@ const TeamsManager = () => {
             <br />
 
             <Table 
-                loading={teamDataStatus === "pending"}
-                getRowIdField="email"
+                loading={searching ? teamSearchStatus === "pending" : teamDataStatus === "pending"}
+                getRowIdField="userId"
                 fetchMoreData={getMoreTeamData}
-                filteredRows={filteredRows}
+                filteredRows={searching ? teamSearchData?.data?.data : rows}
                 columns={columns}
                 searchInput={searchInput}
                 handleSearchChange={handleSearchChange}
