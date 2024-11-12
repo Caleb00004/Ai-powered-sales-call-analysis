@@ -18,37 +18,7 @@ import PricingUi from "@/components/secondary/PricingUI";
 import FaqUI from "@/components/secondary/FaqUI";
 import TickIcon from "../../public/svgs/tick-icon.svg"
 import Carousel from "@/components/secondary/LandingPageCarousel.";
-
-export const faqs = [
-  {
-    question: "How do I search for accommodations near my university?",
-    answer:
-      "To find accommodations near your university, select your university, desired location, apartment type, and price range on the apartment page, then click search. Apartments that match your criteria will be displayed.",
-  },
-  {
-    question:
-      "What amenities are typically included in student accommodations?",
-    answer:
-      "Student apartments usually include basic amenities like water, electricity, and waste disposal. Some also offer extras such as internet, cable TV, and recreational facilities",
-  },
-  {
-    question:
-      "Are the listed apartments fully furnished, or do I need to bring my own furniture?",
-    answer:
-      "Most apartments listed here are likely to be unfurnished, so you'll need to bring your own furniture and essentials. If an apartment is furnished, you may not need to do so, but furnished apartments are more of an exception than the norm ",
-  },
-  {
-    question: "How can I schedule a viewing or tour of an apartment?",
-    answer:
-      "To schedule a viewing for your chosen apartment on the Apartment page, click the 'inspect' button on the apartment card. Scroll down the redirected page to find the landlord/agent details, then click either the 'contact agent' or 'chat on WhatsApp' buttons.",
-  },
-  {
-    question:
-      "What's the typical duration of rental agreements for student accommodations?",
-    answer:
-      "Rental agreements usually last for one year, but in some cases, there may be offers for shorter durations of 6 to 11 months.",
-  }
-];
+import Link from "next/link";
 
 const callAnalysis = [
   {
@@ -186,7 +156,7 @@ export default function Home() {
 
         <div className="flex flex-col-reverse mdx4:flex-row mt-10 border border-[#495677] rounded-lg overflow-hidden">
           <div className="flex flex-col justify-center relative bg-gradient-to-r from-[#414F729C] to-[#323E5A28] px-8 py-14 flex-1 text-left">
-            <p className="w-[80%] pt-3 pb-8 text-[16px] text-slate-200">Take out the guesswork and finally understand your Sales Reps so they can drive more revenue </p>
+            <p className="w-[80%] pt-3 pb-8 text-[25px] sm:text-[28px] text-slate-200">Infinitely scale your sales team with <span className="animate-nav-text">Clear Visibility</span></p>
             {/* <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
             <p className="text-[#71717A] lead font-[700] w-[18em] text-[18px] leading-5">Seamless Integration with Zoom, Google Meet, and Kixie</p>
@@ -217,13 +187,13 @@ export default function Home() {
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
-            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">Sales Training Materials</p>
+            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Access detailed reports and actionable insights through an intuitive dashboard.</p>
           </div>
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">Real-Time Insights Dashboard</p>
             <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
           </div>
 
@@ -234,22 +204,33 @@ export default function Home() {
       
       {/* CALL ANALYSIS */}
       <div className="  bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
-        <div className="w-[95%] sm:w-[32em]">
-          <h1 className="text-white text-[30px] sm:text-[40px] font-[600] leading-[43px]">Durekt <span className="text-[#C32782] inline-block">AI-Powered</span> Call Analysis</h1>
-          <p className="text-[#A1A1AA] mt-3 ">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
+        <div className="flex flex-col mdx4:flex-row pt-[5em] gap-8">
+          <div className="flex-1">
+            <h1 className="text-white text-[30px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Reach your sales reps full potential with <span className="animate-nav-text">our proprietary AI grading system</span></h1>
+            <div className="mt-10 w-[200px]  ">
+              <Button className="bg-transparent border border-[#C32781] hover:scale-[1.025]"><p className="text-[#C32781]">START FOR FREE</p></Button>
+            </div>
+            {/* <p className="text-[#A1A1AA] mt-3 ">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p> */}
+          </div>
+          
+          <div className="flex-1 relative">
+            <Image alt="flexible-img" src={"/images/homepage/flexible-team.png"} className={`w-[100%] my-auto px-2 relative z-[2] `} height={5000} width={5000} />
+            <Image className="flex absolute translate-x-[20px] rotate-[10deg] top-[-140px] opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-14 sm:mt-24 gap-6 relative ">
-          {callAnalysis.map((item, i) => (
-            <div className="bg-[#000000B2] flex flex-col justify-between py-6 rounded-lg z-[2] ">
-              <Image alt="flexible-img" src={item.img} className={`w-[100%] my-auto px-2 ${i+1 === 3 && "py-[5em] sm:h-auto"}`} height={5000} width={5000} />
-              <div className="mt-6 text-center px-6">
-                <h1 className="text-white font-[700] text-[20px]">{item.header}</h1>
-                <p className="text-[#A1A1AA] text-[14px] mt-2">{item.body}</p>
-              </div>
+        <div className="flex flex-col mdx4:flex-row-reverse pt-[5em] gap-12">
+          <div className="flex-1">
+            <h1 className="text-white text-[30px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Eliminate Guesswork with Data that <span className="animate-nav-text">accurately measures Performance instantly</span></h1>
+            <div className="mt-10 w-[200px]">
+              <Button className="bg-transparent border border-[#C32781] hover:scale-[1.025] "><p className="text-[#C32781]">START FOR FREE</p></Button>
             </div>
-          ))}
-        
+          </div>
+          
+          <div className="flex-1 relative">
+            <Image alt="flexible-img" src={"/images/homepage/accurate-transcription.png"} className={`w-[100%] my-auto px-2 relative z-[2] `} height={5000} width={5000} />
+            <Image className="flex absolute translate-x-[20px] rotate-[10deg] top-[-140px] opacity-[1] z-[1]" src={ellipse1} alt="ellips" width={10000} height={10000} />
+          </div>
         </div>
       </div>
         
