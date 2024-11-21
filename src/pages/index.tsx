@@ -45,28 +45,28 @@ const callAnalysis = [
 
 const howItWorks = [
   {
-    header: "Sign up",
-    body: "Lorem ipsum dolor sit amet consectetur. Placerat venenatis."
+    header: "Sales Call Interaction",
+    body: "Durekt analyzes the live call"
   },
   {
-    header: "Add Team Members",
-    body: "Lorem ipsum dolor sit amet consectetur. Leo et sit amet nunc bibendum scelerisque. Bibendum."
+    header: "Durekt AI Grading Process",
+    body: "AI grades the call through Durekts proprietory grading system."
   },
   {
-    header: "Schedule Meetings",
-    body: "Add a deal and provide meeting link"
+    header: "Data Transimission",
+    body: "Graded data is securely transmitted to Durekts dashboard."
   },
   {
-    header: "Automatic Call Recording",
-    body: "Automatically join and  record all your scheduled sales calls for analysis."
+    header: "Durekt Report to Sales Leaders",
+    body: "Reports are sent to managers for analysis"
   },
   {
-    header: "AI-Powered Analysis",
-    body: "AI analyzes and grade calls based on your unique sales skills"
+    header: "Durekt Dashboard Data",
+    body: "Performance data is created for tracking growth"
   },
   {
-    header: "Actionable Insights",
-    body: "View detailed insights and feedback on a user-friendly dashboard."
+    header: "Forecasting and Planning",
+    body: "Historical data is used for future planning and predictions."
   }
 ]
 
@@ -109,7 +109,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
-                <p className="text-white flex items-center gap-2"> <TickIcon /> Free 14-day trial</p>
+                <p className="text-white flex items-center gap-2"> <TickIcon /> Free trial</p>
                 <p className="text-white flex items-center gap-2"> <TickIcon /> No Credit card required</p>
               </div>
             </div>
@@ -149,22 +149,14 @@ export default function Home() {
       
       {/* FEATURES */}
       <div className=" bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
-        <h2 className="text-colour-gradient">FEATURES</h2>
-        <h1 className="text-white text-[30px] sm:text-[40px] font-[500]">Most essential features</h1>
-        <p className="text-white w-[90%] md:w-[30em] text-[14px] mx-auto">Harness the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</p>
+        {/* <h2 className="text-colour-gradient">FEATURES</h2> */}
+        <h2 className="text-[1.2em] w-[90%] md:w-[30em] mx-auto"><span className="text-colour-gradient">Harness</span> the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</h2>
+        {/* <p className="text-white w-[90%] md:w-[30em] text-[14px] mx-auto">Harness the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</p> */}
         {/* <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p> */}
 
         <div className="flex flex-col-reverse mdx4:flex-row mt-10 border border-[#495677] rounded-lg overflow-hidden">
           <div className="flex flex-col justify-center relative bg-gradient-to-r from-[#414F729C] to-[#323E5A28] px-8 py-14 flex-1 text-left">
             <p className="w-[80%] pt-3 pb-8 text-[25px] sm:text-[28px] text-slate-200">Infinitely scale your sales team with <span className="animate-nav-text">Clear Visibility</span></p>
-            {/* <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
-            </div>
-            <p className="text-[#71717A] lead font-[700] w-[18em] text-[18px] leading-5">Seamless Integration with Zoom, Google Meet, and Kixie</p>
-            <p className="w-[80%] pt-3 pb-8 text-[15px] text-slate-200">Easily connect your existing communication tools for effortless call recording and management.</p>
-
-            <div className="w-[10em]">
-              <Button className=" rounded-sm ">Request a Demo</Button>
-            </div> */}
 
             <div className="bg-[#D9D9D9] top-4 left-4 absolute h-1 w-1 rounded-full"></div>
             <div className="bg-[#D9D9D9] top-4 right-4 absolute h-1 w-1 rounded-full"></div>
@@ -182,19 +174,19 @@ export default function Home() {
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
             <p className="text-[#71717A] font-[700]  text-[18px]">AI-Powered Performance Grading</p>
-            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
+            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on real time performance</p>
           </div>
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
-            <p className="text-[#71717A] font-[700]  text-[18px]">Sales Training Materials</p>
-            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Access detailed reports and actionable insights through an intuitive dashboard.</p>
+            <p className="text-[#71717A] font-[700]  text-[18px]">Deep Dive Analytics</p>
+            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Deep impactful analytics into your sales reps true skill sets and attributes pertaining to your sales process</p>
           </div>
           <div className="text-left">
             <div className="h-[24px] mb-2 w-[24px] bg-gradient-to-r from-[#5F5FC9] to-[#C32782] rounded-full">
             </div>
             <p className="text-[#71717A] font-[700]  text-[18px]">Real-Time Insights Dashboard</p>
-            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Proprietary AI algorithms analyze and grade sales calls based on your sales education material.</p>
+            <p className="w-[80%] pt-1 text-[15px] text-slate-200">Data that showcases true visibility across your entire sales infrastructure</p>
           </div>
 
         </div>
@@ -206,11 +198,10 @@ export default function Home() {
       <div className="  bg-[#161529] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[2em] sm:py-[3em] mdx3:py-[5em]">
         <div className="flex flex-col mdx4:flex-row pt-[5em] gap-8">
           <div className="flex-1">
-            <h1 className="text-white text-[30px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Reach your sales reps full potential with <span className="animate-nav-text">our proprietary AI grading system</span></h1>
+            <h1 className="text-white text-[28px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Reach your sales reps full potential with <span className="animate-nav-text">our proprietary AI grading system</span></h1>
             <div className="mt-10 w-[200px]  ">
               <Button className="bg-transparent border border-[#C32781] hover:scale-[1.025]"><p className="text-[#C32781]">START FOR FREE</p></Button>
             </div>
-            {/* <p className="text-[#A1A1AA] mt-3 ">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p> */}
           </div>
           
           <div className="flex-1 relative">
@@ -221,7 +212,7 @@ export default function Home() {
 
         <div className="flex flex-col mdx4:flex-row-reverse pt-[5em] gap-12">
           <div className="flex-1">
-            <h1 className="text-white text-[30px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Eliminate Guesswork with Data that <span className="animate-nav-text">accurately measures Performance instantly</span></h1>
+            <h1 className="text-white text-[28px] lg:text-[40px] font-[600] leading-[40px] lg:leading-[50px]">Eliminate Guesswork with Data that <span className="animate-nav-text">accurately measures Performance instantly</span></h1>
             <div className="mt-10 w-[200px]">
               <Button className="bg-transparent border border-[#C32781] hover:scale-[1.025] "><p className="text-[#C32781]">START FOR FREE</p></Button>
             </div>
@@ -255,8 +246,7 @@ export default function Home() {
       {/* HOW IT WORKS */}
       <div className=" bg-[#000000] px-[1em] sm:px-[3.5em] mdx5:px-[5em] py-[3em] sm:py-[4em] mdx4:py-[9em] text-center">
         <h2 className="z-[2] relative text-colour-gradient" >HOW IT WORKS</h2>
-        <h1 className="z-[2] relative text-[30px] mdx3:text-[45px] leading-[40px] mt-5 font-[600]">Discover the seamless process using Durekt</h1>
-        <p className="z-[2] relative text-[#A1A1AA] text-[16px] sm:text-[20px] pt-3 pb-8">Lorem ipsum dolor sit amet consectetur. Id interdum non sem adipiscing malesuada viverra gravida interdum ut. Netus tempor.</p>
+        <h1 className="z-[2] relative text-[30px] mdx3:text-[45px] leading-[40px] mt-5 font-[600] pb-8">The Durekt Model</h1>
 
         <div className="flex pb-2 sm:pb-0 overflow-y-hidden overflow-x-auto sm:grid sm:grid-cols-2 mdx4:grid-cols-3 gap-y-10 gap-x-6 px-[0em] sm:px-[2em] mdx2:px-[4em] mt-3 relative">
           {howItWorks.map((item, i) => (

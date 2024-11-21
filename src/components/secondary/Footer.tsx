@@ -23,7 +23,7 @@ const Footer = () => {
                     <p className="text-[#94A3B8] pb-6">HELP</p>
                     <div className="flex flex-col gap-5">
                         <p>Contact Us</p>
-                        <p>FAQ</p>
+                        <Link href={"/faq"}>FAQ</Link>
                         <Link href={"/terms-of-service"}>Terms & Conditions</Link>
                         <Link href={"/privacy-policy"} >Privacy Policy</Link>
                     </div>
