@@ -14,9 +14,10 @@ interface Props {
   select?: boolean; // If true, render a select input
   className?: string;
   disabled?: boolean;
+  inputClassname?: string;
 }
 
-const Input: FC<Props> = React.memo(({ label, placeholder, type = "text", disabled, name, value, onChange, options, select, className }) => {
+const Input: FC<Props> = React.memo(({ label, placeholder, type = "text", disabled, inputClassname, name, value, onChange, options, select, className }) => {
   const isPassword = type === "password";
   const [showPassword, setShowPassword] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
@@ -51,14 +52,14 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = "text", disabl
         {select ? (
           <div className="relative" ref={dropdownRef} >
             <div
-              className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md cursor-pointer"
+              className={`w-full mt-1 border border-[#D0D5DD] rounded-md cursor-pointer ${inputClassname ? inputClassname : "p-2"}`}
               onClick={handleDropdownToggle}
             >
               {options?.find(item => item.value === value)?.name || placeholder}
             </div>
 
             {isDropdownOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+              <div className="absolute top-[-5px] z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
                 {/* Search input within the dropdown */}
                 <input
                   type="text"
@@ -93,7 +94,7 @@ const Input: FC<Props> = React.memo(({ label, placeholder, type = "text", disabl
                 disabled={disabled}
                 value={value}
                 onChange={onChange}
-                className="w-full mt-1 p-2 border border-[#D0D5DD] rounded-md text-[15px]"
+                className={`w-full mt-1 border border-[#D0D5DD] rounded-md text-[15px] ${inputClassname ? inputClassname : "p-2"}`}
                 type={!isPassword ? type : showPassword ? "text" : "password"}
                 placeholder={placeholder}
                 name={name}

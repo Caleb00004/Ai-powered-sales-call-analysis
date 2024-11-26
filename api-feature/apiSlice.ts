@@ -152,6 +152,7 @@ export const {
     useGetDealStagesQuery,
     useGetDealOverviewQuery,
     useGetDealSalesrepPerformanceQuery,
+    useGetTimezonesQuery,
 
     // Training
     useGetTrainingsQuery,

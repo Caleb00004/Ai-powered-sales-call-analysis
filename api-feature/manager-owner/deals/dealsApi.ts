@@ -31,6 +31,12 @@ const dealsEndpoints = (
         }),
         providesTags: ['getDealNotes']
     }),
+    getTimezones: builder.query<undefined, void>({
+        query: () => ({
+            url: `/deal/timezones`,
+            method: 'GET',
+        })
+    }),
     postCreateNote: builder.mutation<undefined, {message: string, id: number}>({
         query: (data) => ({
             url: `/deal/${data.id}/note`,
@@ -46,7 +52,7 @@ const dealsEndpoints = (
         }),
         providesTags: ["getMeetings"]
     }),
-    postScheduleMeeting: builder.mutation<undefined, {id: string, body: {title: string, platform: string, scheduledTime: string}}>({
+    postScheduleMeeting: builder.mutation<undefined, {id: string, body: {title: string, platform: string, scheduledTime: string, endTime: string, timezone: string, invite_emails: string[]}}>({
         query: (data) => ({
             url: `/deal/${data.id}/meeting`,
             method: 'POST',

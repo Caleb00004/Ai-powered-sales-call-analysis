@@ -1,4 +1,5 @@
 import { FC, ReactNode, useEffect, useRef } from "react";
+import CloseIcon from "../../../public/svgs/close-icon.svg"
 
 interface modalType {
     isOpen: boolean;
@@ -50,8 +51,8 @@ const Modal: FC<modalType> = ({ isOpen, onClose, children, className = "", conta
     return (
       <div className="fixed z-[8] inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
         <div ref={modalRef} className={`relative ${containerClassname ? containerClassname : " bg-white rounded-lg shadow-lg w-[90%] md:w-[35em]"}`}>
-          <button className="absolute text-[1.8em] right-8 text-gray-600" onClick={onClose}>
-            &times;
+          <button className="absolute text-[1.8em] right-4 sm:right-8 text-gray-600 z-[2] mt-5 bg-white" onClick={onClose}>
+            <CloseIcon />
           </button>
           <div className={`${className}`}>{children}</div>
         </div>
