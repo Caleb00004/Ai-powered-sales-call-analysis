@@ -57,7 +57,7 @@ const SalesrepDashboard = () => {
     const {data: assignedDeals, status: assignedDealsStatus, error: assignedDealsError} = useGetSalesDashAssignedDealsQuery<assignedDealsApi>()
     const {data: datatraining, status: trainingStatus, error: trainingError} = useGetSalesDashScheduledTrainingQuery<scheduledTrainingApi>()
     const {data: activities, status: activityStatus, error: activityError} = useGetSalesDashActivitiesQuery<activitiesApi>()
-
+    
     const overviewData = salesrepOverview?.data
     const areaOfConcernData = areaOfConcern?.data
     const assignedData = assignedDeals?.data?.data
@@ -73,13 +73,13 @@ const SalesrepDashboard = () => {
             <div className="bg-white border xl:h-[180px] rounded-2xl flex flex-col gap-2 p-3">
                 <h1 className="text-[1.5em] font-[600] text-[#333333]">Welcome Back!</h1>
                 <div className="flex flex-col xl:flex-row gap-5 h-full">
-                    <div className="flex gap-4 ">
+                    <div className="flex gap-4">
                         <div className='bg-slate-700 w-[130px] h-[120px] xl:h-full rounded-lg flex-shrink-0 '>
                         </div>
                         <div className='flex justify-between my-auto'>
                             <div>
                                 <p className="text-[20px] text-[#333333] font-[500]">{userProfile?.firstName} {userProfile?.lastName}</p>
-                                <p className='text-[#828282] text-[14px]'>Senior Project Manager</p>
+                                <p className='text-[#828282] text-[14px]'>{userProfile?.company?.position}</p>
                             </div>
                         </div>
                     </div>

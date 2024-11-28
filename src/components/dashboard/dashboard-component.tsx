@@ -11,7 +11,7 @@ const DashboardComponent = () => {
         <div>
             {account_type === "admin" && <AdminDashboard />}
             {(account_type === "manager" || account_type === "owner") && <ManagerDashboard />}
-            {account_type === "sales-rep" && <SalesrepDashboard />}
+            {account_type === "sales personel" && <SalesrepDashboard />}
         </div>
     )
 }

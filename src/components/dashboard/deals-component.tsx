@@ -10,7 +10,7 @@ const DealsComponent = () => {
     return (
         <div>
             {(account_type === "manager" || account_type === "owner") && <DealsManager />}
-            {account_type === "sales-rep" && <DealSalesrep />}
+            {account_type === "sales personel" && <DealSalesrep />}
         </div>
     )
 }

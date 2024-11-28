@@ -23,6 +23,7 @@ export type dealFormType = {
     stage: string,
     saleReps: number[]
 }
+
 interface dealsApi extends ApiType {
     data: {data: {deals: dealsType[], page: number, totalPage: number, totalUser: number}}, success: boolean
 }
@@ -113,7 +114,7 @@ const DealsManager = () => {
                 renderCell: (params) => (
                     <TableActionsMenu options={[
                         <MenuItem key={1} onClick={() => handleSelectDeal(params as { id: string; row: {}; }) }>View More</MenuItem>,
-                        <MenuItem key={2} onClick={() => handleOpenEditModal(params as { id: string; row: dealsType; })}>Edit</MenuItem>,
+                        // <MenuItem key={2} onClick={() => handleOpenEditModal(params as { id: string; row: dealsType; })}>Edit</MenuItem>,
                         <MenuItem key={3} onClick={() => {}}>Delete</MenuItem>
                     ]} data={params} />
                 ),
@@ -137,14 +138,21 @@ const DealsManager = () => {
 
     return (
         <div className="flex flex-col gap-[20px] w-full">
-            <EditTableModal 
+            {/* <EditTableModal 
                 isOpen={modalOpen}
                 onClose={closeModal}
                 dea
                 // @ts-ignore
                 cellData={selectedDeal}
                 handleValueChange={handleEditChange}
-            />
+            /> */}
+            {/* <EditDealsModal 
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                salesRep={salesRepOptions}
+                dealOptions={dealOptions}
+                data={dealData}
+            /> */}
             <NewdealModal 
                 modalOpen={dealModalOpen}
                 closeModal={closeDealModal}

@@ -38,7 +38,7 @@ const InsightsComponent = () => {
     return (
         <div>
             {(account_type === "manager" || account_type === "owner") && <InsightsManager />}
-            {account_type === "sales-rep" && <InsightSalesrep />}
+            {account_type === "sales personel" && <InsightSalesrep />}
         </div>
     )   
 }

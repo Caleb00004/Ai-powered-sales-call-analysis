@@ -35,7 +35,7 @@ const SideNav = () => {
     const router = useRouter()
     const splitName = router.pathname.split('/')
     const routeName = splitName[2]
-    const {accountType: ACCOUNT_TYPE} = useContext(appContext)
+    const {accountType: ACCOUNT_TYPE, userProfile} = useContext(appContext)
     // const ACCOUNT_TYPE = globalState.account_type
     const [displayDropdown, setDisplayDropdown] = useState({display: false, type: "" as "company" | "system" | "subscription"})
     // const routeName = router.pathname.split('/').slice(2).join('/')
@@ -171,7 +171,7 @@ const SideNav = () => {
             </div>
             {ACCOUNT_TYPE !== "admin" && <Link href={"/dashboard/company-permission"} className=" border border-[#D9D9D9] rounded-[150px] flex justify-between mt-auto mb-6 pl-3 pr-1 py-2 mx-2 ">
                 <div>
-                    <p className="text-white text-[14px] font-[500]">Bles Sofware</p>
+                    <p className="text-white text-[14px] font-[500]">{userProfile?.company?.name}</p>
                     <p className=" text-[#D9D9D9] text-[12px]" >Add or switch company</p>
                 </div>
                 <ArrowIcon className="text-white" />

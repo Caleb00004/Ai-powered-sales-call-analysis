@@ -2,7 +2,7 @@ import Button from "@/components/primary/Button"
 import Input from "@/components/primary/input"
 import Logo from "@/components/primary/Logo"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Picture from "../../public/svgs/john-doe.svg"
 import { Checkbox } from "@mui/material"
 import gsap from "gsap"
@@ -10,6 +10,7 @@ import { SkillsType, APISTATUS, ApiType, } from "../../api-feature/types"
 import { globalState, useGetAvailableSkillsListQuery, useGetCompaniesQuery, usePostSwitchCompaniesMutation, usePostCreateCompanyMutation } from "../../api-feature/apiSlice"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
 import toast from "react-hot-toast"
+import { appContext } from "@/components/contexts/appContext"
 
 
 
@@ -18,7 +19,7 @@ interface skillsApiType extends ApiType {
 }
 
 const CompanySetup = () => {
-    console.log(globalState)
+    const {userProfile} = useContext(appContext)
     const {data: availableSkills, status: availableSkillsStatus, error: availableSkillsError} = useGetAvailableSkillsListQuery<skillsApiType>()
     const [switchCompnay] = usePostSwitchCompaniesMutation()
     const [loading, setLoading] = useState(false)
@@ -177,7 +178,7 @@ const CompanySetup = () => {
                     <div className="w-full" >
                         <div style={{boxShadow: "0px 0px 8px 1px rgba(187, 185, 185, 0.25)"}} className="bg-white rounded-md flex flex-col items-center px-[20px] sm:px-[50px] py-8 mt-14">
                             <Picture />
-                            <h1 className="text-[#333333] font-[600] text-[20px]">Hello, Evelyn Michael</h1>
+                            <h1 className="text-[#333333] font-[600] text-[20px]">Hello, {userProfile?.firstName} {userProfile?.lastName}</h1>
                             <p className="text-[#71717A] text-[16px] pt-2">First tell us about your company</p>
                             <Input
                                 className="mt-8"

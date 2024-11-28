@@ -15,6 +15,7 @@ import Button from "../primary/Button"
 import SideNav from "./SideNav"
 import DropdownItem from "./DropdownItem"
 import UserIcon from "../../../public/svgs/user-icon.svg"
+import { TOKEN_NAME } from "../../../api-feature/types"
 
 const TopNav = () => {
     const [openNav, setOpenNav] = useState(false)
@@ -71,6 +72,11 @@ const TopNav = () => {
         const name = e.target.name
         const value = e.target.value
         setContactDetails(prev => ({...prev, [name]: value}))
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem(TOKEN_NAME)
+        router.push("/onboarding")
     }
 
     const faqContent = 
@@ -152,6 +158,7 @@ const TopNav = () => {
                     </div>
                     <Dropdown isOpen={displayDropDown} className="mt-4">
                         <Link href={"/dashboard/settings"}><DropdownItem text="Settings" onClick={() => {}} /></Link>
+                        <DropdownItem text="Logout" className="text-red-600 py-2 px-2" onClick={handleLogout} />
                     </Dropdown>
                 </div>
             </div>

@@ -7,23 +7,41 @@ import TableActionsMenu from "@/components/secondary/TableActionsMenu"
 import { MenuItem } from "@mui/material"
 import { stageFilterOperator, statusFilterOperator } from "@/components/util/customFilterOperators"
 import { appContext } from "@/components/contexts/appContext"
+import { useGetDealsQuery, useGetDealStagesQuery } from "../../../../api-feature/apiSlice"
+import { ApiType } from "../../../../api-feature/types"
+import { dealsType } from "../../../../api-feature/manager-owner/deals/deal-type"
+import usePaginationLimit from "@/components/util/usePaginationLimit"
+import NewdealModal from "@/components/modals/newDeal-modal"
+import useModal from "@/components/util/useModal"
+import { dataContext } from "@/components/contexts/dataContext"
+import Button from "@/components/primary/Button"
 
+
+interface dealsApi extends ApiType {
+    data: {data: {deals: dealsType[], page: number, totalPage: number, totalUser: number}}, success: boolean
+}
 
 const DealSalesrep = () => {
     const routeTo = useRouter()
+    const {teamData, teamDataStatus} = useContext(dataContext)
     const [searchInput, setSearchInput] = useState("")
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
-    const rows = dealsData
+    const {dataLimit, getMoreData} = usePaginationLimit()
+    const {data: dealsData, status: dealStatus, error} = useGetDealsQuery<dealsApi>({page: 1, limit: dataLimit, search: searchInput})
+    const {data: dealStagesData, status: dealStagesStatus, error: dealStagesError} = useGetDealStagesQuery()
+    const {modalOpen, openModal, closeModal } = useModal()
+
+    const rows = dealsData?.data.deals
 
     useEffect(() => {
         setIsLargeScreen(window.innerWidth > 940);
     })
 
-    const filteredRows = useMemo(() => {
-        return rows.filter(row =>
-            row.name.toLowerCase().includes(searchInput.toLowerCase())
-        );
-    }, [rows, searchInput]);
+    // const filteredRows = useMemo(() => {
+    //     return rows.filter(row =>
+    //         row.name.toLowerCase().includes(searchInput.toLowerCase())
+    //     );
+    // }, [rows, searchInput]);
 
     const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
@@ -80,17 +98,33 @@ const DealSalesrep = () => {
         ]
     },[isLargeScreen]) 
 
+    const dealOptions = [] as {value: number, name: string}[]
+    dealStagesData?.map(item => dealOptions.push({value: item.id, name: item.name}))
+
+    const salesRepOptions = [] as {value: number | number, name: string}[]
+    teamData?.map(item => salesRepOptions.push({value: item.userId, name: `${item.firstName} ${item.lastName}`}))
+
 
     return (
         <div className="flex flex-col gap-[20px] w-full">
             
+            <NewdealModal 
+                modalOpen={modalOpen}
+                closeModal={closeModal}
+                salesRep={salesRepOptions}
+                dealOptions={dealOptions}
+            />
+
             <div className="flex justify-between items-center">
                 <h1 className="text-[20px] font-[600] text-[#333333]">Assigned Deals</h1>
+                <div className="w-[140px]">
+                    <Button onClick={openModal} className="py-[6px] text-[13px]">Add New Deal</Button>
+                </div>
             </div>
 
             <Table 
                 loading={false}
-                filteredRows={filteredRows}
+                filteredRows={rows}
                 columns={columns}
                 searchInput={searchInput}
                 handleSearchChange={handleSearchChange}
