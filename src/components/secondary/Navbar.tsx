@@ -44,21 +44,21 @@ const Navbar = () => {
 
     const INTEGRATIONS = 
         <div className="text-[14px] text-white overflow-hidden absolute w-[20em] mx-auto mdx4:w-[14em] z-[2] bg-[#02010E] mt-[17em] mdx4:mt-[4em] mdx4:-ml-10 rounded-2xl top-0 px-1 ">        
-            <Link href={"/durekt-meet"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={google} alt="google" height={1000} width={1000} />
                 </div>
                 <p className="">Google Meet</p>
             </Link>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[0.9px]" />
-            <Link href={"/durekt-kixie"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={kixie} alt="kixie" className="bg-[#02010E]" height={1000} width={1000} />
                 </div>
                 <p className="">Kixie</p>
             </Link>
             <div className="bg-gradient-to-t from-[#48D0FF] to-[#C32782] w-full h-[1px]" />
-            <Link href={"/durekt-zoom"} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
+            <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="hover:bg-[#0e0c22] cursor-pointer flex gap-2 items-center py-2 px-3">
                 <div className="w-14 h-14 scale-[0.8]">
                     <Image src={zoom} alt="zoom" height={1000} width={1000} />
                 </div>
@@ -135,7 +135,8 @@ const Navbar = () => {
                     <Link href={"/onboarding"} className="w-[100%] ">
                         <Button className="font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>
                     </Link>
-                    <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="w-[100%] ">
+                    {/* <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}} className="w-[100%] "> */}
+                    <Link href={{pathname: "/pricing"}} className="w-[100%] ">
                         <Button className="font-light ">Sign up</Button>
                     </Link>
                 </div>
@@ -167,7 +168,8 @@ const Navbar = () => {
                         <Link href={"/onboarding"} className="w-[100%] ">
                             <Button className=" font-light bg-transparent hover:bg-[#B3387F] cursor-pointer transition-all">Sign in</Button>                        
                         </Link>
-                        <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}}>
+                        {/* <Link href={{pathname: "/onboarding", query: {goToSection: "signup"}}}> */}
+                        <Link href={{pathname: "/pricing"}}>
                             <Button className="font-light ">Sign up</Button>
                         </Link>
                     </div>

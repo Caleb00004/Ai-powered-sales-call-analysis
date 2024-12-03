@@ -30,11 +30,11 @@ const EditSkillsModal:FC<props> = ({modalOpen, closeModal, handleUpdateSkills, a
                 // @ts-ignore
                 .catch(rejected => {
                     console.error(rejected)
-                    toast.error("Error occured")
+                    toast.error("work in progress")
                 })
         } catch(error) {
             console.error(error)
-            toast.error("Error occured")
+            toast.error("work in progress")
         } finally {
             setLoading(false)
         }

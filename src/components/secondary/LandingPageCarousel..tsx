@@ -4,7 +4,7 @@ import StarIcon from "../../../public/svgs/Star-icon.svg"
 import Arrow from "../../../public/svgs/arrow2-icon.svg"
 
 interface CarouselProps {
-  items: ReactNode[];
+  items: {header?: string, body?: string, author?: string, position?: string}[];
   largeScreenItems?: number;
   smallScreenItems?: number;
   gap?: number;
@@ -32,7 +32,7 @@ const Carousel: React.FC<CarouselProps> = ({
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setNumVisibleItems(width < 768 ? smallScreenItems : largeScreenItems);
+      setNumVisibleItems(width < 1000 ? smallScreenItems : largeScreenItems);
     };
     
     window.addEventListener('resize', handleResize);
@@ -89,6 +89,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 gap: `${gap}px`,
                 cursor: draggable ? 'grab' : 'default',
                 transition: draggable ? 'none' : 'transform 0.5s ease',
+                // height: "100%"
             }}
             onMouseDown={draggable ? () => {} : undefined} // Dragging can be implemented if needed
         >
@@ -102,8 +103,9 @@ const Carousel: React.FC<CarouselProps> = ({
                     flex: `0 0 calc(${100 / numVisibleItems}% - ${gap}px)`,
                     ...customItemStyle,
                 }}
+                // className='bg-red-600 '
             >
-            <div className="relative bg-[#18181B] px-[1px] py-[1px] rounded-xl overflow-hidden">
+            <div className="relative bg-[#18181B] px-[1px] h-full py-[1px] rounded-xl overflow-hidden">
                 <div 
                 ref={borderRef} 
                 className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-[#48D0FF] to-[#C32782]"
@@ -114,23 +116,24 @@ const Carousel: React.FC<CarouselProps> = ({
                 }}
                 >
                 </div>
-                <div className="relative z-[4] bg-[#18181B] px-6 py-8 rounded-xl">
-                <div className="flex gap-2">
-                    <StarIcon className="h-[20px] w-[20px]"  />
-                    <StarIcon className="h-[20px] w-[20px]"  />
-                    <StarIcon className="h-[20px] w-[20px]"  />
-                    <StarIcon className="h-[20px] w-[20px]"  />
-                    <StarIcon  className="h-[20px] w-[20px]" />
-                </div>
-                <p className="py-4 text-[14.5px]">Lorem ipsum dolor sit amet consectetur. Arcu convallis eget adipiscing pellentesque et semper non. Et diam et at risus convallis hendrerit sit ac quam. Molestie. Arcu convallis eget adipiscing pellentesque et semper non.</p>
-                <div className="mt-2 flex gap-2">
-                    <div className="w-[43px]  bg-slate-600 rounded-full">
-                    </div>
-                    <div>
-                    <p className="text-[#71717A] text-[14.5px] font-[600]">Name Surname</p>
-                    <p className="text-[12px] mt-1 ">Director of ICT, CreativeGig</p>
-                    </div>
-                </div>
+                <div className="relative z-[4] flex flex-col bg-[#18181B] h-full px-6 py-8 rounded-xl">
+                  <div className="flex gap-2">
+                      <StarIcon className="h-[20px] w-[20px]"  />
+                      <StarIcon className="h-[20px] w-[20px]"  />
+                      <StarIcon className="h-[20px] w-[20px]"  />
+                      <StarIcon className="h-[20px] w-[20px]"  />
+                      <StarIcon  className="h-[20px] w-[20px]" />
+                  </div>
+                  <h1 className='mt-4'>{item?.header}</h1>
+                  <p className="py-4 text-[14.5px]">{item?.body}</p>
+                  <div className="mt-auto flex gap-2">
+                      <div className="w-[43px] bg-slate-600 rounded-full">
+                      </div>
+                      <div>
+                      <p className="text-[#71717A] text-[14.5px] font-[600]">{item?.author}</p>
+                      <p className="text-[12px] mt-1 ">{item?.position}</p>
+                      </div>
+                  </div>
                 </div>
             </div>
             </div>

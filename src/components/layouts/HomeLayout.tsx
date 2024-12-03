@@ -35,7 +35,7 @@ const HomeLayout:FC<props> = ({children}) => {
                             <Logo classname="w-[100px] h-[25px] -translate-x-2 scale-[0.8] sm:scale-1" />
                             <p className="text-[#545454]">Online</p>
                         </div>
-                        <p onClick={closeModal} className=" cursor-pointer absolute text-[#545454] right-4 top-3 font-[600]">X</p>
+                        {/* <p onClick={closeModal} className=" cursor-pointer absolute text-[#545454] right-4 top-3 font-[600]">X</p> */}
                     </div>
 
                     {/* MESSAGES SECTION */}

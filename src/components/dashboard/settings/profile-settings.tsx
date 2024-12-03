@@ -56,11 +56,11 @@ const ProfileSettings:FC<props> = ({data}) => {
                     // @ts-ignore
                     .catch(rejected => {
                         console.log(rejected)
-                        toast.error("error occured")
+                        toast.error("work in progress")
                     })
             } catch(error) {
                 console.error(error)
-                toast.error("error occured")
+                toast.error("work in progress")
             } finally {
                 setRequestStatus("idle")
                 setDetailsLoading(false)
@@ -95,11 +95,11 @@ const ProfileSettings:FC<props> = ({data}) => {
                     // @ts-ignore
                     .catch(rejected => {
                         console.log(rejected)
-                        toast.error("error occured")
+                        toast.error("work in progress")
                     })
             } catch(error) {
                 console.error(error)
-                toast.error("error occured")
+                toast.error("work in progress")
             } finally {
                 setRequestStatus("idle")
                 setPasswordLoading(false)

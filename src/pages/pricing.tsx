@@ -32,7 +32,7 @@ const Pricing = () => {
     return (
         <HomeLayout>
             <div className="text-[#333333] bg-white py-[3em] sm:py-[4em]">
-                <div className="w-[90%] sm:w-[34em] mx-auto text-center">
+                <div className="w-[90%] mdx4:w-[50em] mx-auto text-center">
                     <h1 className="text-[35px] sm:text-[45px] font-[700] mt-0">Simple pricing that scales with you</h1>
                     <p className="text-[#5B5B5B] font-[500]">User friendly pricing plans for your business</p>
 
@@ -55,7 +55,7 @@ const Pricing = () => {
                 <div className="mx-auto pt-[7em] p-[1em] sm:p-[4em]">
                     <h1 className="text-[35px] text-center sm:text-[45px] font-[700] mt-0">Frequently Asked Pricing Questions</h1>
                     
-                    <div className="w-[100%] sm:w-[40em] mx-auto mt-14">
+                    <div className="w-[100%] md:w-[40em] mx-auto mt-14 ">
                         <FaqUI className="bg-white border-t mt-[0px] py-3" detailsClassName=" text-[#333333] text-[14px]" />
                     </div>
                 </div>

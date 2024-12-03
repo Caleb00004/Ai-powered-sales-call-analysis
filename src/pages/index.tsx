@@ -20,6 +20,7 @@ import TickIcon from "../../public/svgs/tick-icon.svg"
 import Carousel from "@/components/secondary/LandingPageCarousel.";
 import Link from "next/link";
 
+
 const callAnalysis = [
   {
     header: "Flexible Team Management",
@@ -70,13 +71,40 @@ const howItWorks = [
   }
 ]
 
-const items = [
-  <div style={{ background: 'red', height: '200px' }}>Item 1</div>,
-  <div style={{ background: 'blue', height: '200px' }}>Item 2</div>,
-  <div style={{ background: 'green', height: '200px' }}>Item 3</div>,
-  <div style={{ background: 'orange', height: '200px' }}>Item 4</div>,
+// const items = [
+//   <div style={{ background: 'red', height: '200px' }}>Item 1</div>,
+//   <div style={{ background: 'blue', height: '200px' }}>Item 2</div>,
+//   <div style={{ background: 'green', height: '200px' }}>Item 3</div>,
+//   <div style={{ background: 'orange', height: '200px' }}>Item 4</div>,
+// ];
 
+const items = [
+  {
+    header: "Empowering Sales Teams with Precision",
+    body: "Since partnering with Durekt, our sales team has transformed into a high-performing machine. The platform's intuitive tools provide razor-sharp insights into customer behavior, allowing us to craft strategies that resonate. Productivity has soared, and our reps are closing deals faster than ever. Durekt isn't just a tool; it's the backbone of our sales success",
+    author: "Alex P",
+    position: "Sales Director, Velocity Sales"
+  },
+  {
+    header: "Turning Reps into Sales Superstars",
+    body: "Durekt has revolutionized how our sales reps approach their day. The streamlined dashboard ensures every lead is nurtured and no opportunity slips through the cracks. It’s like having a personal trainer for each rep. Since implementing Durekt, our individual sales numbers have increased by 30%. It’s not just a platform; it’s a game-changer.",
+    author: "Sarah C",
+    position: "Senior Sales Representative, Arex Global"
+  },
+  {
+    header: "Driving Results and Team Morale",
+    body: "The impact of Durekt on our sales operations has been profound. Beyond the numbers—though a 40% increase in closed deals speaks volumes—it's the boost in team confidence and morale that stands out. Reps feel empowered, supported, and equipped to exceed their targets. With Durekt, we're not just meeting goals; we’re shattering them.",
+    author: "Michael R.",
+    position: "VP of Sales, Summit Dash Sales"
+  },
+  {
+    header: "Revolutionizing Sales Strategy and Execution",
+    body: "Durekt has been a revelation for our sales organization. Its ability to provide actionable insights and real-time analytics has completely redefined how we strategize and execute. Our reps are now spending more time building relationships and closing deals, rather than getting bogged down by admin tasks. Since onboarding Durekt, our revenue per rep has increased by 35%. It’s more than a platform—it’s our competitive edge.",
+    author: "Emma W.",
+    position: "Head of Sales Operations"
+  }
 ];
+
 
 export default function Home() {
   const borderRef = useRef(null);
@@ -105,7 +133,7 @@ export default function Home() {
             <div ref={supportRef}>
               <div className="flex gap-2 mx-auto w-[100%] sm:w-[35em] ">
                 <input type="text" placeholder="Enter your email" className="h-auto flex-1 px-4 bg-transparent border border-[#D4D4D4] rounded-sm" name="email" value="" onChange={() => {}} />
-                <Button className="flex-[0.75] sm:flex-[0.4] py-1 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Sign Up free</Button>
+                <Link href={"/onboarding"} className="flex-[0.75] sm:flex-[0.4] "><Button className="py-1 rounded-sm border border-[#B3387F] hover:bg-transparent transition-all active:scale-[0.95]">Sign Up free</Button></Link>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center mt-8 gap-4">
@@ -150,7 +178,8 @@ export default function Home() {
       {/* FEATURES */}
       <div className=" bg-[#000000] relative px-[1em] sm:px-[3.5em] mdx5:px-[5em] pb-[3em] pt-[4em] mdx3:py-[5em] text-center ">
         {/* <h2 className="text-colour-gradient">FEATURES</h2> */}
-        <h2 className="text-[1.2em] w-[90%] md:w-[30em] mx-auto"><span className="text-colour-gradient">Harness</span> the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</h2>
+        {/* <h2 className="text-[1.2em] w-[90%] md:w-[30em] mx-auto"><span className="text-colour-gradient">Harness</span> the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</h2> */}
+        <h1 className="text-white text-[24px] lg:text-[35px] font-[600] leading-[40px] lg:leading-[45px]">Harness the power of durekt using advanced proprietary AI combined with NLP to unlock <span className="animate-nav-text">new levels of insight, accuracy and data to increase sales performance</span></h1>
         {/* <p className="text-white w-[90%] md:w-[30em] text-[14px] mx-auto">Harness the power of durekt using advanced proprietary AI combined with NLP to unlock new levels of insight, accuracy and data to increase sales performance</p> */}
         {/* <p className="text-white w-[23em] text-[14px] mx-auto">Record, Transcribe, Analyze, and Grade Sales Calls to Boost Your Team’s Success</p> */}
 
@@ -290,8 +319,8 @@ export default function Home() {
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
           <div className="flex flex-col sm:flex-row gap-4 w-[80%] sm:w-[25em] mx-auto mt-14">
-              <Button className=" rounded-sm " color="bg-[#334155]">Start Free Trial</Button>
-              <Button className=" rounded-sm">Request a Demo</Button>
+              <Link href={"/onboarding"}><Button className=" rounded-sm " color="bg-[#334155]">Start Free Trial</Button></Link>
+              <Link href={"/onboarding"}><Button className=" rounded-sm">Request a Demo</Button></Link>
           </div>
 
           <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:left-[0px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />
