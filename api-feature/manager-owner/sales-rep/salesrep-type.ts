@@ -4,6 +4,7 @@ export interface SalesrepType {
     grade: number,
     skills: string,
     skillSymbol: string
+    url?: string
 }
 
 export interface AreaofconcernType {
@@ -32,6 +33,7 @@ export interface SalesRepPerformanceType {
         lastName: string;
         id: number;
         CompanyUser: {position: string}[]
+        url?: string
     },
     overall: number;
     role: string;

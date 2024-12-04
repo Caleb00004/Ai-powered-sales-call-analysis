@@ -4,7 +4,7 @@ import DropdownIcon from "../../../public/svgs/dropdown-icon.svg"
 import Search from "./Search"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import gsap from "gsap"
 import Dropdown from "./Dropdown"
 import Modal from "../primary/Modal"
@@ -15,9 +15,15 @@ import Button from "../primary/Button"
 import SideNav from "./SideNav"
 import DropdownItem from "./DropdownItem"
 import UserIcon from "../../../public/svgs/user-icon.svg"
-import { TOKEN_NAME } from "../../../api-feature/types"
+import { profileType, TOKEN_NAME } from "../../../api-feature/types"
+import { appContext } from "../contexts/appContext"
+import { globalState } from "../../../api-feature/apiSlice"
+import { apiSlice } from "../../../api-feature/apiSlice"
+import { useDispatch } from "react-redux"
 
 const TopNav = () => {
+    const dispatch = useDispatch()
+    const {setLoggedIn, setUserProfile} = useContext(appContext)
     const [openNav, setOpenNav] = useState(false)
     const [displayDropDown, setDisplayDropDown] = useState(false)
     const [helpDropDown, setHelpDropdown] = useState(false)
@@ -75,7 +81,15 @@ const TopNav = () => {
     }
 
     const handleLogout = () => {
+        setLoggedIn(false)
+        setUserProfile({} as profileType)
+        globalState.authorizationToken = ""
+        globalState.account_type = ""
         localStorage.removeItem(TOKEN_NAME)
+
+        // Clear RTK Query cache
+        dispatch(apiSlice.util.resetApiState())
+
         router.push("/onboarding")
     }
 
@@ -151,8 +165,9 @@ const TopNav = () => {
                 </Link>
                 <div className="flex gap-1 items-center relative cursor-pointer">
                     <div className="flex gap-1 items-center" onClick={handleDropDown}>
-                        <div className="rounded-full">
-                            <UserIcon className="w-[33px] h-[33px]" />
+                        <div className="rounded-full bg-slate-200">
+                            <Logo classname="w-[33px] h-[33px]" />
+                            {/* <UserIcon className="w-[33px] h-[33px]" /> */}
                         </div>
                         <DropdownIcon />
                     </div>

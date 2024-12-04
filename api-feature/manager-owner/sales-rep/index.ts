@@ -16,11 +16,11 @@ const salesRepEndpoints = (
                 method: "GET",
             }),
         }),
-        getSalesrepPerformance: builder.query<undefined, void>({
-            query: () => ({
+        getSalesrepPerformance: builder.query<undefined, {page?: number, limit?: number, search?: string}>({
+            query: ({page = 1, limit = 40, search = ""}) => ({
                 url: "/sales-rep/company-user-overall-performance",
                 method: "GET",
-                params: {page: 1, limit: 3}
+                params: {page: page, limit: limit, search: search}
             })
         }),
         getSalesrepDeals: builder.query<undefined, number>({

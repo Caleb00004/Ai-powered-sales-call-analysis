@@ -24,7 +24,7 @@ const TeamDistribution:FC<props> = ({className, label, hideLabel}) => {
             {!hideLabel && 
                 <div className="flex pb-8 justify-between text-[#333333] font-[600]">
                     <p>{label ? label : "Current Team Performance"}</p>
-                    <MoreIcon />
+                    {/* <MoreIcon /> */}
                 </div>
             }
             {status === "pending" && <Loading customStyle={{display: "flex"}} />}

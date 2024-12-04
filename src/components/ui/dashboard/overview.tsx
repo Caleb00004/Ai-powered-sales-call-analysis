@@ -4,6 +4,8 @@ import { overviewType } from "../../../../api-feature/manager-owner/overview/ove
 import { ApiType } from "../../../../api-feature/types"
 import CallIcon from "../../../../public/svgs/call-icon.svg"
 import ActivityIndicator from "@/components/secondary/ActivityIndicator"
+import { useContext } from "react"
+import { dataContext } from "@/components/contexts/dataContext"
 
 interface overviewApiType extends ApiType {
     data: {success: boolean, data: overviewType}
@@ -11,6 +13,7 @@ interface overviewApiType extends ApiType {
 
 export const OverviewComponent = () => {
     const {data, status, error} = useGetOverviewQuery<overviewApiType>()
+    const {overallSalesrepData} = useContext(dataContext)
 
     const overviewData = data?.data
 
@@ -68,7 +71,7 @@ export const OverviewComponent = () => {
                         <MoreIcon />
                     </div> */}
                 </div>
-                <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">null</h1>
+                {overallSalesrepData?.length > 0 && <h1 className="text-[29px] font-semibold text-[#333333] pt-2 pb-4">{overallSalesrepData[0]?.firstName ?? "null"} {overallSalesrepData[0]?.lastName}</h1>}
                 <p className="text-[#828282] text-[12px]">Highest-performing salesperson</p>
             </div>
             <div className="bg-white rounded-2xl p-3">

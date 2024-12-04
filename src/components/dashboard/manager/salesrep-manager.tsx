@@ -17,6 +17,9 @@ import { SalesRepPerformanceType } from '../../../../api-feature/manager-owner/s
 import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
 import { useRouter } from 'next/router';
 import useModal from '@/components/util/useModal';
+import usePaginationLimit from '@/components/util/usePaginationLimit';
+import Logo from '@/components/primary/Logo';
+import Image from 'next/image';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -31,11 +34,12 @@ interface activitiesApi extends ApiType {
 const SalesRepManager = () => {
     const [selectedSalesRep, setSelectedSalesRep] = useState({} as SalesRepPerformanceType)
     const {modalOpen, openModal, closeModal} = useModal()
+    const {dataLimit, getMoreData} = usePaginationLimit()
     const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
     const router = useRouter()
-    const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>()
-    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
     const [searchInput, setSearchInput] = useState("")
+    const {data, status, error} = useGetSalesrepPerformanceQuery<salesPerformanceApi>({page: 1, limit: dataLimit, search: searchInput})
+    const {data: activitiesData, status: activitiesStatus, error: activitiesError} = useGetSalesRepActivitiesQuery<activitiesApi>(selectedSalesRep?.user?.id, {skip: !selectedSalesRep?.user?.id})
     const [section, setSection] = useState<"table" | "details">("table")
     const [displayDropDown, setDisplayDropDown] = useState(false)
     const viewRef = useRef<HTMLDivElement>(null)
@@ -95,10 +99,8 @@ const SalesRepManager = () => {
         });
 
         const baseColumns: GridColDef[] = [
-            {field: "user", headerName: "Name", flex: isLargeScreen ? 1 : undefined, 
-                width: isLargeScreen ? undefined : 200, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
-            {field: "overall", headerName: "Overall", flex: isLargeScreen ? 0.7 : undefined, 
-                width: isLargeScreen ? undefined : 130,},
+            {field: "user", headerName: "Name", width: 130, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
+            {field: "overall", headerName: "Overall", width: 80},
 
             // {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
             // {field: "status", headerName: "Status",
@@ -166,8 +168,13 @@ const SalesRepManager = () => {
                 <>    
                     <div className="bg-white mdx2:h-[150px] rounded-2xl flex flex-col mdx2:flex-row gap-2 p-3">
                         <div className='flex gap-3 flex-[0.8]'>
-                            <div className='w-[130px] p-0 h-[120px] mdx2:h-full rounded-lg relative overflow-hidden'>
-                                <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
+                            <div className='w-[130px] p-0 h-[120px] bg-slate-200 mdx2:h-full rounded-lg relative overflow-hidden'>
+                                {selectedSalesRep?.user?.url ? 
+                                    <Image src={selectedSalesRep?.user?.url ?? ""} className='h-full' alt='image'  height={2000} width={2000}  /> :
+                                    <Logo classname='w-full h-full px-2' /> 
+                                }
+                                {/* <div className='w-full h-full relative z-[2] mb-auto '></div> */}
+                                {/* <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " /> */}
                             </div>
                             <div>
                                 <p className='text-[20px] text-[#333333] font-[500] leading-6'>{selectedSalesRep?.user?.firstName} {selectedSalesRep?.user?.lastName}</p>
@@ -190,8 +197,12 @@ const SalesRepManager = () => {
                     :
                 <>
                     <div className="bg-white lg:h-[150px] rounded-2xl flex flex-col lg:flex-row gap-2 p-3">
-                        <div className='w-[130px] h-[120px] lg:h-full rounded-lg flex-shrink-0  relative overflow-hidden  '>
-                            <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " />
+                        <div className='w-[130px] h-[120px] bg-slate-200 lg:h-full rounded-lg flex-shrink-0  relative overflow-hidden  '>
+                            {selectedSalesRep?.user?.url ? 
+                                <Image src={selectedSalesRep?.user?.url ?? ""} className='h-full' alt='image'  height={2000} width={2000}  /> :
+                                <Logo classname='w-full h-full px-2' /> 
+                            }
+                            {/* <UserIcon className="w-full h-full relative z-[2] scale-x-[1.35] scale-y-[1.19] mb-auto " /> */}
                         </div>
                         <div className='flex-1'>
                             <div className='flex justify-between'>
@@ -234,10 +245,11 @@ const SalesRepManager = () => {
             {section === "table" && 
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable
+                        fetchMoreData={getMoreData}
                         loading={status === "pending"}
                         searchInput={searchInput}
                         handleSearchChange={handleSearchChange}
-                        filteredRows={filteredRows}
+                        filteredRows={rows}
                         columns={columns}
                         getRowIdField='user.id'
                         handleSelectCell={handleSelectSalesRep as GridEventListener<"cellClick">}

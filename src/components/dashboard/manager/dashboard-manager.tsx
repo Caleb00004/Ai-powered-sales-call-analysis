@@ -91,7 +91,6 @@ const ManagerDashboard = () => {
         return [...baseColumns, ...gradeColumns];
     },[rows]) 
     
-
     return (
         <div> 
             <div className="flex items-center gap-1">
@@ -109,19 +108,19 @@ const ManagerDashboard = () => {
                         <p className="text-[16px] text-[#333333] font-[600]">Recent call Analysis</p>
                     </div>
                     <div>
-                        <Table 
-                            filteredRows={rows}
-                            columns={columns}
-                            getRowIdField="date"
-                            hideHelpers
-                            hideFooter
-                            hideHeader
-                            loading={status === "pending"}
-                            searchInput=""
-                            handleSearchChange={() => {}}
-                            rowHeight={64}
-                            columnHeaderHeight={60}
-                        />
+                    <Table 
+                        filteredRows={rows}
+                        columns={columns}
+                        getRowIdField="date"
+                        hideHelpers
+                        hideFooter
+                        hideHeader
+                        loading={status === "pending"}
+                        searchInput=""
+                        handleSearchChange={() => {}}
+                        rowHeight={64}
+                        columnHeaderHeight={60}
+                    />
                     </div>
                 </div>
                 <TeamDistribution />

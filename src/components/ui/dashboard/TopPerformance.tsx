@@ -6,6 +6,8 @@ import { ApiType } from "../../../../api-feature/types"
 import { useGetTopSalesrepQuery } from "../../../../api-feature/apiSlice"
 import Loading from "../../secondary/LoadingSpinner"
 import UserIcon from "../../../../public/svgs/usericon-rectangle.svg"
+import Logo from "@/components/primary/Logo"
+import Image from "next/image"
 
 interface props {
     label?: string,
@@ -24,7 +26,7 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
         <div className={`rounded-lg flex-1 p-3 ${className ? className : "bg-white flex-1"}`}>
             {!hideLabel && <div className="flex justify-between items-center">
                 <h1 className="text-[16px] text-[#333333] font-[600]">{label ? label : "Top 3 Team performance"}</h1>
-                <MoreIcon />
+                {/* <MoreIcon /> */}
             </div>}
 
             {status === "pending" &&  <Loading customStyle={{display: "flex", marginTop: 14}} />}
@@ -42,8 +44,8 @@ const TopPerformance:FC<props> = ({label, className, hideLabel}) => {
                             <tr>
                                 <td className="flex items-center gap-2 mb-3 ">
                                     <p className="text-[12px] font-[600]">{i+1}</p> 
-                                    <div className="h-12 w-12 rounded-lg"><UserIcon /></div>
-                                    <p className="text-[12px] underline font-[600]">{item?.firstName} {item?.lastName}</p>
+                                    <div className="h-12 w-12 rounded-lg flex bg-slate-200 overflow-hidden">{item?.url ? <Image src={item.url} height={2000} width={2000} alt="image" /> : <Logo classname="text-white my-auto px-1" />}</div>
+                                    <p className="text-[12px] underline font-[600]">{item?.firstName} {item?.lastName}</p> 
                                 </td>
                                 <td className="">
                                     <GradientCircle className="mx-auto">

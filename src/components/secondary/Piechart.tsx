@@ -27,7 +27,7 @@ const PiechartComponent:FC<props> = ({data}) => {
                     height={210}
                 />
             </div>
-            <div className='flex flex-col gap-4'>
+            <div className='flex max-h-[20em] pr-2 overflow-auto flex-col gap-4'>
                 {data.map((item, i) => (
                     <div>
                         <p className='text-[14px] text-[#6D6D6D]'>{item.label}</p>

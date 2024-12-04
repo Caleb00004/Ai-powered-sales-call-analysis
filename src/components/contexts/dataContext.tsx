@@ -35,7 +35,7 @@ interface platformApi extends ApiType {
 interface DataContextProps {
     availableSkills: SkillsType[],
     availableSkillsStatus: APISTATUS
-    salesRepData: SalesrepType[]
+    overallSalesrepData: SalesrepType[]
     salesRepsataStatus: APISTATUS
     teamRolesData: teamRoleType[]
     teamRolesDataStatus: APISTATUS
@@ -51,7 +51,7 @@ interface DataContextProps {
 const dataContext = createContext<DataContextProps>({
     availableSkills: [],
     availableSkillsStatus: "pending",
-    salesRepData: [],
+    overallSalesrepData: [],
     salesRepsataStatus: "pending",
     teamRolesData: [],
     teamRolesDataStatus: "pending",
@@ -81,7 +81,7 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     }
 
     const platformData = platforms?.data
-    const salesRepData = salesRep?.data
+    const overallSalesrepData = salesRep?.data
     const teamRolesData = teamRoles?.data
     const teamData = teamMembers?.data?.data
     const trainingModuleData = modules?.data
@@ -90,7 +90,7 @@ function DataContextProvider({ children }: { children: ReactNode }) {
     const contextValue: DataContextProps = {
         availableSkills,
         availableSkillsStatus,
-        salesRepData,
+        overallSalesrepData,
         salesRepsataStatus,
         teamRolesData,
         teamRolesDataStatus,
