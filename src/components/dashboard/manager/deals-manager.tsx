@@ -115,7 +115,7 @@ const DealsManager = () => {
                     <TableActionsMenu options={[
                         <MenuItem key={1} onClick={() => handleSelectDeal(params as { id: string; row: {}; }) }>View More</MenuItem>,
                         // <MenuItem key={2} onClick={() => handleOpenEditModal(params as { id: string; row: dealsType; })}>Edit</MenuItem>,
-                        <MenuItem key={3} onClick={() => {}}>Delete</MenuItem>
+                        // <MenuItem key={3} onClick={() => {}}>Delete</MenuItem>
                     ]} data={params} />
                 ),
                 sortable: false,

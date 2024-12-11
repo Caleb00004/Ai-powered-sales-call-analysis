@@ -63,7 +63,7 @@ const SalesRepDetails:FC<props> = ({userId, activitiesData, activitiesStatus, mo
                 userId={userId}
             />
             <div className='flex w-[20em] gap-4 ml-auto'>
-                <Button onClick={openModal} className='text-[13px] py-1'>Message Elizabeth</Button>
+                <Button onClick={openModal} className='text-[13px] py-1'>Message</Button>
                 <Button onClick={() => router.push("/dashboard/trainings")} className='text-[13px] py-1 bg-transparent border border-[#A4A4A4]' ><p className='text-[#333333]'>Schedule Training</p></Button>
             </div>
             <div className='flex flex-col mdx5:flex-row gap-5 mt-5'>

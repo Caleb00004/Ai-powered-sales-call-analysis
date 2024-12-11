@@ -117,14 +117,15 @@ const TeamsManager = () => {
             {field: "name", 
                 flex: isLargeScreen ? 1 : undefined, 
                 width: isLargeScreen ? undefined : 200,
-                cellClassName: " text-[#333333] font-[500]", headerName: "Name/Email",  
+                cellClassName: " text-[#333333] font-[500]", headerName: "Name",  
                 renderCell: (params) => {
                     const {firstName, lastName, email} = params.row
                     return (
-                        <div className="flex flex-col">
-                            <p className="leading-3 mt-5">{firstName} {lastName}</p>
-                            <p className="leading-6 text-[12px]">{email}</p>
-                        </div>
+                        <p>{firstName} {lastName}</p>
+                        // <div className="flex flex-col">
+                        //     <p className="leading-3 mt-5">{firstName} {lastName}</p>
+                        //     <p className="leading-6 text-[12px]">{email}</p>
+                        // </div>
                     )
                 },
             },

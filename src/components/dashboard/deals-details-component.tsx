@@ -1,7 +1,7 @@
 import Button from "@/components/primary/Button"
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 import Table from "@/components/secondary/Table"
-import { dealsData, dealsDataType } from "@/testData"
+import { dealsData, dealsDataType, skillSetData } from "@/testData"
 import { GridColDef, GridEventListener } from "@mui/x-data-grid"
 import MenuItem from '@mui/material/MenuItem';
 import TableActionsMenu from "@/components/secondary/TableActionsMenu"
@@ -14,6 +14,8 @@ import { dealMeetingsDataType, dealSalesrepPerformanceType, dealsOverviewType, n
 import useModal from "../util/useModal"
 import { DealOverview, DealReport, DealNotes } from "../ui/deals"
 import ScheduleMeetingModal from "../modals/schedulemeeting-modal."
+import toast from "react-hot-toast"
+import { getHighlightColor } from "../util/helperFunctions"
 
 type sectionsType = "overview" | "meetings" | "notes"
  
@@ -140,7 +142,46 @@ const DealdetailsComponent = () => {
                 flex: isLargeScreen ? 1 : undefined,
                 width: isLargeScreen ? undefined : 130,
                 headerName: "Status",
-            }
+            },
+            {
+                field: 'actions',
+                headerName: 'Actions',
+                renderCell: (params) => {
+                    // Sample date string from backend
+                    const backendDate = params?.row?.date;
+
+                    // Convert the string to a Date object
+                    const eventDate = new Date(backendDate);
+
+                    // Get the current date and time
+                    const currentDate = new Date();
+
+                    // Compare the dates
+                    // if (eventDate.getTime() < currentDate.getTime()) {
+                    //     return (<div>
+                    //         <TableActionsMenu options={[
+                    //             <Link target="__blank__" href={params?.row?.url} ><MenuItem>Ended</MenuItem></Link>,
+                    //         ]} data={params} />
+                    //     </div>)
+                    // } else {
+                    //     return (<div>
+                    //         <TableActionsMenu options={[
+                    //             <Link target="__blank__" href={params?.row?.url} ><MenuItem>Join</MenuItem></Link>,
+                    //         ]} data={params} />
+                    //     </div>)
+                    // }
+                    return (<div>
+                        <TableActionsMenu options={[
+                            <Link target="__blank__" href={params?.row?.url} ><MenuItem>Join</MenuItem></Link>,
+                        ]} data={params} />
+                    </div>)
+                },
+                flex: isLargeScreen ? 0.3 : undefined, 
+                width: isLargeScreen ? undefined : 120,
+                sortable: false,
+                filterable: false,
+            },
+
         ];
     }, [isLargeScreen, meetingRows]);
 
@@ -158,8 +199,9 @@ const DealdetailsComponent = () => {
             {
                 field: "user",
                 // flex: 1,
-                flex: isLargeScreen ? 1 : undefined, 
-                width: isLargeScreen ? undefined : 200,
+                // flex: isLargeScreen ? 2 : undefined, 
+                // width: isLargeScreen ? undefined : 200,
+                width: 150,
                 headerName: "Name",
                 renderCell: (params) => {
                     const {firstName, lastName} = params?.row?.user
@@ -174,21 +216,32 @@ const DealdetailsComponent = () => {
             {
                 field: "overall",
                 // flex: 1,
-                flex: isLargeScreen ? 1 : undefined,
-                width: isLargeScreen ? undefined : 150,
-                headerName: "Overall"
+                // flex: isLargeScreen ? 1 : undefined,
+                // width: isLargeScreen ? undefined : 150,
+                width: isLargeScreen ? 80 : 100,
+                headerName: "Overall",
+                renderCell: (params) => (<span className={`${getHighlightColor(Number(params?.row?.overall))} p-[4px] rounded-full`}>{params?.row?.overall}</span>)
             }
         ];
 
-        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
-            field: `skills.${skillKey}`,
-            headerName: skillKey,
-            flex: isLargeScreen ? 0.5 : undefined,
-            width: isLargeScreen ? undefined : 100,
-            renderCell: (params) => {
-            return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
+        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => {
+            const skillData = skillSetData?.find((item) => item.short === skillKey); // Match with the short key
+
+            return {
+                field: `skills.${skillKey}`,
+                headerName: skillKey,
+                description: skillData
+                    ? `(${skillData.name}) - ${skillData.description}` // Combine name and description if a match is found
+                    : "No description available", // Fallback description
+                disableColumnMenu: true,
+                sortable: false,
+                width: 60,
+                // flex: isLargeScreen ? 0.5 : undefined,
+                // width: isLargeScreen ? undefined : 100,
+                renderCell: (params) => {
+                return <span className={`${getHighlightColor(Number(params?.row?.skills[skillKey]))} p-[4px] rounded-full`} >{params.row.skills[skillKey]}</span>; // Accessing the skill value
             },
-        }));
+        }});
 
         return [...baseColumns, ...skillColumns];
     }, [isLargeScreen, dealPerformanceRows]);
@@ -204,14 +257,22 @@ const DealdetailsComponent = () => {
                     closeModal={closeModal}
                 />
 
-                <div className="flex flex-col sm:flex-row justify-between sm:items-center">
+                <div className="flex flex-col mdx4:flex-row justify-between mdx4:items-center">
                     <div className="flex items-center gap-0 text-[15px]">
                         <Link className=" cursor-pointer underline text-[#5B5B5B]" href={"/dashboard/deals"}><p >Deals</p></Link>
                         <ArrorwIcon className="scale-[0.8]" />
                         <p className=" text-[#333333] font-[500] ">Deal details</p>
                     </div>
-                    <div style={{width: "10em", marginLeft: "auto"}}>
-                        <Button onClick={openModal} className=" py-[6px] text-[13px]">Schedule Meeting</Button>
+                    <div className="flex flex-col sm:flex-row ml-auto gap-3">
+                        <div style={{width: "10em"}}>
+                            <Button onClick={() => toast.error("Work in progress")} className=" py-[6px] text-[13px]">Upload Meeting</Button>
+                        </div>
+                        {/* <div style={{width: "10em"}}>
+                            <Button onClick={() => toast.error("Work in progress")} className=" py-[6px] text-[13px]">Joi Meeting</Button>
+                        </div> */}
+                        <div style={{width: "10em"}}>
+                            <Button onClick={openModal} className=" py-[6px] text-[13px]">Schedule Meeting</Button>
+                        </div>
                     </div>
                 </div>
 

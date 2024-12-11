@@ -319,8 +319,8 @@ export default function Home() {
             <p className="text-[#D9D9D9] text-[16px] w-[20em] mx-auto">Experience the power of AI-driven sales call analysis today.</p>
 
           <div className="flex flex-col sm:flex-row gap-4 w-[80%] sm:w-[25em] mx-auto mt-14">
-              <Link href={"/onboarding"}><Button className=" rounded-sm " color="bg-[#334155]">Start Free Trial</Button></Link>
-              <Link href={"/onboarding"}><Button className=" rounded-sm">Request a Demo</Button></Link>
+              <Link className="flex-1" href={"/onboarding"}><Button className=" rounded-sm " color="bg-[#334155]">Start Free Trial</Button></Link>
+              <Link className="flex-1" href={"/onboarding"}><Button className=" rounded-sm">Request a Demo</Button></Link>
           </div>
 
           <Image className="absolute scale-[1] h-[18em] w-[18em] left-[0px] sm:left-[0px] opacity-[1] z-[1]" src={rectangleImg} alt="ellips" width={10000} height={10000} />

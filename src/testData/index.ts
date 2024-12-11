@@ -1,3 +1,136 @@
+export const skillSetData = [
+    {
+        short: "BO",
+        name: "Becoming Obsessed",
+        description: "Demonstrating deep understanding and passion for the customer’s needs."
+    }, 
+    {
+        short: "BV",
+        name: "Building Value",
+        description: "Highlighting product/service value to meet customer needs."
+    },
+    {
+        short: "VP",
+        name: "Value Over Price",
+        description: "Convincing the customer to prioritize value over cost."
+    },
+    {
+        short: "MU1",
+        name: "Mastering Urgency - Comprehensive",
+        description: "Building a sense of urgency across the entire sales process."
+    },
+    {
+        short: "MU2",
+        name: "Mastering Urgency - Communication",
+        description: "Creating urgency through verbal tone and delivery."
+    },
+    {
+        short: "VP",
+        name: "Value Preservation",
+        description: "Ensuring that the perceived value of the product/service remains intact."
+    },
+    {
+        short: "MU3",
+        name: "Mastering Urgency - Implementation",
+        description: "Translating urgency into actionable steps for the customer."
+    },
+    {
+        short: "UIP",
+        name: "Influence of Passion",
+        description: "Communicating with energy and enthusiasm to influence decisions."
+    },
+    {
+        short: "C",
+        name: "Conviction",
+        description: "Demonstrating belief in the product or service’s efficacy."
+    },
+    {
+        short: "FTC",
+        name: " Feeling the Conviction",
+        description: "Ensuring the customer senses the rep’s conviction."
+    },
+    {
+        short: "CC",
+        name: "Convinced Communication",
+        description: "Ensuring every point made is persuasive and convincing."
+    },
+    {
+        short: "MOH",
+        name: "Mastering Objection Handling",
+        description: "Effectively addressing customer objections with confidence."
+    },
+    {
+        short: "RTS",
+        name: "Rebuttals That Make Sense",
+        description: "Crafting logical and relevant responses to objections."
+    },
+    {
+        short: "SM",
+        name: "Shifting Mindset",
+        description: "Encouraging the customer to reconsider their perspective."
+    },
+    {
+        short: "POS",
+        name: "Preventing Objections Strategically",
+        description: "Anticipating and mitigating objections before they arise."
+    },
+    {
+        short: "CP",
+        name: "Cultivating Perseverance",
+        description: "Maintaining persistence without appearing pushy."
+    },
+    {
+        short: "NUC",
+        name: "Navigating Unexpected Challenges",
+        description: "Handling curveballs with composure and adaptability."
+    },
+    {
+        short: "CR",
+        name: "Cultivating Resilient Mindset",
+        description: "Staying positive and motivated throughout the sales call."
+    },
+    {
+        short: "NAS",
+        name: "Navigating Adversity in Sales",
+        description: "Overcoming tough objections or resistance."
+    },
+    {
+        short: "MT",
+        name: "Mastering Transitions",
+        description: "Seamlessly guiding the conversation between topics."
+    },
+    {
+        short: "MPC",
+        name: "Mastering Purposeful Communication",
+        description: "Keeping the conversation focused on actionable objectives."
+    },
+    {
+        short: "MPC",
+        name: "Mastering Purposeful Communication",
+        description: "Keeping the conversation focused on actionable objectives."
+    },
+    {
+        short: "MG",
+        name: "Mastering Guiding Buyers",
+        description: "Leading the customer towards informed decisions."
+    },
+    {
+        short: "NN",
+        name: "Navigating Negativity",
+        description: "Handling negative emotions or statements with tact."
+    },
+    {
+        short: "BT",
+        name: "Building Trust",
+        description: "Establishing credibility and reliability with the customer."
+    },
+    {
+        short: "BR",
+        name: "Building Relationships",
+        description: "Creating a long-term connection beyond the sale."
+    },
+]
+
 export const callData:callDataType[] = 
 [   
     {

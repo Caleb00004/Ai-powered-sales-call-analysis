@@ -8,7 +8,7 @@ import GradientCircle from '@/components/secondary/GradientCircle';
 import Callicon from "../../../../public/svgs/round-call.svg"
 import BriefcaseIcon from "../../../../public/svgs/briefcase-icon.svg"
 import Dropdown from '@/components/secondary/Dropdown';
-import { scrollToView } from '@/components/util/helperFunctions';
+import { getHighlightColor, scrollToView } from '@/components/util/helperFunctions';
 import DropdownItem from '@/components/secondary/DropdownItem';
 import SalesRepDetails from '@/components/ui/salesrepDetails';
 import { useGetSalesRepActivitiesQuery, useGetSalesrepPerformanceQuery } from '../../../../api-feature/apiSlice';
@@ -20,6 +20,7 @@ import useModal from '@/components/util/useModal';
 import usePaginationLimit from '@/components/util/usePaginationLimit';
 import Logo from '@/components/primary/Logo';
 import Image from 'next/image';
+import { skillSetData } from '@/testData';
 
 const LazyTable = React.lazy(() => import("@/components/secondary/Table"))
 
@@ -100,40 +101,45 @@ const SalesRepManager = () => {
 
         const baseColumns: GridColDef[] = [
             {field: "user", headerName: "Name", width: 130, renderCell: (params) => (<p>{params.row.user.firstName} {params.row.user.lastName}</p>)},
-            {field: "overall", headerName: "Overall", width: 80},
-
-            // {field: "Date", headerName: "Date", headerClassName: "bg-[#C32782]", cellClassName: "date-column--cell",},
-            // {field: "status", headerName: "Status",
-            //     renderCell: (params) => (
-            //         <Box
-            //             sx={{
-            //                 color: 'white',
-            //                 display: "flex",
-            //                 justifyContent: "center",
-            //                 alignItems: "center",
-            //                 borderRadius: '4px',
-            //                 textAlign: 'center',
-            //                 width: '100%',
-            //                 height: '100%',
-            //             }}
-            //         >
-            //             <p className={`w-16 h-[30px] rounded-2xl text-[#333333] text-[13px] font-[500] flex justify-center items-center ${params.value === "Past" ? "bg-[#E1335D33]" : "bg-[#32ea2833]"}`}>{params.value}</p>
-            //         </Box>
-            //     )
-            // },
-            // {field: "BG", filterOperators: customNumericOperators, headerName: "BG", headerClassName: "bg-[#C32782]"},
+            {field: "overall", headerName: "Overall", width: 80, renderCell: (params) => (<span className={`${getHighlightColor(Number(params.row.overall))} p-[4px] rounded-full`}>{params.row.overall}</span>)},
             // {field: "MC", filterOperators: customNumericOperators, headerName: "MC", headerClassName: "bg-[#C32782]"},
         ]; 
 
-        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
-            field: `skills.${skillKey}`,
-            headerName: skillKey,
-            flex: isLargeScreen ? 0.5 : undefined,
-            width: isLargeScreen ? undefined : 100,
-            renderCell: (params) => {
-            return <span>{params.row.skills[skillKey]}</span>; // Accessing the skill value
-            },
-        }));
+        const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => {
+            const skillData = skillSetData?.find((item) => item.short === skillKey); // Match with the short key
+            
+            return {
+                field: `skills.${skillKey}`,
+                headerName: skillKey,
+                description: skillData
+                    ? `(${skillData.name}) - ${skillData.description}` // Combine name and description if a match is found
+                    : "No description available", // Fallback description
+                disableColumnMenu: true,
+                sortable: false,
+                width: 60, 
+                // flex: isLargeScreen ? 1 : undefined,
+                // width: isLargeScreen ? undefined : 100,
+                renderCell: (params) => {
+                    const skill = params.row.skills[skillKey];
+                    return <span className={`${getHighlightColor(Number(skill))} p-[4px] rounded-full`}>{skill}</span>;
+                },
+            };
+        });
+
+        // const skillColumns: GridColDef[] = Array.from(allSkillKeys).map((skillKey) => ({
+        //     field: `skills.${skillKey}`,
+        //     headerName: skillKey,
+        //     description: "yello",
+        //     disableColumnMenu: true,
+        //     sortable: false,
+        //     // width: 70, 
+        //     // flex: isLargeScreen ? 1 : undefined,
+        //     // width: isLargeScreen ? undefined : 100,
+        //     renderCell: (params) => {
+        //         const skill = params.row.skills[skillKey]
+        //         return <span className={`${getHighlightColor(Number(skill))} p-[4px] rounded-full `}>{params.row.skills[skillKey]}</span>; // Accessing the skill value
+        //     },
+        // }));
 
         return [...baseColumns, ...skillColumns]
     }, [status, isLargeScreen]) 
@@ -246,6 +252,7 @@ const SalesRepManager = () => {
                 <Suspense fallback={<div>Loading Table...</div>}>
                     <LazyTable
                         fetchMoreData={getMoreData}
+                        title="Team Leaderboard"
                         loading={status === "pending"}
                         searchInput={searchInput}
                         handleSearchChange={handleSearchChange}

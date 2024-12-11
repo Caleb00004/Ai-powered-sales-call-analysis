@@ -127,8 +127,8 @@ const Carousel: React.FC<CarouselProps> = ({
                   <h1 className='mt-4'>{item?.header}</h1>
                   <p className="py-4 text-[14.5px]">{item?.body}</p>
                   <div className="mt-auto flex gap-2">
-                      <div className="w-[43px] bg-slate-600 rounded-full">
-                      </div>
+                      {/* <div className="w-[43px] bg-slate-600 rounded-full">
+                      </div> */}
                       <div>
                       <p className="text-[#71717A] text-[14.5px] font-[600]">{item?.author}</p>
                       <p className="text-[12px] mt-1 ">{item?.position}</p>

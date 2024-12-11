@@ -9,6 +9,8 @@ import { ApiType } from "../../../../api-feature/types"
 import { recentCallsType } from "../../../../api-feature/manager-owner/overview/overview-type"
 import Table from "@/components/secondary/Table"
 import { useMemo } from "react"
+import { getHighlightColor } from "@/components/util/helperFunctions"
+import { skillSetData } from "@/testData"
 
 interface callsApiType extends ApiType {
     data: {data: {meetings: recentCallsType[], skills: string[]}, success: boolean}
@@ -67,26 +69,25 @@ const ManagerDashboard = () => {
                     </Box>
                 )
             },
-            {field: "overallGrade", headerName: "Overall"},
-            // {field: "BA", headerName: "BA"},
-            // {field: "BB", headerName: "BB"},
-            // {field: "BC", headerName: "BC"},
-            // {field: "BD", headerName: "BD"},
-            // {field: "BE", headerName: "BE"},
-            // {field: "BF", headerName: "BF"},
-            // {field: "BG", headerName: "BG"},
-            // {field: "MC", headerName: "MC"},
+            {field: "overallGrade", headerName: "Overall", renderCell: (params) => (<span className={`${getHighlightColor(Number(params?.row?.overallGrade))} p-[4px] rounded-full`}>{params?.row?.overallGrade}</span>)},
         ]
 
-        const gradeColumns: GridColDef[] = Array.from(allGradeKeys).map((gradeKey) => ({
-            field: `grades.${gradeKey}`,
-            headerName: gradeKey,
-            // flex: isLargeScreen ? 0.5 : undefined,
-            // width: isLargeScreen ? undefined : 100,
-            renderCell: (params) => {
-                return <span>{params?.row?.grades[gradeKey]}</span>; // Accessing the skill value
-            },
-        }));
+        const gradeColumns: GridColDef[] = Array.from(allGradeKeys).map((gradeKey) => {
+            const skillData = skillSetData?.find((item) => item.short === gradeKey); // Match with the short key
+
+            return {
+                field: `grades.${gradeKey}`,
+                headerName: gradeKey,
+                description: skillData
+                    ? `(${skillData.name}) - ${skillData.description}` // Combine name and description if a match is found
+                    : "No description available", // Fallback description
+                // flex: isLargeScreen ? 0.5 : undefined,
+                // width: isLargeScreen ? undefined : 100,
+                renderCell: (params) => {
+                    return <span className={`${getHighlightColor(Number(params?.row?.grades[gradeKey]))} p-[4px] rounded-full`}>{params?.row?.grades[gradeKey]}</span>; // Accessing the skill value
+                },
+            }
+        });
 
         return [...baseColumns, ...gradeColumns];
     },[rows]) 

@@ -67,3 +67,15 @@ export function formatDateAndTime(dateString: string) {
   };
 }
 
+export function getHighlightColor(value: number) {
+    if (value <= 69) {
+      return "bg-red-200 text-red-800"
+    } else if (value <= 79) {
+      return "bg-yellow-200 text-yellow-800"
+    } else if (value <= 89) {
+      return "bg-green-200 text-green-800"
+    } else {
+      return "bg-blue-200 text-blue-800"
+    }
+
+}
